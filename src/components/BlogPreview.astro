@@ -1,0 +1,158 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const latestPosts = posts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  }).format(date);
+}
+---
+
+<section class="blog-preview" id="blog">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Blog</span>
+      <h2>Consejos de salud y bienestar</h2>
+      <p>Artículos útiles para cuidar tu cuerpo en el día a día</p>
+    </div>
+    
+    <div class="blog-grid">
+      {latestPosts.map(post => (
+        <article class="blog-card">
+          <a href={`/blog/${post.slug}`} class="blog-card-image-link">
+            <img src={post.data.image} alt={post.data.title} class="blog-card-image" loading="lazy" />
+          </a>
+          <div class="blog-card-content">
+            <span class="blog-card-tag">{post.data.category}</span>
+            <h3>
+              <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+            </h3>
+            <p>{post.data.excerpt}</p>
+            <div class="blog-card-meta">
+              <span>{formatDate(post.data.date)}</span>
+              <span>•</span>
+              <span>{post.data.readTime} min lectura</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    
+    <div class="blog-cta">
+      <a href="/blog" class="btn btn-secondary">Ver todos los artículos</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog-preview {
+    background: var(--color-cream);
+  }
+  
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  
+  .blog-card {
+    background: var(--color-warm-white);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid rgba(90, 124, 89, 0.08);
+  }
+  
+  .blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+  }
+  
+  .blog-card-image-link {
+    display: block;
+    overflow: hidden;
+  }
+  
+  .blog-card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: var(--transition);
+  }
+  
+  .blog-card:hover .blog-card-image {
+    transform: scale(1.05);
+  }
+  
+  .blog-card-content {
+    padding: 30px;
+  }
+  
+  .blog-card-tag {
+    display: inline-block;
+    background: var(--color-secondary-light);
+    color: var(--color-text);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .blog-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  
+  .blog-card h3 a {
+    text-decoration: none;
+    color: var(--color-text);
+    transition: var(--transition);
+  }
+  
+  .blog-card h3 a:hover {
+    color: var(--color-primary);
+  }
+  
+  .blog-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    max-width: none;
+  }
+  
+  .blog-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(90, 124, 89, 0.1);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+  
+  .blog-cta {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  @media (max-width: 1024px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

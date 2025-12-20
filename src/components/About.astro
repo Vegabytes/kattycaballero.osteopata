@@ -1,0 +1,169 @@
+---
+const features = [
+  '+12 años de experiencia',
+  'Formación continua',
+  'Trato personalizado',
+  'Espacio tranquilo y acogedor',
+  'Técnicas no invasivas',
+  'Visión holística del cuerpo'
+];
+---
+
+<section class="about" id="sobre-mi">
+  <div class="container about-container">
+    <div class="about-image">
+      <img src="/images/sala-2.jpg" alt="Consulta de osteopatía de Katy Caballero en Alpedrete" loading="lazy" />
+      <div class="about-image-frame"></div>
+    </div>
+    
+    <div class="about-content">
+      <span class="section-tag">Sobre Mí</span>
+      <h2>Katy Caballero, tu osteópata de confianza</h2>
+      
+      <p>
+        Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia en el mundo de las terapias manuales y el bienestar.
+      </p>
+      
+      <p>
+        Mi vocación nació a través del <strong>masaje tradicional tailandés</strong>, donde descubrí cómo el contacto consciente y respetuoso puede transformar el cuerpo y la mente. Desde entonces, he continuado mi formación en quiromasaje, masaje deportivo y osteopatía, con especial atención a las ramas estructural, visceral y sacro craneal.
+      </p>
+      
+      <p>
+        A lo largo de mi carrera, he trabajado en <strong>spas de lujo en Madrid</strong>, donde aprendí la importancia de cuidar cada detalle para crear experiencias únicas de bienestar.
+      </p>
+      
+      <p>
+        Hoy, con mucha ilusión, he abierto mi propio espacio en <strong>Alpedrete, Madrid</strong>. Un lugar diseñado para que desde el primer momento sientas calma, confianza y bienestar.
+      </p>
+      
+      <div class="about-features">
+        {features.map(feature => (
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+            <span>{feature}</span>
+          </div>
+        ))}
+      </div>
+      
+      <a href="/sobre-mi" class="btn btn-secondary mt-4">Conoce más sobre mí</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: var(--color-warm-white);
+  }
+  
+  .about-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: center;
+  }
+  
+  .about-image {
+    position: relative;
+  }
+  
+  .about-image img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    border-radius: 30px;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .about-image-frame {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    right: -30px;
+    bottom: -30px;
+    border: 3px solid var(--color-secondary);
+    border-radius: 30px;
+    z-index: -1;
+  }
+  
+  .about-content {
+    padding-left: 20px;
+  }
+  
+  .about-content .section-tag {
+    text-align: left;
+  }
+  
+  .about-content h2 {
+    margin-bottom: 30px;
+    text-align: left;
+  }
+  
+  .about-content p {
+    margin-bottom: 20px;
+    max-width: none;
+  }
+  
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 35px;
+    margin-bottom: 30px;
+  }
+  
+  .about-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .about-feature-icon {
+    width: 24px;
+    height: 24px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .about-feature-icon svg {
+    width: 14px;
+    height: 14px;
+    fill: white;
+  }
+  
+  .about-feature span {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    font-weight: 500;
+  }
+  
+  @media (max-width: 1024px) {
+    .about-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+    
+    .about-content {
+      padding-left: 0;
+    }
+    
+    .about-image img {
+      height: 400px;
+    }
+    
+    .about-image-frame {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .about-features {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

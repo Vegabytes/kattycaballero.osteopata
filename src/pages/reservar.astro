@@ -1,0 +1,359 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Reservar Cita | Katy Caballero - Osteópata en Alpedrete";
+const pageDescription = "Reserva tu cita de osteopatía o masaje en Alpedrete, Madrid. Sistema de reservas online, WhatsApp o teléfono. Horario flexible.";
+
+const services = [
+  { name: 'Osteopatía estructural, visceral y sacrocraneal', duration: '55 min', price: '40€' },
+  { name: 'Masaje deportivo', duration: '30 min', price: '20€' },
+  { name: 'Masaje corporal con aceite', duration: '60 min', price: '40€' },
+  { name: 'Masaje corporal con aceite', duration: '90 min', price: '55€' },
+  { name: 'Masaje tradicional tailandés', duration: '60 min', price: '45€' },
+  { name: 'Masaje tradicional tailandés', duration: '90 min', price: '60€' },
+  { name: 'Masaje con pindas herbales calientes', duration: '90 min', price: '70€' },
+  { name: 'Masaje para embarazadas (desde 4º mes)', duration: '60 min', price: '40€' },
+];
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="booking-hero">
+    <div class="container">
+      <span class="section-tag">Reservar Cita</span>
+      <h1>Reserva tu sesión</h1>
+      <p>Elige el método que prefieras para reservar tu cita. Normalmente respondo en menos de 2 horas.</p>
+    </div>
+  </section>
+  
+  <section class="booking-methods">
+    <div class="container">
+      <div class="booking-grid">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20una%20cita" class="booking-card whatsapp" target="_blank" rel="noopener">
+          <div class="booking-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </div>
+          <h3>WhatsApp</h3>
+          <p>Escríbeme directamente y te confirmo disponibilidad al momento</p>
+          <span class="booking-cta">Abrir WhatsApp →</span>
+        </a>
+        
+        <!-- Teléfono -->
+        <a href="tel:+34643961065" class="booking-card phone">
+          <div class="booking-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+            </svg>
+          </div>
+          <h3>Llamar</h3>
+          <p>Llámame para resolver dudas o reservar directamente</p>
+          <span class="booking-cta">643 961 065 →</span>
+        </a>
+        
+        <!-- Email -->
+        <a href="mailto:katycaballero.osteopata@gmail.com?subject=Reserva%20de%20cita&body=Hola%20Katy,%0A%0AMe%20gustaría%20reservar%20una%20cita.%0A%0AServicio:%0AFecha%20preferida:%0AHora%20preferida:%0A%0AGracias!" class="booking-card email">
+          <div class="booking-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </div>
+          <h3>Email</h3>
+          <p>Envíame un correo con tu solicitud de cita</p>
+          <span class="booking-cta">Enviar email →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <section class="booking-info">
+    <div class="container">
+      <div class="booking-info-grid">
+        <div class="booking-details">
+          <h2>Información de reserva</h2>
+          
+          <div class="info-item">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            <div>
+              <h4>Horario de atención</h4>
+              <p>Lunes a Viernes: 9:00 - 20:00<br>Sábados: 9:00 - 14:00</p>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <div>
+              <h4>Ubicación</h4>
+              <p>Calle Río Guadarrama 2<br>28430 Alpedrete, Madrid</p>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/></svg>
+            <div>
+              <h4>Política de cancelación</h4>
+              <p>Por favor, avisa con 24h de antelación si necesitas cancelar o cambiar tu cita.</p>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+            <div>
+              <h4>Formas de pago</h4>
+              <p>Efectivo, Bizum y transferencia bancaria</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="booking-services">
+          <h2>Tarifas</h2>
+          <div class="services-list">
+            {services.map(service => (
+              <div class="service-item">
+                <div class="service-info">
+                  <span class="service-name">{service.name}</span>
+                  <span class="service-duration">{service.duration}</span>
+                </div>
+                <span class="service-price">{service.price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="booking-first-visit">
+    <div class="container text-center">
+      <h2>¿Es tu primera visita?</h2>
+      <p>En la primera sesión dedicaré tiempo a conocer tu historia, tus hábitos y cómo se manifiestan tus molestias. A través de la observación, el movimiento y el tacto, identificaré las tensiones y desequilibrios que pueden estar afectando a tu bienestar.</p>
+      <p><strong>No necesitas traer nada especial</strong>, solo ropa cómoda si optas por el masaje tailandés. Para los demás tratamientos, te proporcionaré todo lo necesario.</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .booking-hero {
+    padding-top: 150px;
+    padding-bottom: 40px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+  
+  .booking-hero h1 {
+    margin-bottom: 20px;
+  }
+  
+  .booking-hero p {
+    margin: 0 auto;
+    max-width: 550px;
+  }
+  
+  .booking-methods {
+    background: var(--color-warm-white);
+    padding-top: 60px;
+    padding-bottom: 80px;
+  }
+  
+  .booking-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .booking-card {
+    background: var(--color-cream);
+    padding: 35px 30px;
+    border-radius: 20px;
+    text-align: center;
+    text-decoration: none;
+    transition: var(--transition);
+    border: 2px solid transparent;
+  }
+  
+  .booking-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+  }
+  
+  .booking-card.whatsapp:hover {
+    border-color: #25D366;
+    background: rgba(37, 211, 102, 0.05);
+  }
+  
+  .booking-card.phone:hover {
+    border-color: var(--color-primary);
+    background: rgba(90, 124, 89, 0.05);
+  }
+  
+  .booking-card.email:hover {
+    border-color: var(--color-secondary);
+    background: rgba(196, 163, 90, 0.05);
+  }
+  
+  .booking-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+  
+  .booking-card.whatsapp .booking-icon {
+    background: #25D366;
+  }
+  
+  .booking-card.phone .booking-icon {
+    background: var(--color-primary);
+  }
+  
+  .booking-card.email .booking-icon {
+    background: var(--color-secondary);
+  }
+  
+  .booking-icon svg {
+    width: 28px;
+    height: 28px;
+    fill: white;
+  }
+  
+  .booking-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--color-text);
+  }
+  
+  .booking-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin-bottom: 15px;
+    max-width: none;
+  }
+  
+  .booking-cta {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  .booking-card.whatsapp .booking-cta { color: #25D366; }
+  .booking-card.phone .booking-cta { color: var(--color-primary); }
+  .booking-card.email .booking-cta { color: var(--color-secondary); }
+  
+  .booking-info {
+    background: var(--color-cream);
+  }
+  
+  .booking-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+  
+  .booking-details h2,
+  .booking-services h2 {
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+  }
+  
+  .info-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+  }
+  
+  .info-item svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--color-primary);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  
+  .info-item h4 {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--color-text);
+  }
+  
+  .info-item p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+  
+  .services-list {
+    background: var(--color-warm-white);
+    border-radius: 15px;
+    padding: 10px;
+  }
+  
+  .service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid rgba(90, 124, 89, 0.08);
+  }
+  
+  .service-item:last-child {
+    border-bottom: none;
+  }
+  
+  .service-name {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    font-weight: 500;
+  }
+  
+  .service-duration {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-top: 3px;
+  }
+  
+  .service-price {
+    background: var(--color-secondary-light);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+  
+  .booking-first-visit {
+    background: var(--color-warm-white);
+    padding: 80px 0;
+  }
+  
+  .booking-first-visit h2 {
+    margin-bottom: 25px;
+  }
+  
+  .booking-first-visit p {
+    max-width: 700px;
+    margin: 0 auto 20px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+  
+  @media (max-width: 900px) {
+    .booking-grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+    }
+    
+    .booking-info-grid {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+  }
+</style>

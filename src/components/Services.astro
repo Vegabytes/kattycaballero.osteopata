@@ -1,0 +1,234 @@
+---
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  price: string;
+  icon: string;
+  featured?: boolean;
+}
+
+const services: Service[] = [
+  {
+    id: 'osteopatia',
+    title: 'Osteopatía Estructural, Visceral y Sacrocraneal',
+    description: 'Tratamiento integral que aborda el sistema músculo-esquelético, órganos internos y sistema craneal. Ideal para dolores de espalda, cervicales, problemas digestivos, migrañas y estrés.',
+    duration: '55 min',
+    price: '40€',
+    icon: 'spine',
+    featured: true
+  },
+  {
+    id: 'masaje-deportivo',
+    title: 'Masaje Deportivo',
+    description: 'Recuperación muscular especializada para deportistas. Prevención de lesiones, alivio de contracturas y mejora del rendimiento físico.',
+    duration: '30 min',
+    price: '20€',
+    icon: 'muscle'
+  },
+  {
+    id: 'masaje-corporal',
+    title: 'Masaje Corporal con Aceite',
+    description: 'Relajación y desconexión plena. Masaje envolvente con aceites esenciales que alivia tensiones y nutre la piel.',
+    duration: '60 min / 90 min',
+    price: '40€ / 55€',
+    icon: 'oil'
+  },
+  {
+    id: 'masaje-tailandes',
+    title: 'Masaje Tradicional Tailandés',
+    description: 'Movilidad y estiramientos asistidos. Técnica milenaria que combina presiones, estiramientos y trabajo energético.',
+    duration: '60 min / 90 min',
+    price: '45€ / 60€',
+    icon: 'thai'
+  },
+  {
+    id: 'pindas-herbales',
+    title: 'Masaje con Pindas Herbales Calientes',
+    description: 'Calor terapéutico con saquitos de hierbas medicinales. Relaja profundamente, descontractura y tiene propiedades antiinflamatorias.',
+    duration: '90 min',
+    price: '70€',
+    icon: 'herbs'
+  },
+  {
+    id: 'embarazadas',
+    title: 'Masaje para Embarazadas',
+    description: 'Alivio y bienestar materno. Desde el 4º mes de embarazo. Técnicas suaves adaptadas a cada etapa para reducir molestias típicas.',
+    duration: '60 min',
+    price: '40€',
+    icon: 'pregnant'
+  }
+];
+---
+
+<section class="services" id="servicios">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Servicios</span>
+      <h2>Tratamientos personalizados para tu bienestar</h2>
+      <p>Cada cuerpo es único. Por eso, diseño cada sesión adaptada a tus necesidades específicas.</p>
+    </div>
+    
+    <div class="services-grid">
+      {services.map(service => (
+        <div class="service-card" id={service.id} class:list={[{ featured: service.featured }]}>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              {service.icon === 'spine' && <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>}
+              {service.icon === 'muscle' && <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>}
+              {service.icon === 'oil' && <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>}
+              {service.icon === 'thai' && <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>}
+              {service.icon === 'herbs' && <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>}
+              {service.icon === 'pregnant' && <path d="M9 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm7 9c-.01-1.34-.83-2.51-2-3-1.19-.51-2.5-.5-4 0-1.18.49-1.99 1.66-2 3v7h2v-5h4v5h2v-7z"/>}
+            </svg>
+          </div>
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+          <div class="service-meta">
+            <span class="service-duration">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+              {service.duration}
+            </span>
+            <span class="service-price">{service.price}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <div class="services-cta">
+      <p>¿No sabes qué tratamiento es mejor para ti?</p>
+      <a href="/contacto" class="btn btn-secondary">Consúltame sin compromiso</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--color-cream);
+  }
+  
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  
+  .service-card {
+    background: var(--color-warm-white);
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    transition: var(--transition);
+    border: 1px solid transparent;
+    position: relative;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-medium);
+    border-color: rgba(90, 124, 89, 0.1);
+  }
+  
+  .service-card.featured::before {
+    content: 'Más popular';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--color-secondary);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .service-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+  
+  .service-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+  }
+  
+  .service-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    color: var(--color-primary-dark);
+    line-height: 1.3;
+  }
+  
+  .service-card p {
+    margin: 0 auto 20px;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+  
+  .service-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(90, 124, 89, 0.1);
+  }
+  
+  .service-duration {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  
+  .service-duration svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .service-price {
+    background: var(--color-secondary-light);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+  
+  .services-cta {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(90, 124, 89, 0.1);
+  }
+  
+  .services-cta p {
+    margin: 0 auto 20px;
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .service-card {
+      padding: 30px 25px;
+    }
+  }
+</style>

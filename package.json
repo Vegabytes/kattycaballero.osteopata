@@ -1,0 +1,17 @@
+{
+  "name": "katy-caballero-osteopata",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Web de Katy Caballero - Osteópata y Masajista en Alpedrete, Madrid",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.0.0",
+    "@astrojs/sitemap": "^3.0.0"
+  }
+}

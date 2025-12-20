@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Services from '../components/Services.astro';
+import CTASection from '../components/CTASection.astro';
+
+const pageTitle = "Servicios de Osteopatía y Masajes | Katy Caballero";
+const pageDescription = "Descubre todos mis servicios: osteopatía estructural, visceral y craneal, masaje deportivo, tailandés, corporal y para embarazadas. Precios y duración de cada tratamiento.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="page-header">
+    <div class="container">
+      <span class="section-tag">Servicios</span>
+      <h1>Tratamientos de osteopatía y masajes</h1>
+      <p>Cada cuerpo es único. Por eso, diseño cada sesión adaptada a tus necesidades específicas.</p>
+    </div>
+  </section>
+  
+  <Services />
+  
+  <section class="first-session">
+    <div class="container first-session-container">
+      <div class="first-session-content">
+        <span class="section-tag">La primera sesión</span>
+        <h2>¿Cómo es tu primera visita?</h2>
+        <p>
+          Cada persona es única, en la primera sesión dedico tiempo a <strong>valorar tu cuerpo</strong>, conocer tu historia, tus hábitos y cómo se manifiestan tus molestias.
+        </p>
+        <p>
+          A través de la <strong>observación, el movimiento y el tacto</strong>, identifico las tensiones, los bloqueos y desequilibrios que pueden estar afectando a tu bienestar.
+        </p>
+        <p>
+          Solo así puedo diseñar un tratamiento verdaderamente personalizado y efectivo para ti.
+        </p>
+        <a href="/reservar" class="btn btn-primary mt-3">Reservar mi primera cita</a>
+      </div>
+      <div class="first-session-image">
+        <img src="/images/sala-1.jpg" alt="Sala de tratamiento" loading="lazy" />
+      </div>
+    </div>
+  </section>
+  
+  <CTASection 
+    title="¿No sabes qué tratamiento necesitas?"
+    description="Contacta conmigo sin compromiso y te orientaré sobre el tratamiento más adecuado para ti."
+    buttonText="Contactar ahora"
+    buttonLink="/contacto"
+  />
+</Layout>
+
+<style>
+  .page-header {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+  
+  .page-header h1 {
+    margin-bottom: 20px;
+  }
+  
+  .page-header p {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+  
+  .first-session {
+    background: var(--color-warm-white);
+  }
+  
+  .first-session-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  
+  .first-session-content .section-tag {
+    text-align: left;
+  }
+  
+  .first-session-content h2 {
+    text-align: left;
+    margin-bottom: 25px;
+  }
+  
+  .first-session-content p {
+    margin-bottom: 15px;
+    max-width: none;
+  }
+  
+  .first-session-image img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: var(--shadow-medium);
+  }
+  
+  @media (max-width: 1024px) {
+    .first-session-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    
+    .first-session-image {
+      order: -1;
+    }
+    
+    .first-session-image img {
+      height: 350px;
+    }
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Contact from '../components/Contact.astro';
+
+const pageTitle = "Contacto | Katy Caballero - Osteópata en Alpedrete";
+const pageDescription = "Contacta con Katy Caballero para reservar tu cita de osteopatía o masaje en Alpedrete, Madrid. Teléfono, WhatsApp, email y dirección.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="page-header">
+    <div class="container">
+      <span class="section-tag">Contacto</span>
+      <h1>¿Tienes dudas? Estoy aquí para ayudarte</h1>
+      <p>No dudes en contactarme para cualquier consulta. Estaré encantada de atenderte.</p>
+    </div>
+  </section>
+  
+  <Contact />
+  
+  <section class="faq">
+    <div class="container">
+      <h2 class="text-center mb-4">Preguntas frecuentes</h2>
+      
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>¿Cómo puedo reservar una cita?</h3>
+          <p>Puedes reservar llamándome al <a href="tel:+34643961065">643 961 065</a>, por WhatsApp, o a través del formulario de reserva online. Te confirmaré la cita lo antes posible.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>¿Cuánto dura una sesión?</h3>
+          <p>La duración depende del tratamiento. Las sesiones de osteopatía duran 55 minutos, mientras que los masajes varían entre 30 y 90 minutos según el tipo.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>¿Qué métodos de pago aceptas?</h3>
+          <p>Acepto efectivo, Bizum y transferencia bancaria. El pago se realiza al finalizar la sesión.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>¿Puedo cancelar o cambiar mi cita?</h3>
+          <p>Sí, pero te pido que me avises con al menos 24 horas de antelación para poder reorganizar mi agenda.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>¿Hay parking cerca?</h3>
+          <p>Sí, hay estacionamiento gratuito en la zona. Al reservar tu cita te daré indicaciones exactas.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>¿Emites factura?</h3>
+          <p>Sí, puedo emitir factura si la necesitas. Solo tienes que pedírmelo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-header {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+  
+  .page-header h1 {
+    margin-bottom: 20px;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+  }
+  
+  .page-header p {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+  
+  .faq {
+    background: var(--color-cream);
+  }
+  
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .faq-item {
+    background: var(--color-warm-white);
+    padding: 30px;
+    border-radius: 15px;
+  }
+  
+  .faq-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: var(--color-primary-dark);
+  }
+  
+  .faq-item p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: none;
+  }
+  
+  .faq-item a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .faq-item a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

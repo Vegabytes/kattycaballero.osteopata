@@ -1,0 +1,305 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Gallery from '../components/Gallery.astro';
+import CTASection from '../components/CTASection.astro';
+
+const pageTitle = "Sobre Mí | Katy Caballero - Osteópata y Masajista";
+const pageDescription = "Conoce a Katy Caballero: más de 12 años de experiencia en osteopatía y masajes. Mi formación, mi filosofía y por qué decidí abrir mi propio espacio en Alpedrete.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="about-hero">
+    <div class="container about-hero-container">
+      <div class="about-hero-content">
+        <span class="section-tag">Sobre Mí</span>
+        <h1>Katy Caballero</h1>
+        <p class="subtitle">Osteópata y Masajista</p>
+      </div>
+      <div class="about-hero-image">
+        <img src="/images/katy-trabajando.jpg" alt="Katy Caballero realizando un tratamiento" loading="eager" />
+      </div>
+    </div>
+  </section>
+  
+  <section class="about-story">
+    <div class="container">
+      <div class="about-story-content">
+        <h2>Mi historia</h2>
+        
+        <p>
+          Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia en el mundo de las terapias manuales y el bienestar.
+        </p>
+        
+        <p>
+          Mi vocación nació a través del <strong>masaje tradicional tailandés</strong>. Viajé a Tailandia para aprender de primera mano esta técnica milenaria, y allí descubrí cómo el contacto consciente y respetuoso puede transformar el cuerpo y la mente.
+        </p>
+        
+        <p>
+          Desde entonces, no he dejado de formarme. He completado estudios en <strong>quiromasaje, masaje deportivo y osteopatía</strong>, con especial atención a las ramas estructural, visceral y sacro craneal. Cada formación me ha dado nuevas herramientas para ayudar a mis pacientes de forma más completa.
+        </p>
+        
+        <p>
+          A lo largo de mi carrera, he trabajado en <strong>spas de lujo en Madrid</strong>, donde aprendí la importancia de cuidar cada detalle para crear experiencias únicas de bienestar. Esa atención al detalle es algo que he traído a mi propia consulta.
+        </p>
+        
+        <p>
+          Hoy, con mucha ilusión, he decidido abrir mi propio espacio en <strong>Alpedrete, Madrid</strong>. Un lugar diseñado para que desde el primer momento sientas calma, confianza y bienestar. He puesto todo mi amor, esfuerzo y dedicación en este proyecto.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="about-philosophy">
+    <div class="container">
+      <div class="philosophy-grid">
+        <div class="philosophy-card">
+          <div class="philosophy-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <h3>Mi filosofía</h3>
+          <p>Creo en la capacidad innata del cuerpo para sanarse. Mi trabajo es facilitar ese proceso, escuchando lo que tu cuerpo necesita y ayudándole a encontrar su equilibrio natural.</p>
+        </div>
+        
+        <div class="philosophy-card">
+          <div class="philosophy-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <h3>Mi enfoque</h3>
+          <p>Trabajo de forma holística, entendiendo que cuerpo, mente y emociones están conectados. No trato solo síntomas, busco la causa raíz para conseguir resultados duraderos.</p>
+        </div>
+        
+        <div class="philosophy-card">
+          <div class="philosophy-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+          </div>
+          <h3>Mi compromiso</h3>
+          <p>Cada persona es única y merece un trato personalizado. Me comprometo a escucharte, a explicarte lo que hago y por qué, y a acompañarte en tu proceso de mejora.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="about-formation">
+    <div class="container">
+      <h2 class="text-center mb-4">Formación y experiencia</h2>
+      
+      <div class="formation-timeline">
+        <div class="formation-item">
+          <div class="formation-year">2012</div>
+          <div class="formation-content">
+            <h4>Masaje Tradicional Tailandés</h4>
+            <p>Formación en escuelas tradicionales de Tailandia</p>
+          </div>
+        </div>
+        
+        <div class="formation-item">
+          <div class="formation-year">2014</div>
+          <div class="formation-content">
+            <h4>Quiromasaje Profesional</h4>
+            <p>Técnicas de masaje terapéutico occidental</p>
+          </div>
+        </div>
+        
+        <div class="formation-item">
+          <div class="formation-year">2016</div>
+          <div class="formation-content">
+            <h4>Masaje Deportivo</h4>
+            <p>Especialización en preparación y recuperación deportiva</p>
+          </div>
+        </div>
+        
+        <div class="formation-item">
+          <div class="formation-year">2018</div>
+          <div class="formation-content">
+            <h4>Osteopatía Estructural</h4>
+            <p>Tratamiento del sistema músculo-esquelético</p>
+          </div>
+        </div>
+        
+        <div class="formation-item">
+          <div class="formation-year">2020</div>
+          <div class="formation-content">
+            <h4>Osteopatía Visceral y Craneal</h4>
+            <p>Ampliación de conocimientos en osteopatía</p>
+          </div>
+        </div>
+        
+        <div class="formation-item">
+          <div class="formation-year">2024</div>
+          <div class="formation-content">
+            <h4>Apertura de mi espacio en Alpedrete</h4>
+            <p>Inicio de mi proyecto personal</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <Gallery />
+  
+  <CTASection 
+    title="¿Te gustaría conocerme?"
+    description="Reserva tu primera cita y empecemos a trabajar juntos en tu bienestar."
+  />
+</Layout>
+
+<style>
+  .about-hero {
+    padding-top: 120px;
+    padding-bottom: 80px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+  }
+  
+  .about-hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  
+  .about-hero-content h1 {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    margin-bottom: 10px;
+    color: var(--color-primary-dark);
+  }
+  
+  .about-hero-content .subtitle {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-secondary);
+    font-style: italic;
+  }
+  
+  .about-hero-image img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: var(--shadow-strong);
+  }
+  
+  .about-story {
+    background: var(--color-warm-white);
+  }
+  
+  .about-story-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .about-story h2 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .about-story p {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    margin-bottom: 25px;
+    max-width: none;
+  }
+  
+  .about-philosophy {
+    background: var(--color-cream);
+  }
+  
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  
+  .philosophy-card {
+    background: var(--color-warm-white);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .philosophy-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+  }
+  
+  .philosophy-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+  }
+  
+  .philosophy-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--color-primary-dark);
+  }
+  
+  .philosophy-card p {
+    font-size: 0.95rem;
+    max-width: none;
+    text-align: center;
+  }
+  
+  .about-formation {
+    background: var(--color-warm-white);
+  }
+  
+  .formation-timeline {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .formation-item {
+    display: flex;
+    gap: 30px;
+    padding: 25px 0;
+    border-bottom: 1px solid rgba(90, 124, 89, 0.1);
+  }
+  
+  .formation-item:last-child {
+    border-bottom: none;
+  }
+  
+  .formation-year {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    min-width: 80px;
+  }
+  
+  .formation-content h4 {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--color-text);
+  }
+  
+  .formation-content p {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+  }
+  
+  @media (max-width: 1024px) {
+    .about-hero-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      text-align: center;
+    }
+    
+    .about-hero-image img {
+      height: 400px;
+    }
+    
+    .philosophy-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

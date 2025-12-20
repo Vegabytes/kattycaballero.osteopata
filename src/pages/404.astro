@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Página no encontrada | Katy Caballero">
+  <section class="error-page">
+    <div class="container text-center">
+      <div class="error-content">
+        <span class="error-code">404</span>
+        <h1>Página no encontrada</h1>
+        <p>Lo siento, la página que buscas no existe o ha sido movida.</p>
+        <div class="error-buttons">
+          <a href="/" class="btn btn-primary">Volver al inicio</a>
+          <a href="/contacto" class="btn btn-secondary">Contactar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .error-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    padding: 100px 0;
+  }
+  
+  .error-content {
+    max-width: 500px;
+  }
+  
+  .error-code {
+    font-family: var(--font-display);
+    font-size: 8rem;
+    font-weight: 700;
+    color: var(--color-primary-light);
+    line-height: 1;
+    display: block;
+    margin-bottom: 20px;
+  }
+  
+  .error-page h1 {
+    margin-bottom: 15px;
+    color: var(--color-primary-dark);
+  }
+  
+  .error-page p {
+    margin-bottom: 35px;
+    font-size: 1.1rem;
+  }
+  
+  .error-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  @media (max-width: 480px) {
+    .error-code {
+      font-size: 5rem;
+    }
+    
+    .error-buttons {
+      flex-direction: column;
+    }
+  }
+</style>
