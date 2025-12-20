@@ -1,0 +1,28 @@
+backend:
+  name: github
+  repo: Vegabytes/kattycaballero.osteopata
+  branch: main
+  base_url: https://decap-oauth.netlify.app
+
+media_folder: public/images/blog
+public_folder: /images/blog
+
+locale: es
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: blog
+    label: "Artículos del Blog"
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descripción", name: "description", widget: "text" }
+      - { label: "Fecha", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Imagen destacada", name: "image", widget: "image", required: false }
+      - { label: "Categoría", name: "category", widget: "select", options: ["Osteopatía", "Masajes", "Bienestar", "Consejos"] }
+      - { label: "Contenido", name: "body", widget: "markdown" }

@@ -4,11 +4,13 @@ const blogCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    excerpt: z.string(),
-    date: z.date(),
+    description: z.string().optional(),
+    excerpt: z.string().optional(),
+    pubDate: z.coerce.date().optional(),
+    date: z.coerce.date().optional(),
     category: z.string(),
-    image: z.string(),
-    readTime: z.number(),
+    image: z.string().optional(),
+    readTime: z.number().optional(),
     author: z.string().default('Katy Caballero'),
   }),
 });

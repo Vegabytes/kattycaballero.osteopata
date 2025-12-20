@@ -61,65 +61,82 @@ npm run preview
 
 ## 📝 Cómo añadir artículos al blog
 
-1. Crea un archivo `.md` en `src/content/blog/`
-2. Añade el frontmatter con los metadatos:
+### Desde GitHub (sin programar):
+
+1. Ve a: https://github.com/Vegabytes/kattycaballero.osteopata
+2. Navega a `src/content/blog/`
+3. Clic en **"Add file"** → **"Create new file"**
+4. Nombre del archivo: `mi-nuevo-post.md` (usa guiones, sin espacios ni acentos)
+5. Copia este formato:
 
 ```markdown
 ---
 title: "Título del artículo"
-excerpt: "Descripción breve para listados y SEO"
-date: 2024-12-20
+excerpt: "Resumen corto del artículo (1-2 frases)"
+date: 2025-12-20
 category: "Osteopatía"
-image: "https://url-de-imagen.jpg"
+image: "/images/blog/nombre-imagen.jpg"
 readTime: 5
 author: "Katy Caballero"
 ---
 
-Aquí va el contenido del artículo en Markdown...
+Aquí va el contenido del artículo.
+
+## Subtítulo
+
+Más texto...
+
+### Otro subtítulo
+
+- Lista de puntos
+- Otro punto
 ```
 
-3. El artículo aparecerá automáticamente en el blog
+6. Clic en **"Commit changes"**
+7. Cloudflare desplegará automáticamente en 1-2 minutos
 
-## 🌐 Despliegue
+### Categorías disponibles:
+- Osteopatía
+- Masajes
+- Bienestar
+- Consejos
 
-### Opción 1: Netlify (Recomendado - GRATIS)
+### Editar un post existente:
 
-1. Crea cuenta en [netlify.com](https://netlify.com)
-2. Conecta tu repositorio de GitHub
-3. Configura:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-4. Netlify desplegará automáticamente con cada push
+1. Ve a `src/content/blog/`
+2. Clic en el archivo `.md`
+3. Clic en el lápiz ✏️ (editar)
+4. Haz los cambios
+5. Clic en **"Commit changes"**
 
-### Opción 2: Vercel (GRATIS)
+### Subir imágenes para el blog:
 
-1. Crea cuenta en [vercel.com](https://vercel.com)
-2. Importa el proyecto desde GitHub
-3. Vercel detectará Astro automáticamente
+1. Ve a `public/images/blog/`
+2. Clic en **"Add file"** → **"Upload files"**
+3. Arrastra la imagen
+4. Clic en **"Commit changes"**
+5. Usa en el post: `image: "/images/blog/nombre-imagen.jpg"`
 
-### Opción 3: IONOS (hosting actual)
+## 🌐 Despliegue actual: Cloudflare Pages
 
-1. Ejecuta `npm run build`
-2. Sube el contenido de la carpeta `dist/` por FTP
-3. Configura el dominio en el panel de IONOS
+- **Web**: https://katycaballeroosteopata.com
+- **Preview**: https://kattycaballero-osteopata.pages.dev
+- **GitHub**: https://github.com/Vegabytes/kattycaballero.osteopata
 
-## 🔗 Conectar el dominio katycaballeroosteopata.com
+### Despliegue automático:
+Cada vez que hagas un cambio en GitHub, Cloudflare lo despliega automáticamente en 1-2 minutos.
 
-### En Namecheap (donde está el dominio):
+### DNS:
+El dominio está en Namecheap con nameservers de Cloudflare:
+- elliot.ns.cloudflare.com
+- natasha.ns.cloudflare.com
 
-1. Entra en Namecheap → Domain List → Manage
-2. Ve a "Advanced DNS"
-3. Configura según el hosting:
+## 🔗 Enlaces importantes
 
-**Para Netlify:**
-- Tipo: ALIAS o CNAME
-- Host: @
-- Value: [tu-sitio].netlify.app
-
-**Para IONOS:**
-- Tipo: A
-- Host: @
-- Value: [IP de tu hosting IONOS]
+- **WhatsApp**: https://wa.me/34643961065
+- **Instagram**: https://instagram.com/katycaballero.osteopata
+- **Google Business**: Centro de masaje y osteopatía Katy Caballero
+- **Dejar reseña**: https://g.page/r/CUVuAD3Rp90PEBE/review
 
 ## ✏️ Personalización
 

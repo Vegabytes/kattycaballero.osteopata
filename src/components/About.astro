@@ -12,8 +12,10 @@ const features = [
 <section class="about" id="sobre-mi">
   <div class="container about-container">
     <div class="about-image">
-      <img src="/images/sala-2.jpg" alt="Consulta de osteopatía de Katy Caballero en Alpedrete" loading="lazy" />
-      <div class="about-image-frame"></div>
+      <div class="about-image-wrapper">
+        <img src="/images/sala-2.jpg" alt="Consulta de osteopatía de Katy Caballero en Alpedrete" loading="lazy" />
+      </div>
+      <div class="about-image-decoration"></div>
     </div>
     
     <div class="about-content">
@@ -68,23 +70,41 @@ const features = [
     position: relative;
   }
   
-  .about-image img {
-    width: 100%;
-    height: 550px;
-    object-fit: cover;
-    border-radius: 30px;
-    box-shadow: var(--shadow-soft);
+  .about-image-wrapper {
+    border-radius: 60% 40% 45% 55% / 55% 50% 50% 45%;
+    overflow: hidden;
+    transition: transform 0.5s ease;
   }
   
-  .about-image-frame {
+  .about-image:hover .about-image-wrapper {
+    transform: scale(1.02);
+  }
+  
+  .about-image-wrapper img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  
+  .about-image:hover .about-image-wrapper img {
+    transform: scale(1.05);
+  }
+  
+  .about-image-decoration {
     position: absolute;
-    top: 30px;
-    left: 30px;
-    right: -30px;
-    bottom: -30px;
-    border: 3px solid var(--color-secondary);
-    border-radius: 30px;
+    top: 20px;
+    left: 20px;
+    right: -15px;
+    bottom: -15px;
+    border-radius: 60% 40% 45% 55% / 55% 50% 50% 45%;
+    background: var(--color-secondary-light);
     z-index: -1;
+    transition: transform 0.5s ease;
+  }
+  
+  .about-image:hover .about-image-decoration {
+    transform: translate(5px, 5px);
   }
   
   .about-content {
@@ -152,11 +172,11 @@ const features = [
       padding-left: 0;
     }
     
-    .about-image img {
+    .about-image-wrapper img {
       height: 400px;
     }
     
-    .about-image-frame {
+    .about-image-decoration {
       display: none;
     }
   }
@@ -164,6 +184,11 @@ const features = [
   @media (max-width: 600px) {
     .about-features {
       grid-template-columns: 1fr;
+    }
+    
+    .about-image {
+      max-width: 320px;
+      margin: 0 auto;
     }
   }
 </style>
