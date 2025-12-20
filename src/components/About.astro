@@ -12,10 +12,7 @@ const features = [
 <section class="about" id="sobre-mi">
   <div class="container about-container">
     <div class="about-image">
-      <div class="about-image-wrapper">
-        <img src="/images/sala-2.jpg" alt="Consulta de osteopatía de Katy Caballero en Alpedrete" loading="lazy" />
-      </div>
-      <div class="about-image-decoration"></div>
+      <img src="/images/sala-2.jpg" alt="Consulta de osteopatía de Katy Caballero en Alpedrete" loading="lazy" />
     </div>
     
     <div class="about-content">
@@ -70,41 +67,17 @@ const features = [
     position: relative;
   }
   
-  .about-image-wrapper {
-    border-radius: 60% 40% 45% 55% / 55% 50% 50% 45%;
-    overflow: hidden;
-    transition: transform 0.5s ease;
-  }
-  
-  .about-image:hover .about-image-wrapper {
-    transform: scale(1.02);
-  }
-  
-  .about-image-wrapper img {
+  .about-image img {
     width: 100%;
     height: 500px;
     object-fit: cover;
-    transition: transform 0.6s ease;
-  }
-  
-  .about-image:hover .about-image-wrapper img {
-    transform: scale(1.05);
-  }
-  
-  .about-image-decoration {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: -15px;
-    bottom: -15px;
-    border-radius: 60% 40% 45% 55% / 55% 50% 50% 45%;
-    background: var(--color-secondary-light);
-    z-index: -1;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     transition: transform 0.5s ease;
   }
   
-  .about-image:hover .about-image-decoration {
-    transform: translate(5px, 5px);
+  .about-image:hover img {
+    transform: scale(1.02);
   }
   
   .about-content {
@@ -172,12 +145,8 @@ const features = [
       padding-left: 0;
     }
     
-    .about-image-wrapper img {
+    .about-image img {
       height: 400px;
-    }
-    
-    .about-image-decoration {
-      display: none;
     }
   }
   
