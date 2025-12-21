@@ -1,9 +1,9 @@
 ---
 const images = [
-  { src: '/images/sala-1.jpg', alt: 'Sala de tratamiento con camilla' },
-  { src: '/images/sala-2.jpg', alt: 'Vista general de la consulta' },
-  { src: '/images/sala-3.jpg', alt: 'Espacio de espera' },
-  { src: '/images/sala-4.png', alt: 'Ambiente relajante de la sala' },
+  { src: '/images/sala-1.jpg', alt: 'Sala de tratamiento con camilla', width: 400, height: 533 },
+  { src: '/images/sala-2.jpg', alt: 'Vista general de la consulta', width: 400, height: 533 },
+  { src: '/images/sala-3.jpg', alt: 'Espacio de espera', width: 400, height: 533 },
+  { src: '/images/sala-4.png', alt: 'Ambiente relajante de la sala', width: 400, height: 533 },
 ];
 ---
 
@@ -18,7 +18,7 @@ const images = [
     <div class="gallery-grid">
       {images.map((image, index) => (
         <div class="gallery-item" style={`--delay: ${index * 0.15}s`}>
-          <img src={image.src} alt={image.alt} loading="lazy" />
+          <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" />
         </div>
       ))}
     </div>

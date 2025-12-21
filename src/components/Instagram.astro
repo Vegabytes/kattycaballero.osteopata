@@ -1,0 +1,68 @@
+---
+const instagramUsername = "katycaballero.osteopata";
+const instagramUrl = `https://www.instagram.com/${instagramUsername}/`;
+---
+
+<section class="instagram" id="instagram">
+  <div class="container">
+    <div class="instagram-header">
+      <span class="section-tag">Instagram</span>
+      <h2>Sígueme en Instagram</h2>
+      <p>Consejos de bienestar, ejercicios y el día a día en consulta</p>
+    </div>
+
+    <div class="instagram-feed">
+      <behold-widget feed-id="DrkcCAEJCQOWOB0TdjnT"></behold-widget>
+    </div>
+
+    <div class="instagram-cta-wrapper">
+      <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+        </svg>
+        Seguir en Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const d = document, s = d.createElement("script");
+    s.type = "module";
+    s.src = "https://w.behold.so/widget.js";
+    d.head.append(s);
+  })();
+</script>
+
+<style>
+  .instagram {
+    background: var(--color-cream);
+  }
+
+  .instagram-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .instagram-header h2 {
+    color: var(--color-primary-dark);
+    margin-bottom: 12px;
+  }
+
+  .instagram-header p {
+    color: var(--color-text-light);
+    margin: 0 auto;
+    max-width: 400px;
+  }
+
+  .instagram-feed {
+    margin-bottom: 40px;
+  }
+
+  .instagram-cta-wrapper {
+    text-align: center;
+  }
+</style>

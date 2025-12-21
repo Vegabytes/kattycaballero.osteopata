@@ -5,7 +5,7 @@ interface Service {
   description: string;
   duration: string;
   price: string;
-  icon: string;
+  image: string;
   featured?: boolean;
 }
 
@@ -16,7 +16,7 @@ const services: Service[] = [
     description: 'Tratamiento integral que aborda el sistema músculo-esquelético, órganos internos y sistema craneal. Ideal para dolores de espalda, cervicales, problemas digestivos, migrañas y estrés.',
     duration: '55 min',
     price: '40€',
-    icon: 'spine',
+    image: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=250&h=250&fit=crop&crop=center&q=80',
     featured: true
   },
   {
@@ -25,7 +25,7 @@ const services: Service[] = [
     description: 'Recuperación muscular especializada para deportistas. Prevención de lesiones, alivio de contracturas y mejora del rendimiento físico.',
     duration: '30 min',
     price: '20€',
-    icon: 'muscle'
+    image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=250&h=250&fit=crop&crop=center&q=80'
   },
   {
     id: 'masaje-corporal',
@@ -33,7 +33,7 @@ const services: Service[] = [
     description: 'Relajación y desconexión plena. Masaje envolvente con aceites esenciales que alivia tensiones y nutre la piel.',
     duration: '60 min / 90 min',
     price: '40€ / 55€',
-    icon: 'oil'
+    image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=250&h=250&fit=crop&crop=center&q=80'
   },
   {
     id: 'masaje-tailandes',
@@ -41,7 +41,7 @@ const services: Service[] = [
     description: 'Movilidad y estiramientos asistidos. Técnica milenaria que combina presiones, estiramientos y trabajo energético.',
     duration: '60 min / 90 min',
     price: '45€ / 60€',
-    icon: 'thai'
+    image: 'https://images.unsplash.com/photo-1591343395082-e120087004b4?w=250&h=250&fit=crop&crop=center&q=80'
   },
   {
     id: 'pindas-herbales',
@@ -49,7 +49,7 @@ const services: Service[] = [
     description: 'Calor terapéutico con saquitos de hierbas medicinales. Relaja profundamente, descontractura y tiene propiedades antiinflamatorias.',
     duration: '90 min',
     price: '70€',
-    icon: 'herbs'
+    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=250&h=250&fit=crop&crop=center&q=80'
   },
   {
     id: 'embarazadas',
@@ -57,7 +57,7 @@ const services: Service[] = [
     description: 'Alivio y bienestar materno. Desde el 4º mes de embarazo. Técnicas suaves adaptadas a cada etapa para reducir molestias típicas.',
     duration: '60 min',
     price: '40€',
-    icon: 'pregnant'
+    image: 'https://images.unsplash.com/photo-1504438190342-5951e134ffee?w=250&h=250&fit=crop&crop=center&q=80'
   }
 ];
 ---
@@ -73,15 +73,8 @@ const services: Service[] = [
     <div class="services-grid">
       {services.map(service => (
         <div class="service-card" id={service.id} class:list={[{ featured: service.featured }]}>
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              {service.icon === 'spine' && <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>}
-              {service.icon === 'muscle' && <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>}
-              {service.icon === 'oil' && <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>}
-              {service.icon === 'thai' && <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>}
-              {service.icon === 'herbs' && <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>}
-              {service.icon === 'pregnant' && <path d="M9 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm7 9c-.01-1.34-.83-2.51-2-3-1.19-.51-2.5-.5-4 0-1.18.49-1.99 1.66-2 3v7h2v-5h4v5h2v-7z"/>}
-            </svg>
+          <div class="service-image">
+            <img src={service.image} alt={service.title} loading="lazy" />
           </div>
           <h3>{service.title}</h3>
           <p>{service.description}</p>
@@ -98,7 +91,12 @@ const services: Service[] = [
     
     <div class="services-cta">
       <p>¿No sabes qué tratamiento es mejor para ti?</p>
-      <a href="/contacto" class="btn btn-secondary">Consúltame sin compromiso</a>
+      <a href="/contacto" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Consúltame sin compromiso
+      </a>
     </div>
   </div>
 </section>
@@ -143,28 +141,33 @@ const services: Service[] = [
     font-weight: 600;
   }
   
-  .service-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  .service-image {
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
     margin: 0 auto 24px;
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.2);
+    border: 3px solid var(--color-primary-light);
   }
-  
-  .service-icon svg {
-    width: 32px;
-    height: 32px;
-    fill: white;
+
+  .service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover .service-image img {
+    transform: scale(1.1);
   }
   
   .service-card h3 {
     font-size: 1.3rem;
     margin-bottom: 16px;
-    color: var(--color-primary-dark);
+    color: var(--color-primary);
     line-height: 1.3;
+    font-weight: 600;
   }
   
   .service-card p {
@@ -210,10 +213,12 @@ const services: Service[] = [
     padding-top: 40px;
     border-top: 1px solid rgba(90, 124, 89, 0.1);
   }
-  
+
   .services-cta p {
-    margin: 0 auto 20px;
-    font-size: 1.1rem;
+    margin: 0 auto 24px;
+    font-size: 1.15rem;
+    color: var(--color-primary);
+    font-weight: 500;
   }
   
   @media (max-width: 1024px) {
