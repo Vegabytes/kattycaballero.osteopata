@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:katycaballeroosteopata.com)",
+      "Bash(curl:*)",
+      "Bash(xmllint:*)",
+      "Bash(npm run build:*)",
+      "WebFetch(domain:www.instagram.com)",
+      "Bash(npm run dev:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nMejoras servicios, botón reservar y feed Instagram\n\n- Iconos de servicios: imágenes circulares de Unsplash\n- Botón reservar cita: más fino y elegante\n- Sección Instagram: feed real con Behold widget\n- CTAs sin degradados, estilo corporativo\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "WebFetch(domain:kamaispa.com)",
+      "WebFetch(domain:unsplash.com)",
+      "WebFetch(domain:www.pexels.com)",
+      "Bash(git commit:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}
