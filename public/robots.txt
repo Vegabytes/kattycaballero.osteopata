@@ -1,4 +1,26 @@
+# Robots.txt para Katy Caballero - Osteopata
+
 User-agent: *
 Allow: /
 
+# Bloquear acceso a archivos de administración
+Disallow: /admin/
+
+# Sitemap
 Sitemap: https://katycaballeroosteopata.com/sitemap-index.xml
+
+# Crawl-delay recomendado
+Crawl-delay: 1
+
+# Reglas específicas para bots de IA
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

@@ -3,9 +3,65 @@ import Layout from '../layouts/Layout.astro';
 
 const pageTitle = "Contacto | Katy Caballero - Osteópata en Alpedrete";
 const pageDescription = "Contacta con Katy Caballero para reservar tu cita de osteopatía o masaje en Alpedrete, Madrid. Teléfono, WhatsApp, email y dirección.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cómo puedo reservar una cita?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Puedes reservar llamando al 643 961 065, por WhatsApp, o enviando un email. Te confirmaré la cita lo antes posible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto dura una sesión de osteopatía o masaje?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Las sesiones de osteopatía duran 55 minutos, mientras que los masajes varían entre 30 y 90 minutos dependiendo del tratamiento elegido."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué métodos de pago se aceptan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se acepta efectivo, Bizum y transferencia bancaria. El pago se realiza al finalizar la sesión."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuál es la política de cancelación?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se solicita avisar con al menos 24 horas de antelación para cancelar o cambiar la cita."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hay parking cerca de la consulta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, hay estacionamiento gratuito en la zona. Al reservar se proporcionan indicaciones exactas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Se emite factura?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, se puede emitir factura si se necesita. Solo hay que solicitarla."
+      }
+    }
+  ]
+};
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={pageDescription} keywords="contacto osteopata alpedrete, reservar cita masaje, osteopatia madrid sierra, telefono osteopata">
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section class="contact-page">
     <div class="container">
       <div class="contact-header">
