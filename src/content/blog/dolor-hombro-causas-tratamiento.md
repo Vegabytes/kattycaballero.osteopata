@@ -3,7 +3,7 @@ title: "Dolor de hombro: causas comunes y cómo tratarlo con osteopatía"
 excerpt: "El hombro es una articulación compleja que puede doler por muchas razones. Descubre las causas más frecuentes y cómo la osteopatía puede ayudarte."
 date: 2025-01-15
 category: "Osteopatía"
-image: "https://images.unsplash.com/photo-1616279969862-40ae1e59f9e3?w=800&h=500&fit=crop"
+image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=500&fit=crop"
 readTime: 5
 author: "Katy Caballero"
 ---

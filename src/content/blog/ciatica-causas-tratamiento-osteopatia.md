@@ -3,7 +3,7 @@ title: "Ciática: causas, síntomas y cómo la osteopatía puede ayudarte"
 excerpt: "El dolor de ciática puede ser muy incapacitante. Conoce sus causas y cómo el tratamiento osteopático puede aliviarlo."
 date: 2024-12-20
 category: "Osteopatía"
-image: "https://images.unsplash.com/photo-1559757175-7cb036e0e5b4?w=800&h=500&fit=crop"
+image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=500&fit=crop"
 readTime: 5
 author: "Katy Caballero"
 ---
