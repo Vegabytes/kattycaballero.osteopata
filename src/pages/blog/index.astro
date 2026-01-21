@@ -5,8 +5,8 @@ import { getCollection } from 'astro:content';
 const posts = await getCollection('blog');
 const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const pageTitle = "Blog de Osteopatía y Bienestar | Katy Caballero";
-const pageDescription = "Artículos sobre osteopatía, masajes, ejercicios para el dolor de espalda y consejos de salud. Aprende a cuidar tu cuerpo en el día a día.";
+const pageTitle = "Blog de Osteopatía y Bienestar | Sierra de Madrid";
+const pageDescription = "Artículos sobre osteopatía, masajes terapéuticos, ejercicios para el dolor de espalda, contracturas y consejos de salud. Blog de Katy Caballero, osteópata en Alpedrete, Sierra de Madrid.";
 
 function formatDate(date: Date): string {
   return new Intl.DateTimeFormat('es-ES', {
@@ -17,7 +17,7 @@ function formatDate(date: Date): string {
 }
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={pageDescription} keywords="blog osteopatia, consejos dolor de espalda, ejercicios contracturas, masaje terapeutico beneficios, osteopatia sierra de madrid, salud bienestar alpedrete, fisioterapia consejos">
   <section class="page-header">
     <div class="container">
       <span class="section-tag">Blog</span>

@@ -14,7 +14,8 @@
       "WebFetch(domain:unsplash.com)",
       "WebFetch(domain:www.pexels.com)",
       "Bash(git commit:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "WebSearch"
     ]
   }
 }

@@ -14,10 +14,10 @@ interface Props {
 
 const {
   title,
-  description = "Osteópata y masajista en Alpedrete, Madrid. Más de 12 años de experiencia en osteopatía estructural, visceral, craneal y masajes terapéuticos. Reserva tu cita.",
+  description = "Osteópata y masajista en Alpedrete, Sierra de Madrid. Más de 12 años de experiencia en osteopatía estructural, visceral, craneal y masajes terapéuticos. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama.",
   image = "/images/sala-1.jpg",
   type = "website",
-  keywords = "osteopata alpedrete, masajista alpedrete, osteopatia madrid, masaje deportivo, masaje tailandes, dolor de espalda, fisioterapia alpedrete, quiromasaje"
+  keywords = "osteopata alpedrete, masajista alpedrete, osteopatia sierra de madrid, masaje deportivo sierra madrid, osteopata collado villalba, masajista moralzarzal, osteopatia galapagar, fisioterapia sierra de guadarrama, dolor de espalda tratamiento, contracturas cervicales, masaje tailandes madrid, quiromasaje alpedrete, osteopata torrelodones, masajes guadarrama, ciatica osteopatia"
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -78,6 +78,7 @@ const socialImageURL = new URL(image, Astro.site);
     "@context": "https://schema.org",
     "@type": "HealthAndBeautyBusiness",
     "name": "Katy Caballero - Osteópata y Masajista",
+    "description": "Centro de osteopatía y masajes en Alpedrete, Sierra de Madrid. Tratamientos de osteopatía estructural, visceral y craneal, masaje deportivo, tailandés y terapéutico.",
     "image": "https://katycaballeroosteopata.com/images/logo.png",
     "telephone": "+34643961065",
     "email": "katycaballero.osteopata@gmail.com",
@@ -94,6 +95,22 @@ const socialImageURL = new URL(image, Astro.site);
       "latitude": "40.6631",
       "longitude": "-4.0270"
     },
+    "areaServed": [
+      {"@type": "City", "name": "Alpedrete"},
+      {"@type": "City", "name": "Collado Villalba"},
+      {"@type": "City", "name": "Moralzarzal"},
+      {"@type": "City", "name": "Galapagar"},
+      {"@type": "City", "name": "Guadarrama"},
+      {"@type": "City", "name": "Torrelodones"},
+      {"@type": "City", "name": "El Escorial"},
+      {"@type": "City", "name": "Cercedilla"},
+      {"@type": "City", "name": "Navacerrada"},
+      {"@type": "City", "name": "Collado Mediano"},
+      {"@type": "City", "name": "Becerril de la Sierra"},
+      {"@type": "City", "name": "Los Molinos"},
+      {"@type": "AdministrativeArea", "name": "Sierra de Guadarrama"},
+      {"@type": "AdministrativeArea", "name": "Sierra de Madrid"}
+    ],
     "url": "https://katycaballeroosteopata.com",
     "priceRange": "€€",
     "openingHoursSpecification": [
@@ -112,7 +129,18 @@ const socialImageURL = new URL(image, Astro.site);
     ],
     "sameAs": [
       "https://www.instagram.com/katycaballero.osteopata"
-    ]
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios de osteopatía y masajes",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Osteopatía estructural, visceral y sacrocraneal"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Masaje deportivo"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Masaje tradicional tailandés"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Masaje corporal con aceite"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Masaje para embarazadas"}}
+      ]
+    }
   }
   </script>
 </head>
