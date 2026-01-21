@@ -15,7 +15,9 @@
       "WebFetch(domain:www.pexels.com)",
       "Bash(git commit:*)",
       "Bash(ls:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(gh auth:*)",
+      "Bash(gh repo view:*)"
     ]
   }
 }
