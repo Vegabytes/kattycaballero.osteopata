@@ -30,6 +30,61 @@ const localBusinessSchema = {
   "priceRange": "€€"
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es la osteopatía y para qué sirve?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La osteopatía es una terapia manual que trata el cuerpo de forma global. A través de técnicas suaves sobre músculos, articulaciones, vísceras y cráneo, busca restaurar el equilibrio del organismo. Es eficaz para dolores de espalda, cervicales, migrañas, problemas digestivos, estrés y lesiones deportivas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto dura una sesión de osteopatía?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Una sesión de osteopatía en nuestra consulta de Alpedrete dura 55 minutos. En la primera visita se realiza una valoración completa del paciente para diseñar un tratamiento personalizado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuántas sesiones de osteopatía necesito?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende de cada caso. Para problemas agudos como contracturas o lumbalgias, muchos pacientes notan mejoría desde la primera sesión. Para problemas crónicos, suelen necesitarse entre 3 y 6 sesiones. En la primera visita te daré una orientación personalizada."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuál es la diferencia entre osteopatía y fisioterapia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ambas son terapias manuales, pero la osteopatía tiene un enfoque más global del cuerpo. Mientras la fisioterapia suele centrarse en la zona de dolor, la osteopatía busca el origen del problema, que puede estar en otra parte del cuerpo. Son complementarias y en muchos casos se pueden combinar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué tipo de masajes ofrecéis en Alpedrete?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ofrecemos masaje deportivo (30 min, 20€), masaje corporal con aceite (60/90 min, 40€/55€), masaje tradicional tailandés (60/90 min, 45€/60€), masaje con pindas herbales calientes (90 min, 70€) y masaje para embarazadas (60 min, 40€). Todos los tratamientos son personalizados."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Atendéis pacientes de Collado Villalba, Moralzarzal y Galapagar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, nuestra consulta en Alpedrete está muy bien comunicada y atendemos pacientes de toda la Sierra de Madrid: Collado Villalba, Moralzarzal, Galapagar, Guadarrama, Torrelodones, El Escorial, Cercedilla, Navacerrada, Collado Mediano, Becerril de la Sierra y Los Molinos."
+      }
+    }
+  ]
+};
+
 const servicesSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -121,6 +176,7 @@ const servicesSchema = {
 <Layout title={pageTitle} description={pageDescription} keywords="osteopatia alpedrete, osteopatia estructural sierra madrid, osteopatia visceral collado villalba, osteopatia craneal moralzarzal, masaje deportivo sierra de guadarrama, masaje tailandes alpedrete, masaje embarazadas sierra madrid, quiromasaje galapagar, dolor de espalda tratamiento, contracturas cervicales osteopatia, ciatica masaje" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Servicios" }]}>
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(servicesSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section class="page-header">
     <div class="container">
       <span class="section-tag">Servicios</span>
@@ -153,7 +209,42 @@ const servicesSchema = {
     </div>
   </section>
   
-  <CTASection 
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Preguntas Frecuentes</span>
+        <h2>Lo que más nos preguntan</h2>
+      </div>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>¿Qué es la osteopatía y para qué sirve?</summary>
+          <p>La osteopatía es una terapia manual que trata el cuerpo de forma global. A través de técnicas suaves sobre músculos, articulaciones, vísceras y cráneo, busca restaurar el equilibrio del organismo. Es eficaz para dolores de espalda, cervicales, migrañas, problemas digestivos, estrés y lesiones deportivas.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuánto dura una sesión de osteopatía?</summary>
+          <p>Una sesión de osteopatía en nuestra consulta de Alpedrete dura 55 minutos. En la primera visita se realiza una valoración completa del paciente para diseñar un tratamiento personalizado.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuántas sesiones de osteopatía necesito?</summary>
+          <p>Depende de cada caso. Para problemas agudos como contracturas o lumbalgias, muchos pacientes notan mejoría desde la primera sesión. Para problemas crónicos, suelen necesitarse entre 3 y 6 sesiones. En la primera visita te daré una orientación personalizada.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuál es la diferencia entre osteopatía y fisioterapia?</summary>
+          <p>Ambas son terapias manuales, pero la osteopatía tiene un enfoque más global del cuerpo. Mientras la fisioterapia suele centrarse en la zona de dolor, la osteopatía busca el origen del problema, que puede estar en otra parte del cuerpo. Son complementarias y en muchos casos se pueden combinar.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué tipo de masajes ofrecéis en Alpedrete?</summary>
+          <p>Ofrecemos masaje deportivo (30 min, 20€), masaje corporal con aceite (60/90 min, 40€/55€), masaje tradicional tailandés (60/90 min, 45€/60€), masaje con pindas herbales calientes (90 min, 70€) y masaje para embarazadas (60 min, 40€). Todos los tratamientos son personalizados.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Atendéis pacientes de Collado Villalba, Moralzarzal y Galapagar?</summary>
+          <p>Sí, nuestra consulta en Alpedrete está muy bien comunicada y atendemos pacientes de toda la Sierra de Madrid: Collado Villalba, Moralzarzal, Galapagar, Guadarrama, Torrelodones, El Escorial, Cercedilla, Navacerrada, Collado Mediano, Becerril de la Sierra y Los Molinos.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
     title="¿No sabes qué tratamiento necesitas?"
     description="Contacta conmigo sin compromiso y te orientaré sobre el tratamiento más adecuado para ti."
     buttonText="Contactar ahora"
@@ -211,16 +302,82 @@ const servicesSchema = {
     box-shadow: var(--shadow-medium);
   }
   
+  .faq-section {
+    background: var(--color-cream);
+  }
+
+  .faq-grid {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .faq-item {
+    background: var(--color-warm-white);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .faq-item summary {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1.05rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .faq-item summary:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-item p {
+    padding: 0 25px 20px;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    max-width: none;
+  }
+
   @media (max-width: 1024px) {
     .first-session-container {
       grid-template-columns: 1fr;
       gap: 40px;
     }
-    
+
     .first-session-image {
       order: -1;
     }
-    
+
     .first-session-image img {
       height: 350px;
     }
