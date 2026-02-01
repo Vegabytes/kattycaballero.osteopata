@@ -39,7 +39,7 @@ A medida que crece la barriga, el centro de gravedad cambia y la espalda sufre u
 
 - Relajar la musculatura lumbar sobrecargada
 - Aliviar la tensión en la zona dorsal
-- Reducir el dolor de ciática tan frecuente en el embarazo
+- Reducir el dolor de [ciática](/blog/ciatica-causas-tratamiento-osteopatia) tan frecuente en el embarazo
 
 ### 2. Reduce la hinchazón
 
@@ -125,4 +125,6 @@ Si estás embarazada y vives en Alpedrete, Collado Villalba, Moralzarzal, Galapa
 
 Es un regalo que te mereces: un momento para cuidarte, aliviar las molestias y conectar con tu bebé.
 
-**[Reserva tu sesión](/reservar)** y disfruta de tu embarazo con menos molestias.
+Consulta todos mis [servicios y tarifas](/servicios) o **[reserva tu sesión](/reservar)** y disfruta de tu embarazo con menos molestias.
+
+**Te puede interesar:** [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico) · [Ciática: causas y tratamiento](/blog/ciatica-causas-tratamiento-osteopatia)

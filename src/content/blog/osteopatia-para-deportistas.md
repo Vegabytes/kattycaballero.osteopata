@@ -3,7 +3,7 @@ title: "Osteopatía para deportistas: prevención y recuperación de lesiones"
 excerpt: "Descubre cómo la osteopatía puede mejorar tu rendimiento deportivo y acelerar la recuperación de lesiones."
 date: 2025-01-05
 category: "Osteopatía"
-image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=500&fit=crop"
+image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&h=500&fit=crop&crop=center&q=80"
 readTime: 4
 author: "Katy Caballero"
 ---
@@ -96,7 +96,7 @@ Analizo tu postura, tu forma de moverte y las demandas específicas de tu deport
 Combino diferentes técnicas según lo que necesites:
 
 - **Técnicas estructurales**: Para restaurar la movilidad articular
-- **Masaje deportivo**: Para liberar la musculatura sobrecargada
+- **[Masaje deportivo](/servicios)**: Para liberar la musculatura sobrecargada
 - **Técnicas de energía muscular**: Para reequilibrar cadenas musculares
 - **Vendaje neuromuscular**: Si es necesario
 
@@ -124,4 +124,6 @@ Si entrenas en la Sierra de Guadarrama, ya sea corriendo por el monte, en bici p
 - Recuperarte más rápido
 - Tratar lesiones existentes
 
-**[Reserva tu sesión](/reservar)** y lleva tu rendimiento al siguiente nivel.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu sesión](/reservar)** y lleva tu rendimiento al siguiente nivel.
+
+**Te puede interesar:** [Dolor de hombro: causas y tratamiento](/blog/dolor-hombro-causas-tratamiento) · [Ciática: causas y tratamiento](/blog/ciatica-causas-tratamiento-osteopatia)

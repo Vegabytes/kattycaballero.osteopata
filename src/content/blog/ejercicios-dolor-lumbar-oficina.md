@@ -3,7 +3,7 @@ title: "5 ejercicios para aliviar el dolor lumbar si trabajas sentado"
 excerpt: "Descubre estiramientos simples que puedes hacer en casa para combatir el dolor de espalda causado por pasar muchas horas sentado."
 date: 2024-12-15
 category: "Dolor de espalda"
-image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=500&fit=crop"
+image: "https://images.unsplash.com/photo-1591343395082-e120087004b4?w=800&h=500&fit=crop&crop=center&q=80"
 readTime: 5
 author: "Katy Caballero"
 ---
@@ -75,8 +75,10 @@ El piriforme es un músculo que puede tensarse y causar dolor referido a la zona
 
 ## ¿Cuándo acudir a un profesional?
 
-Si el dolor persiste más de dos semanas, se irradia hacia las piernas, o viene acompañado de hormigueo o debilidad, es importante consultar con un profesional.
+Si el dolor persiste más de dos semanas, se irradia hacia las piernas, o viene acompañado de hormigueo o debilidad, es importante consultar con un profesional. Si sientes dolor que baja por la pierna, te recomiendo leer nuestro artículo sobre [ciática: causas y tratamiento](/blog/ciatica-causas-tratamiento-osteopatia).
 
 La osteopatía puede ayudarte a identificar el origen del problema y tratarlo de forma personalizada. En mi consulta de Alpedrete trabajo con un enfoque integral que aborda no solo el síntoma, sino la causa raíz del dolor.
 
-**¿Necesitas ayuda con tu dolor de espalda?** [Reserva tu cita](/reservar) y empecemos a trabajar juntos.
+Descubre todos mis [tratamientos de osteopatía y masajes](/servicios). **¿Necesitas ayuda con tu dolor de espalda?** [Reserva tu cita](/reservar) y empecemos a trabajar juntos.
+
+**Te puede interesar:** [Contracturas cervicales: causas y tratamiento](/blog/contracturas-cervicales-causas-tratamiento) · [Cómo el estrés genera tensión muscular](/blog/estres-tension-muscular-cuerpo)

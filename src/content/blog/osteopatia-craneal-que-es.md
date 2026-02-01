@@ -3,7 +3,7 @@ title: "Osteopatía craneal: qué es y para qué sirve"
 excerpt: "La osteopatía craneal es una técnica sutil pero muy efectiva. Descubre en qué consiste y qué problemas puede tratar."
 date: 2024-12-10
 category: "Osteopatía"
-image: "https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=800&h=500&fit=crop"
+image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&h=500&fit=crop&crop=center&q=80"
 readTime: 5
 author: "Katy Caballero"
 ---
@@ -136,6 +136,8 @@ La osteopatía craneal es una **especialización dentro de la osteopatía**. Un 
 - Osteopatía visceral (órganos)
 - Osteopatía craneal
 
+Si quieres saber más sobre las diferencias con otros tratamientos, lee nuestro artículo sobre [diferencias entre osteopatía y fisioterapia](/blog/diferencias-osteopatia-fisioterapia).
+
 En mi consulta, combino las tres según lo que necesite cada paciente. A veces trabajo solo con técnicas craneales, otras veces las integro en un tratamiento más global.
 
 ## Osteopatía craneal en la Sierra de Madrid
@@ -144,4 +146,6 @@ Si sufres dolores de cabeza, problemas de mandíbula, estrés o simplemente quie
 
 Atiendo a pacientes de Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama.
 
-**[Reserva tu cita](/reservar)** y descubre cómo la osteopatía craneal puede ayudarte.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y descubre cómo la osteopatía craneal puede ayudarte.
+
+**Te puede interesar:** [Cómo el estrés afecta a tu cuerpo](/blog/estres-tension-muscular-cuerpo) · [Contracturas cervicales: causas y tratamiento](/blog/contracturas-cervicales-causas-tratamiento)

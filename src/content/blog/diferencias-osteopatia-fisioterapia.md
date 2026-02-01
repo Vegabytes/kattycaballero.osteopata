@@ -25,7 +25,7 @@ La osteopatía es una terapia manual que considera el cuerpo como una unidad int
 
 2. **Osteopatía visceral**: Trabaja sobre los órganos internos y su movilidad. Puede ayudar con problemas digestivos, respiratorios y pélvicos.
 
-3. **Osteopatía craneal**: Utiliza técnicas muy suaves para trabajar el ritmo craneal. Muy útil para migrañas, problemas de ATM, estrés y ansiedad.
+3. **[Osteopatía craneal](/blog/osteopatia-craneal-que-es)**: Utiliza técnicas muy suaves para trabajar el ritmo craneal. Muy útil para migrañas, problemas de ATM, estrés y ansiedad.
 
 ## ¿Qué es la fisioterapia?
 
@@ -80,4 +80,6 @@ En mi consulta de Alpedrete, trabajo desde la osteopatía integrando las tres ra
 
 La primera sesión siempre incluye una valoración completa: escucho tu historia, observo tu postura, palpo los tejidos y realizo tests para entender qué está pasando en tu cuerpo. Solo así puedo diseñar el tratamiento más adecuado para ti.
 
-**¿Tienes dudas sobre qué necesitas?** [Contacta conmigo](/contacto) y te oriento sin compromiso.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios). **¿Tienes dudas sobre qué necesitas?** [Contacta conmigo](/contacto) y te oriento sin compromiso.
+
+**Te puede interesar:** [Osteopatía craneal: qué es y para qué sirve](/blog/osteopatia-craneal-que-es) · [Osteopatía para deportistas](/blog/osteopatia-para-deportistas)

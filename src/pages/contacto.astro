@@ -4,6 +4,45 @@ import Layout from '../layouts/Layout.astro';
 const pageTitle = "Contacto | Osteópata en Alpedrete - Sierra de Madrid";
 const pageDescription = "Contacta con Katy Caballero para reservar tu cita de osteopatía o masaje en Alpedrete. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama. WhatsApp, teléfono y email.";
 
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "description": "Centro de osteopatía y masajes en Alpedrete, Sierra de Madrid.",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "telephone": "+34643961065",
+  "email": "katycaballero.osteopata@gmail.com",
+  "url": "https://katycaballeroosteopata.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Río Guadarrama 2",
+    "addressLocality": "Alpedrete",
+    "addressRegion": "Madrid",
+    "postalCode": "28430",
+    "addressCountry": "ES"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "40.6631",
+    "longitude": "-4.0270"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "14:00"
+    }
+  ],
+  "priceRange": "€€"
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -60,7 +99,8 @@ const faqSchema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription} keywords="contacto osteopata alpedrete, reservar cita masaje sierra madrid, osteopatia collado villalba contacto, telefono osteopata moralzarzal, cita masajista galapagar, osteopata sierra de guadarrama, direccion osteopatia alpedrete">
+<Layout title={pageTitle} description={pageDescription} keywords="contacto osteopata alpedrete, reservar cita masaje sierra madrid, osteopatia collado villalba contacto, telefono osteopata moralzarzal, cita masajista galapagar, osteopata sierra de guadarrama, direccion osteopatia alpedrete" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Contacto" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section class="contact-page">
     <div class="container">

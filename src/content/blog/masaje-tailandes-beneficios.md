@@ -68,7 +68,7 @@ El masaje tailandés es beneficioso para:
 
 - **Personas con estrés y tensión acumulada**
 - **Quienes pasan muchas horas sentados**
-- **Deportistas** que quieren mejorar su flexibilidad
+- **[Deportistas](/blog/osteopatia-para-deportistas)** que quieren mejorar su flexibilidad
 - **Personas con dolor de espalda** de origen muscular
 - **Quienes buscan una experiencia de relajación profunda**
 - **Practicantes de yoga** que quieren profundizar en los estiramientos
@@ -119,4 +119,6 @@ En mi consulta de Alpedrete, las sesiones de masaje tailandés duran 60 o 90 min
 
 Si vives en Alpedrete, Collado Villalba, Moralzarzal, Galapagar o cualquier zona de la Sierra de Guadarrama y quieres experimentar los beneficios del masaje tradicional tailandés, te invito a probarlo en mi consulta.
 
-**[Reserva tu sesión](/reservar)** y descubre esta técnica milenaria.
+Consulta todos mis [servicios y tarifas](/servicios) o **[reserva tu sesión](/reservar)** y descubre esta técnica milenaria.
+
+**Te puede interesar:** [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico) · [Osteopatía para deportistas](/blog/osteopatia-para-deportistas)

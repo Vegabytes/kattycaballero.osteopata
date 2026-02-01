@@ -5,9 +5,42 @@ import CTASection from '../components/CTASection.astro';
 
 const pageTitle = "Sobre Mí | Katy Caballero - Osteópata en Alpedrete, Sierra de Madrid";
 const pageDescription = "Conoce a Katy Caballero: más de 12 años de experiencia en osteopatía y masajes en la Sierra de Madrid. Mi formación en Yomana Thai Concept, mi filosofía y por qué decidí abrir mi espacio en Alpedrete.";
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Katy Caballero",
+  "jobTitle": "Osteópata y Masajista",
+  "worksFor": {
+    "@type": "HealthAndBeautyBusiness",
+    "name": "Katy Caballero - Osteópata y Masajista",
+    "url": "https://katycaballeroosteopata.com"
+  },
+  "image": "https://katycaballeroosteopata.com/images/katy-trabajando.jpg",
+  "url": "https://katycaballeroosteopata.com/sobre-mi",
+  "knowsAbout": [
+    "Osteopatía estructural",
+    "Osteopatía visceral",
+    "Osteopatía craneal",
+    "Masaje deportivo",
+    "Masaje tradicional tailandés",
+    "Masaje terapéutico",
+    "Quiromasaje"
+  ],
+  "areaServed": [
+    "Alpedrete",
+    "Collado Villalba",
+    "Moralzarzal",
+    "Galapagar",
+    "Guadarrama",
+    "Torrelodones",
+    "Sierra de Madrid"
+  ]
+};
 ---
 
-<Layout title={pageTitle} description={pageDescription} keywords="katy caballero osteopata, osteopata alpedrete, osteopata sierra de madrid, formacion osteopatia madrid, masajista profesional collado villalba, yomana thai concept, experiencia masajista sierra guadarrama">
+<Layout title={pageTitle} description={pageDescription} keywords="katy caballero osteopata, osteopata alpedrete, osteopata sierra de madrid, formacion osteopatia madrid, masajista profesional collado villalba, yomana thai concept, experiencia masajista sierra guadarrama" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Sobre Mí" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
   <section class="about-hero">
     <div class="container about-hero-container">
       <div class="about-hero-content">

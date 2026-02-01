@@ -64,7 +64,7 @@ En mi consulta, abordo las contracturas cervicales de forma integral:
 
 3. **Técnicas articulatorias**: Para recuperar la movilidad de las vértebras cervicales.
 
-4. **Técnicas craneales**: Muy útiles cuando hay dolor de cabeza asociado.
+4. **[Técnicas craneales](/blog/osteopatia-craneal-que-es)**: Muy útiles cuando hay dolor de cabeza asociado.
 
 5. **Estiramientos asistidos**: Para elongar los músculos acortados.
 
@@ -112,4 +112,6 @@ En mi consulta de la Sierra de Madrid, trato las contracturas cervicales con un 
 
 Si vives en Alpedrete, Collado Villalba, Moralzarzal, Galapagar o cualquier pueblo de la Sierra de Guadarrama y sufres de contracturas cervicales, puedo ayudarte.
 
-**[Reserva tu cita](/reservar)** y empieza a sentirte mejor.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y empieza a sentirte mejor.
+
+**Te puede interesar:** [Dolor de hombro: causas y tratamiento](/blog/dolor-hombro-causas-tratamiento) · [Cómo el estrés afecta a tu cuerpo](/blog/estres-tension-muscular-cuerpo)

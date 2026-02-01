@@ -39,7 +39,7 @@ Es la causa más conocida. Cuando el disco intervertebral se desplaza o rompe, p
 
 El músculo piramidal (o piriforme) está situado en la nalga, y el nervio ciático pasa justo por debajo (o a través) de él. Si este músculo se contractura, puede irritar el nervio.
 
-**Este es más común de lo que se piensa**, especialmente en personas que pasan mucho tiempo sentadas o que hacen deportes como el running.
+**Este es más común de lo que se piensa**, especialmente en personas que pasan mucho tiempo sentadas o que hacen deportes como el running. Si eres deportista, te interesa leer sobre [osteopatía para deportistas](/blog/osteopatia-para-deportistas).
 
 ### 3. Estenosis del canal lumbar
 
@@ -51,7 +51,7 @@ Cuando una vértebra se desliza sobre otra, puede comprimir el nervio.
 
 ### 5. Embarazo
 
-El peso del bebé y los cambios posturales pueden irritar el nervio ciático, especialmente en el tercer trimestre.
+El peso del bebé y los cambios posturales pueden irritar el nervio ciático, especialmente en el tercer trimestre. Si estás embarazada, lee nuestro artículo sobre [masaje para embarazadas](/blog/masaje-embarazadas-beneficios-seguridad).
 
 ## ¿Cómo diferencia la osteopatía el origen del dolor?
 
@@ -136,4 +136,6 @@ Estos síntomas pueden indicar un problema más serio que requiere evaluación m
 
 Si sufres de ciática y vives en Alpedrete, Collado Villalba, Moralzarzal, Galapagar o cualquier zona de la Sierra de Guadarrama, en mi consulta puedo ayudarte a identificar la causa de tu dolor y tratarlo de forma efectiva.
 
-**[Reserva tu cita](/reservar)** y empieza a recuperar tu calidad de vida.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y empieza a recuperar tu calidad de vida.
+
+**Te puede interesar:** [5 ejercicios para el dolor lumbar](/blog/ejercicios-dolor-lumbar-oficina) · [Contracturas cervicales: causas y tratamiento](/blog/contracturas-cervicales-causas-tratamiento)

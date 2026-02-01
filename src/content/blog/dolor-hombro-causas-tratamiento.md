@@ -3,7 +3,7 @@ title: "Dolor de hombro: causas comunes y cómo tratarlo con osteopatía"
 excerpt: "El hombro es una articulación compleja que puede doler por muchas razones. Descubre las causas más frecuentes y cómo la osteopatía puede ayudarte."
 date: 2025-01-15
 category: "Osteopatía"
-image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=500&fit=crop"
+image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=500&fit=crop&crop=center&q=80"
 readTime: 5
 author: "Katy Caballero"
 ---
@@ -55,7 +55,7 @@ Es una rigidez progresiva del hombro que limita enormemente el movimiento. Más 
 
 Muchas veces el dolor de hombro no viene del hombro, sino del cuello. Las vértebras cervicales pueden irradiar dolor hacia el hombro y el brazo.
 
-**Pista:** Si el dolor va acompañado de hormigueo en los dedos o dolor cervical, probablemente el origen esté en el cuello.
+**Pista:** Si el dolor va acompañado de hormigueo en los dedos o dolor cervical, probablemente el origen esté en el cuello. Puedes leer más en nuestro artículo sobre [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento).
 
 ### 5. Síndrome del hombro de oficina
 
@@ -123,4 +123,6 @@ Busca atención médica urgente si:
 
 Si sufres dolor de hombro y vives en Alpedrete, Collado Villalba, Moralzarzal, Galapagar o cualquier zona de la Sierra de Guadarrama, puedo ayudarte a identificar la causa y tratarla de forma efectiva.
 
-**[Reserva tu cita](/reservar)** y recupera la movilidad de tu hombro.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y recupera la movilidad de tu hombro.
+
+**Te puede interesar:** [Osteopatía para deportistas: prevención y recuperación](/blog/osteopatia-para-deportistas) · [Cómo el estrés genera tensión muscular](/blog/estres-tension-muscular-cuerpo)

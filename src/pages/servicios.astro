@@ -6,6 +6,30 @@ import CTASection from '../components/CTASection.astro';
 const pageTitle = "Servicios de Osteopatía y Masajes en Alpedrete | Sierra de Madrid";
 const pageDescription = "Servicios de osteopatía estructural, visceral y craneal, masaje deportivo, tailandés y para embarazadas en Alpedrete. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama. Precios y duración.";
 
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "description": "Centro de osteopatía y masajes en Alpedrete, Sierra de Madrid.",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "telephone": "+34643961065",
+  "url": "https://katycaballeroosteopata.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Río Guadarrama 2",
+    "addressLocality": "Alpedrete",
+    "addressRegion": "Madrid",
+    "postalCode": "28430",
+    "addressCountry": "ES"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "40.6631",
+    "longitude": "-4.0270"
+  },
+  "priceRange": "€€"
+};
+
 const servicesSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -94,7 +118,8 @@ const servicesSchema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription} keywords="osteopatia alpedrete, osteopatia estructural sierra madrid, osteopatia visceral collado villalba, osteopatia craneal moralzarzal, masaje deportivo sierra de guadarrama, masaje tailandes alpedrete, masaje embarazadas sierra madrid, quiromasaje galapagar, dolor de espalda tratamiento, contracturas cervicales osteopatia, ciatica masaje">
+<Layout title={pageTitle} description={pageDescription} keywords="osteopatia alpedrete, osteopatia estructural sierra madrid, osteopatia visceral collado villalba, osteopatia craneal moralzarzal, masaje deportivo sierra de guadarrama, masaje tailandes alpedrete, masaje embarazadas sierra madrid, quiromasaje galapagar, dolor de espalda tratamiento, contracturas cervicales osteopatia, ciatica masaje" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Servicios" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(servicesSchema)} />
   <section class="page-header">
     <div class="container">

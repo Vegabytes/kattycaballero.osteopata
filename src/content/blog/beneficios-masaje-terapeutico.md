@@ -81,13 +81,13 @@ Relajación profunda con aceites esenciales. Ideal para desconectar del estrés 
 ### Masaje deportivo
 Técnicas más intensas para deportistas. Preparación y recuperación muscular.
 
-### Masaje tradicional tailandés
+### [Masaje tradicional tailandés](/blog/masaje-tailandes-beneficios)
 Combina presiones, estiramientos y trabajo energético. Sin aceites, con ropa cómoda.
 
 ### Masaje con pindas herbales calientes
 Saquitos de hierbas medicinales que se aplican con calor. Propiedades antiinflamatorias y muy relajante.
 
-### Masaje para embarazadas
+### [Masaje para embarazadas](/blog/masaje-embarazadas-beneficios-seguridad)
 Técnicas suaves y adaptadas a cada etapa del embarazo. Desde el 4º mes.
 
 ## El masaje como autocuidado
@@ -103,4 +103,6 @@ Dedicarte tiempo para cuidarte no es egoísta, es necesario. El masaje es un esp
 
 Si nunca has probado el masaje terapéutico o hace tiempo que no te das uno, te invito a experimentar los beneficios por ti mismo.
 
-**[Reserva tu sesión](/reservar)** y empieza a cuidarte como te mereces.
+Consulta todos mis [servicios y tarifas](/servicios) o **[reserva tu sesión](/reservar)** y empieza a cuidarte como te mereces.
+
+**Te puede interesar:** [Cómo el estrés genera tensión muscular](/blog/estres-tension-muscular-cuerpo) · [Masaje tailandés: beneficios](/blog/masaje-tailandes-beneficios)

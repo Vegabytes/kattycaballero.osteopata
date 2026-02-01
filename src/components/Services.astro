@@ -6,6 +6,7 @@ interface Service {
   duration: string;
   price: string;
   image: string;
+  alt: string;
   featured?: boolean;
 }
 
@@ -17,6 +18,7 @@ const services: Service[] = [
     duration: '55 min',
     price: '40€',
     image: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=250&h=250&fit=crop&crop=center&q=80',
+    alt: 'Sesión de osteopatía estructural y craneal en consulta de Alpedrete, Sierra de Madrid',
     featured: true
   },
   {
@@ -25,7 +27,8 @@ const services: Service[] = [
     description: 'Recuperación muscular especializada para deportistas. Prevención de lesiones, alivio de contracturas y mejora del rendimiento físico.',
     duration: '30 min',
     price: '20€',
-    image: 'https://images.pexels.com/photos/8219058/pexels-photo-8219058.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+    image: 'https://images.pexels.com/photos/8219058/pexels-photo-8219058.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop',
+    alt: 'Masaje deportivo para recuperación muscular en Alpedrete, cerca de Collado Villalba'
   },
   {
     id: 'masaje-corporal',
@@ -33,7 +36,8 @@ const services: Service[] = [
     description: 'Relajación y desconexión plena. Masaje envolvente con aceites esenciales que alivia tensiones y nutre la piel.',
     duration: '60 min / 90 min',
     price: '40€ / 55€',
-    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=300&h=300&fit=crop&crop=center&q=80'
+    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=300&h=300&fit=crop&crop=center&q=80',
+    alt: 'Masaje relajante corporal con aceites esenciales en Alpedrete, Sierra de Guadarrama'
   },
   {
     id: 'masaje-tailandes',
@@ -41,7 +45,8 @@ const services: Service[] = [
     description: 'Movilidad y estiramientos asistidos. Técnica milenaria que combina presiones, estiramientos y trabajo energético.',
     duration: '60 min / 90 min',
     price: '45€ / 60€',
-    image: 'https://images.pexels.com/photos/6186763/pexels-photo-6186763.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+    image: 'https://images.pexels.com/photos/6186763/pexels-photo-6186763.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop',
+    alt: 'Masaje tradicional tailandés con estiramientos en Alpedrete, Sierra de Madrid'
   },
   {
     id: 'pindas-herbales',
@@ -49,7 +54,8 @@ const services: Service[] = [
     description: 'Calor terapéutico con saquitos de hierbas medicinales. Relaja profundamente, descontractura y tiene propiedades antiinflamatorias.',
     duration: '90 min',
     price: '70€',
-    image: 'https://images.pexels.com/photos/6187421/pexels-photo-6187421.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+    image: 'https://images.pexels.com/photos/6187421/pexels-photo-6187421.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop',
+    alt: 'Masaje con pindas herbales calientes para relajación profunda en Alpedrete'
   },
   {
     id: 'embarazadas',
@@ -57,7 +63,8 @@ const services: Service[] = [
     description: 'Alivio y bienestar materno. Desde el 4º mes de embarazo. Técnicas suaves adaptadas a cada etapa para reducir molestias típicas.',
     duration: '60 min',
     price: '40€',
-    image: 'https://images.unsplash.com/photo-1493894473891-10fc1e5dbd22?w=300&h=300&fit=crop&crop=center&q=80'
+    image: 'https://images.unsplash.com/photo-1493894473891-10fc1e5dbd22?w=300&h=300&fit=crop&crop=center&q=80',
+    alt: 'Masaje prenatal para embarazadas en consulta de Alpedrete, Moralzarzal y Galapagar'
   }
 ];
 ---
@@ -74,7 +81,7 @@ const services: Service[] = [
       {services.map(service => (
         <div class="service-card" id={service.id} class:list={[{ featured: service.featured }]}>
           <div class="service-image">
-            <img src={service.image} alt={service.title} loading="lazy" />
+            <img src={service.image} alt={service.alt} loading="lazy" />
           </div>
           <h3>{service.title}</h3>
           <p>{service.description}</p>
