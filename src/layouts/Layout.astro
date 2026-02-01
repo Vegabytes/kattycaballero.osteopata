@@ -16,15 +16,17 @@ interface Props {
   type?: string;
   keywords?: string;
   breadcrumbs?: BreadcrumbItem[];
+  publishedDate?: string;
 }
 
 const {
   title,
   description = "Osteópata y masajista en Alpedrete, Sierra de Madrid. Más de 12 años de experiencia en osteopatía estructural, visceral, craneal y masajes terapéuticos. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama.",
-  image = "/images/sala-1.jpg",
+  image = "/images/sala-1.webp",
   type = "website",
   keywords = "osteopata alpedrete, masajista alpedrete, osteopatia sierra de madrid, masaje deportivo sierra madrid, osteopata collado villalba, masajista moralzarzal, osteopatia galapagar, fisioterapia sierra de guadarrama, dolor de espalda tratamiento, contracturas cervicales, masaje tailandes madrid, quiromasaje alpedrete, osteopata torrelodones, masajes guadarrama, ciatica osteopatia",
-  breadcrumbs = []
+  breadcrumbs = [],
+  publishedDate
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -73,7 +75,11 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
   <meta property="og:image" content={socialImageURL}>
   <meta property="og:locale" content="es_ES">
   <meta property="og:site_name" content="Katy Caballero - Osteópata y Masajista">
-  
+  {publishedDate && (
+    <meta property="article:published_time" content={publishedDate} />
+    <meta property="article:author" content="Katy Caballero" />
+  )}
+
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content={canonicalURL}>

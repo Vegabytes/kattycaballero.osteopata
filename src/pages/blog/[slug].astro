@@ -64,6 +64,7 @@ const relatedPosts = allPosts
   description={post.data.excerpt}
   image={post.data.image}
   type="article"
+  publishedDate={post.data.date.toISOString()}
   breadcrumbs={[
     { name: "Inicio", url: "/" },
     { name: "Blog", url: "/blog" },
@@ -81,7 +82,7 @@ const relatedPosts = allPosts
         <span class="post-category">{post.data.category}</span>
         <h1>{post.data.title}</h1>
         <div class="post-meta">
-          <img src="/images/logo.png" alt="Katy Caballero" class="author-avatar" />
+          <img src="/images/logo.webp" alt="Katy Caballero" class="author-avatar" />
           <div>
             <span class="author-name">{post.data.author}</span>
             <span class="post-date">{formatDate(post.data.date)} · {post.data.readTime} min lectura</span>
