@@ -1,0 +1,176 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CTASection from '../../components/CTASection.astro';
+import { getServiceBySlug } from '../../data/services';
+
+const service = getServiceBySlug('masaje-pindas-herbales-alpedrete')!;
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": service.h1,
+  "description": service.metaDescription,
+  "provider": {
+    "@type": "HealthAndBeautyBusiness",
+    "name": "Katy Caballero - Osteópata y Masajista",
+    "address": { "@type": "PostalAddress", "streetAddress": "Calle Río Guadarrama 2", "addressLocality": "Alpedrete", "addressRegion": "Madrid", "postalCode": "28430", "addressCountry": "ES" }
+  },
+  "areaServed": { "@type": "City", "name": "Alpedrete" },
+  "offers": { "@type": "Offer", "price": "70", "priceCurrency": "EUR" }
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": service.faq.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+  }))
+};
+
+const breadcrumbSchema = [
+  { name: "Inicio", url: "/" },
+  { name: "Servicios", url: "/servicios" },
+  { name: service.title }
+];
+---
+
+<Layout title={service.metaTitle} description={service.metaDescription} keywords={service.keywords} breadcrumbs={breadcrumbSchema}>
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="service-header">
+    <div class="container">
+      <span class="section-tag">{service.title}</span>
+      <h1>{service.h1}</h1>
+      <div class="service-header-meta">
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> {service.duration}</span>
+        <span class="meta-price">{service.price}</span>
+      </div>
+      <a href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20un%20masaje%20con%20pindas%20herbales" class="btn btn-primary" target="_blank" rel="noopener">Reservar cita</a>
+    </div>
+  </section>
+
+  <section class="service-description">
+    <div class="container service-description-grid">
+      <div class="service-description-text">
+        <p class="intro-text">{service.intro}</p>
+        {service.description.split('\n\n').map(p => <p set:html={p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')} />)}
+      </div>
+      <div class="service-description-image">
+        <img src={service.image} alt={service.imageAlt} loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="service-benefits">
+    <div class="container">
+      <h2>Beneficios del masaje con pindas herbales</h2>
+      <div class="benefits-grid">
+        {service.benefits.map(b => (
+          <div class="benefit-card">
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-expect">
+    <div class="container">
+      <h2>Qué esperar de la sesión</h2>
+      <div class="expect-steps">
+        {service.whatToExpect.map((step, i) => (
+          <div class="expect-step">
+            <span class="step-number">{i + 1}</span>
+            <p>{step}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-for-whom">
+    <div class="container">
+      <h2>¿Para quién está indicado?</h2>
+      <ul class="for-whom-list">
+        {service.forWhom.map(item => (
+          <li>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="service-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {service.faq.map(f => (
+          <details class="faq-item">
+            <summary>{f.question}</summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="¿Quieres probar las pindas herbales?"
+    description="Reserva esta experiencia única de relajación terapéutica."
+  />
+</Layout>
+
+<style>
+  .service-header { padding-top: 150px; padding-bottom: 60px; background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
+  .service-header h1 { margin-bottom: 20px; }
+  .service-header-meta { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 30px; }
+  .meta-item { display: flex; align-items: center; gap: 6px; font-size: 1rem; color: var(--color-text-light); }
+  .meta-item svg { width: 20px; height: 20px; }
+  .meta-price { background: var(--color-secondary-light); padding: 8px 24px; border-radius: 20px; font-weight: 600; font-size: 1.1rem; color: var(--color-text); }
+  .service-description { background: var(--color-warm-white); }
+  .service-description-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
+  .intro-text { font-size: 1.15rem; color: var(--color-primary-dark); font-weight: 500; margin-bottom: 20px; line-height: 1.7; }
+  .service-description-text p { margin-bottom: 15px; line-height: 1.8; }
+  .service-description-image img { width: 100%; height: 400px; object-fit: cover; border-radius: 20px; box-shadow: var(--shadow-medium); }
+  .service-benefits { background: var(--color-cream); }
+  .service-benefits h2 { text-align: center; margin-bottom: 50px; }
+  .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+  .benefit-card { background: var(--color-warm-white); padding: 30px; border-radius: 16px; text-align: center; transition: var(--transition); }
+  .benefit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+  .benefit-card h3 { font-size: 1.1rem; color: var(--color-primary); margin-bottom: 10px; }
+  .benefit-card p { font-size: 0.92rem; line-height: 1.6; color: var(--color-text-light); }
+  .service-expect { background: var(--color-warm-white); }
+  .service-expect h2 { text-align: center; margin-bottom: 50px; }
+  .expect-steps { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
+  .expect-step { display: flex; align-items: flex-start; gap: 20px; }
+  .step-number { width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: var(--font-display); font-size: 1.2rem; flex-shrink: 0; }
+  .expect-step p { font-size: 1.05rem; line-height: 1.6; padding-top: 6px; }
+  .service-for-whom { background: var(--color-cream); }
+  .service-for-whom h2 { text-align: center; margin-bottom: 40px; }
+  .for-whom-list { max-width: 700px; margin: 0 auto; list-style: none; display: flex; flex-direction: column; gap: 15px; }
+  .for-whom-list li { display: flex; align-items: center; gap: 12px; font-size: 1.02rem; line-height: 1.5; }
+  .for-whom-list svg { width: 22px; height: 22px; fill: var(--color-primary); flex-shrink: 0; }
+  .service-faq { background: var(--color-warm-white); }
+  .service-faq h2 { text-align: center; margin-bottom: 40px; }
+  .faq-grid { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+  .faq-item { background: var(--color-cream); border-radius: 15px; overflow: hidden; border: 1px solid rgba(90, 124, 89, 0.1); transition: all 0.3s ease; }
+  .faq-item[open] { box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1); }
+  .faq-item summary { padding: 20px 25px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 1.05rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; font-size: 1.4rem; color: var(--color-primary); font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item summary:hover { color: var(--color-primary); }
+  .faq-item p { padding: 0 25px 20px; color: var(--color-text-light); line-height: 1.8; font-size: 0.95rem; max-width: none; }
+  @media (max-width: 1024px) {
+    .service-description-grid { grid-template-columns: 1fr; gap: 40px; }
+    .service-description-image { order: -1; }
+    .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) { .benefits-grid { grid-template-columns: 1fr; } }
+</style>

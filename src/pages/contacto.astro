@@ -199,35 +199,35 @@ const faqSchema = {
       <h2 class="text-center mb-4">Preguntas frecuentes</h2>
 
       <div class="faq-grid">
-        <div class="faq-item">
-          <h3>¿Cómo puedo reservar una cita?</h3>
+        <details class="faq-item">
+          <summary>¿Cómo puedo reservar una cita?</summary>
           <p>Puedes reservar llamándome al <a href="tel:+34643961065">643 961 065</a>, por WhatsApp, o enviándome un email. Te confirmaré la cita lo antes posible.</p>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <h3>¿Cuánto dura una sesión?</h3>
+        <details class="faq-item">
+          <summary>¿Cuánto dura una sesión?</summary>
           <p>La duración depende del tratamiento. Las sesiones de osteopatía duran 55 minutos, mientras que los masajes varían entre 30 y 90 minutos.</p>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <h3>¿Qué métodos de pago aceptas?</h3>
+        <details class="faq-item">
+          <summary>¿Qué métodos de pago aceptas?</summary>
           <p>Acepto efectivo, Bizum y transferencia bancaria. El pago se realiza al finalizar la sesión.</p>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <h3>¿Puedo cancelar o cambiar mi cita?</h3>
+        <details class="faq-item">
+          <summary>¿Puedo cancelar o cambiar mi cita?</summary>
           <p>Sí, te pido que me avises con al menos 24 horas de antelación para poder reorganizar mi agenda.</p>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <h3>¿Hay parking cerca?</h3>
+        <details class="faq-item">
+          <summary>¿Hay parking cerca?</summary>
           <p>Sí, hay estacionamiento gratuito en la zona. Al reservar te daré indicaciones exactas.</p>
-        </div>
+        </details>
 
-        <div class="faq-item">
-          <h3>¿Emites factura?</h3>
+        <details class="faq-item">
+          <summary>¿Emites factura?</summary>
           <p>Sí, puedo emitir factura si la necesitas. Solo tienes que pedírmelo.</p>
-        </div>
+        </details>
       </div>
     </div>
   </section>
@@ -455,19 +455,55 @@ const faqSchema = {
 
   .faq-item {
     background: var(--color-warm-white);
-    padding: 28px;
-    border-radius: 14px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: all 0.3s ease;
   }
 
-  .faq-item h3 {
+  .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .faq-item summary {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text);
     font-size: 1.05rem;
-    margin-bottom: 10px;
-    color: var(--color-primary-dark);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .faq-item summary:hover {
+    color: var(--color-primary);
   }
 
   .faq-item p {
-    font-size: 0.92rem;
-    line-height: 1.6;
+    padding: 0 25px 20px;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    font-size: 0.95rem;
     max-width: none;
   }
 

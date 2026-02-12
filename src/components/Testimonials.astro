@@ -49,8 +49,41 @@ const reviews = [
     badge: "Local Guide",
   },
 ];
+
+const avgRating = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
+
+const reviewSchema = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "url": "https://katycaballeroosteopata.com",
+  "telephone": "+34643961065",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Río Guadarrama 2",
+    "addressLocality": "Alpedrete",
+    "addressRegion": "Madrid",
+    "postalCode": "28430",
+    "addressCountry": "ES"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": avgRating,
+    "reviewCount": reviews.length,
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "review": reviews.map(r => ({
+    "@type": "Review",
+    "author": { "@type": "Person", "name": r.name },
+    "reviewRating": { "@type": "Rating", "ratingValue": r.rating, "bestRating": "5" },
+    "reviewBody": r.text
+  }))
+};
 ---
 
+<script type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />
 <section class="testimonials" id="testimonios">
   <div class="container">
     <div class="section-header">

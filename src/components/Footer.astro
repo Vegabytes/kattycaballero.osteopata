@@ -2,11 +2,22 @@
 const currentYear = new Date().getFullYear();
 
 const services = [
-  { href: '/servicios#osteopatia', label: 'Osteopatía' },
-  { href: '/servicios#masaje-deportivo', label: 'Masaje Deportivo' },
-  { href: '/servicios#masaje-tailandes', label: 'Masaje Tailandés' },
-  { href: '/servicios#masaje-corporal', label: 'Masaje Corporal' },
-  { href: '/servicios#embarazadas', label: 'Masaje Embarazadas' },
+  { href: '/servicios/osteopatia-alpedrete', label: 'Osteopatía' },
+  { href: '/servicios/masaje-deportivo-alpedrete', label: 'Masaje Deportivo' },
+  { href: '/servicios/masaje-tailandes-alpedrete', label: 'Masaje Tailandés' },
+  { href: '/servicios/masaje-corporal-alpedrete', label: 'Masaje Corporal' },
+  { href: '/servicios/masaje-embarazadas-alpedrete', label: 'Masaje Embarazadas' },
+];
+
+const zones = [
+  { href: '/osteopata-collado-villalba', label: 'Collado Villalba' },
+  { href: '/osteopata-moralzarzal', label: 'Moralzarzal' },
+  { href: '/osteopata-galapagar', label: 'Galapagar' },
+  { href: '/osteopata-guadarrama', label: 'Guadarrama' },
+  { href: '/osteopata-torrelodones', label: 'Torrelodones' },
+  { href: '/osteopata-becerril-de-la-sierra', label: 'Becerril de la Sierra' },
+  { href: '/osteopata-collado-mediano', label: 'Collado Mediano' },
+  { href: '/osteopata-los-molinos', label: 'Los Molinos' },
 ];
 
 const links = [
@@ -66,6 +77,15 @@ const links = [
       </div>
       
       <div class="footer-section">
+        <h4>Zonas</h4>
+        <ul>
+          {zones.map(zone => (
+            <li><a href={zone.href}>{zone.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-section">
         <h4>Contacto</h4>
         <ul class="contact-list">
           <li>
@@ -99,8 +119,8 @@ const links = [
   
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-    gap: 50px;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
+    gap: 40px;
   }
   
   .footer-logo {

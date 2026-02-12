@@ -8,11 +8,13 @@ interface Service {
   image: string;
   alt: string;
   featured?: boolean;
+  slug: string;
 }
 
 const services: Service[] = [
   {
     id: 'osteopatia',
+    slug: 'osteopatia-alpedrete',
     title: 'Osteopatía Estructural, Visceral y Sacrocraneal',
     description: 'Tratamiento integral que aborda el sistema músculo-esquelético, órganos internos y sistema craneal. Ideal para dolores de espalda, cervicales, problemas digestivos, migrañas y estrés.',
     duration: '55 min',
@@ -23,6 +25,7 @@ const services: Service[] = [
   },
   {
     id: 'masaje-deportivo',
+    slug: 'masaje-deportivo-alpedrete',
     title: 'Masaje Deportivo',
     description: 'Recuperación muscular especializada para deportistas. Prevención de lesiones, alivio de contracturas y mejora del rendimiento físico.',
     duration: '30 min',
@@ -32,6 +35,7 @@ const services: Service[] = [
   },
   {
     id: 'masaje-corporal',
+    slug: 'masaje-corporal-alpedrete',
     title: 'Masaje Corporal con Aceite',
     description: 'Relajación y desconexión plena. Masaje envolvente con aceites esenciales que alivia tensiones y nutre la piel.',
     duration: '60 min / 90 min',
@@ -41,6 +45,7 @@ const services: Service[] = [
   },
   {
     id: 'masaje-tailandes',
+    slug: 'masaje-tailandes-alpedrete',
     title: 'Masaje Tradicional Tailandés',
     description: 'Movilidad y estiramientos asistidos. Técnica milenaria que combina presiones, estiramientos y trabajo energético.',
     duration: '60 min / 90 min',
@@ -50,6 +55,7 @@ const services: Service[] = [
   },
   {
     id: 'pindas-herbales',
+    slug: 'masaje-pindas-herbales-alpedrete',
     title: 'Masaje con Pindas Herbales Calientes',
     description: 'Calor terapéutico con saquitos de hierbas medicinales. Relaja profundamente, descontractura y tiene propiedades antiinflamatorias.',
     duration: '90 min',
@@ -59,6 +65,7 @@ const services: Service[] = [
   },
   {
     id: 'embarazadas',
+    slug: 'masaje-embarazadas-alpedrete',
     title: 'Masaje para Embarazadas',
     description: 'Alivio y bienestar materno. Desde el 4º mes de embarazo. Técnicas suaves adaptadas a cada etapa para reducir molestias típicas.',
     duration: '60 min',
@@ -79,20 +86,23 @@ const services: Service[] = [
     
     <div class="services-grid">
       {services.map(service => (
-        <div class="service-card" id={service.id} class:list={[{ featured: service.featured }]}>
-          <div class="service-image">
-            <img src={service.image} alt={service.alt} loading="lazy" />
+        <a href={`/servicios/${service.slug}`} class="service-card-link">
+          <div class="service-card" id={service.id} class:list={[{ featured: service.featured }]}>
+            <div class="service-image">
+              <img src={service.image} alt={service.alt} loading="lazy" />
+            </div>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+            <div class="service-meta">
+              <span class="service-duration">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                {service.duration}
+              </span>
+              <span class="service-price">{service.price}</span>
+            </div>
+            <span class="service-more">Ver más →</span>
           </div>
-          <h3>{service.title}</h3>
-          <p>{service.description}</p>
-          <div class="service-meta">
-            <span class="service-duration">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-              {service.duration}
-            </span>
-            <span class="service-price">{service.price}</span>
-          </div>
-        </div>
+        </a>
       ))}
     </div>
     
@@ -113,12 +123,18 @@ const services: Service[] = [
     background: var(--color-cream);
   }
   
+  .service-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
   }
-  
+
   .service-card {
     background: var(--color-warm-white);
     padding: 40px 30px;
@@ -212,6 +228,19 @@ const services: Service[] = [
     font-weight: 600;
     color: var(--color-text);
     font-size: 0.95rem;
+  }
+
+  .service-more {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    transition: var(--transition);
+  }
+
+  .service-card:hover .service-more {
+    color: var(--color-secondary);
   }
   
   .services-cta {
