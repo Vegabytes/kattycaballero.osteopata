@@ -75,19 +75,19 @@ Depende de tu situación y objetivos:
 
 En mi consulta de Alpedrete trabajo con diferentes técnicas según tus necesidades:
 
-### Masaje corporal con aceite
+### [Masaje corporal con aceite](/servicios/masaje-corporal-alpedrete)
 Relajación profunda con aceites esenciales. Ideal para desconectar del estrés y nutrir la piel.
 
-### Masaje deportivo
+### [Masaje deportivo](/servicios/masaje-deportivo-alpedrete)
 Técnicas más intensas para deportistas. Preparación y recuperación muscular.
 
-### [Masaje tradicional tailandés](/blog/masaje-tailandes-beneficios)
+### [Masaje tradicional tailandés](/servicios/masaje-tailandes-alpedrete)
 Combina presiones, estiramientos y trabajo energético. Sin aceites, con ropa cómoda.
 
-### Masaje con pindas herbales calientes
+### [Masaje con pindas herbales calientes](/servicios/masaje-pindas-herbales-alpedrete)
 Saquitos de hierbas medicinales que se aplican con calor. Propiedades antiinflamatorias y muy relajante.
 
-### [Masaje para embarazadas](/blog/masaje-embarazadas-beneficios-seguridad)
+### [Masaje para embarazadas](/servicios/masaje-embarazadas-alpedrete)
 Técnicas suaves y adaptadas a cada etapa del embarazo. Desde el 4º mes.
 
 ## El masaje como autocuidado
@@ -102,6 +102,8 @@ Dedicarte tiempo para cuidarte no es egoísta, es necesario. El masaje es un esp
 ## ¿Listo para probarlo?
 
 Si nunca has probado el masaje terapéutico o hace tiempo que no te das uno, te invito a experimentar los beneficios por ti mismo.
+
+Si vives en [Guadarrama](/osteopata-guadarrama), [Collado Villalba](/osteopata-collado-villalba), [Los Molinos](/osteopata-los-molinos) o alrededores, estoy a tu alcance.
 
 Consulta todos mis [servicios y tarifas](/servicios) o **[reserva tu sesión](/reservar)** y empieza a cuidarte como te mereces.
 

@@ -121,10 +121,10 @@ Depende de tus necesidades y molestias:
 
 ## Masaje prenatal en la Sierra de Madrid
 
-Si estás embarazada y vives en Alpedrete, Collado Villalba, Moralzarzal, Galapagar o cualquier zona de la Sierra de Guadarrama, en mi consulta ofrezco masaje prenatal adaptado a cada etapa del embarazo.
+Si estás embarazada y vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba), [Collado Mediano](/osteopata-collado-mediano), [Galapagar](/osteopata-galapagar) o cualquier zona de la Sierra de Guadarrama, en mi consulta ofrezco masaje prenatal adaptado a cada etapa del embarazo.
 
 Es un regalo que te mereces: un momento para cuidarte, aliviar las molestias y conectar con tu bebé.
 
-Consulta todos mis [servicios y tarifas](/servicios) o **[reserva tu sesión](/reservar)** y disfruta de tu embarazo con menos molestias.
+Consulta nuestro [servicio de masaje para embarazadas en Alpedrete](/servicios/masaje-embarazadas-alpedrete), todos mis [servicios y tarifas](/servicios) o **[reserva tu sesión](/reservar)** y disfruta de tu embarazo con menos molestias.
 
 **Te puede interesar:** [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico) · [Ciática: causas y tratamiento](/blog/ciatica-causas-tratamiento-osteopatia)

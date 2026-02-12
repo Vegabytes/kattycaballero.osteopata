@@ -76,9 +76,9 @@ La fisioterapia es ideal cuando:
 
 ## Mi enfoque como osteópata
 
-En mi consulta de Alpedrete, trabajo desde la osteopatía integrando las tres ramas (estructural, visceral y craneal). Cada persona es única, y por eso **cada tratamiento es personalizado**.
+En mi consulta de Alpedrete, trabajo desde la osteopatía integrando las tres ramas (estructural, visceral y craneal). Cada persona es única, y por eso **cada tratamiento es personalizado**. Si buscas osteópata, puedes conocer más sobre nuestro [servicio de osteopatía en Alpedrete](/servicios/osteopatia-alpedrete).
 
-La primera sesión siempre incluye una valoración completa: escucho tu historia, observo tu postura, palpo los tejidos y realizo tests para entender qué está pasando en tu cuerpo. Solo así puedo diseñar el tratamiento más adecuado para ti.
+La primera sesión siempre incluye una valoración completa: escucho tu historia, observo tu postura, palpo los tejidos y realizo tests para entender qué está pasando en tu cuerpo. Solo así puedo diseñar el tratamiento más adecuado para ti. Atiendo a pacientes de [Torrelodones](/osteopata-torrelodones), [Guadarrama](/osteopata-guadarrama), [Collado Villalba](/osteopata-collado-villalba) y toda la Sierra de Madrid.
 
 Consulta todos mis [servicios de osteopatía y masajes](/servicios). **¿Tienes dudas sobre qué necesitas?** [Contacta conmigo](/contacto) y te oriento sin compromiso.
 

@@ -117,8 +117,8 @@ En mi consulta de Alpedrete, las sesiones de masaje tailandés duran 60 o 90 min
 
 ## Masaje tailandés en la Sierra de Madrid
 
-Si vives en Alpedrete, Collado Villalba, Moralzarzal, Galapagar o cualquier zona de la Sierra de Guadarrama y quieres experimentar los beneficios del masaje tradicional tailandés, te invito a probarlo en mi consulta.
+Si vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba), [Moralzarzal](/osteopata-moralzarzal), [Galapagar](/osteopata-galapagar) o cualquier zona de la Sierra de Guadarrama y quieres experimentar los beneficios del masaje tradicional tailandés, te invito a probarlo en mi consulta.
 
-Consulta todos mis [servicios y tarifas](/servicios) o **[reserva tu sesión](/reservar)** y descubre esta técnica milenaria.
+Consulta nuestro [servicio de masaje tailandés en Alpedrete](/servicios/masaje-tailandes-alpedrete), todos mis [servicios y tarifas](/servicios) o **[reserva tu sesión](/reservar)** y descubre esta técnica milenaria.
 
 **Te puede interesar:** [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico) · [Osteopatía para deportistas](/blog/osteopatia-para-deportistas)

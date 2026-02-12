@@ -121,7 +121,7 @@ Busca atención médica urgente si:
 
 ## Tratamiento del dolor de hombro en la Sierra de Madrid
 
-Si sufres dolor de hombro y vives en Alpedrete, Collado Villalba, Moralzarzal, Galapagar o cualquier zona de la Sierra de Guadarrama, puedo ayudarte a identificar la causa y tratarla de forma efectiva.
+Si sufres dolor de hombro y vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba), [Moralzarzal](/osteopata-moralzarzal), [Galapagar](/osteopata-galapagar) o cualquier zona de la Sierra de Guadarrama, puedo ayudarte a identificar la causa y tratarla de forma efectiva con nuestro [servicio de osteopatía en Alpedrete](/servicios/osteopatia-alpedrete).
 
 Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y recupera la movilidad de tu hombro.
 

@@ -144,8 +144,8 @@ En mi consulta, combino las tres según lo que necesite cada paciente. A veces t
 
 Si sufres dolores de cabeza, problemas de mandíbula, estrés o simplemente quieres experimentar los beneficios de esta técnica, en mi consulta de Alpedrete ofrezco osteopatía craneal como parte de mis tratamientos.
 
-Atiendo a pacientes de Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama.
+Atiendo a pacientes de [Collado Villalba](/osteopata-collado-villalba), [Moralzarzal](/osteopata-moralzarzal), [Galapagar](/osteopata-galapagar) y toda la Sierra de Guadarrama.
 
-Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y descubre cómo la osteopatía craneal puede ayudarte.
+Consulta nuestro [servicio de osteopatía en Alpedrete](/servicios/osteopatia-alpedrete), todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y descubre cómo la osteopatía craneal puede ayudarte.
 
 **Te puede interesar:** [Cómo el estrés afecta a tu cuerpo](/blog/estres-tension-muscular-cuerpo) · [Contracturas cervicales: causas y tratamiento](/blog/contracturas-cervicales-causas-tratamiento)

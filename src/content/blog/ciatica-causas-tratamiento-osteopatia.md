@@ -134,7 +134,7 @@ Estos síntomas pueden indicar un problema más serio que requiere evaluación m
 
 ## Tratamiento de ciática en la Sierra de Madrid
 
-Si sufres de ciática y vives en Alpedrete, Collado Villalba, Moralzarzal, Galapagar o cualquier zona de la Sierra de Guadarrama, en mi consulta puedo ayudarte a identificar la causa de tu dolor y tratarlo de forma efectiva.
+Si sufres de ciática y vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba), [Moralzarzal](/osteopata-moralzarzal), [Galapagar](/osteopata-galapagar) o cualquier zona de la Sierra de Guadarrama, en mi consulta puedo ayudarte a identificar la causa de tu dolor y tratarlo de forma efectiva con nuestro [tratamiento de osteopatía](/servicios/osteopatia-alpedrete).
 
 Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y empieza a recuperar tu calidad de vida.
 

@@ -77,7 +77,7 @@ El piriforme es un músculo que puede tensarse y causar dolor referido a la zona
 
 Si el dolor persiste más de dos semanas, se irradia hacia las piernas, o viene acompañado de hormigueo o debilidad, es importante consultar con un profesional. Si sientes dolor que baja por la pierna, te recomiendo leer nuestro artículo sobre [ciática: causas y tratamiento](/blog/ciatica-causas-tratamiento-osteopatia).
 
-La osteopatía puede ayudarte a identificar el origen del problema y tratarlo de forma personalizada. En mi consulta de Alpedrete trabajo con un enfoque integral que aborda no solo el síntoma, sino la causa raíz del dolor.
+La [osteopatía](/servicios/osteopatia-alpedrete) puede ayudarte a identificar el origen del problema y tratarlo de forma personalizada. En mi consulta de Alpedrete trabajo con un enfoque integral que aborda no solo el síntoma, sino la causa raíz del dolor. También atiendo a pacientes de [Collado Villalba](/osteopata-collado-villalba), [Torrelodones](/osteopata-torrelodones) y toda la Sierra de Madrid.
 
 Descubre todos mis [tratamientos de osteopatía y masajes](/servicios). **¿Necesitas ayuda con tu dolor de espalda?** [Reserva tu cita](/reservar) y empecemos a trabajar juntos.
 
