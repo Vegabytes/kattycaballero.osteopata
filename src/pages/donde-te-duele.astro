@@ -1,0 +1,1342 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+
+const pageTitle = "¿Dónde te duele? | Mapa Corporal Interactivo - Katy Caballero";
+const pageDescription = "Descubre qué tratamiento necesitas según tu zona de dolor. Mapa corporal interactivo con diagnóstico orientativo y recomendación de tratamiento de osteopatía y masaje.";
+const pageKeywords = "donde me duele, dolor de espalda tratamiento, dolor cervical osteopata, ciatica tratamiento, dolor lumbar masaje";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cómo sé si necesito un osteópata o un masajista?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si tu dolor es recurrente, se irradia a otras zonas o limita tu movilidad, la osteopatía es la mejor opción porque busca el origen del problema. Si tienes contracturas puntuales, tensión muscular por estrés o necesitas recuperarte del deporte, un masaje terapéutico o deportivo puede ser suficiente. En nuestra consulta de Alpedrete evaluamos tu caso y te recomendamos el tratamiento más adecuado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuántas sesiones de osteopatía necesito para que se me quite el dolor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende de cada caso. Los problemas agudos (recientes) suelen mejorar en 1-3 sesiones. Los dolores crónicos o recurrentes pueden necesitar entre 4-6 sesiones espaciadas. En la primera consulta evaluamos tu situación y te damos una estimación honesta del número de sesiones necesarias."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿La osteopatía duele? ¿Es segura?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La osteopatía utiliza técnicas manuales suaves y respetuosas con el cuerpo. Puedes sentir cierta presión o molestia leve durante el tratamiento de zonas contracturadas, pero nunca dolor intenso. Es una terapia segura, no invasiva y sin efectos secundarios. Está especialmente indicada para personas de todas las edades, incluidas embarazadas y niños."
+      }
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "¿Dónde te duele?" }]}>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="page-header">
+    <div class="container">
+      <span class="section-tag">HERRAMIENTA INTERACTIVA</span>
+      <h1>¿Dónde te duele?</h1>
+      <p class="page-subtitle">Haz clic en la zona del cuerpo donde sientes molestia y te recomendaremos el tratamiento más adecuado para ti.</p>
+    </div>
+  </section>
+
+  <section class="body-map-section">
+    <div class="container">
+      <div class="body-map-layout">
+
+        <!-- LEFT: SVG Body Map -->
+        <div class="body-map-col">
+          <div class="body-map-wrapper">
+            <svg viewBox="0 0 300 600" xmlns="http://www.w3.org/2000/svg" class="body-svg" id="body-svg" aria-label="Mapa corporal interactivo. Haz clic en una zona para ver información.">
+              <!-- Body outline -->
+              <g class="body-outline" fill="none" stroke="#c5c0b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Head -->
+                <ellipse cx="150" cy="52" rx="32" ry="40" />
+                <!-- Neck -->
+                <line x1="138" y1="90" x2="135" y2="115" />
+                <line x1="162" y1="90" x2="165" y2="115" />
+                <!-- Shoulders -->
+                <path d="M135,115 Q120,112 100,125" />
+                <path d="M165,115 Q180,112 200,125" />
+                <!-- Torso -->
+                <path d="M100,125 L95,140 L90,200 L95,260 L110,290" />
+                <path d="M200,125 L205,140 L210,200 L205,260 L190,290" />
+                <!-- Arms left -->
+                <path d="M100,125 L85,160 L75,210 L70,260 L72,280" />
+                <path d="M95,130 L80,165 L68,215 L63,260 L65,280" />
+                <!-- Arms right -->
+                <path d="M200,125 L215,160 L225,210 L230,260 L228,280" />
+                <path d="M205,130 L220,165 L232,215 L237,260 L235,280" />
+                <!-- Waist / Hip area -->
+                <path d="M110,290 Q120,305 130,310" />
+                <path d="M190,290 Q180,305 170,310" />
+                <!-- Legs -->
+                <path d="M130,310 L125,370 L120,430 L118,480 L115,530 L112,560 L105,585" />
+                <path d="M145,310 L140,370 L137,430 L136,480 L135,530 L133,560 L128,585" />
+                <path d="M155,310 L160,370 L163,430 L164,480 L165,530 L167,560 L172,585" />
+                <path d="M170,310 L175,370 L180,430 L182,480 L185,530 L188,560 L195,585" />
+                <!-- Feet -->
+                <path d="M105,585 Q100,590 98,595 Q100,600 115,600 Q128,600 128,595 L128,585" />
+                <path d="M195,585 Q200,590 202,595 Q200,600 185,600 Q172,600 172,595 L172,585" />
+              </g>
+
+              <!-- Interactive zones -->
+              <g class="interactive-zones">
+                <!-- Cabeza -->
+                <ellipse class="zone" data-zone="cabeza" cx="150" cy="50" rx="30" ry="38" />
+
+                <!-- Cuello -->
+                <ellipse class="zone" data-zone="cuello" cx="150" cy="105" rx="18" ry="14" />
+
+                <!-- Hombro izquierdo -->
+                <ellipse class="zone" data-zone="hombro-izq" cx="105" cy="130" rx="18" ry="14" />
+
+                <!-- Hombro derecho -->
+                <ellipse class="zone" data-zone="hombro-der" cx="195" cy="130" rx="18" ry="14" />
+
+                <!-- Espalda alta / dorsal -->
+                <ellipse class="zone" data-zone="espalda-alta" cx="150" cy="170" rx="38" ry="30" />
+
+                <!-- Brazos (zona central entre ambos brazos) -->
+                <ellipse class="zone" data-zone="brazo" cx="72" cy="230" rx="14" ry="35" />
+                <ellipse class="zone zone-mirror" data-zone="brazo" cx="228" cy="230" rx="14" ry="35" />
+
+                <!-- Lumbar -->
+                <ellipse class="zone" data-zone="lumbar" cx="150" cy="250" rx="35" ry="25" />
+
+                <!-- Cadera -->
+                <ellipse class="zone" data-zone="cadera" cx="150" cy="300" rx="38" ry="18" />
+
+                <!-- Rodilla -->
+                <ellipse class="zone" data-zone="rodilla" cx="130" cy="435" rx="14" ry="18" />
+                <ellipse class="zone zone-mirror" data-zone="rodilla" cx="170" cy="435" rx="14" ry="18" />
+
+                <!-- Pies -->
+                <ellipse class="zone" data-zone="pie" cx="116" cy="580" rx="16" ry="16" />
+                <ellipse class="zone zone-mirror" data-zone="pie" cx="184" cy="580" rx="16" ry="16" />
+
+                <!-- Embarazo (zona vientre) -->
+                <ellipse class="zone" data-zone="embarazo" cx="150" cy="220" rx="20" ry="20" />
+              </g>
+
+              <!-- Zone labels (shown on hover via CSS) -->
+              <g class="zone-labels" fill="#3d3d3d" font-family="Montserrat, sans-serif" font-size="10" font-weight="500" text-anchor="middle" pointer-events="none">
+                <text x="150" y="54" class="zone-label" data-zone="cabeza">Cabeza</text>
+                <text x="150" y="109" class="zone-label" data-zone="cuello">Cuello</text>
+                <text x="60" y="134" class="zone-label" data-zone="hombro-izq">Hombro</text>
+                <text x="240" y="134" class="zone-label" data-zone="hombro-der">Hombro</text>
+                <text x="150" y="174" class="zone-label" data-zone="espalda-alta">Dorsal</text>
+                <text x="42" y="234" class="zone-label" data-zone="brazo">Brazo</text>
+                <text x="150" y="254" class="zone-label" data-zone="lumbar">Lumbar</text>
+                <text x="150" y="304" class="zone-label" data-zone="cadera">Cadera</text>
+                <text x="108" y="462" class="zone-label" data-zone="rodilla">Rodilla</text>
+                <text x="116" y="566" class="zone-label" data-zone="pie">Pie</text>
+                <text x="150" y="210" class="zone-label" data-zone="embarazo" font-size="8">Embarazo</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- RIGHT: Info Panel -->
+        <div class="info-panel-col">
+          <div class="info-panel" id="info-panel">
+            <div class="info-panel-placeholder" id="info-placeholder">
+              <div class="placeholder-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+                  <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                  <line x1="6" y1="1" x2="6" y2="4" />
+                  <line x1="10" y1="1" x2="10" y2="4" />
+                  <line x1="14" y1="1" x2="14" y2="4" />
+                </svg>
+              </div>
+              <h3>Selecciona una zona del cuerpo</h3>
+              <p>Haz clic sobre cualquier zona del mapa corporal para ver las molestias comunes, posibles causas y el tratamiento recomendado.</p>
+            </div>
+            <div class="info-panel-content" id="info-content" style="display:none;">
+              <span class="info-zone-tag" id="info-zone-tag"></span>
+              <h3 class="info-zone-name" id="info-zone-name"></h3>
+
+              <div class="info-block">
+                <h4>Molestias comunes</h4>
+                <ul class="info-list" id="info-molestias"></ul>
+              </div>
+
+              <div class="info-block">
+                <h4>Tratamiento recomendado</h4>
+                <p class="info-tratamiento" id="info-tratamiento"></p>
+              </div>
+
+              <div class="info-block">
+                <h4>Posibles causas</h4>
+                <ul class="info-list" id="info-causas"></ul>
+              </div>
+
+              <div class="info-actions">
+                <a class="btn btn-primary-body" id="info-whatsapp" href="#" target="_blank" rel="noopener">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  Reservar Cita
+                </a>
+                <a class="btn btn-outline-body" id="info-link" href="#">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  Ver Tratamiento
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile quick-access cards -->
+  <section class="zone-cards-section">
+    <div class="container">
+      <h2 class="zone-cards-title">Todas las zonas</h2>
+      <p class="zone-cards-subtitle">Pulsa sobre cualquier zona para ver el diagnóstico orientativo y tratamiento recomendado.</p>
+      <div class="zone-cards-grid" id="zone-cards-grid">
+
+        <div class="zone-card" data-zone-card="cabeza">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v3"/><path d="M8 14c0 4 8 4 8 0"/></svg>
+            </div>
+            <h3 class="zone-card-name">Cabeza</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Migranas</li>
+                <li>Cefaleas tensionales</li>
+                <li>Mareos</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Osteopatia craneal</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Tension cervical acumulada</li>
+                <li>Estres y bruxismo</li>
+                <li>Mala postura ante el ordenador</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20duele%20la%20cabeza%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/osteopatia-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card" data-zone-card="cuello">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M12 8v14"/><path d="M8 12h8"/></svg>
+            </div>
+            <h3 class="zone-card-name">Cuello / Cervicales</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Contracturas cervicales</li>
+                <li>Torticolis</li>
+                <li>Rigidez cervical</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Osteopatia + masaje</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Postura prolongada ante pantallas</li>
+                <li>Estres y tension emocional</li>
+                <li>Almohada inadecuada</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20duele%20el%20cuello%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/osteopatia-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card" data-zone-card="hombros">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4v6l-3 3v5l3 4"/><path d="M8 4v6l3 3v5l-3 4"/></svg>
+            </div>
+            <h3 class="zone-card-name">Hombros</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Tendinitis</li>
+                <li>Dolor de hombro</li>
+                <li>Movilidad reducida</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Osteopatia estructural</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Movimientos repetitivos</li>
+                <li>Lesiones deportivas</li>
+                <li>Tension muscular cronica</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20duele%20el%20hombro%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/osteopatia-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card" data-zone-card="espalda-alta">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M12 8v14"/><path d="M8 12h8"/><path d="M9 20l3-3 3 3"/></svg>
+            </div>
+            <h3 class="zone-card-name">Espalda alta / Dorsal</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Contracturas dorsales</li>
+                <li>Dolor entre omoplatos</li>
+                <li>Mala postura</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Masaje deportivo</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Sedentarismo y trabajo de oficina</li>
+                <li>Estres emocional</li>
+                <li>Debilidad muscular en la zona</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20duele%20la%20espalda%20alta%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/masaje-deportivo-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card" data-zone-card="brazo">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l6 6"/><path d="M18 6l-6 6"/><path d="M12 12v8"/><circle cx="12" cy="4" r="2"/></svg>
+            </div>
+            <h3 class="zone-card-name">Brazos / Manos</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Epicondilitis (codo de tenista)</li>
+                <li>Tunel carpiano</li>
+                <li>Hormigueo en manos</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Osteopatia</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Uso excesivo del raton o teclado</li>
+                <li>Movimientos repetitivos laborales</li>
+                <li>Compresion nerviosa cervical</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20duele%20el%20brazo%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/osteopatia-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card" data-zone-card="lumbar">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M12 8v14"/><path d="M8 16h8"/><path d="M6 20h12"/></svg>
+            </div>
+            <h3 class="zone-card-name">Zona lumbar</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Lumbalgia</li>
+                <li>Ciatica</li>
+                <li>Hernia discal</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Osteopatia + masaje corporal</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Sedentarismo prolongado</li>
+                <li>Cargar peso de forma incorrecta</li>
+                <li>Debilidad de la musculatura abdominal</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20duele%20la%20zona%20lumbar%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/osteopatia-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card" data-zone-card="cadera">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M6.5 8a2 2 0 0 0-1.9 1.3L2 16h3l1.5-4L9 17l-1 5h2l2-6 2 6h2l-1-5 2.5-5 1.5 4h3l-2.6-6.7A2 2 0 0 0 17.5 8h-11z"/></svg>
+            </div>
+            <h3 class="zone-card-name">Cadera</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Dolor de cadera</li>
+                <li>Trocanteritis</li>
+                <li>Limitacion de movimiento</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Osteopatia estructural</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Desgaste articular</li>
+                <li>Desequilibrio muscular pelvico</li>
+                <li>Sobrecarga por actividad deportiva</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20duele%20la%20cadera%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/osteopatia-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card" data-zone-card="rodilla">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4v6l-3 3v5l3 4"/><path d="M8 4v6l3 3v5l-3 4"/></svg>
+            </div>
+            <h3 class="zone-card-name">Rodillas</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Dolor de rodilla</li>
+                <li>Condromalacia</li>
+                <li>Rigidez articular</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Osteopatia</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Sobrecarga deportiva</li>
+                <li>Desalineacion postural</li>
+                <li>Desequilibrio muscular de la pierna</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20duele%20la%20rodilla%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/osteopatia-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card" data-zone-card="pie">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16s1-1 3-1 3 2 5 2 3-2 5-2 3 1 3 1v3H4z"/><path d="M4 19v2h16v-2"/></svg>
+            </div>
+            <h3 class="zone-card-name">Piernas / Pies</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Fascitis plantar</li>
+                <li>Calambres</li>
+                <li>Piernas cansadas</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Masaje deportivo</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Calzado inadecuado</li>
+                <li>Estar de pie muchas horas</li>
+                <li>Mala circulacion sanguinea</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20duelen%20los%20pies%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/masaje-deportivo-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card" data-zone-card="embarazo">
+          <div class="zone-card-header">
+            <div class="zone-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M16 10c0 0-1-1-4-1s-4 1-4 1c-1 .5-2 2-2 4 0 3 1.5 5 3 7h6c1.5-2 3-4 3-7 0-2-1-3.5-2-4z"/></svg>
+            </div>
+            <h3 class="zone-card-name">Embarazo</h3>
+            <span class="zone-card-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-card-info">
+              <h4>Molestias comunes</h4>
+              <ul>
+                <li>Dolor lumbar del embarazo</li>
+                <li>Ciatica gestacional</li>
+                <li>Retencion de liquidos</li>
+              </ul>
+            </div>
+            <div class="zone-card-info">
+              <h4>Tratamiento recomendado</h4>
+              <p>Masaje para embarazadas</p>
+            </div>
+            <div class="zone-card-info">
+              <h4>Posibles causas</h4>
+              <ul>
+                <li>Cambios posturales por el peso del bebe</li>
+                <li>Cambios hormonales</li>
+                <li>Compresion de nervios y vasos sanguineos</li>
+              </ul>
+            </div>
+            <div class="zone-card-actions">
+              <a class="btn btn-primary-body btn-sm" href="https://wa.me/34643961065?text=Hola%20Katy,%20estoy%20embarazada%20y%20me%20gustar%C3%ADa%20una%20consulta" target="_blank" rel="noopener">Reservar Cita</a>
+              <a class="btn btn-outline-body btn-sm" href="/servicios/masaje-embarazadas-alpedrete">Ver Tratamiento</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="¿No sabes por dónde empezar?"
+    description="Escríbeme y cuéntame qué te pasa. Te orientaré sin compromiso sobre el mejor tratamiento para ti."
+    buttonText="Consultarme por WhatsApp"
+    buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20he%20visto%20tu%20mapa%20corporal%20y%20me%20gustar%C3%ADa%20consultarte%20sobre%20mi%20dolor"
+  />
+
+</Layout>
+
+<style>
+  /* Page Header */
+  .page-header {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .page-header h1 {
+    margin-bottom: 20px;
+  }
+
+  .page-subtitle {
+    margin: 0 auto;
+    max-width: 600px;
+    font-size: 1.1rem;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: var(--color-secondary-light);
+    color: var(--color-primary-dark);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  /* Body Map Section */
+  .body-map-section {
+    padding: 60px 0 80px;
+    background: var(--color-warm-white);
+  }
+
+  .body-map-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* SVG Body Map */
+  .body-map-col {
+    display: flex;
+    justify-content: center;
+  }
+
+  .body-map-wrapper {
+    width: 100%;
+    max-width: 320px;
+    position: sticky;
+    top: 120px;
+  }
+
+  .body-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Interactive zones */
+  .zone {
+    fill: rgba(196, 163, 90, 0.08);
+    stroke: rgba(196, 163, 90, 0.25);
+    stroke-width: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .zone:hover {
+    fill: rgba(196, 163, 90, 0.25);
+    stroke: var(--color-secondary);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 8px rgba(196, 163, 90, 0.4));
+  }
+
+  .zone.active {
+    fill: rgba(196, 163, 90, 0.3);
+    stroke: var(--color-secondary);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 12px rgba(196, 163, 90, 0.5));
+  }
+
+  /* Zone labels */
+  .zone-label {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    font-weight: 600;
+    fill: var(--color-primary-dark);
+  }
+
+  .zone:hover ~ .zone-labels .zone-label,
+  .zone.active ~ .zone-labels .zone-label {
+    opacity: 0;
+  }
+
+  /* Info Panel */
+  .info-panel-col {
+    min-height: 400px;
+  }
+
+  .info-panel {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    box-shadow: var(--shadow-soft);
+    position: sticky;
+    top: 120px;
+  }
+
+  .info-panel-placeholder {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .placeholder-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-secondary-light);
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    color: var(--color-primary);
+  }
+
+  .info-panel-placeholder h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: var(--color-text);
+  }
+
+  .info-panel-placeholder p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  /* Info content */
+  .info-panel-content {
+    animation: fadeSlideIn 0.4s ease;
+  }
+
+  @keyframes fadeSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .info-zone-tag {
+    display: inline-block;
+    background: var(--color-secondary-light);
+    color: var(--color-primary-dark);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .info-zone-name {
+    font-size: 1.6rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 24px;
+  }
+
+  .info-block {
+    margin-bottom: 20px;
+  }
+
+  .info-block h4 {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-light);
+    margin-bottom: 8px;
+  }
+
+  .info-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .info-list li {
+    background: var(--color-cream);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--color-text);
+  }
+
+  .info-tratamiento {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 1rem;
+    max-width: none;
+  }
+
+  .info-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary-body {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-primary);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .btn-primary-body:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(90, 124, 89, 0.25);
+    color: white;
+  }
+
+  .btn-outline-body {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--color-primary);
+    padding: 14px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: var(--transition);
+    border: 2px solid var(--color-primary);
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .btn-outline-body:hover {
+    background: var(--color-secondary-light);
+    transform: translateY(-2px);
+    color: var(--color-primary-dark);
+  }
+
+  .btn-sm {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+
+  /* Zone Cards Section */
+  .zone-cards-section {
+    padding: 80px 0;
+    background: var(--color-cream);
+  }
+
+  .zone-cards-title {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .zone-cards-subtitle {
+    text-align: center;
+    margin: 0 auto 40px;
+    max-width: 500px;
+  }
+
+  .zone-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .zone-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    overflow: hidden;
+    transition: var(--transition);
+  }
+
+  .zone-card:hover {
+    border-color: rgba(90, 124, 89, 0.2);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .zone-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .zone-card-header:hover {
+    background: var(--color-cream);
+  }
+
+  .zone-card-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-secondary-light);
+    border-radius: 12px;
+    color: var(--color-primary);
+  }
+
+  .zone-card-name {
+    flex: 1;
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .zone-card-toggle {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--color-text-light);
+    transition: transform 0.3s ease;
+  }
+
+  .zone-card.open .zone-card-toggle {
+    transform: rotate(180deg);
+  }
+
+  .zone-card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .zone-card.open .zone-card-body {
+    max-height: 600px;
+  }
+
+  .zone-card-body > div {
+    padding: 0 20px;
+  }
+
+  .zone-card-body > div:first-child {
+    padding-top: 4px;
+    border-top: 1px solid rgba(90, 124, 89, 0.08);
+  }
+
+  .zone-card-info {
+    margin-bottom: 14px;
+  }
+
+  .zone-card-info h4 {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-light);
+    margin-bottom: 6px;
+  }
+
+  .zone-card-info ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .zone-card-info li {
+    background: var(--color-cream);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--color-text);
+  }
+
+  .zone-card-info p {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 0.95rem;
+    max-width: none;
+  }
+
+  .zone-card-actions {
+    display: flex;
+    gap: 10px;
+    padding: 0 20px 18px;
+    flex-wrap: wrap;
+  }
+
+  /* Active card styling */
+  .zone-card.open {
+    border-color: var(--color-primary);
+    box-shadow: 0 6px 25px rgba(90, 124, 89, 0.12);
+  }
+
+  .zone-card.open .zone-card-icon {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .body-map-layout {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .body-map-col {
+      display: none;
+    }
+
+    .info-panel-col {
+      min-height: auto;
+    }
+
+    .info-panel {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      padding-top: 120px;
+      padding-bottom: 40px;
+    }
+
+    .body-map-section {
+      padding: 40px 0 60px;
+    }
+
+    .zone-cards-section {
+      padding: 60px 0;
+    }
+
+    .zone-cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .zone-card-header {
+      padding: 15px 16px;
+    }
+
+    .zone-card-icon {
+      width: 38px;
+      height: 38px;
+    }
+
+    .zone-card-name {
+      font-size: 0.95rem;
+    }
+
+    .zone-card-actions {
+      flex-direction: column;
+    }
+
+    .zone-card-actions .btn {
+      text-align: center;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 901px) {
+    .zone-cards-section {
+      padding-top: 40px;
+    }
+
+    .zone-cards-title {
+      font-size: 1.6rem;
+    }
+
+    .zone-cards-subtitle {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+<script>
+  var ZONES = [
+    {
+      id: 'cabeza',
+      name: 'Cabeza',
+      tag: 'Zona craneal',
+      molestias: ['Migranas', 'Cefaleas tensionales', 'Mareos'],
+      tratamiento: 'Osteopatia craneal',
+      causas: ['Tension cervical acumulada', 'Estres y bruxismo', 'Mala postura ante el ordenador'],
+      link: '/servicios/osteopatia-alpedrete',
+      whatsappZone: 'la cabeza'
+    },
+    {
+      id: 'cuello',
+      name: 'Cuello / Cervicales',
+      tag: 'Zona cervical',
+      molestias: ['Contracturas cervicales', 'Torticolis', 'Rigidez cervical'],
+      tratamiento: 'Osteopatia + masaje',
+      causas: ['Postura prolongada ante pantallas', 'Estres y tension emocional', 'Almohada inadecuada'],
+      link: '/servicios/osteopatia-alpedrete',
+      whatsappZone: 'el cuello'
+    },
+    {
+      id: 'hombro-izq',
+      name: 'Hombros',
+      tag: 'Zona de hombros',
+      molestias: ['Tendinitis', 'Dolor de hombro', 'Movilidad reducida'],
+      tratamiento: 'Osteopatia estructural',
+      causas: ['Movimientos repetitivos', 'Lesiones deportivas', 'Tension muscular cronica'],
+      link: '/servicios/osteopatia-alpedrete',
+      whatsappZone: 'el hombro'
+    },
+    {
+      id: 'hombro-der',
+      name: 'Hombros',
+      tag: 'Zona de hombros',
+      molestias: ['Tendinitis', 'Dolor de hombro', 'Movilidad reducida'],
+      tratamiento: 'Osteopatia estructural',
+      causas: ['Movimientos repetitivos', 'Lesiones deportivas', 'Tension muscular cronica'],
+      link: '/servicios/osteopatia-alpedrete',
+      whatsappZone: 'el hombro'
+    },
+    {
+      id: 'espalda-alta',
+      name: 'Espalda alta / Dorsal',
+      tag: 'Zona dorsal',
+      molestias: ['Contracturas dorsales', 'Dolor entre omoplatos', 'Mala postura'],
+      tratamiento: 'Masaje deportivo',
+      causas: ['Sedentarismo y trabajo de oficina', 'Estres emocional', 'Debilidad muscular en la zona'],
+      link: '/servicios/masaje-deportivo-alpedrete',
+      whatsappZone: 'la espalda alta'
+    },
+    {
+      id: 'brazo',
+      name: 'Brazos / Manos',
+      tag: 'Extremidades superiores',
+      molestias: ['Epicondilitis (codo de tenista)', 'Tunel carpiano', 'Hormigueo en manos'],
+      tratamiento: 'Osteopatia',
+      causas: ['Uso excesivo del raton o teclado', 'Movimientos repetitivos laborales', 'Compresion nerviosa cervical'],
+      link: '/servicios/osteopatia-alpedrete',
+      whatsappZone: 'el brazo'
+    },
+    {
+      id: 'lumbar',
+      name: 'Zona lumbar',
+      tag: 'Zona lumbar',
+      molestias: ['Lumbalgia', 'Ciatica', 'Hernia discal'],
+      tratamiento: 'Osteopatia + masaje corporal',
+      causas: ['Sedentarismo prolongado', 'Cargar peso de forma incorrecta', 'Debilidad de la musculatura abdominal'],
+      link: '/servicios/osteopatia-alpedrete',
+      whatsappZone: 'la zona lumbar'
+    },
+    {
+      id: 'cadera',
+      name: 'Cadera',
+      tag: 'Zona de cadera',
+      molestias: ['Dolor de cadera', 'Trocanteritis', 'Limitacion de movimiento'],
+      tratamiento: 'Osteopatia estructural',
+      causas: ['Desgaste articular', 'Desequilibrio muscular pelvico', 'Sobrecarga por actividad deportiva'],
+      link: '/servicios/osteopatia-alpedrete',
+      whatsappZone: 'la cadera'
+    },
+    {
+      id: 'rodilla',
+      name: 'Rodillas',
+      tag: 'Zona de rodillas',
+      molestias: ['Dolor de rodilla', 'Condromalacia', 'Rigidez articular'],
+      tratamiento: 'Osteopatia',
+      causas: ['Sobrecarga deportiva', 'Desalineacion postural', 'Desequilibrio muscular de la pierna'],
+      link: '/servicios/osteopatia-alpedrete',
+      whatsappZone: 'la rodilla'
+    },
+    {
+      id: 'pie',
+      name: 'Piernas / Pies',
+      tag: 'Extremidades inferiores',
+      molestias: ['Fascitis plantar', 'Calambres', 'Piernas cansadas'],
+      tratamiento: 'Masaje deportivo',
+      causas: ['Calzado inadecuado', 'Estar de pie muchas horas', 'Mala circulacion sanguinea'],
+      link: '/servicios/masaje-deportivo-alpedrete',
+      whatsappZone: 'los pies'
+    },
+    {
+      id: 'embarazo',
+      name: 'Embarazo',
+      tag: 'Embarazo',
+      molestias: ['Dolor lumbar del embarazo', 'Ciatica gestacional', 'Retencion de liquidos'],
+      tratamiento: 'Masaje para embarazadas',
+      causas: ['Cambios posturales por el peso del bebe', 'Cambios hormonales', 'Compresion de nervios y vasos sanguineos'],
+      link: '/servicios/masaje-embarazadas-alpedrete',
+      whatsappZone: 'el embarazo'
+    }
+  ];
+
+  function getZoneData(zoneId) {
+    for (var i = 0; i < ZONES.length; i++) {
+      if (ZONES[i].id === zoneId) {
+        return ZONES[i];
+      }
+    }
+    return null;
+  }
+
+  // SVG zone click handling
+  var allZones = document.querySelectorAll('.zone');
+  var infoPlaceholder = document.getElementById('info-placeholder');
+  var infoContent = document.getElementById('info-content');
+  var currentActiveZone = null;
+
+  allZones.forEach(function(zone) {
+    zone.addEventListener('click', function() {
+      var zoneId = this.getAttribute('data-zone');
+      selectZone(zoneId);
+
+      // Update SVG active states
+      allZones.forEach(function(z) { z.classList.remove('active'); });
+      // Activate all zones with same data-zone
+      document.querySelectorAll('.zone[data-zone="' + zoneId + '"]').forEach(function(z) {
+        z.classList.add('active');
+      });
+    });
+
+    // Show labels on hover
+    zone.addEventListener('mouseenter', function() {
+      var zoneId = this.getAttribute('data-zone');
+      document.querySelectorAll('.zone-label[data-zone="' + zoneId + '"]').forEach(function(label) {
+        label.style.opacity = '1';
+      });
+    });
+
+    zone.addEventListener('mouseleave', function() {
+      var zoneId = this.getAttribute('data-zone');
+      document.querySelectorAll('.zone-label[data-zone="' + zoneId + '"]').forEach(function(label) {
+        label.style.opacity = '0';
+      });
+    });
+  });
+
+  function selectZone(zoneId) {
+    var data = getZoneData(zoneId);
+    if (!data) return;
+
+    currentActiveZone = zoneId;
+
+    // Update info panel
+    document.getElementById('info-zone-tag').textContent = data.tag;
+    document.getElementById('info-zone-name').textContent = data.name;
+
+    // Molestias
+    var molestiasList = document.getElementById('info-molestias');
+    molestiasList.innerHTML = '';
+    data.molestias.forEach(function(m) {
+      var li = document.createElement('li');
+      li.textContent = m;
+      molestiasList.appendChild(li);
+    });
+
+    // Tratamiento
+    document.getElementById('info-tratamiento').textContent = data.tratamiento;
+
+    // Causas
+    var causasList = document.getElementById('info-causas');
+    causasList.innerHTML = '';
+    data.causas.forEach(function(c) {
+      var li = document.createElement('li');
+      li.textContent = c;
+      causasList.appendChild(li);
+    });
+
+    // WhatsApp link
+    var waText = encodeURIComponent('Hola Katy, me duele ' + data.whatsappZone + ' y me gustaria una consulta');
+    document.getElementById('info-whatsapp').href = 'https://wa.me/34643961065?text=' + waText;
+
+    // Treatment link
+    document.getElementById('info-link').href = data.link;
+
+    // Show content, hide placeholder
+    infoPlaceholder.style.display = 'none';
+    infoContent.style.display = 'none';
+    // Force reflow for animation
+    void infoContent.offsetWidth;
+    infoContent.style.display = 'block';
+
+    // Scroll info panel into view on smaller screens
+    if (window.innerWidth <= 1000) {
+      document.getElementById('info-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Zone card accordion
+  var zoneCards = document.querySelectorAll('.zone-card');
+  zoneCards.forEach(function(card) {
+    var header = card.querySelector('.zone-card-header');
+    header.addEventListener('click', function() {
+      var isOpen = card.classList.contains('open');
+
+      // Close all cards
+      zoneCards.forEach(function(c) { c.classList.remove('open'); });
+
+      // Toggle current card
+      if (!isOpen) {
+        card.classList.add('open');
+      }
+    });
+  });
+</script>
