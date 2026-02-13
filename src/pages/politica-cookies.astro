@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Política de Cookies - Katy Caballero"
+  description="Política de cookies del sitio web de Katy Caballero, osteópata y masajista en Alpedrete."
+  noindex={true}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Política de Cookies" }]}
+>
+  <section class="legal-page">
+    <div class="container">
+      <h1>Política de Cookies</h1>
+      <p class="legal-date">Última actualización: febrero 2026</p>
+
+      <h2>¿Qué son las cookies?</h2>
+      <p>Las cookies son pequeños archivos de texto que los sitios web almacenan en tu navegador. Sirven para recordar tus preferencias y mejorar tu experiencia de navegación.</p>
+
+      <h2>¿Qué cookies utilizamos?</h2>
+
+      <h3>Cookies técnicas (necesarias)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Cookie</th>
+            <th>Finalidad</th>
+            <th>Duración</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>cookie-consent</td>
+            <td>Almacena tu preferencia sobre el uso de cookies</td>
+            <td>Permanente (localStorage)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Cookies analíticas (opcionales)</h3>
+      <p>Solo se activan si aceptas el uso de cookies en el banner.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Cookie</th>
+            <th>Proveedor</th>
+            <th>Finalidad</th>
+            <th>Duración</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>_ga</td>
+            <td>Google Analytics</td>
+            <td>Distinguir usuarios únicos</td>
+            <td>2 años</td>
+          </tr>
+          <tr>
+            <td>_ga_*</td>
+            <td>Google Analytics</td>
+            <td>Mantener el estado de la sesión</td>
+            <td>2 años</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>¿Cómo gestionar las cookies?</h2>
+      <p>Puedes cambiar tu decisión en cualquier momento eliminando las cookies de tu navegador. La próxima vez que visites la web, volverá a aparecer el banner de consentimiento.</p>
+      <p>También puedes configurar tu navegador para bloquear o eliminar cookies. Estos son los enlaces de ayuda de los navegadores más comunes:</p>
+      <ul>
+        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
+        <li><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
+        <li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Safari</a></li>
+        <li><a href="https://support.microsoft.com/es-es/microsoft-edge/eliminar-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
+      </ul>
+
+      <h2>Responsable del tratamiento</h2>
+      <p><strong>Katy Caballero - Osteópata y Masajista</strong><br>
+      Calle Río Guadarrama 2, Alpedrete, Madrid<br>
+      Email: <a href="mailto:katycaballero.osteopata@gmail.com">katycaballero.osteopata@gmail.com</a></p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .legal-page {
+    padding-top: 140px;
+    padding-bottom: 80px;
+  }
+
+  .legal-page h1 {
+    margin-bottom: 10px;
+  }
+
+  .legal-date {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+  }
+
+  .legal-page h2 {
+    font-size: 1.5rem;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    color: var(--color-primary-dark);
+  }
+
+  .legal-page h3 {
+    font-size: 1.2rem;
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+
+  .legal-page p,
+  .legal-page li {
+    max-width: 75ch;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+
+  .legal-page ul {
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+
+  .legal-page li {
+    margin-bottom: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(90, 124, 89, 0.12);
+  }
+
+  th {
+    background: var(--color-cream);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  td {
+    color: var(--color-text-light);
+  }
+
+  @media (max-width: 768px) {
+    table {
+      font-size: 0.8rem;
+    }
+
+    th, td {
+      padding: 8px 10px;
+    }
+  }
+</style>
