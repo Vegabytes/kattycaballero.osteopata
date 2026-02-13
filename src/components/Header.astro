@@ -30,7 +30,7 @@ const navLinks = [
       ))}
     </ul>
     
-    <button class="mobile-menu-btn" aria-label="Menú" id="mobile-menu-btn">
+    <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false" id="mobile-menu-btn">
       <span></span>
       <span></span>
       <span></span>
@@ -249,6 +249,18 @@ const navLinks = [
   mobileMenuBtn?.addEventListener('click', () => {
     mobileMenuBtn.classList.toggle('active');
     mobileMenu?.classList.toggle('active');
+    const isOpen = mobileMenu?.classList.contains('active');
+    mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Close mobile menu on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu?.classList.contains('active')) {
+      mobileMenuBtn?.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+      mobileMenuBtn?.focus();
+    }
   });
   
   // Scroll effect
