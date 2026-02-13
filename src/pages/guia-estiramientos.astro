@@ -1,0 +1,510 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+
+const pageTitle = "Guía de Estiramientos por Zona | Katy Caballero - Osteópata en Alpedrete";
+const pageDescription = "Guía gratuita de estiramientos para cuello, espalda, lumbar y piernas. Ejercicios sencillos para hacer en casa y aliviar tensiones. Por Katy Caballero, osteópata.";
+const pageKeywords = "estiramientos espalda, ejercicios dolor cervical, estiramientos lumbar, estiramientos piernas, guia estiramientos";
+
+const zones = [
+  {
+    id: "cuello",
+    name: "Cuello y Cervicales",
+    stretches: [
+      {
+        name: "Inclinación lateral",
+        duration: "20 seg",
+        description: "Inclina la cabeza hacia un lado llevando la oreja al hombro. Mantén 20 segundos. No fuerces, deja que el peso de la cabeza haga el trabajo. Repite al otro lado.",
+      },
+      {
+        name: "Rotación suave",
+        duration: "15 seg",
+        description: "Gira la cabeza lentamente hacia un lado hasta sentir un estiramiento suave. Mantén 15 segundos. Vuelve al centro y repite al otro lado.",
+      },
+      {
+        name: "Flexión de mentón",
+        duration: "20 seg",
+        description: "Lleva el mentón hacia el pecho, sintiendo el estiramiento en la nuca. Puedes ayudarte con las manos suavemente. Mantén 20 segundos.",
+      },
+      {
+        name: "Estiramiento de trapecio",
+        duration: "20 seg",
+        description: "Inclina la cabeza a un lado y con la mano del mismo lado tira suavemente. El brazo contrario queda relajado hacia abajo. Mantén 20 segundos por lado.",
+      },
+    ],
+  },
+  {
+    id: "espalda",
+    name: "Espalda y Dorsales",
+    stretches: [
+      {
+        name: "Gato-vaca",
+        duration: "10 rep",
+        description: "A cuatro patas, arquea la espalda hacia arriba (gato) y luego hacia abajo (vaca). Haz 10 repeticiones lentas coordinando con la respiración.",
+      },
+      {
+        name: "Rotación torácica",
+        duration: "15 seg",
+        description: "Sentado o a cuatro patas, lleva un brazo hacia el techo rotando el tronco. Sigue la mano con la mirada. Mantén 15 segundos por lado.",
+      },
+      {
+        name: "Abrazo de rodillas",
+        duration: "30 seg",
+        description: "Tumbado boca arriba, lleva ambas rodillas al pecho y abrázalas. Mécete suavemente de lado a lado. Mantén 30 segundos.",
+      },
+      {
+        name: "Estiramiento de pectoral en puerta",
+        duration: "20 seg",
+        description: "Coloca el antebrazo en el marco de una puerta y gira el cuerpo hacia el lado contrario. Sentirás el estiramiento en el pecho y la parte frontal del hombro. 20 segundos por lado.",
+      },
+    ],
+  },
+  {
+    id: "lumbar",
+    name: "Zona Lumbar",
+    stretches: [
+      {
+        name: "Rodilla al pecho",
+        duration: "20 seg",
+        description: "Tumbado boca arriba, lleva una rodilla al pecho con las manos. La otra pierna puede estar estirada o flexionada. Mantén 20 segundos por lado.",
+      },
+      {
+        name: "Torsión lumbar",
+        duration: "30 seg",
+        description: "Tumbado boca arriba con los brazos en cruz, lleva ambas rodillas juntas hacia un lado. Gira la cabeza al lado contrario. Mantén 30 segundos por lado.",
+      },
+      {
+        name: "Postura del niño",
+        duration: "30 seg",
+        description: "De rodillas, siéntate sobre los talones y estira los brazos hacia delante. Deja que la frente toque el suelo. Respira profundo y mantén 30 segundos.",
+      },
+      {
+        name: "Basculación pélvica",
+        duration: "10 rep",
+        description: "Tumbado boca arriba con rodillas flexionadas, aprieta el abdomen y pega la zona lumbar al suelo. Mantén 5 segundos y relaja. Repite 10 veces.",
+      },
+    ],
+  },
+  {
+    id: "piernas",
+    name: "Piernas y Cadera",
+    stretches: [
+      {
+        name: "Isquiotibiales de pie",
+        duration: "20 seg",
+        description: "Coloca un pie elevado sobre una silla o escalón. Con la espalda recta, inclínate hacia delante desde la cadera. Mantén 20 segundos por pierna.",
+      },
+      {
+        name: "Cuádriceps de pie",
+        duration: "20 seg",
+        description: "De pie, sujétate a una pared. Agarra un pie por detrás y lleva el talón al glúteo. Mantén las rodillas juntas. 20 segundos por pierna.",
+      },
+      {
+        name: "Piriforme",
+        duration: "20 seg",
+        description: "Tumbado boca arriba, cruza un tobillo sobre la rodilla contraria. Tira de la pierna de abajo hacia el pecho. Sentirás el estiramiento en el glúteo. 20 segundos por lado.",
+      },
+      {
+        name: "Flexor de cadera",
+        duration: "20 seg",
+        description: "En posición de zancada con una rodilla en el suelo, empuja la cadera hacia delante. Mantén la espalda recta. 20 segundos por lado.",
+      },
+    ],
+  },
+];
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Guía de Estiramientos" }]}>
+
+  <section class="page-header">
+    <div class="container">
+      <span class="section-tag">Guía gratuita</span>
+      <h1>Estiramientos para hacer en casa</h1>
+      <p>Ejercicios sencillos que puedes hacer cada día para aliviar tensiones y prevenir dolores. Selecciona la zona que quieres trabajar.</p>
+    </div>
+  </section>
+
+  <section class="stretches-section">
+    <div class="container">
+
+      <!-- Zone Tabs -->
+      <div class="zone-tabs" role="tablist" aria-label="Zonas del cuerpo">
+        {zones.map((zone, i) => (
+          <button
+            class={`zone-tab ${i === 0 ? "active" : ""}`}
+            role="tab"
+            aria-selected={i === 0 ? "true" : "false"}
+            aria-controls={`panel-${zone.id}`}
+            data-zone={zone.id}
+          >
+            <span class="zone-dot"></span>
+            {zone.name}
+          </button>
+        ))}
+      </div>
+
+      <!-- Zone Panels -->
+      {zones.map((zone, i) => (
+        <div
+          class={`zone-panel ${i === 0 ? "active" : ""}`}
+          id={`panel-${zone.id}`}
+          role="tabpanel"
+          data-zone={zone.id}
+        >
+          <div class="stretches-grid">
+            {zone.stretches.map((stretch) => (
+              <div class="stretch-card">
+                <div class="stretch-card-header">
+                  <h3>{stretch.name}</h3>
+                  <span class="stretch-badge">{stretch.duration}</span>
+                </div>
+                <p class="stretch-description">{stretch.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+    </div>
+  </section>
+
+  <!-- Important Notes -->
+  <section class="notes-section">
+    <div class="container">
+      <div class="notes-box">
+        <div class="notes-header">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <h2>Antes de empezar, ten en cuenta</h2>
+        </div>
+        <ul class="notes-list">
+          <li>Nunca fuerces un estiramiento hasta sentir dolor</li>
+          <li>Respira de forma suave y continua, nunca aguantes la respiración</li>
+          <li>Si algún movimiento te produce dolor, detente y consúltame</li>
+          <li>Estos estiramientos son generales. Para un plan personalizado, reserva una sesión</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="¿Necesitas un plan personalizado?"
+    description="Estos estiramientos son generales. En consulta puedo diseñar una rutina específica para tu cuerpo y tus necesidades."
+    buttonText="Reservar Cita por WhatsApp"
+    buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20un%20plan%20de%20estiramientos%20personalizado"
+  />
+
+</Layout>
+
+<style>
+  /* Page Header */
+  .page-header {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .page-header h1 {
+    margin-bottom: 20px;
+  }
+
+  .page-header p {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  /* Stretches Section */
+  .stretches-section {
+    background: var(--color-warm-white);
+    padding-bottom: 40px;
+  }
+
+  /* Zone Tabs */
+  .zone-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+
+  .zone-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border: 2px solid rgba(90, 124, 89, 0.15);
+    border-radius: 50px;
+    background: var(--color-cream);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+  }
+
+  .zone-tab:hover {
+    border-color: var(--color-primary);
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .zone-tab.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 20px rgba(90, 124, 89, 0.25);
+  }
+
+  .zone-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary-light);
+    flex-shrink: 0;
+    transition: var(--transition);
+  }
+
+  .zone-tab.active .zone-dot {
+    background: var(--color-secondary-light);
+  }
+
+  /* Zone Panels */
+  .zone-panel {
+    display: none;
+  }
+
+  .zone-panel.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Stretches Grid */
+  .stretches-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+
+  /* Stretch Card */
+  .stretch-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    border-left: 4px solid var(--color-primary);
+    transition: var(--transition);
+  }
+
+  .stretch-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(90, 124, 89, 0.1);
+  }
+
+  .stretch-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .stretch-card-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .stretch-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    background: var(--color-secondary-light);
+    padding: 5px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+
+  .stretch-description {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: none;
+    margin: 0;
+  }
+
+  /* Notes Section */
+  .notes-section {
+    background: var(--color-warm-white);
+    padding-top: 20px;
+  }
+
+  .notes-box {
+    background: #fef9ef;
+    border: 1px solid rgba(196, 163, 90, 0.25);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .notes-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    color: var(--color-secondary);
+  }
+
+  .notes-header h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .notes-header svg {
+    flex-shrink: 0;
+    color: var(--color-secondary);
+  }
+
+  .notes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .notes-list li {
+    position: relative;
+    padding-left: 28px;
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .notes-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-secondary);
+    opacity: 0.6;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .stretches-grid {
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .zone-tabs {
+      gap: 8px;
+    }
+
+    .zone-tab {
+      padding: 10px 18px;
+      font-size: 0.85rem;
+    }
+
+    .stretches-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .stretch-card {
+      padding: 24px;
+    }
+
+    .notes-box {
+      padding: 28px 24px;
+    }
+
+    .notes-header {
+      flex-direction: column;
+      text-align: center;
+      gap: 8px;
+    }
+
+    .notes-list li {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .zone-tabs {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .zone-tab {
+      justify-content: center;
+    }
+
+    .stretch-card-header {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stretch-badge {
+      align-self: flex-start;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.zone-tab');
+    const panels = document.querySelectorAll('.zone-panel');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const zone = tab.getAttribute('data-zone');
+
+        // Update tabs
+        tabs.forEach((t) => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        // Update panels
+        panels.forEach((panel) => {
+          panel.classList.remove('active');
+        });
+        const activePanel = document.getElementById(`panel-${zone}`);
+        if (activePanel) {
+          activePanel.classList.add('active');
+        }
+      });
+    });
+  });
+</script>

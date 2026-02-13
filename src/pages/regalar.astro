@@ -1,0 +1,565 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+import { services } from '../data/services';
+
+const pageTitle = "Regala un Masaje u Osteopatía en Alpedrete | Tarjeta Regalo - Katy Caballero";
+const pageDescription = "Regala bienestar: tarjeta regalo de masaje u osteopatía en Alpedrete. Masaje relajante, deportivo, tailandés o sesión de osteopatía. El regalo perfecto para cualquier ocasión.";
+const pageKeywords = "regalar masaje alpedrete, tarjeta regalo masaje sierra madrid, regalo osteopatia, bono regalo masaje";
+
+interface GiftOption {
+  name: string;
+  duration: string;
+  price: string;
+  description: string;
+  badge?: string;
+}
+
+const giftOptions: GiftOption[] = [
+  {
+    name: "Osteopatía",
+    duration: "55 min",
+    price: "40€",
+    description: "Para quien necesita aliviar dolores y tensiones",
+  },
+  {
+    name: "Masaje Deportivo",
+    duration: "30 min",
+    price: "20€",
+    description: "Para el deportista que lo da todo",
+  },
+  {
+    name: "Masaje Corporal con Aceite",
+    duration: "60 min / 90 min",
+    price: "40€ / 55€",
+    description: "Relajación total con aceites esenciales",
+  },
+  {
+    name: "Masaje Tailandés",
+    duration: "60 min / 90 min",
+    price: "45€ / 60€",
+    description: "Una experiencia única de flexibilidad y calma",
+  },
+  {
+    name: "Pindas Herbales",
+    duration: "90 min",
+    price: "70€",
+    description: "La experiencia premium: calor, aromas y relajación profunda",
+    badge: "Más regalado",
+  },
+  {
+    name: "Masaje Embarazadas",
+    duration: "60 min",
+    price: "40€",
+    description: "Para la futura mamá que se merece un mimo",
+  },
+];
+
+function whatsappLink(serviceName: string): string {
+  const message = encodeURIComponent(`Hola Katy, me gustaría comprar una tarjeta regalo de ${serviceName}`);
+  return `https://wa.me/34643961065?text=${message}`;
+}
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cómo se entrega la tarjeta regalo de masaje?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Te envío la tarjeta regalo digital por WhatsApp o email. Si prefieres una tarjeta física, te la preparo en consulta."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿La tarjeta regalo tiene caducidad?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La tarjeta regalo es válida durante 6 meses desde la compra."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿La persona que recibe el regalo puede elegir la fecha?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, la persona que recibe el regalo reserva el día y hora que prefiera."
+      }
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Regalar" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- Header -->
+  <section class="page-header">
+    <div class="container">
+      <span class="section-tag">Tarjeta Regalo</span>
+      <h1>Regala bienestar</h1>
+      <p>El regalo perfecto para cumpleaños, Día de la Madre, aniversarios o simplemente para decir "te quiero". Regala una experiencia de cuidado y relajación.</p>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="steps-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Cómo funciona</span>
+        <h2>Regalar es muy fácil</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Elige el tratamiento</h3>
+          <p>Escoge entre nuestros masajes y tratamientos</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Contacta conmigo</h3>
+          <p>Te preparo la tarjeta regalo personalizada</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Sorprende</h3>
+          <p>Entrega el regalo y la persona reserva cuando quiera</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gift options grid -->
+  <section class="gift-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Elige un regalo</span>
+        <h2>Tratamientos para regalar</h2>
+      </div>
+      <div class="gift-grid">
+        {giftOptions.map((option) => (
+          <div class:list={["gift-card", { "gift-card--featured": option.badge }]}>
+            {option.badge && <span class="gift-badge">{option.badge}</span>}
+            <div class="gift-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 12 20 22 4 22 4 12" />
+                <rect x="2" y="7" width="20" height="5" />
+                <line x1="12" y1="22" x2="12" y2="7" />
+                <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+              </svg>
+            </div>
+            <h3 class="gift-card-title">{option.name}</h3>
+            <span class="gift-card-duration">{option.duration}</span>
+            <div class="gift-card-price">{option.price}</div>
+            <p class="gift-card-description">{option.description}</p>
+            <a href={whatsappLink(option.name)} target="_blank" rel="noopener" class="gift-card-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Regalar este
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial highlight -->
+  <section class="testimonial-highlight">
+    <div class="container">
+      <div class="testimonial-box">
+        <div class="testimonial-quote-mark">&ldquo;</div>
+        <blockquote class="testimonial-text">
+          Gran regalo de cumpleaños!! No se me ocurre uno mejor. Mi primera vez y ha sido una experiencia de 10.
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-stars">
+            {Array.from({length: 5}).map(() => (
+              <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FBBC05"/></svg>
+            ))}
+          </div>
+          <span class="testimonial-name">Natalia Fernández Grande</span>
+          <span class="testimonial-source">Reseña en Google</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Info section -->
+  <section class="info-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Preguntas frecuentes</span>
+        <h2>Todo sobre la tarjeta regalo</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h3>¿Cómo se entrega?</h3>
+          <p>Te envío la <strong>tarjeta regalo digital</strong> por WhatsApp o email. Si prefieres una <strong>tarjeta física</strong>, te la preparo en consulta.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h3>¿Tiene caducidad?</h3>
+          <p>La tarjeta regalo es válida durante <strong>6 meses</strong> desde la compra.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h3>¿Puede elegir la fecha?</h3>
+          <p>Sí, la persona que recibe el regalo <strong>reserva el día y hora</strong> que prefiera.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTASection
+    title="¿No sabes qué regalar?"
+    description="Escríbeme y te ayudo a elegir el tratamiento perfecto para esa persona especial."
+    buttonText="Escríbeme por WhatsApp"
+    buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20la%20tarjeta%20regalo"
+  />
+</Layout>
+
+<style>
+  /* ====== Page Header ====== */
+  .page-header {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .page-header h1 {
+    margin-bottom: 20px;
+  }
+
+  .page-header p {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  /* ====== Steps Section ====== */
+  .steps-section {
+    background: var(--color-warm-white);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .step-card {
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .step-number {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.3);
+  }
+
+  .step-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    color: var(--color-text);
+  }
+
+  .step-card p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    max-width: none;
+    margin: 0 auto;
+  }
+
+  /* ====== Gift Section ====== */
+  .gift-section {
+    background: var(--color-cream);
+  }
+
+  .gift-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .gift-card {
+    background: white;
+    border-radius: 20px;
+    padding: 35px 28px 30px;
+    text-align: center;
+    position: relative;
+    border: 2px solid rgba(90, 124, 89, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gift-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(90, 124, 89, 0.15);
+    border-color: var(--color-primary-light);
+  }
+
+  .gift-card--featured {
+    border-color: var(--color-secondary);
+    box-shadow: 0 4px 20px rgba(196, 163, 90, 0.15);
+  }
+
+  .gift-card--featured:hover {
+    border-color: var(--color-secondary);
+    box-shadow: 0 15px 40px rgba(196, 163, 90, 0.25);
+  }
+
+  .gift-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--color-secondary);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .gift-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-secondary-light) 0%, rgba(196, 163, 90, 0.15) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--color-secondary);
+  }
+
+  .gift-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 8px;
+  }
+
+  .gift-card-duration {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    background: var(--color-cream);
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .gift-card-price {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .gift-card-description {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 22px;
+    flex-grow: 1;
+    max-width: none;
+  }
+
+  .gift-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #25D366;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: auto;
+  }
+
+  .gift-card-btn:hover {
+    background: #20bd5a;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+  }
+
+  /* ====== Testimonial Highlight ====== */
+  .testimonial-highlight {
+    background: var(--color-primary-dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonial-highlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .testimonial-box {
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+
+  .testimonial-quote-mark {
+    font-family: var(--font-display);
+    font-size: 8rem;
+    line-height: 0.5;
+    color: rgba(255, 255, 255, 0.12);
+    margin-bottom: 10px;
+    user-select: none;
+  }
+
+  .testimonial-text {
+    color: white;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0 0 30px;
+    border: none;
+    padding: 0;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .testimonial-stars {
+    display: flex;
+    gap: 3px;
+  }
+
+  .star-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .testimonial-name {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .testimonial-source {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+  }
+
+  /* ====== Info Section ====== */
+  .info-section {
+    background: var(--color-warm-white);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .info-card {
+    background: var(--color-cream);
+    border-radius: 20px;
+    padding: 35px 30px;
+    text-align: center;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+  }
+
+  .info-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--color-secondary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--color-primary);
+  }
+
+  .info-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: var(--color-text);
+  }
+
+  .info-card p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: none;
+  }
+
+  /* ====== Responsive ====== */
+  @media (max-width: 1024px) {
+    .gift-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      max-width: 400px;
+    }
+
+    .gift-grid {
+      grid-template-columns: 1fr;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonial-quote-mark {
+      font-size: 5rem;
+    }
+  }
+</style>

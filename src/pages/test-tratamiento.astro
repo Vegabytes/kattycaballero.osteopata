@@ -1,0 +1,987 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+
+const pageTitle = "Test: ¿Qué Tratamiento Necesitas? | Katy Caballero - Alpedrete";
+const pageDescription = "Descubre qué tratamiento de osteopatía o masaje es el más adecuado para ti. Test rápido de 5 preguntas con recomendación personalizada.";
+const pageKeywords = "que tipo de masaje necesito, que tratamiento necesito, test osteopatia, test masaje";
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Test" }]}>
+
+  <section class="page-header">
+    <div class="container">
+      <span class="section-tag">Test</span>
+      <h1>¿Qué tratamiento necesitas?</h1>
+      <p>Responde 5 preguntas y te recomiendo el tratamiento ideal para ti</p>
+    </div>
+  </section>
+
+  <section class="quiz-section">
+    <div class="container">
+      <div class="quiz-wrapper" id="quiz-wrapper">
+
+        <!-- Progress bar -->
+        <div class="progress-container" id="progress-container">
+          <div class="progress-text">Pregunta <span id="progress-current">1</span> de <span id="progress-total">5</span></div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="quiz-step active" data-step="1">
+          <h2 class="quiz-question">¿Cuál es tu principal motivo de consulta?</h2>
+          <div class="quiz-options">
+            <button class="quiz-option" data-key="motive" data-value="pain">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 18.7c1.2-.6 2-1.9 2-3.2 0-2.1-1.7-3.7-3.7-3.7-.4 0-.7.1-1 .2C14.7 9.8 12.6 8 10 8c-3 0-5.5 2.5-5.5 5.5 0 1.3.5 2.5 1.2 3.4"/><path d="M12 14v4"/><path d="M10 16h4"/></svg>
+              </span>
+              <span class="quiz-option-text">Tengo dolor o molestia física</span>
+            </button>
+            <button class="quiz-option" data-key="motive" data-value="relax">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+              </span>
+              <span class="quiz-option-text">Quiero relajarme y desconectar</span>
+            </button>
+            <button class="quiz-option" data-key="motive" data-value="sport">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M6.5 8a2 2 0 0 0-1.9 1.3L2 16h3l1.5-4L9 17l-1 5h2l2-6 2 6h2l-1-5 2.5-5 1.5 4h3l-2.6-6.7A2 2 0 0 0 17.5 8h-11z"/></svg>
+              </span>
+              <span class="quiz-option-text">Necesito recuperarme del deporte</span>
+            </button>
+            <button class="quiz-option" data-key="motive" data-value="pregnant">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M16 10c0 0-1-1-4-1s-4 1-4 1c-1 .5-2 2-2 4 0 3 1.5 5 3 7h6c1.5-2 3-4 3-7 0-2-1-3.5-2-4z"/></svg>
+              </span>
+              <span class="quiz-option-text">Estoy embarazada y quiero cuidarme</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="quiz-step" data-step="2">
+          <h2 class="quiz-question">¿Dónde sientes más molestia?</h2>
+          <div class="quiz-options">
+            <button class="quiz-option" data-key="area" data-value="back">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M12 8v14"/><path d="M8 12h8"/><path d="M9 20l3-3 3 3"/></svg>
+              </span>
+              <span class="quiz-option-text">Espalda, cervicales o zona lumbar</span>
+            </button>
+            <button class="quiz-option" data-key="area" data-value="legs">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4v6l-3 3v5l3 4"/><path d="M8 4v6l3 3v5l-3 4"/></svg>
+              </span>
+              <span class="quiz-option-text">Piernas, rodillas o pies</span>
+            </button>
+            <button class="quiz-option" data-key="area" data-value="full">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="9" y1="22" x2="12" y2="16"/><line x1="15" y1="22" x2="12" y2="16"/></svg>
+              </span>
+              <span class="quiz-option-text">Todo el cuerpo en general</span>
+            </button>
+            <button class="quiz-option" data-key="area" data-value="head">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v3"/><path d="M8 14c0 4 8 4 8 0"/><path d="M9 5l1 2"/><path d="M15 5l-1 2"/></svg>
+              </span>
+              <span class="quiz-option-text">Cabeza, mandíbula o mareos</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="quiz-step" data-step="3">
+          <h2 class="quiz-question">¿Desde cuándo tienes esta molestia?</h2>
+          <div class="quiz-options">
+            <button class="quiz-option" data-key="duration" data-value="acute">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </span>
+              <span class="quiz-option-text">Es reciente (menos de 2 semanas)</span>
+            </button>
+            <button class="quiz-option" data-key="duration" data-value="chronic">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </span>
+              <span class="quiz-option-text">Llevo semanas o meses</span>
+            </button>
+            <button class="quiz-option" data-key="duration" data-value="recurring">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              </span>
+              <span class="quiz-option-text">Es algo recurrente que va y viene</span>
+            </button>
+            <button class="quiz-option" data-key="duration" data-value="wellness">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </span>
+              <span class="quiz-option-text">No tengo molestia, busco bienestar</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="quiz-step" data-step="4">
+          <h2 class="quiz-question">¿Practicas deporte regularmente?</h2>
+          <div class="quiz-options">
+            <button class="quiz-option" data-key="sport" data-value="active">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+              </span>
+              <span class="quiz-option-text">Sí, varias veces por semana</span>
+            </button>
+            <button class="quiz-option" data-key="sport" data-value="moderate">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </span>
+              <span class="quiz-option-text">De vez en cuando (fines de semana)</span>
+            </button>
+            <button class="quiz-option" data-key="sport" data-value="sedentary">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/></svg>
+              </span>
+              <span class="quiz-option-text">Poco o nada</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="quiz-step" data-step="5">
+          <h2 class="quiz-question">¿Qué prefieres?</h2>
+          <div class="quiz-options">
+            <button class="quiz-option" data-key="preference" data-value="therapeutic">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </span>
+              <span class="quiz-option-text">Tratamiento terapéutico (resolver un problema)</span>
+            </button>
+            <button class="quiz-option" data-key="preference" data-value="relaxation">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
+              </span>
+              <span class="quiz-option-text">Experiencia de relajación y desconexión</span>
+            </button>
+            <button class="quiz-option" data-key="preference" data-value="both">
+              <span class="quiz-option-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </span>
+              <span class="quiz-option-text">Un poco de los dos</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="quiz-result" id="quiz-result">
+          <div class="result-card">
+            <span class="result-tag">Tu tratamiento recomendado</span>
+            <h2 class="result-title" id="result-title"></h2>
+            <div class="result-meta">
+              <span class="result-price" id="result-price"></span>
+              <span class="result-separator">|</span>
+              <span class="result-duration" id="result-duration"></span>
+            </div>
+            <p class="result-reason" id="result-reason"></p>
+            <div class="result-actions">
+              <a class="btn btn-primary" id="result-whatsapp" href="#" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <span id="result-whatsapp-text">Reservar</span>
+              </a>
+              <a class="btn btn-secondary-outline" id="result-link" href="#">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                Ver más sobre este tratamiento
+              </a>
+            </div>
+          </div>
+
+          <div class="secondary-card">
+            <p class="secondary-label">También te podría interesar:</p>
+            <div class="secondary-info">
+              <h3 class="secondary-title" id="secondary-title"></h3>
+              <a class="secondary-link" id="secondary-link" href="#">Ver tratamiento</a>
+            </div>
+          </div>
+
+          <div class="result-footer">
+            <div class="share-section">
+              <p class="share-label">Comparte el test</p>
+              <div class="share-buttons">
+                <a class="share-btn share-whatsapp" id="share-whatsapp" href="#" target="_blank" rel="noopener" aria-label="Compartir en WhatsApp">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WhatsApp
+                </a>
+                <button class="share-btn share-copy" id="share-copy" aria-label="Copiar enlace">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  Copiar enlace
+                </button>
+              </div>
+            </div>
+            <button class="btn btn-restart" id="btn-restart">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Volver a hacer el test
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="¿Prefieres que te asesore personalmente?"
+    description="Si tienes dudas sobre qué tratamiento elegir, escríbeme y te ayudo sin compromiso."
+    buttonText="Consultarme por WhatsApp"
+    buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20he%20hecho%20el%20test%20de%20tu%20web%20y%20me%20gustar%C3%ADa%20consultarte"
+  />
+</Layout>
+
+<style>
+  .page-header {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .page-header h1 {
+    margin-bottom: 20px;
+  }
+
+  .page-header p {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  /* Quiz Section */
+  .quiz-section {
+    background: var(--color-warm-white);
+    padding: 60px 0 80px;
+  }
+
+  .quiz-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Progress */
+  .progress-container {
+    margin-bottom: 35px;
+  }
+
+  .progress-text {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(90, 124, 89, 0.12);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+
+  /* Steps */
+  .quiz-step {
+    display: none;
+    animation: fadeSlideIn 0.4s ease;
+  }
+
+  .quiz-step.active {
+    display: block;
+  }
+
+  @keyframes fadeSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .quiz-question {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 20px 24px;
+    background: white;
+    border: 2px solid rgba(90, 124, 89, 0.12);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--color-text);
+    line-height: 1.4;
+  }
+
+  .quiz-option:hover {
+    border-color: var(--color-primary);
+    background: var(--color-cream);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(90, 124, 89, 0.1);
+  }
+
+  .quiz-option:active {
+    transform: translateY(0);
+    background: var(--color-secondary-light);
+    border-color: var(--color-primary);
+  }
+
+  .quiz-option-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-secondary-light);
+    border-radius: 12px;
+    color: var(--color-primary);
+    transition: all 0.25s ease;
+  }
+
+  .quiz-option:hover .quiz-option-icon {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .quiz-option-text {
+    font-weight: 500;
+  }
+
+  /* Result */
+  .quiz-result {
+    display: none;
+    animation: fadeSlideIn 0.5s ease;
+  }
+
+  .quiz-result.active {
+    display: block;
+  }
+
+  .result-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 35px;
+    border: 2px solid var(--color-primary);
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 40px rgba(90, 124, 89, 0.12);
+  }
+
+  .result-tag {
+    display: inline-block;
+    background: var(--color-secondary-light);
+    color: var(--color-primary-dark);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .result-title {
+    font-size: 1.8rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 12px;
+  }
+
+  .result-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .result-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+
+  .result-separator {
+    color: rgba(90, 124, 89, 0.3);
+    font-weight: 300;
+  }
+
+  .result-duration {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    background: var(--color-cream);
+    padding: 4px 14px;
+    border-radius: 20px;
+  }
+
+  .result-reason {
+    color: var(--color-text-light);
+    line-height: 1.7;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .result-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(90, 124, 89, 0.25);
+    color: white;
+  }
+
+  .btn-secondary-outline {
+    background: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary) !important;
+  }
+
+  .btn-secondary-outline:hover {
+    background: var(--color-secondary-light);
+    transform: translateY(-2px);
+    color: var(--color-primary-dark);
+  }
+
+  /* Secondary Card */
+  .secondary-card {
+    background: var(--color-cream);
+    border-radius: 16px;
+    padding: 24px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .secondary-label {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    margin: 0;
+    max-width: none;
+  }
+
+  .secondary-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .secondary-title {
+    font-size: 1.05rem;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .secondary-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+  }
+
+  .secondary-link:hover {
+    color: var(--color-primary-dark);
+  }
+
+  /* Result Footer */
+  .result-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .share-section {
+    text-align: center;
+  }
+
+  .share-label {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin-bottom: 10px;
+    max-width: none;
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+
+  .share-whatsapp {
+    background: #25d366;
+    color: white;
+  }
+
+  .share-whatsapp:hover {
+    background: #1fb855;
+    transform: translateY(-1px);
+    color: white;
+  }
+
+  .share-copy {
+    background: white;
+    color: var(--color-text);
+    border: 1px solid rgba(90, 124, 89, 0.2) !important;
+  }
+
+  .share-copy:hover {
+    background: var(--color-cream);
+    transform: translateY(-1px);
+  }
+
+  .share-copy.copied {
+    background: var(--color-secondary-light);
+    color: var(--color-primary);
+    border-color: var(--color-primary) !important;
+  }
+
+  .btn-restart {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--color-text-light);
+    border: 2px solid rgba(90, 124, 89, 0.2);
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .btn-restart:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .quiz-section {
+      padding: 40px 0 60px;
+    }
+
+    .quiz-question {
+      font-size: 1.25rem;
+    }
+
+    .quiz-option {
+      padding: 16px 18px;
+      gap: 12px;
+    }
+
+    .quiz-option-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .quiz-option-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .quiz-option-text {
+      font-size: 0.95rem;
+    }
+
+    .result-card {
+      padding: 30px 22px;
+    }
+
+    .result-title {
+      font-size: 1.4rem;
+    }
+
+    .result-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .secondary-card {
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .secondary-info {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+</style>
+
+<script>
+  const SERVICES = {
+    osteopatia: {
+      name: 'Osteopatía',
+      price: '40\u20ac',
+      duration: '55 min',
+      slug: 'osteopatia-alpedrete',
+    },
+    deportivo: {
+      name: 'Masaje Deportivo',
+      price: '20\u20ac',
+      duration: '30 min',
+      slug: 'masaje-deportivo-alpedrete',
+    },
+    tailandes: {
+      name: 'Masaje Tailandés',
+      price: '45\u20ac / 60\u20ac',
+      duration: '60 min / 90 min',
+      slug: 'masaje-tailandes-alpedrete',
+    },
+    corporal: {
+      name: 'Masaje Corporal con Aceite',
+      price: '40\u20ac / 55\u20ac',
+      duration: '60 min / 90 min',
+      slug: 'masaje-corporal-alpedrete',
+    },
+    pindas: {
+      name: 'Masaje con Pindas Herbales',
+      price: '70\u20ac',
+      duration: '90 min',
+      slug: 'masaje-pindas-herbales-alpedrete',
+    },
+    embarazadas: {
+      name: 'Masaje para Embarazadas',
+      price: '40\u20ac',
+      duration: '60 min',
+      slug: 'masaje-embarazadas-alpedrete',
+    },
+  };
+
+  const answers = {};
+  let currentStep = 1;
+  const totalSteps = 5;
+
+  const steps = document.querySelectorAll('.quiz-step');
+  const result = document.getElementById('quiz-result');
+  const progressContainer = document.getElementById('progress-container');
+  const progressCurrent = document.getElementById('progress-current');
+  const progressFill = document.getElementById('progress-fill');
+
+  // Attach click listeners to all quiz options
+  document.querySelectorAll('.quiz-option').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const key = this.getAttribute('data-key');
+      const value = this.getAttribute('data-value');
+      answers[key] = value;
+
+      // If pregnant, skip steps 2-4 and go to step 5
+      if (key === 'motive' && value === 'pregnant') {
+        goToStep(5);
+        return;
+      }
+
+      // After step 5, show result
+      if (currentStep === totalSteps) {
+        showResult();
+        return;
+      }
+
+      goToStep(currentStep + 1);
+    });
+  });
+
+  function goToStep(step) {
+    // Hide current
+    steps.forEach(function (s) { s.classList.remove('active'); });
+
+    currentStep = step;
+
+    // Update progress
+    progressCurrent.textContent = currentStep;
+    progressFill.style.width = (currentStep / totalSteps) * 100 + '%';
+
+    // Show next
+    var nextStep = document.querySelector('.quiz-step[data-step="' + currentStep + '"]');
+    if (nextStep) {
+      nextStep.classList.remove('active');
+      // Force reflow for animation
+      void nextStep.offsetWidth;
+      nextStep.classList.add('active');
+    }
+
+    // Scroll to quiz top
+    document.querySelector('.quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function getRecommendation() {
+    var motive = answers.motive || '';
+    var area = answers.area || '';
+    var duration = answers.duration || '';
+    var sport = answers.sport || '';
+    var preference = answers.preference || '';
+
+    // pregnant
+    if (motive === 'pregnant') {
+      return {
+        primary: 'embarazadas',
+        secondary: 'corporal',
+        reason: 'Al estar embarazada, el masaje prenatal es la opción más segura y beneficiosa para ti. Técnicas suaves adaptadas a tu etapa del embarazo que alivian las molestias típicas como dolor lumbar y piernas cansadas, siempre cuidando de ti y de tu bebé.'
+      };
+    }
+
+    // sport + active
+    if (motive === 'sport' && sport === 'active') {
+      return {
+        primary: 'deportivo',
+        secondary: 'osteopatia',
+        reason: 'Como deportista activo que busca recuperación, el masaje deportivo es ideal para ti. Trabaja directamente sobre los grupos musculares más exigidos, acelera la recuperación y previene lesiones para que sigas rindiendo al máximo.'
+      };
+    }
+
+    // pain + back + (acute|chronic|recurring)
+    if (motive === 'pain' && area === 'back' && (duration === 'acute' || duration === 'chronic' || duration === 'recurring')) {
+      return {
+        primary: 'osteopatia',
+        secondary: 'deportivo',
+        reason: 'Tu dolor de espalda necesita un abordaje global que vaya más allá del síntoma. La osteopatía busca el origen real del problema, ya sea postural, articular o visceral, para ofrecerte una solución duradera y no solo un alivio temporal.'
+      };
+    }
+
+    // pain + head
+    if (motive === 'pain' && area === 'head') {
+      return {
+        primary: 'osteopatia',
+        secondary: 'tailandes',
+        reason: 'Las molestias en cabeza, mandíbula o mareos suelen tener un origen cervical o craneal. La osteopatía sacrocraneal es especialmente efectiva para este tipo de problemas, trabajando de forma suave sobre las membranas craneales y la columna cervical.'
+      };
+    }
+
+    // pain + legs + active
+    if (motive === 'pain' && area === 'legs' && sport === 'active') {
+      return {
+        primary: 'deportivo',
+        secondary: 'osteopatia',
+        reason: 'Tus molestias en piernas combinadas con tu actividad deportiva hacen que el masaje deportivo sea perfecto para ti. Trabaja sobre contracturas, mejora la circulación y acelera la recuperación muscular en las zonas que más lo necesitas.'
+      };
+    }
+
+    // pain + legs (not active, fallback)
+    if (motive === 'pain' && area === 'legs') {
+      return {
+        primary: 'osteopatia',
+        secondary: 'deportivo',
+        reason: 'Las molestias en piernas pueden tener su origen en la zona lumbar, la pelvis o las propias articulaciones. La osteopatía evalúa todo el conjunto para encontrar la causa real y trabajar sobre ella de forma global.'
+      };
+    }
+
+    // pain + full (general body pain)
+    if (motive === 'pain' && area === 'full') {
+      return {
+        primary: 'osteopatia',
+        secondary: 'tailandes',
+        reason: 'Cuando la molestia es generalizada, la osteopatía es la mejor opción porque evalúa tu cuerpo de forma integral. Busca los desequilibrios que generan tensión en distintas zonas y trabaja para restablecer el equilibrio global.'
+      };
+    }
+
+    // relax + relaxation
+    if (motive === 'relax' && preference === 'relaxation') {
+      return {
+        primary: 'corporal',
+        secondary: 'pindas',
+        reason: 'Si buscas pura relajación y desconexión, el masaje corporal con aceite es tu tratamiento. Movimientos envolventes, aceites esenciales de calidad y un ambiente de calma absoluta para que salgas renovada.'
+      };
+    }
+
+    // relax + therapeutic
+    if (motive === 'relax' && preference === 'therapeutic') {
+      return {
+        primary: 'tailandes',
+        secondary: 'osteopatia',
+        reason: 'El masaje tailandés combina relajación con un trabajo terapéutico profundo. Los estiramientos asistidos y las presiones rítmicas liberan tensiones mientras mejoran tu flexibilidad y equilibrio energético.'
+      };
+    }
+
+    // relax + both
+    if (motive === 'relax' && preference === 'both') {
+      return {
+        primary: 'pindas',
+        secondary: 'tailandes',
+        reason: 'Las pindas herbales son la combinación perfecta de relajación y terapia. El calor penetrante de las hierbas medicinales relaja la musculatura profunda mientras sus propiedades antiinflamatorias y analgésicas trabajan a nivel terapéutico.'
+      };
+    }
+
+    // sport (non-active fallback)
+    if (motive === 'sport') {
+      return {
+        primary: 'deportivo',
+        secondary: 'osteopatia',
+        reason: 'El masaje deportivo está diseñado para ayudarte en la recuperación muscular después de la actividad física. Trabaja sobre contracturas, mejora la circulación y prepara tus músculos para el siguiente entrenamiento.'
+      };
+    }
+
+    // Default / wellness
+    return {
+      primary: 'corporal',
+      secondary: 'tailandes',
+      reason: 'El masaje corporal con aceite es la opción ideal para cuidarte y disfrutar de un momento de bienestar. Relajación profunda para cuerpo y mente, con aceites esenciales de calidad que nutren tu piel.'
+    };
+  }
+
+  function showResult() {
+    // Hide all steps and progress
+    steps.forEach(function (s) { s.classList.remove('active'); });
+    progressContainer.style.display = 'none';
+
+    var rec = getRecommendation();
+    var primary = SERVICES[rec.primary];
+    var secondary = SERVICES[rec.secondary];
+
+    // Fill primary
+    document.getElementById('result-title').textContent = primary.name;
+    document.getElementById('result-price').textContent = primary.price;
+    document.getElementById('result-duration').textContent = primary.duration;
+    document.getElementById('result-reason').textContent = rec.reason;
+
+    var waMsg = encodeURIComponent('Hola Katy, he hecho el test de tu web y me interesa el tratamiento de ' + primary.name + '. ¿Podríamos agendar una cita?');
+    document.getElementById('result-whatsapp').href = 'https://wa.me/34643961065?text=' + waMsg;
+    document.getElementById('result-whatsapp-text').textContent = 'Reservar ' + primary.name;
+    document.getElementById('result-link').href = '/servicios/' + primary.slug;
+
+    // Fill secondary
+    document.getElementById('secondary-title').textContent = secondary.name;
+    document.getElementById('secondary-link').href = '/servicios/' + secondary.slug;
+
+    // Share links
+    var shareUrl = window.location.origin + '/test-tratamiento';
+    var shareText = encodeURIComponent('Descubre qué tratamiento de osteopatía o masaje necesitas con este test rápido:');
+    document.getElementById('share-whatsapp').href = 'https://wa.me/?text=' + shareText + '%20' + encodeURIComponent(shareUrl);
+
+    // Show result
+    result.classList.add('active');
+
+    // Scroll to result
+    document.querySelector('.quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Copy link button
+  document.getElementById('share-copy').addEventListener('click', function () {
+    var url = window.location.origin + '/test-tratamiento';
+    var btn = this;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function () {
+        btn.classList.add('copied');
+        btn.querySelector('svg').style.display = 'none';
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Enlace copiado';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar enlace';
+        }, 2000);
+      });
+    }
+  });
+
+  // Restart button
+  document.getElementById('btn-restart').addEventListener('click', function () {
+    // Reset answers
+    for (var key in answers) {
+      delete answers[key];
+    }
+    currentStep = 1;
+
+    // Hide result
+    result.classList.remove('active');
+
+    // Show progress
+    progressContainer.style.display = 'block';
+    progressCurrent.textContent = '1';
+    progressFill.style.width = '20%';
+
+    // Show first step
+    steps.forEach(function (s) { s.classList.remove('active'); });
+    var firstStep = document.querySelector('.quiz-step[data-step="1"]');
+    void firstStep.offsetWidth;
+    firstStep.classList.add('active');
+
+    // Scroll to top
+    document.querySelector('.quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
