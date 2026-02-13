@@ -26,12 +26,15 @@ const links = [
   { href: '/tarifas', label: 'Tarifas' },
   { href: '/blog', label: 'Blog' },
   { href: '/contacto', label: 'Contacto' },
-  { href: '/test-tratamiento', label: '¿Qué necesito?' },
-  { href: '/donde-te-duele', label: '¿Dónde te duele?' },
-  { href: '/test-postura', label: 'Test de Postura' },
-  { href: '/regalar', label: 'Regalar Sesión' },
-  { href: '/guia-estiramientos', label: 'Guía Estiramientos' },
   { href: '/reservar', label: 'Reservar Cita' },
+];
+
+const tools = [
+  { href: '/donde-te-duele', label: '¿Dónde te duele?' },
+  { href: '/test-tratamiento', label: '¿Qué necesito?' },
+  { href: '/test-postura', label: 'Test de Postura' },
+  { href: '/guia-estiramientos', label: 'Guía Estiramientos' },
+  { href: '/regalar', label: 'Regalar Sesión' },
 ];
 ---
 
@@ -81,7 +84,16 @@ const links = [
           ))}
         </ul>
       </div>
-      
+
+      <div class="footer-section">
+        <h4>Herramientas</h4>
+        <ul>
+          {tools.map(tool => (
+            <li><a href={tool.href}>{tool.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
       <div class="footer-section">
         <h4>Zonas</h4>
         <ul>
@@ -125,7 +137,7 @@ const links = [
   
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1.2fr;
     gap: 40px;
   }
   
