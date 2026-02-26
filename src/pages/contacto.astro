@@ -1,14 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pageTitle = "Contacto | Osteópata en Alpedrete - Sierra de Madrid";
-const pageDescription = "Contacta con Katy Caballero para reservar tu cita de osteopatía o masaje en Alpedrete. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama. WhatsApp, teléfono y email.";
+const pageTitle = "Contacto | Osteópata en Alpedrete - Sierra Noroeste de Madrid";
+const pageDescription = "Contacta con Katy Caballero para reservar tu cita de osteopatía o masaje en Alpedrete, Sierra Noroeste de Madrid. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama. WhatsApp, teléfono y email.";
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "HealthAndBeautyBusiness",
   "name": "Katy Caballero - Osteópata y Masajista",
-  "description": "Centro de osteopatía y masajes en Alpedrete, Sierra de Madrid.",
+  "description": "Centro de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid.",
   "image": "https://katycaballeroosteopata.com/images/logo.png",
   "telephone": "+34643961065",
   "email": "katycaballero.osteopata@gmail.com",
@@ -99,7 +99,7 @@ const faqSchema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription} keywords="contacto osteopata alpedrete, reservar cita masaje sierra madrid, osteopatia collado villalba contacto, telefono osteopata moralzarzal, cita masajista galapagar, osteopata sierra de guadarrama, direccion osteopatia alpedrete" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Contacto" }]}>
+<Layout title={pageTitle} description={pageDescription} keywords="contacto osteopata alpedrete, reservar cita masaje sierra madrid, reservar cita masaje sierra noroeste, osteopatia collado villalba contacto, telefono osteopata moralzarzal, cita masajista galapagar, osteopata sierra de guadarrama, osteopata sierra noroeste madrid, direccion osteopatia alpedrete" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Contacto" }]}>
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section class="contact-page">

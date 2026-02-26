@@ -3,14 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import Services from '../components/Services.astro';
 import CTASection from '../components/CTASection.astro';
 
-const pageTitle = "Servicios de Osteopatía y Masajes en Alpedrete | Sierra de Madrid";
-const pageDescription = "Servicios de osteopatía estructural, visceral y craneal, masaje deportivo, tailandés y para embarazadas en Alpedrete. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama. Precios y duración.";
+const pageTitle = "Servicios de Osteopatía y Masajes en Alpedrete | Sierra Noroeste de Madrid";
+const pageDescription = "Servicios de osteopatía estructural, visceral y craneal, masaje deportivo, tailandés y para embarazadas en Alpedrete, Sierra Noroeste de Madrid. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama. Precios y duración.";
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "HealthAndBeautyBusiness",
   "name": "Katy Caballero - Osteópata y Masajista",
-  "description": "Centro de osteopatía y masajes en Alpedrete, Sierra de Madrid.",
+  "description": "Centro de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid.",
   "image": "https://katycaballeroosteopata.com/images/logo.png",
   "telephone": "+34643961065",
   "url": "https://katycaballeroosteopata.com",
@@ -79,7 +79,7 @@ const faqSchema = {
       "name": "¿Atendéis pacientes de Collado Villalba, Moralzarzal y Galapagar?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí, nuestra consulta en Alpedrete está muy bien comunicada y atendemos pacientes de toda la Sierra de Madrid: Collado Villalba, Moralzarzal, Galapagar, Guadarrama, Torrelodones, El Escorial, Cercedilla, Navacerrada, Collado Mediano, Becerril de la Sierra y Los Molinos."
+        "text": "Sí, nuestra consulta en Alpedrete está muy bien comunicada y atendemos pacientes de toda la Sierra Noroeste de Madrid: Collado Villalba, Moralzarzal, Galapagar, Guadarrama, Torrelodones, El Escorial, Cercedilla, Navacerrada, Collado Mediano, Becerril de la Sierra y Los Molinos."
       }
     }
   ]
@@ -173,7 +173,7 @@ const servicesSchema = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription} keywords="osteopatia alpedrete, osteopatia estructural sierra madrid, osteopatia visceral collado villalba, osteopatia craneal moralzarzal, masaje deportivo sierra de guadarrama, masaje tailandes alpedrete, masaje embarazadas sierra madrid, quiromasaje galapagar, dolor de espalda tratamiento, contracturas cervicales osteopatia, ciatica masaje" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Servicios" }]}>
+<Layout title={pageTitle} description={pageDescription} keywords="osteopatia alpedrete, osteopatia estructural sierra madrid, osteopatia sierra noroeste madrid, osteopatia visceral collado villalba, osteopatia craneal moralzarzal, masaje deportivo sierra de guadarrama, masaje tailandes alpedrete, masaje embarazadas sierra noroeste madrid, quiromasaje galapagar, dolor de espalda tratamiento, contracturas cervicales osteopatia, ciatica masaje" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Servicios" }]}>
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(servicesSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
@@ -238,7 +238,7 @@ const servicesSchema = {
         </details>
         <details class="faq-item">
           <summary>¿Atendéis pacientes de Collado Villalba, Moralzarzal y Galapagar?</summary>
-          <p>Sí, nuestra consulta en Alpedrete está muy bien comunicada y atendemos pacientes de toda la Sierra de Madrid: Collado Villalba, Moralzarzal, Galapagar, Guadarrama, Torrelodones, El Escorial, Cercedilla, Navacerrada, Collado Mediano, Becerril de la Sierra y Los Molinos.</p>
+          <p>Sí, nuestra consulta en Alpedrete está muy bien comunicada y atendemos pacientes de toda la Sierra Noroeste de Madrid: Collado Villalba, Moralzarzal, Galapagar, Guadarrama, Torrelodones, El Escorial, Cercedilla, Navacerrada, Collado Mediano, Becerril de la Sierra y Los Molinos.</p>
         </details>
       </div>
     </div>

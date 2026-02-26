@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Gallery from '../components/Gallery.astro';
 import CTASection from '../components/CTASection.astro';
 
-const pageTitle = "Sobre Mí | Katy Caballero - Osteópata en Alpedrete, Sierra de Madrid";
-const pageDescription = "Conoce a Katy Caballero: más de 12 años de experiencia en osteopatía y masajes en la Sierra de Madrid. Mi formación en Yomana Thai Concept, mi filosofía y por qué decidí abrir mi espacio en Alpedrete.";
+const pageTitle = "Sobre Mí | Katy Caballero - Osteópata en Alpedrete, Sierra Noroeste de Madrid";
+const pageDescription = "Conoce a Katy Caballero: más de 12 años de experiencia en osteopatía y masajes en la Sierra Noroeste de Madrid. Mi formación en Yomana Thai Concept, mi filosofía y por qué decidí abrir mi espacio en Alpedrete.";
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -34,12 +34,14 @@ const personSchema = {
     "Galapagar",
     "Guadarrama",
     "Torrelodones",
-    "Sierra de Madrid"
+    "Sierra de Madrid",
+    "Sierra Noroeste de Madrid",
+    "Sierra de Guadarrama"
   ]
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription} keywords="katy caballero osteopata, osteopata alpedrete, osteopata sierra de madrid, formacion osteopatia madrid, masajista profesional collado villalba, yomana thai concept, experiencia masajista sierra guadarrama" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Sobre Mí" }]}>
+<Layout title={pageTitle} description={pageDescription} keywords="katy caballero osteopata, osteopata alpedrete, osteopata sierra de madrid, osteopata sierra noroeste madrid, formacion osteopatia madrid, masajista profesional collado villalba, yomana thai concept, experiencia masajista sierra guadarrama" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Sobre Mí" }]}>
   <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
   <section class="about-hero">
     <div class="container about-hero-container">
