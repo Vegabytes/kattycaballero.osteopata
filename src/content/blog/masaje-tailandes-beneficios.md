@@ -3,7 +3,7 @@ title: "Masaje tailandés: qué es, beneficios y para quién está indicado"
 excerpt: "El masaje tradicional tailandés es una técnica milenaria que combina estiramientos, presiones y trabajo energético. Descubre sus beneficios."
 date: 2024-12-15
 category: "Masajes"
-image: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&h=500&fit=crop"
+image: "/images/blog/masaje-tailandes.webp"
 readTime: 4
 author: "Katy Caballero"
 ---

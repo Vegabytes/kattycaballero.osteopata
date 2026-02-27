@@ -3,7 +3,7 @@ title: "Masaje para embarazadas: beneficios, seguridad y qué esperar"
 excerpt: "El embarazo trae muchas molestias físicas. Descubre cómo el masaje prenatal puede ayudarte y cuándo es seguro recibirlo."
 date: 2024-12-28
 category: "Masajes"
-image: "https://images.unsplash.com/photo-1544126592-807ade215a0b?w=800&h=500&fit=crop"
+image: "/images/blog/masaje-embarazadas.webp"
 readTime: 4
 author: "Katy Caballero"
 ---

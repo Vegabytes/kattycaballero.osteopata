@@ -3,7 +3,7 @@ title: "Osteopatía craneal: qué es y para qué sirve"
 excerpt: "La osteopatía craneal es una técnica sutil pero muy efectiva. Descubre en qué consiste y qué problemas puede tratar."
 date: 2024-12-10
 category: "Osteopatía"
-image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&h=500&fit=crop&crop=center&q=80"
+image: "/images/blog/osteopatia-craneal.webp"
 readTime: 5
 author: "Katy Caballero"
 ---

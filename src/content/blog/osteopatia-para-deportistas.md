@@ -3,7 +3,7 @@ title: "Osteopatía para deportistas: prevención y recuperación de lesiones"
 excerpt: "Descubre cómo la osteopatía puede mejorar tu rendimiento deportivo y acelerar la recuperación de lesiones."
 date: 2025-01-05
 category: "Osteopatía"
-image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&h=500&fit=crop&crop=center&q=80"
+image: "/images/blog/osteopatia-deportistas.webp"
 readTime: 4
 author: "Katy Caballero"
 ---

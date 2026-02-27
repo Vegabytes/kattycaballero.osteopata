@@ -3,7 +3,7 @@ title: "Contracturas cervicales: causas, síntomas y tratamiento"
 excerpt: "Las contracturas en el cuello son una de las consultas más frecuentes. Descubre por qué aparecen y cómo tratarlas eficazmente."
 date: 2025-01-10
 category: "Osteopatía"
-image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=500&fit=crop"
+image: "/images/blog/contracturas-cervicales.webp"
 readTime: 5
 author: "Katy Caballero"
 ---

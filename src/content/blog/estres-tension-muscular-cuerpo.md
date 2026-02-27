@@ -3,7 +3,7 @@ title: "Cómo el estrés afecta a tu cuerpo y genera tensión muscular"
 excerpt: "El estrés no solo afecta a tu mente. Descubre cómo se manifiesta en tu cuerpo y qué puedes hacer para liberarlo."
 date: 2025-01-08
 category: "Bienestar"
-image: "https://images.unsplash.com/photo-1541199249251-f713e6145474?w=800&h=500&fit=crop"
+image: "/images/blog/estres-tension.webp"
 readTime: 4
 author: "Katy Caballero"
 ---

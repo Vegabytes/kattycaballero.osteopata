@@ -3,7 +3,7 @@ title: "5 ejercicios para aliviar el dolor lumbar si trabajas sentado"
 excerpt: "Descubre estiramientos simples que puedes hacer en casa para combatir el dolor de espalda causado por pasar muchas horas sentado."
 date: 2024-12-15
 category: "Dolor de espalda"
-image: "https://images.unsplash.com/photo-1591343395082-e120087004b4?w=800&h=500&fit=crop&crop=center&q=80"
+image: "/images/blog/ejercicios-lumbar.webp"
 readTime: 5
 author: "Katy Caballero"
 ---

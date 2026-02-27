@@ -3,7 +3,7 @@ title: "Por qué deberías incluir el masaje terapéutico en tu rutina"
 excerpt: "El masaje no es un lujo, es una inversión en salud. Conoce los beneficios de recibir masajes regularmente."
 date: 2024-12-05
 category: "Masajes"
-image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&h=500&fit=crop"
+image: "/images/blog/masaje-terapeutico.webp"
 readTime: 3
 author: "Katy Caballero"
 ---

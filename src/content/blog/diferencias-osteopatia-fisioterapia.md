@@ -3,7 +3,7 @@ title: "Diferencias entre osteopatía y fisioterapia: ¿cuál necesitas?"
 excerpt: "Ambas disciplinas buscan tu bienestar, pero tienen enfoques diferentes. Te explicamos cuándo acudir a cada profesional."
 date: 2024-12-10
 category: "Osteopatía"
-image: "https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=800&h=500&fit=crop"
+image: "/images/blog/osteopatia-fisioterapia.webp"
 readTime: 4
 author: "Katy Caballero"
 ---
