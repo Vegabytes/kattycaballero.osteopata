@@ -115,7 +115,7 @@ section {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #8b6f30;
+  color: #806528;
   margin-bottom: 16px;
 }
 
@@ -159,8 +159,8 @@ section {
 
 .btn-secondary {
   background: transparent;
-  color: var(--color-primary);
-  border: 2px solid var(--color-primary);
+  color: var(--color-primary-dark);
+  border: 2px solid var(--color-primary-dark);
 }
 
 .btn-secondary:hover {
