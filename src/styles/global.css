@@ -14,7 +14,7 @@
   --color-warm-white: #fffefb;
   --color-text: #3d3d3d;
   --color-text-light: #6b6b6b;
-  --color-text-muted: #9a9a9a;
+  --color-text-muted: #767676;
   
   /* Typography */
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -115,7 +115,7 @@ section {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--color-secondary);
+  color: #8b6f30;
   margin-bottom: 16px;
 }
 
