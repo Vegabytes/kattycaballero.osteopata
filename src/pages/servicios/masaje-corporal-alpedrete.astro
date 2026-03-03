@@ -59,7 +59,7 @@ const breadcrumbSchema = [
         {service.description.split('\n\n').map(p => <p set:html={p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')} />)}
       </div>
       <div class="service-description-image">
-        <img src={service.image} alt={service.imageAlt} loading="lazy" />
+        <img src={service.image} alt={service.imageAlt} width="600" height="400" loading="lazy" />
       </div>
     </div>
   </section>
