@@ -25,6 +25,7 @@ const blogPostingSchema = {
   "description": post.data.excerpt,
   "image": post.data.image,
   "datePublished": post.data.date.toISOString(),
+  "dateModified": post.data.date.toISOString(),
   "author": {
     "@type": "Person",
     "name": post.data.author,

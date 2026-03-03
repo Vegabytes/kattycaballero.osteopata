@@ -27,7 +27,7 @@ function formatDate(date: Date): string {
       {latestPosts.map(post => (
         <article class="blog-card">
           <a href={`/blog/${post.slug}`} class="blog-card-image-link">
-            <img src={post.data.image} alt={post.data.title} class="blog-card-image" loading="lazy" />
+            <img src={post.data.image} alt={post.data.title} class="blog-card-image" width="400" height="220" loading="lazy" />
           </a>
           <div class="blog-card-content">
             <span class="blog-card-tag">{post.data.category}</span>

@@ -32,7 +32,7 @@ function formatDate(date: Date): string {
         {sortedPosts.map((post, index) => (
           <article class="blog-card" class:list={[{ featured: index === 0 }]}>
             <a href={`/blog/${post.slug}`} class="blog-card-image-link">
-              <img src={post.data.image} alt={post.data.title} class="blog-card-image" loading={index === 0 ? "eager" : "lazy"} />
+              <img src={post.data.image} alt={post.data.title} class="blog-card-image" width="600" height="280" loading={index === 0 ? "eager" : "lazy"} />
             </a>
             <div class="blog-card-content">
               <span class="blog-card-tag">{post.data.category}</span>

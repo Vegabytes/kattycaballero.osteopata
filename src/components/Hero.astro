@@ -15,7 +15,7 @@ const {
 <section class="hero" id="inicio">
   <!-- Video Background -->
   <div class="hero-video-container">
-    <video autoplay muted loop playsinline class="hero-video" id="hero-video" poster="/images/sala-1.webp" preload="metadata" aria-hidden="true">
+    <video autoplay muted loop playsinline class="hero-video" id="hero-video" poster="/images/sala-1.webp" preload="none" aria-hidden="true">
       <source src="/images/video-hero.mp4" type="video/mp4">
     </video>
     <div class="hero-video-overlay"></div>
@@ -239,27 +239,6 @@ const {
   .btn-reservar:hover .btn-arrow {
     transform: translateX(3px);
     opacity: 1;
-  }
-  
-  .btn-whatsapp-hero {
-    background: #25D366;
-    color: white;
-    padding: 16px 32px;
-    border-radius: 50px;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-  }
-  
-  .btn-whatsapp-hero:hover {
-    background: #20bd5a;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-    color: white;
   }
   
   .hero-stats {

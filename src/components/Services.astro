@@ -89,7 +89,7 @@ const services: Service[] = [
         <a href={`/servicios/${service.slug}`} class="service-card-link">
           <div class="service-card" id={service.id} class:list={[{ featured: service.featured }]}>
             <div class="service-image">
-              <img src={service.image} alt={service.alt} loading="lazy" />
+              <img src={service.image} alt={service.alt} width="130" height="130" loading="lazy" />
             </div>
             <h3>{service.title}</h3>
             <p>{service.description}</p>
