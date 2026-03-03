@@ -124,6 +124,7 @@ const tools = [
     
     <div class="footer-bottom">
       <p>© {currentYear} Katy Caballero - Osteópata y Masajista. Todos los derechos reservados.</p>
+      <p class="footer-legal"><a href="/politica-cookies">Política de Cookies</a></p>
     </div>
   </div>
 </footer>
@@ -237,6 +238,20 @@ const tools = [
     text-align: center;
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.5);
+  }
+
+  .footer-legal {
+    margin-top: 10px;
+  }
+
+  .footer-legal a {
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .footer-legal a:hover {
+    color: var(--color-secondary);
   }
   
   @media (max-width: 1024px) {
