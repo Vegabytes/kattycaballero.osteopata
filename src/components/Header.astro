@@ -9,6 +9,13 @@ const navLinks = [
   { href: '/blog', label: 'Blog' },
   { href: '/contacto', label: 'Contacto' },
 ];
+
+const toolLinks = [
+  { href: '/donde-te-duele', label: '¿Dónde te duele?', icon: '🎯' },
+  { href: '/test-tratamiento', label: '¿Qué tratamiento necesito?', icon: '💆' },
+  { href: '/test-postura', label: 'Test de Postura', icon: '📐' },
+  { href: '/guia-estiramientos', label: 'Guía de Estiramientos', icon: '🧘' },
+];
 ---
 
 <nav class="nav" id="main-nav">
@@ -28,6 +35,22 @@ const navLinks = [
           </a>
         </li>
       ))}
+      <li class="nav-dropdown-container">
+        <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+          Herramientas
+          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+        <ul class="nav-dropdown" role="menu">
+          {toolLinks.map(tool => (
+            <li role="none">
+              <a href={tool.href} role="menuitem">
+                <span class="dropdown-icon">{tool.icon}</span>
+                {tool.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </li>
       <li>
         <a href="https://www.instagram.com/katycaballero.osteopata" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="nav-instagram">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
@@ -52,6 +75,22 @@ const navLinks = [
           <a href={link.href}>{link.label}</a>
         </li>
       ))}
+      <li class="mobile-dropdown-container">
+        <button class="mobile-dropdown-trigger" aria-expanded="false">
+          Herramientas
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+        <ul class="mobile-dropdown">
+          {toolLinks.map(tool => (
+            <li>
+              <a href={tool.href}>
+                <span class="dropdown-icon">{tool.icon}</span>
+                {tool.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </li>
       <li>
         <a href="https://www.instagram.com/katycaballero.osteopata" target="_blank" rel="noopener noreferrer" class="mobile-instagram">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
@@ -158,6 +197,122 @@ const navLinks = [
 
   .nav-instagram::after {
     display: none !important;
+  }
+
+  /* Desktop dropdown */
+  .nav-dropdown-container {
+    position: relative;
+  }
+
+  .nav-dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--color-text);
+    padding: 8px 0;
+    transition: var(--transition);
+  }
+
+  .nav-dropdown-trigger:hover {
+    color: var(--color-primary);
+  }
+
+  .nav-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-warm-white);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    padding: 10px;
+    min-width: 260px;
+    list-style: none;
+    z-index: 1001;
+  }
+
+  .nav-dropdown-container:hover .nav-dropdown,
+  .nav-dropdown-container:focus-within .nav-dropdown {
+    display: block;
+  }
+
+  .nav-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+    white-space: nowrap;
+  }
+
+  .nav-dropdown a::after {
+    display: none !important;
+  }
+
+  .nav-dropdown a:hover {
+    background: var(--color-cream);
+    color: var(--color-primary);
+  }
+
+  .dropdown-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  /* Mobile dropdown */
+  .mobile-dropdown-container {
+    border-top: 1px solid rgba(90, 124, 89, 0.1);
+    padding-top: 10px;
+  }
+
+  .mobile-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-text);
+    padding: 12px 0;
+    width: 100%;
+    text-align: left;
+  }
+
+  .mobile-dropdown {
+    display: none;
+    list-style: none;
+    padding-left: 10px;
+  }
+
+  .mobile-dropdown.active {
+    display: block;
+  }
+
+  .mobile-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    text-decoration: none;
+    color: var(--color-text-light);
+    font-size: 1rem;
+    font-weight: 400;
   }
 
   .mobile-instagram {
@@ -303,6 +458,16 @@ const navLinks = [
     }
   });
   
+  // Mobile tools dropdown toggle
+  const mobileDropdownTrigger = document.querySelector('.mobile-dropdown-trigger');
+  const mobileDropdown = document.querySelector('.mobile-dropdown');
+  mobileDropdownTrigger?.addEventListener('click', () => {
+    const isOpen = mobileDropdown?.classList.toggle('active');
+    mobileDropdownTrigger.setAttribute('aria-expanded', String(!!isOpen));
+    const svg = mobileDropdownTrigger.querySelector('svg');
+    if (svg) svg.style.transform = isOpen ? 'rotate(180deg)' : '';
+  });
+
   // Scroll effect
   let lastScroll = 0;
   window.addEventListener('scroll', () => {
