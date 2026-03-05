@@ -3,6 +3,10 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://katycaballeroosteopata.com',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
   integrations: [
     sitemap({
       changefreq: 'weekly',
