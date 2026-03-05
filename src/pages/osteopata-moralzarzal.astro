@@ -27,7 +27,35 @@ const businessSchema = {
     "longitude": "-4.0270"
   },
   "areaServed": { "@type": "City", "name": locality.name },
-  "priceRange": "€€"
+  "priceRange": "€€",
+  "email": "katycaballero.osteopata@gmail.com",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "14:00"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "8",
+    "reviewCount": "8"
+  },
+  "sameAs": [
+    "https://www.instagram.com/katycaballero.osteopata",
+    "https://es.nextdoor.com/pages/sala-osteopatia-katy-caballero-alpedrete-comunidad-de-madrid/",
+    "https://www.bing.com/forbusiness/singleEntity?bizid=24de5fa7-ed7a-48d4-af66-dd995283aec4"
+  ]
 };
 
 const faqSchema = {

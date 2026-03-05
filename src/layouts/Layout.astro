@@ -223,6 +223,21 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
       });
     });
     
+    // WhatsApp click tracking (GA4)
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href*="wa.me"]');
+      if (link && typeof gtag === 'function') {
+        const url = new URL(link.href);
+        const text = url.searchParams.get('text') || '';
+        gtag('event', 'whatsapp_click', {
+          event_category: 'conversion',
+          event_label: text,
+          link_url: link.href,
+          page_path: window.location.pathname
+        });
+      }
+    });
+
     // Navbar shadow on scroll
     window.addEventListener('scroll', () => {
       const nav = document.querySelector('.nav');
