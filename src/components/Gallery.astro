@@ -1,9 +1,15 @@
 ---
 const images = [
-  { src: '/images/sala-1.webp', alt: 'Sala de tratamiento con camilla', width: 400, height: 533 },
-  { src: '/images/sala-2.webp', alt: 'Vista general de la consulta', width: 400, height: 533 },
-  { src: '/images/sala-3.webp', alt: 'Espacio de espera', width: 400, height: 533 },
-  { src: '/images/sala-4.webp', alt: 'Ambiente relajante de la sala', width: 400, height: 533 },
+  { src: '/images/sala-1.webp', alt: 'Camilla de tratamiento con logo Katy Caballero y decoración zen' },
+  { src: '/images/sala-2.webp', alt: 'Vista panorámica de la consulta de osteopatía en Alpedrete' },
+  { src: '/images/sala-3.webp', alt: 'Sala de tratamiento vista desde la entrada con plantas' },
+  { src: '/images/sala-4.webp', alt: 'Detalle del logo Katy Caballero, toallas y estantería' },
+  { src: '/images/sala-5.webp', alt: 'Vista cenital de la sala de osteopatía con iluminación cálida' },
+  { src: '/images/sala-6.webp', alt: 'Camilla profesional Quirumed con aceites esenciales' },
+  { src: '/images/sala-7.webp', alt: 'Detalle de aceites terapéuticos y cuadros anatómicos' },
+  { src: '/images/sala-8.webp', alt: 'Consulta de osteopatía con lámpara infrarroja y camilla' },
+  { src: '/images/sala-9.webp', alt: 'Camilla preparada para sesión de osteopatía frontal' },
+  { src: '/images/sala-10.webp', alt: 'Vista lateral de la sala con sillón de espera' },
 ];
 ---
 
@@ -51,8 +57,8 @@ const images = [
   
   .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
   }
   
   .gallery-item {
@@ -107,13 +113,20 @@ const images = [
   
   @media (max-width: 1024px) {
     .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .gallery-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-  
+
   @media (max-width: 600px) {
     .gallery-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
     
     .gallery-item {
