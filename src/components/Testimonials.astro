@@ -114,24 +114,32 @@ const reviewSchema = {
       </div>
     </div>
 
-    <div class="reviews-grid">
-      {reviews.map((review) => (
-        <article class="review-card">
-          <div class="review-header">
-            <div class="review-avatar">{review.name.charAt(0).toUpperCase()}</div>
-            <div class="review-meta">
-              <span class="review-name">{review.name}</span>
-              {review.badge && <span class="review-badge">{review.badge}</span>}
+    <div class="reviews-carousel-wrapper">
+      <button class="carousel-btn carousel-btn-prev" aria-label="Reseñas anteriores">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+      <div class="reviews-carousel">
+        {reviews.map((review) => (
+          <article class="review-card">
+            <div class="review-header">
+              <div class="review-avatar">{review.name.charAt(0).toUpperCase()}</div>
+              <div class="review-meta">
+                <span class="review-name">{review.name}</span>
+                {review.badge && <span class="review-badge">{review.badge}</span>}
+              </div>
             </div>
-          </div>
-          <div class="review-stars" role="img" aria-label={`${review.rating} de 5 estrellas`}>
-            {Array.from({length: review.rating}).map(() => (
-              <svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FBBC05"/></svg>
-            ))}
-          </div>
-          <p class="review-text">{review.text}</p>
-        </article>
-      ))}
+            <div class="review-stars" role="img" aria-label={`${review.rating} de 5 estrellas`}>
+              {Array.from({length: review.rating}).map(() => (
+                <svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FBBC05"/></svg>
+              ))}
+            </div>
+            <p class="review-text">{review.text}</p>
+          </article>
+        ))}
+      </div>
+      <button class="carousel-btn carousel-btn-next" aria-label="Siguientes reseñas">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
     </div>
 
     <div class="testimonials-cta">
@@ -208,12 +216,61 @@ const reviewSchema = {
     font-size: 0.95rem;
   }
 
-  /* Reviews grid */
-  .reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
+  /* Reviews carousel */
+  .reviews-carousel-wrapper {
+    position: relative;
     margin-top: 40px;
+  }
+
+  .reviews-carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4px 0 10px;
+  }
+
+  .reviews-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .carousel-btn:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .carousel-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .carousel-btn-prev {
+    left: -22px;
+  }
+
+  .carousel-btn-next {
+    right: -22px;
   }
 
   .review-card {
@@ -222,6 +279,10 @@ const reviewSchema = {
     padding: 28px;
     transition: var(--transition);
     border: 1px solid rgba(255,255,255,0.06);
+    min-width: 320px;
+    max-width: 360px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
   }
 
   .review-card:hover {
@@ -324,13 +385,14 @@ const reviewSchema = {
 
   /* Responsive */
   @media (max-width: 768px) {
-    .reviews-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
+    .review-card {
+      min-width: 280px;
+      max-width: 300px;
+      padding: 22px;
     }
 
-    .review-card {
-      padding: 22px;
+    .carousel-btn {
+      display: none;
     }
 
     .google-summary {
@@ -344,3 +406,18 @@ const reviewSchema = {
     }
   }
 </style>
+
+<script>
+  const carousel = document.querySelector('.reviews-carousel');
+  const prevBtn = document.querySelector('.carousel-btn-prev');
+  const nextBtn = document.querySelector('.carousel-btn-next');
+  const scrollAmount = 360;
+
+  prevBtn?.addEventListener('click', () => {
+    carousel?.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    carousel?.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+</script>
