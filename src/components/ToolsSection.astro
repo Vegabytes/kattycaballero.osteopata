@@ -2,25 +2,25 @@
 const tools = [
   {
     href: '/donde-te-duele',
-    icon: '🎯',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.76-5 8-5 8s-5-5.24-5-8a5 5 0 0 1 5-5z"/><circle cx="12" cy="7" r="1.5"/><path d="M12 15v7"/><path d="M9 18h6"/></svg>`,
     title: '¿Dónde te duele?',
     description: 'Toca la zona de tu cuerpo y descubre qué tratamiento necesitas.',
   },
   {
     href: '/test-tratamiento',
-    icon: '💆',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>`,
     title: '¿Qué tratamiento necesito?',
     description: 'Responde 5 preguntas y te recomendamos el mejor tratamiento.',
   },
   {
     href: '/test-postura',
-    icon: '📐',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v6"/><path d="M9 20l3-7 3 7"/><path d="M7 12h10"/><path d="M5 17l2-5"/><path d="M19 17l-2-5"/></svg>`,
     title: 'Test de Postura',
     description: 'Descubre tu nivel de riesgo postural en 2 minutos.',
   },
   {
     href: '/guia-estiramientos',
-    icon: '🧘',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v4"/><path d="M12 10l-4 4"/><path d="M12 10l4 2"/><path d="M8 14v6"/><path d="M16 12l2 4"/><path d="M8 14l-3 1"/></svg>`,
     title: 'Guía de Estiramientos',
     description: 'Ejercicios por zona para aliviar tensión desde casa.',
   },
@@ -38,7 +38,7 @@ const tools = [
     <div class="tools-grid">
       {tools.map(tool => (
         <a href={tool.href} class="tool-card">
-          <span class="tool-icon">{tool.icon}</span>
+          <span class="tool-icon" set:html={tool.icon} />
           <h3>{tool.title}</h3>
           <p>{tool.description}</p>
           <span class="tool-link">Probar gratis <span class="arrow">→</span></span>
@@ -78,9 +78,22 @@ const tools = [
   }
 
   .tool-icon {
-    font-size: 2.5rem;
     margin-bottom: 16px;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tool-icon :global(svg) {
+    width: 48px;
+    height: 48px;
+    color: var(--color-primary);
+    transition: all 0.3s ease;
+  }
+
+  .tool-card:hover .tool-icon :global(svg) {
+    color: var(--color-primary-dark);
+    transform: scale(1.1);
   }
 
   .tool-card h3 {
