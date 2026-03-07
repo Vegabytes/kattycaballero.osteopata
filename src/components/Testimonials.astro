@@ -48,6 +48,18 @@ const reviews = [
     text: "Todo salió bien. Un servicio profesional. 👍👌",
     badge: "Local Guide",
   },
+  {
+    name: "Laura G.U.",
+    rating: 5,
+    text: "Salí nueva, en paz con mi cuerpo y conmigo misma",
+    badge: "",
+  },
+  {
+    name: "Elias Garcia Martinez",
+    rating: 5,
+    text: "Katy me ha ayudado en la recuperación de una lesión de rodilla y a desinflamar y tratar el dolor. Tiene un trato muy agradable y respetuoso, es una gran profesional. Sin duda la recomiendo.",
+    badge: "",
+  },
 ];
 
 const avgRating = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
