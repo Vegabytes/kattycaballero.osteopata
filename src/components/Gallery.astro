@@ -1,15 +1,15 @@
 ---
 const images = [
-  { src: '/images/sala-1.webp', alt: 'Camilla de tratamiento con logo Katy Caballero y decoración zen' },
-  { src: '/images/sala-2.webp', alt: 'Vista panorámica de la consulta de osteopatía en Alpedrete' },
-  { src: '/images/sala-3.webp', alt: 'Sala de tratamiento vista desde la entrada con plantas' },
-  { src: '/images/sala-4.webp', alt: 'Detalle del logo Katy Caballero, toallas y estantería' },
-  { src: '/images/sala-5.webp', alt: 'Vista cenital de la sala de osteopatía con iluminación cálida' },
-  { src: '/images/sala-6.webp', alt: 'Camilla profesional Quirumed con aceites esenciales' },
-  { src: '/images/sala-7.webp', alt: 'Detalle de aceites terapéuticos y cuadros anatómicos' },
-  { src: '/images/sala-8.webp', alt: 'Consulta de osteopatía con lámpara infrarroja y camilla' },
-  { src: '/images/sala-9.webp', alt: 'Camilla preparada para sesión de osteopatía frontal' },
-  { src: '/images/sala-10.webp', alt: 'Vista lateral de la sala con sillón de espera' },
+  { src: '/images/sala-1.webp', alt: 'Camilla de tratamiento con logo Katy Caballero y decoración zen', orientation: 'vertical' },
+  { src: '/images/sala-2.webp', alt: 'Vista panorámica de la consulta de osteopatía en Alpedrete', orientation: 'horizontal' },
+  { src: '/images/sala-3.webp', alt: 'Sala de tratamiento vista desde la entrada con plantas', orientation: 'vertical' },
+  { src: '/images/sala-4.webp', alt: 'Detalle del logo Katy Caballero, toallas y estantería', orientation: 'vertical' },
+  { src: '/images/sala-5.webp', alt: 'Vista cenital de la sala de osteopatía con iluminación cálida', orientation: 'vertical' },
+  { src: '/images/sala-6.webp', alt: 'Camilla profesional Quirumed con aceites esenciales', orientation: 'vertical' },
+  { src: '/images/sala-7.webp', alt: 'Detalle de aceites terapéuticos y cuadros anatómicos', orientation: 'vertical' },
+  { src: '/images/sala-8.webp', alt: 'Consulta de osteopatía con lámpara infrarroja y camilla', orientation: 'vertical' },
+  { src: '/images/sala-9.webp', alt: 'Camilla preparada para sesión de osteopatía frontal', orientation: 'vertical' },
+  { src: '/images/sala-10.webp', alt: 'Vista lateral de la sala con sillón de espera', orientation: 'vertical' },
 ];
 ---
 
@@ -23,8 +23,8 @@ const images = [
     
     <div class="gallery-grid">
       {images.map((image, index) => (
-        <div class="gallery-item" style={`--delay: ${index * 0.15}s`}>
-          <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" />
+        <div class={`gallery-item ${image.orientation === 'horizontal' ? 'gallery-item-wide' : ''}`} style={`--delay: ${index * 0.15}s`}>
+          <img src={image.src} alt={image.alt} loading="lazy" />
         </div>
       ))}
     </div>
@@ -58,18 +58,22 @@ const images = [
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    grid-auto-rows: 280px;
+    gap: 16px;
   }
-  
+
   .gallery-item {
     position: relative;
-    border-radius: 20px;
+    border-radius: 16px;
     overflow: hidden;
-    aspect-ratio: 3/4;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     animation: fadeInUp 0.6s ease-out forwards;
     animation-delay: var(--delay);
     opacity: 0;
+  }
+
+  .gallery-item-wide {
+    grid-column: span 2;
   }
   
   .gallery-item img {
@@ -114,19 +118,26 @@ const images = [
   @media (max-width: 1024px) {
     .gallery-grid {
       grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 240px;
     }
   }
 
   @media (max-width: 768px) {
     .gallery-grid {
       grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 220px;
+    }
+
+    .gallery-item-wide {
+      grid-column: span 2;
     }
   }
 
   @media (max-width: 600px) {
     .gallery-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      grid-auto-rows: 200px;
+      gap: 10px;
     }
     
     .gallery-item {
