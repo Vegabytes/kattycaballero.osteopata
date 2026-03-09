@@ -41,7 +41,7 @@ const faqSchema = {
       "name": "\u00bfOfrec\u00e9is bonos o descuentos?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "S\u00ed, ofrecemos un 10% de descuento para socios del AMPA El Peralejo y la AFA Santa Quiteria. Consulta al reservar tu cita."
+        "text": "S\u00ed, ofrezco bonos de osteopat\u00eda: Bono 3 sesiones por 114\u20ac (38\u20ac/sesi\u00f3n) y Bono 5 sesiones por 180\u20ac (36\u20ac/sesi\u00f3n). Adem\u00e1s, 10% de descuento para socios del AMPA El Peralejo y la AFA Santa Quiteria."
       }
     },
     {
@@ -94,6 +94,38 @@ const faqSchema = {
     </div>
   </section>
 
+  <section class="bonos-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Ahorra con los bonos</span>
+        <h2>Bonos de osteopatía</h2>
+        <p>Si necesitas varias sesiones, los bonos te permiten ahorrar en cada visita.</p>
+      </div>
+      <div class="bonos-grid">
+        <div class="bono-card">
+          <span class="bono-label">Sesión individual</span>
+          <div class="bono-price">40<span class="bono-currency">€</span></div>
+          <span class="bono-detail">Osteopatía · 55 min</span>
+        </div>
+        <div class="bono-card featured">
+          <span class="bono-badge">Más popular</span>
+          <span class="bono-label">Bono 3 sesiones</span>
+          <div class="bono-price">114<span class="bono-currency">€</span></div>
+          <span class="bono-per-session">38€ por sesión</span>
+          <span class="bono-saving">Ahorras 6€</span>
+        </div>
+        <div class="bono-card best">
+          <span class="bono-badge">Mejor precio</span>
+          <span class="bono-label">Bono 5 sesiones</span>
+          <div class="bono-price">180<span class="bono-currency">€</span></div>
+          <span class="bono-per-session">36€ por sesión</span>
+          <span class="bono-saving">Ahorras 20€</span>
+        </div>
+      </div>
+      <p class="bonos-note">Los bonos son para sesiones de osteopatía (55 min). Consúltame al reservar tu cita.</p>
+    </div>
+  </section>
+
   <section class="info-section">
     <div class="container">
       <div class="section-header">
@@ -143,7 +175,7 @@ const faqSchema = {
         </details>
         <details class="faq-item">
           <summary>&iquest;Ofrec&eacute;is bonos o descuentos?</summary>
-          <p>S&iacute;, ofrezco un 10% de descuento para socios del <strong>AMPA El Peralejo</strong> y la <strong>AFA Santa Quiteria</strong>. Cons&uacute;ltame al reservar tu cita para aplicar el descuento.</p>
+          <p>S&iacute;, ofrezco <strong>bonos de osteopat&iacute;a</strong>: Bono 3 sesiones por 114&euro; (38&euro;/sesi&oacute;n) y Bono 5 sesiones por 180&euro; (36&euro;/sesi&oacute;n). Adem&aacute;s, 10% de descuento para socios del <strong>AMPA El Peralejo</strong> y la <strong>AFA Santa Quiteria</strong>.</p>
         </details>
         <details class="faq-item">
           <summary>&iquest;Puedo cancelar o cambiar mi cita?</summary>
@@ -396,6 +428,145 @@ const faqSchema = {
     max-width: none;
   }
 
+  /* Bonos Section */
+  .bonos-section {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+  }
+
+  .bonos-section .section-tag {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  .bonos-section h2 {
+    color: white;
+  }
+
+  .bonos-section .section-header p {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .bonos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .bono-card {
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .bono-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .bono-card.featured,
+  .bono-card.best {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-text);
+    border-color: transparent;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .bono-card.featured:hover,
+  .bono-card.best:hover {
+    background: white;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  }
+
+  .bono-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-secondary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .bono-label {
+    display: block;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    opacity: 0.9;
+  }
+
+  .bono-card.featured .bono-label,
+  .bono-card.best .bono-label {
+    color: var(--color-text);
+    opacity: 1;
+  }
+
+  .bono-price {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .bono-card.featured .bono-price,
+  .bono-card.best .bono-price {
+    color: var(--color-primary);
+  }
+
+  .bono-currency {
+    font-size: 1.5rem;
+    vertical-align: super;
+  }
+
+  .bono-per-session {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--color-text-light);
+  }
+
+  .bono-detail {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+
+  .bono-saving {
+    display: inline-block;
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-top: 4px;
+  }
+
+  .bonos-note {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: none;
+  }
+
   /* Responsive */
   @media (max-width: 1024px) {
     .pricing-grid {
@@ -414,6 +585,16 @@ const faqSchema = {
 
     .pricing-card-price {
       font-size: 2rem;
+    }
+
+    .bonos-grid {
+      grid-template-columns: 1fr;
+      max-width: 350px;
+    }
+
+    .bono-card.featured,
+    .bono-card.best {
+      order: -1;
     }
   }
 </style>
