@@ -14,11 +14,15 @@ if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
   const password = formData.get('password') as string;
 
-  const success = await login(Astro, password);
-  if (success) {
-    return Astro.redirect('/admin');
+  try {
+    const success = await login(Astro, password);
+    if (success) {
+      return Astro.redirect('/admin');
+    }
+    error = 'Contraseña incorrecta';
+  } catch (e: any) {
+    error = `Error: ${e.message}`;
   }
-  error = 'Contraseña incorrecta';
 }
 ---
 

@@ -1,0 +1,403 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { getSettings, saveSettings, type AppSettings } from '../../lib/settings';
+
+let mensaje = '';
+let error = '';
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const section = form.get('_section') as string;
+
+  const boolField = (name: string) => form.get(name) === 'on';
+  const textField = (name: string) => (form.get(name) as string) || '';
+  const numField = (name: string) => Number(form.get(name)) || 0;
+
+  try {
+    if (section === 'general') {
+      await saveSettings(Astro, {
+        nombre_clinica: textField('nombre_clinica'),
+        telefono_clinica: textField('telefono_clinica'),
+        email_clinica: textField('email_clinica'),
+      });
+    } else if (section === 'email') {
+      await saveSettings(Astro, {
+        email_service_activo: boolField('email_service_activo'),
+        email_api_key: textField('email_api_key'),
+        email_from: textField('email_from'),
+      });
+    } else if (section === 'recordatorio') {
+      await saveSettings(Astro, {
+        recordatorio_citas_activo: boolField('recordatorio_citas_activo'),
+        recordatorio_citas_horas: numField('recordatorio_citas_horas'),
+        recordatorio_citas_asunto: textField('recordatorio_citas_asunto'),
+        recordatorio_citas_mensaje: textField('recordatorio_citas_mensaje'),
+      });
+    } else if (section === 'seguimiento') {
+      await saveSettings(Astro, {
+        seguimiento_activo: boolField('seguimiento_activo'),
+        seguimiento_dias: numField('seguimiento_dias'),
+        seguimiento_asunto: textField('seguimiento_asunto'),
+        seguimiento_mensaje: textField('seguimiento_mensaje'),
+      });
+    } else if (section === 'cumpleanos') {
+      await saveSettings(Astro, {
+        cumpleanos_activo: boolField('cumpleanos_activo'),
+        cumpleanos_asunto: textField('cumpleanos_asunto'),
+        cumpleanos_mensaje: textField('cumpleanos_mensaje'),
+      });
+    } else if (section === 'inactividad') {
+      await saveSettings(Astro, {
+        inactividad_activo: boolField('inactividad_activo'),
+        inactividad_semanas: numField('inactividad_semanas'),
+        inactividad_asunto: textField('inactividad_asunto'),
+        inactividad_mensaje: textField('inactividad_mensaje'),
+      });
+    } else if (section === 'whatsapp') {
+      await saveSettings(Astro, {
+        whatsapp_recordatorio_activo: boolField('whatsapp_recordatorio_activo'),
+        whatsapp_recordatorio_horas: numField('whatsapp_recordatorio_horas'),
+        whatsapp_recordatorio_mensaje: textField('whatsapp_recordatorio_mensaje'),
+      });
+    } else if (section === 'facturacion') {
+      await saveSettings(Astro, {
+        facturacion_activa: boolField('facturacion_activa'),
+        facturacion_nif: textField('facturacion_nif'),
+        facturacion_direccion: textField('facturacion_direccion'),
+      });
+    }
+    mensaje = 'Configuración guardada correctamente';
+  } catch (e: any) {
+    error = `Error guardando: ${e.message}`;
+  }
+}
+
+const s = await getSettings(Astro);
+---
+
+<AdminLayout title="Ajustes" activeSection="ajustes">
+  {mensaje && <div class="alert alert-success">{mensaje}</div>}
+  {error && <div class="alert alert-error">{error}</div>}
+
+  <p style="color:#666;font-size:0.85rem;margin-bottom:24px;">
+    Configura las automatizaciones de la clínica. Todo está <strong>desactivado</strong> por defecto.
+    Activa solo lo que necesites. Las variables entre llaves como <code>{'{nombre}'}</code> se reemplazan automáticamente.
+  </p>
+
+  <!-- General -->
+  <div class="card settings-section" id="general">
+    <h3 class="settings-title">Datos de la clínica</h3>
+    <form method="POST">
+      <input type="hidden" name="_section" value="general">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre_clinica">Nombre de la clínica</label>
+          <input type="text" id="nombre_clinica" name="nombre_clinica" value={s.nombre_clinica}>
+        </div>
+        <div class="form-group">
+          <label for="telefono_clinica">Teléfono</label>
+          <input type="tel" id="telefono_clinica" name="telefono_clinica" value={s.telefono_clinica}>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email_clinica">Email de la clínica</label>
+        <input type="email" id="email_clinica" name="email_clinica" value={s.email_clinica}>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <!-- Email Service -->
+  <div class="card settings-section" id="email">
+    <div class="settings-header">
+      <h3 class="settings-title">Servicio de email</h3>
+      <span class={`badge ${s.email_service_activo ? 'badge-completada' : 'badge-cancelada'}`}>
+        {s.email_service_activo ? 'Activo' : 'Inactivo'}
+      </span>
+    </div>
+    <p class="settings-desc">Necesario para enviar emails automáticos. Usa <a href="https://resend.com" target="_blank">Resend.com</a> (gratis hasta 100 emails/día).</p>
+    <form method="POST">
+      <input type="hidden" name="_section" value="email">
+      <div class="form-group">
+        <label class="toggle-label">
+          <input type="checkbox" name="email_service_activo" checked={s.email_service_activo}>
+          Activar servicio de email
+        </label>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email_api_key">API Key de Resend</label>
+          <input type="password" id="email_api_key" name="email_api_key" value={s.email_api_key} placeholder="re_xxxxxxxx">
+        </div>
+        <div class="form-group">
+          <label for="email_from">Email remitente</label>
+          <input type="text" id="email_from" name="email_from" value={s.email_from} placeholder="Katy <katy@tudominio.com>">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <!-- Recordatorio de citas -->
+  <div class="card settings-section" id="recordatorio">
+    <div class="settings-header">
+      <h3 class="settings-title">Recordatorio de citas por email</h3>
+      <span class={`badge ${s.recordatorio_citas_activo ? 'badge-completada' : 'badge-cancelada'}`}>
+        {s.recordatorio_citas_activo ? 'Activo' : 'Inactivo'}
+      </span>
+    </div>
+    <p class="settings-desc">Envía un email automático al paciente antes de su cita.</p>
+    <form method="POST">
+      <input type="hidden" name="_section" value="recordatorio">
+      <div class="form-group">
+        <label class="toggle-label">
+          <input type="checkbox" name="recordatorio_citas_activo" checked={s.recordatorio_citas_activo}>
+          Activar recordatorio de citas
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="recordatorio_citas_horas">Horas antes de la cita</label>
+        <select id="recordatorio_citas_horas" name="recordatorio_citas_horas">
+          <option value="12" selected={s.recordatorio_citas_horas === 12}>12 horas</option>
+          <option value="24" selected={s.recordatorio_citas_horas === 24}>24 horas</option>
+          <option value="48" selected={s.recordatorio_citas_horas === 48}>48 horas</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="recordatorio_citas_asunto">Asunto del email</label>
+        <input type="text" id="recordatorio_citas_asunto" name="recordatorio_citas_asunto" value={s.recordatorio_citas_asunto}>
+      </div>
+      <div class="form-group">
+        <label for="recordatorio_citas_mensaje">Mensaje</label>
+        <textarea id="recordatorio_citas_mensaje" name="recordatorio_citas_mensaje" rows="4">{s.recordatorio_citas_mensaje}</textarea>
+        <small style="color:#999;">Variables: {'{nombre}'}, {'{apellidos}'}, {'{fecha}'}, {'{hora}'}, {'{servicio}'}, {'{telefono_clinica}'}</small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <!-- Seguimiento post-tratamiento -->
+  <div class="card settings-section" id="seguimiento">
+    <div class="settings-header">
+      <h3 class="settings-title">Seguimiento post-tratamiento</h3>
+      <span class={`badge ${s.seguimiento_activo ? 'badge-completada' : 'badge-cancelada'}`}>
+        {s.seguimiento_activo ? 'Activo' : 'Inactivo'}
+      </span>
+    </div>
+    <p class="settings-desc">Email automático al paciente después de su tratamiento para preguntar cómo se encuentra.</p>
+    <form method="POST">
+      <input type="hidden" name="_section" value="seguimiento">
+      <div class="form-group">
+        <label class="toggle-label">
+          <input type="checkbox" name="seguimiento_activo" checked={s.seguimiento_activo}>
+          Activar seguimiento
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="seguimiento_dias">Días después del tratamiento</label>
+        <select id="seguimiento_dias" name="seguimiento_dias">
+          <option value="1" selected={s.seguimiento_dias === 1}>1 día</option>
+          <option value="2" selected={s.seguimiento_dias === 2}>2 días</option>
+          <option value="3" selected={s.seguimiento_dias === 3}>3 días</option>
+          <option value="7" selected={s.seguimiento_dias === 7}>7 días</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="seguimiento_asunto">Asunto del email</label>
+        <input type="text" id="seguimiento_asunto" name="seguimiento_asunto" value={s.seguimiento_asunto}>
+      </div>
+      <div class="form-group">
+        <label for="seguimiento_mensaje">Mensaje</label>
+        <textarea id="seguimiento_mensaje" name="seguimiento_mensaje" rows="4">{s.seguimiento_mensaje}</textarea>
+        <small style="color:#999;">Variables: {'{nombre}'}, {'{apellidos}'}, {'{servicio}'}, {'{dias}'}, {'{telefono_clinica}'}</small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <!-- Cumpleaños -->
+  <div class="card settings-section" id="cumpleanos">
+    <div class="settings-header">
+      <h3 class="settings-title">Felicitación de cumpleaños</h3>
+      <span class={`badge ${s.cumpleanos_activo ? 'badge-completada' : 'badge-cancelada'}`}>
+        {s.cumpleanos_activo ? 'Activo' : 'Inactivo'}
+      </span>
+    </div>
+    <p class="settings-desc">Email automático de felicitación el día del cumpleaños del paciente.</p>
+    <form method="POST">
+      <input type="hidden" name="_section" value="cumpleanos">
+      <div class="form-group">
+        <label class="toggle-label">
+          <input type="checkbox" name="cumpleanos_activo" checked={s.cumpleanos_activo}>
+          Activar felicitación de cumpleaños
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="cumpleanos_asunto">Asunto del email</label>
+        <input type="text" id="cumpleanos_asunto" name="cumpleanos_asunto" value={s.cumpleanos_asunto}>
+      </div>
+      <div class="form-group">
+        <label for="cumpleanos_mensaje">Mensaje</label>
+        <textarea id="cumpleanos_mensaje" name="cumpleanos_mensaje" rows="3">{s.cumpleanos_mensaje}</textarea>
+        <small style="color:#999;">Variables: {'{nombre}'}, {'{apellidos}'}</small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <!-- Pacientes inactivos -->
+  <div class="card settings-section" id="inactividad">
+    <div class="settings-header">
+      <h3 class="settings-title">Pacientes inactivos</h3>
+      <span class={`badge ${s.inactividad_activo ? 'badge-completada' : 'badge-cancelada'}`}>
+        {s.inactividad_activo ? 'Activo' : 'Inactivo'}
+      </span>
+    </div>
+    <p class="settings-desc">Email automático a pacientes que no han venido en X semanas.</p>
+    <form method="POST">
+      <input type="hidden" name="_section" value="inactividad">
+      <div class="form-group">
+        <label class="toggle-label">
+          <input type="checkbox" name="inactividad_activo" checked={s.inactividad_activo}>
+          Activar aviso de inactividad
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="inactividad_semanas">Semanas sin visita</label>
+        <select id="inactividad_semanas" name="inactividad_semanas">
+          <option value="4" selected={s.inactividad_semanas === 4}>4 semanas</option>
+          <option value="6" selected={s.inactividad_semanas === 6}>6 semanas</option>
+          <option value="8" selected={s.inactividad_semanas === 8}>8 semanas</option>
+          <option value="12" selected={s.inactividad_semanas === 12}>12 semanas</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inactividad_asunto">Asunto del email</label>
+        <input type="text" id="inactividad_asunto" name="inactividad_asunto" value={s.inactividad_asunto}>
+      </div>
+      <div class="form-group">
+        <label for="inactividad_mensaje">Mensaje</label>
+        <textarea id="inactividad_mensaje" name="inactividad_mensaje" rows="3">{s.inactividad_mensaje}</textarea>
+        <small style="color:#999;">Variables: {'{nombre}'}, {'{apellidos}'}, {'{telefono_clinica}'}</small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <!-- WhatsApp automático -->
+  <div class="card settings-section" id="whatsapp">
+    <div class="settings-header">
+      <h3 class="settings-title">Recordatorio por WhatsApp</h3>
+      <span class={`badge ${s.whatsapp_recordatorio_activo ? 'badge-completada' : 'badge-cancelada'}`}>
+        {s.whatsapp_recordatorio_activo ? 'Activo' : 'Inactivo'}
+      </span>
+    </div>
+    <p class="settings-desc">Genera enlace de WhatsApp con mensaje pre-escrito para enviar recordatorios. (Envío manual desde el panel, el mensaje se genera automáticamente).</p>
+    <form method="POST">
+      <input type="hidden" name="_section" value="whatsapp">
+      <div class="form-group">
+        <label class="toggle-label">
+          <input type="checkbox" name="whatsapp_recordatorio_activo" checked={s.whatsapp_recordatorio_activo}>
+          Activar recordatorio WhatsApp
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="whatsapp_recordatorio_horas">Horas antes de la cita</label>
+        <select id="whatsapp_recordatorio_horas" name="whatsapp_recordatorio_horas">
+          <option value="12" selected={s.whatsapp_recordatorio_horas === 12}>12 horas</option>
+          <option value="24" selected={s.whatsapp_recordatorio_horas === 24}>24 horas</option>
+          <option value="48" selected={s.whatsapp_recordatorio_horas === 48}>48 horas</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="whatsapp_recordatorio_mensaje">Mensaje</label>
+        <textarea id="whatsapp_recordatorio_mensaje" name="whatsapp_recordatorio_mensaje" rows="3">{s.whatsapp_recordatorio_mensaje}</textarea>
+        <small style="color:#999;">Variables: {'{nombre}'}, {'{fecha}'}, {'{hora}'}, {'{servicio}'}</small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <!-- Facturación -->
+  <div class="card settings-section" id="facturacion">
+    <div class="settings-header">
+      <h3 class="settings-title">Facturación</h3>
+      <span class={`badge ${s.facturacion_activa ? 'badge-completada' : 'badge-cancelada'}`}>
+        {s.facturacion_activa ? 'Activo' : 'Inactivo'}
+      </span>
+    </div>
+    <p class="settings-desc">Datos para generar facturas desde las citas.</p>
+    <form method="POST">
+      <input type="hidden" name="_section" value="facturacion">
+      <div class="form-group">
+        <label class="toggle-label">
+          <input type="checkbox" name="facturacion_activa" checked={s.facturacion_activa}>
+          Activar facturación
+        </label>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="facturacion_nif">NIF / CIF</label>
+          <input type="text" id="facturacion_nif" name="facturacion_nif" value={s.facturacion_nif}>
+        </div>
+        <div class="form-group">
+          <label for="facturacion_direccion">Dirección fiscal</label>
+          <input type="text" id="facturacion_direccion" name="facturacion_direccion" value={s.facturacion_direccion}>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <style>
+    .settings-section {
+      margin-bottom: 20px;
+    }
+    .settings-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .settings-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    .settings-desc {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .settings-desc a {
+      color: #5a7c59;
+    }
+    .toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    .toggle-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #5a7c59;
+    }
+    code {
+      background: #f0f0f0;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 0.8rem;
+    }
+    small {
+      display: block;
+      margin-top: 4px;
+    }
+  </style>
+</AdminLayout>
