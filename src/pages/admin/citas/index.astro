@@ -1,0 +1,103 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getCitas, getCitasSemana } from '../../../lib/db';
+
+const fechaParam = Astro.url.searchParams.get('fecha') || '';
+const hoy = new Date().toISOString().split('T')[0];
+
+// Get current week
+const fecha = fechaParam || hoy;
+const fechaObj = new Date(fecha + 'T00:00:00');
+const dia = fechaObj.getDay();
+const lunes = new Date(fechaObj);
+lunes.setDate(fechaObj.getDate() - (dia === 0 ? 6 : dia - 1));
+const domingo = new Date(lunes);
+domingo.setDate(lunes.getDate() + 6);
+
+const lunesStr = lunes.toISOString().split('T')[0];
+const domingoStr = domingo.toISOString().split('T')[0];
+
+const citasSemana = await getCitasSemana(Astro, lunesStr, domingoStr);
+
+// Group by date
+const citasPorDia: Record<string, typeof citasSemana> = {};
+const diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+for (let i = 0; i < 7; i++) {
+  const d = new Date(lunes);
+  d.setDate(lunes.getDate() + i);
+  const key = d.toISOString().split('T')[0];
+  citasPorDia[key] = citasSemana.filter(c => c.fecha === key);
+}
+
+// Navigation
+const semanaAnterior = new Date(lunes);
+semanaAnterior.setDate(lunes.getDate() - 7);
+const semanaSiguiente = new Date(lunes);
+semanaSiguiente.setDate(lunes.getDate() + 7);
+
+function formatFechaCorta(fecha: string) {
+  const d = new Date(fecha + 'T00:00:00');
+  return d.getDate() + '/' + (d.getMonth() + 1);
+}
+---
+
+<AdminLayout title="Citas" activeSection="citas">
+  <div class="page-header">
+    <h2>Citas — Semana del {formatFechaCorta(lunesStr)} al {formatFechaCorta(domingoStr)}</h2>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <a href={`/admin/citas?fecha=${semanaAnterior.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">← Anterior</a>
+      <a href="/admin/citas" class="btn btn-secondary btn-sm">Hoy</a>
+      <a href={`/admin/citas?fecha=${semanaSiguiente.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">Siguiente →</a>
+      <a href="/admin/citas/nueva" class="btn btn-primary btn-sm">+ Nueva cita</a>
+    </div>
+  </div>
+
+  <!-- Weekly calendar -->
+  <div style="display:grid;grid-template-columns:repeat(7, 1fr);gap:12px;">
+    {Object.entries(citasPorDia).map(([fechaDia, citas], i) => {
+      const esHoy = fechaDia === hoy;
+      return (
+        <div class="card" style={`padding:16px;${esHoy ? 'border-color:#5a7c59;border-width:2px;' : ''}`}>
+          <div style="text-align:center;margin-bottom:12px;">
+            <div style={`font-size:0.75rem;font-weight:600;text-transform:uppercase;color:${esHoy ? '#5a7c59' : '#666'};`}>
+              {diasSemana[i]}
+            </div>
+            <div style={`font-size:1.25rem;font-weight:700;color:${esHoy ? '#5a7c59' : '#333'};`}>
+              {new Date(fechaDia + 'T00:00:00').getDate()}
+            </div>
+          </div>
+
+          {citas.length === 0 ? (
+            <p style="text-align:center;color:#ccc;font-size:0.75rem;">Sin citas</p>
+          ) : (
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              {citas.map((c) => (
+                <a href={`/admin/citas/${c.id}`} style={`display:block;padding:8px;border-radius:6px;text-decoration:none;font-size:0.8rem;background:${
+                  c.estado === 'completada' ? '#e8f5e9' :
+                  c.estado === 'cancelada' ? '#fce4ec' :
+                  c.estado === 'confirmada' ? '#e3f2fd' : '#fff3e0'
+                };`}>
+                  <strong style="color:#333;">{c.hora}</strong>
+                  <div style="color:#666;font-size:0.7rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    {c.paciente_nombre} {c.paciente_apellidos}
+                  </div>
+                  {c.servicio && <div style="color:#999;font-size:0.65rem;">{c.servicio}</div>}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+
+  <style>
+    @media (max-width: 768px) {
+      .week-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</AdminLayout>

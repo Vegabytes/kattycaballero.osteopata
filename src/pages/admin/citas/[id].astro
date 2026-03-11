@@ -1,0 +1,146 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getCita, actualizarCita, eliminarCita, getPacientes } from '../../../lib/db';
+
+const id = Number(Astro.params.id);
+let mensaje = '';
+let error = '';
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const action = form.get('_action');
+
+  if (action === 'eliminar') {
+    await eliminarCita(Astro, id);
+    return Astro.redirect('/admin/citas');
+  }
+
+  const paciente_id = Number(form.get('paciente_id'));
+  const fecha = form.get('fecha') as string;
+  const hora = form.get('hora') as string;
+
+  if (!paciente_id || !fecha || !hora) {
+    error = 'Paciente, fecha y hora son obligatorios';
+  } else {
+    await actualizarCita(Astro, id, {
+      paciente_id,
+      fecha,
+      hora,
+      duracion: Number(form.get('duracion')) || 60,
+      servicio: form.get('servicio') as string,
+      estado: form.get('estado') as string || 'pendiente',
+      notas: form.get('notas') as string,
+      precio: form.get('precio') ? Number(form.get('precio')) : null,
+    });
+    mensaje = 'Cita actualizada correctamente';
+  }
+}
+
+const cita = await getCita(Astro, id);
+if (!cita) {
+  return Astro.redirect('/admin/citas');
+}
+
+const pacientes = await getPacientes(Astro);
+
+const servicios = [
+  'Osteopatía',
+  'Masaje deportivo',
+  'Masaje corporal',
+  'Masaje tailandés',
+  'Masaje embarazadas',
+  'Masaje pindas herbales',
+];
+---
+
+<AdminLayout title={`Cita #${id}`} activeSection="citas">
+  <a href="/admin/citas" class="back-link">← Volver a citas</a>
+
+  {mensaje && <div class="alert alert-success">{mensaje}</div>}
+  {error && <div class="alert alert-error">{error}</div>}
+
+  <div style="display:flex;gap:8px;margin-bottom:20px;">
+    <a href={`/admin/pacientes/${cita.paciente_id}`} class="btn btn-secondary btn-sm">Ver paciente: {cita.paciente_nombre} {cita.paciente_apellidos}</a>
+    <a href={`/admin/tratamientos/nuevo?paciente=${cita.paciente_id}&cita=${id}`} class="btn btn-primary btn-sm">+ Registrar tratamiento</a>
+  </div>
+
+  <div class="card" style="margin-bottom:24px;">
+    <form method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="paciente_id">Paciente *</label>
+          <select id="paciente_id" name="paciente_id" required>
+            {pacientes.map((p) => (
+              <option value={p.id} selected={p.id === cita.paciente_id}>
+                {p.apellidos}, {p.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="servicio">Servicio</label>
+          <select id="servicio" name="servicio">
+            <option value="">Seleccionar...</option>
+            {servicios.map((s) => (
+              <option value={s} selected={s === cita.servicio}>{s}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fecha">Fecha *</label>
+          <input type="date" id="fecha" name="fecha" value={cita.fecha} required>
+        </div>
+        <div class="form-group">
+          <label for="hora">Hora *</label>
+          <input type="time" id="hora" name="hora" value={cita.hora} required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="duracion">Duración (min)</label>
+          <select id="duracion" name="duracion">
+            <option value="30" selected={cita.duracion === 30}>30 min</option>
+            <option value="45" selected={cita.duracion === 45}>45 min</option>
+            <option value="60" selected={cita.duracion === 60}>60 min</option>
+            <option value="90" selected={cita.duracion === 90}>90 min</option>
+            <option value="120" selected={cita.duracion === 120}>120 min</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="precio">Precio (€)</label>
+          <input type="number" id="precio" name="precio" step="0.01" min="0" value={cita.precio || ''}>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <select id="estado" name="estado">
+          <option value="pendiente" selected={cita.estado === 'pendiente'}>Pendiente</option>
+          <option value="confirmada" selected={cita.estado === 'confirmada'}>Confirmada</option>
+          <option value="completada" selected={cita.estado === 'completada'}>Completada</option>
+          <option value="cancelada" selected={cita.estado === 'cancelada'}>Cancelada</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="notas">Notas</label>
+        <textarea id="notas" name="notas">{cita.notas || ''}</textarea>
+      </div>
+
+      <div style="display:flex;gap:12px;">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </form>
+
+    <form method="POST" style="margin-top:24px;padding-top:16px;border-top:1px solid #eee;" onsubmit="return confirm('¿Eliminar esta cita?')">
+      <input type="hidden" name="_action" value="eliminar">
+      <button type="submit" class="btn btn-danger btn-sm">Eliminar cita</button>
+    </form>
+  </div>
+</AdminLayout>

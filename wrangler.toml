@@ -1,0 +1,10 @@
+name = "katy-caballero-osteopata"
+compatibility_date = "2024-12-01"
+
+[vars]
+ADMIN_PASSWORD = "katy2024"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "katy-clinica"
+database_id = "209b7ac3-76b3-4293-aa1c-f1de5bf3c573"

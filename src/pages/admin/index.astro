@@ -1,0 +1,101 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { getEstadisticas, getCitas, getCitasSemana } from '../../lib/db';
+
+const stats = await getEstadisticas(Astro);
+
+const hoy = new Date().toISOString().split('T')[0];
+const citasHoy = await getCitas(Astro, hoy);
+---
+
+<AdminLayout title="Dashboard" activeSection="dashboard">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon green">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" /></svg>
+      </div>
+      <div class="stat-info">
+        <h3>{stats.totalPacientes}</h3>
+        <p>Pacientes</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon blue">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
+      </div>
+      <div class="stat-info">
+        <h3>{stats.citasHoy}</h3>
+        <p>Citas hoy</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon orange">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+      </div>
+      <div class="stat-info">
+        <h3>{stats.citasSemana}</h3>
+        <p>Citas esta semana</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon red">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" /></svg>
+      </div>
+      <div class="stat-info">
+        <h3>{stats.citasPendientes}</h3>
+        <p>Pendientes confirmar</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Citas de hoy -->
+  <div class="card">
+    <div class="page-header">
+      <h2>Citas de hoy ({hoy})</h2>
+      <a href="/admin/citas/nueva" class="btn btn-primary btn-sm">+ Nueva cita</a>
+    </div>
+
+    {citasHoy.length === 0 ? (
+      <div class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
+        <p>No hay citas para hoy</p>
+      </div>
+    ) : (
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Paciente</th>
+              <th>Servicio</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {citasHoy.map((cita) => (
+              <tr>
+                <td><strong>{cita.hora}</strong></td>
+                <td>
+                  <a href={`/admin/pacientes/${cita.paciente_id}`}>{cita.paciente_nombre} {cita.paciente_apellidos}</a>
+                </td>
+                <td>{cita.servicio || '-'}</td>
+                <td>
+                  <span class={`badge badge-${cita.estado}`}>{cita.estado}</span>
+                </td>
+                <td>
+                  <a href={`/admin/citas/${cita.id}`} class="btn btn-secondary btn-sm">Ver</a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+</AdminLayout>

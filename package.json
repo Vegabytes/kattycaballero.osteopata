@@ -8,10 +8,15 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "db:create": "wrangler d1 create katy-clinica",
+    "db:migrate": "wrangler d1 execute katy-clinica --file=db/schema.sql",
+    "db:migrate:local": "wrangler d1 execute katy-clinica --file=db/schema.sql --local"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^8.1.0",
+    "@astrojs/sitemap": "^3.0.0",
     "astro": "^4.0.0",
-    "@astrojs/sitemap": "^3.0.0"
+    "wrangler": "^4.72.0"
   }
 }
