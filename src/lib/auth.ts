@@ -50,24 +50,23 @@ function getPassword(context: any): string {
   return context.locals?.runtime?.env?.ADMIN_PASSWORD || 'katy2024';
 }
 
-export async function login(context: any, password: string): Promise<boolean> {
+export async function login(context: any, password: string): Promise<{ success: boolean; token?: string }> {
   const correctPassword = getPassword(context);
-  if (password !== correctPassword) return false;
+  if (password !== correctPassword) return { success: false };
 
   const token = await createSignedToken(password);
 
-  // Set cookie manually via header to avoid Astro's URL encoding
+  // Set via Astro API
   const maxAge = SESSION_DURATION_HOURS * 60 * 60;
-  const cookieStr = `${COOKIE_NAME}=${token}; Max-Age=${maxAge}; Path=/; HttpOnly; Secure; SameSite=Lax`;
   context.cookies.set(COOKIE_NAME, token, {
     path: '/',
-    httpOnly: true,
-    secure: true,
+    httpOnly: false,
+    secure: false,
     sameSite: 'lax',
     maxAge,
   });
 
-  return true;
+  return { success: true, token };
 }
 
 export async function isAuthenticated(context: any): Promise<boolean> {

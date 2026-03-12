@@ -10,15 +10,17 @@ if (Astro.url.searchParams.get('logout') === '1') {
 
 let error = '';
 let loggedIn = false;
+let token = '';
 
 if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
   const password = formData.get('password') as string;
 
   try {
-    const success = await login(Astro, password);
-    if (success) {
+    const result = await login(Astro, password);
+    if (result.success) {
       loggedIn = true;
+      token = result.token || '';
     } else {
       error = 'Contraseña incorrecta';
     }
@@ -35,7 +37,11 @@ if (Astro.request.method === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>Login | Panel Katy</title>
-  {loggedIn && <meta http-equiv="refresh" content="0;url=/admin">}
+  {loggedIn && <script is:inline define:vars={{ token }}>
+    // Set cookie via JS as backup
+    document.cookie = `katy_admin_session=${token}; path=/; max-age=259200; SameSite=Lax`;
+    window.location.href = '/admin';
+  </script>}
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
