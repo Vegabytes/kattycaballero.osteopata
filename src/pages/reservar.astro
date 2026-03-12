@@ -943,7 +943,7 @@ const services = [
   document.getElementById('user-name')?.addEventListener('input', validateForm);
   document.getElementById('user-phone')?.addEventListener('input', validateForm);
 
-  document.getElementById('btn-send')?.addEventListener('click', () => {
+  document.getElementById('btn-send')?.addEventListener('click', async () => {
     if (!state.service || !state.date || !state.time) return;
     const name = (document.getElementById('user-name') as HTMLInputElement).value.trim();
     const phone = (document.getElementById('user-phone') as HTMLInputElement).value.trim();
@@ -958,6 +958,27 @@ const services = [
     message += `*Nombre:* ${name}\n`;
     message += `*Teléfono:* ${phone}`;
     if (notes) message += `\n*Notas:* ${notes}`;
+
+    // Save booking to database
+    try {
+      const dateStr = `${state.date.getFullYear()}-${String(state.date.getMonth() + 1).padStart(2, '0')}-${String(state.date.getDate()).padStart(2, '0')}`;
+      await fetch('/api/reservar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: name,
+          telefono: phone,
+          servicio: state.service.name,
+          fecha: dateStr,
+          hora: state.time,
+          duracion: parseInt(state.service.duration) || 60,
+          notas: notes || null,
+        }),
+      });
+    } catch (e) {
+      // Don't block WhatsApp if API fails
+      console.error('Error saving booking:', e);
+    }
 
     window.open(`https://wa.me/34643961065?text=${encodeURIComponent(message)}`, '_blank');
   });

@@ -42,6 +42,19 @@ if (Astro.request.method === 'POST') {
     <form method="POST">
       {citaId && <input type="hidden" name="cita_id" value={citaId}>}
 
+      <div style="margin-bottom:24px;padding:16px;background:#f0f7f0;border-radius:8px;border:1px solid #e0e8e0;">
+        <label style="display:block;font-weight:600;margin-bottom:8px;font-size:0.85rem;color:#4a6548;">Plantilla rápida (opcional)</label>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <button type="button" class="template-btn" data-template="cervicalgia" style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:0.8rem;font-family:inherit;">Cervicalgia</button>
+          <button type="button" class="template-btn" data-template="lumbalgia" style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:0.8rem;font-family:inherit;">Lumbalgia</button>
+          <button type="button" class="template-btn" data-template="hombro" style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:0.8rem;font-family:inherit;">Hombro</button>
+          <button type="button" class="template-btn" data-template="deportivo" style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:0.8rem;font-family:inherit;">Masaje deportivo</button>
+          <button type="button" class="template-btn" data-template="embarazo" style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:0.8rem;font-family:inherit;">Embarazo</button>
+          <button type="button" class="template-btn" data-template="valoracion" style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:0.8rem;font-family:inherit;">Valoración inicial</button>
+          <button type="button" class="template-btn" data-template="seguimiento" style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:0.8rem;font-family:inherit;">Seguimiento</button>
+        </div>
+      </div>
+
       <div class="form-row">
         <div class="form-group">
           <label for="paciente_id">Paciente *</label>
@@ -91,4 +104,82 @@ if (Astro.request.method === 'POST') {
       </div>
     </form>
   </div>
+
+  <script is:inline>
+    const templates = {
+      cervicalgia: {
+        motivo: 'Dolor cervical',
+        exploracion: 'Restricción movilidad cervical. Contractura trapecio bilateral. Puntos gatillo en ECOM y escalenos.',
+        diagnostico: 'Cervicalgia mecánica con componente muscular',
+        tratamiento_realizado: 'Técnicas de tejido blando en trapecio y ECOM. Manipulación cervical C3-C4. Stretching musculatura cervical posterior. Técnica de inhibición suboccipital.',
+        recomendaciones: 'Ejercicios de movilización cervical suave (10 rep x 3/día). Evitar posiciones mantenidas >30 min. Aplicar calor local 15 min antes de dormir. Revisar ergonomía del puesto de trabajo.'
+      },
+      lumbalgia: {
+        motivo: 'Dolor lumbar',
+        exploracion: 'Restricción flexión lumbar. Hipertonía cuadrado lumbar y paravertebrales. Test de Lasègue negativo bilateral.',
+        diagnostico: 'Lumbalgia mecánica inespecífica',
+        tratamiento_realizado: 'Técnicas de tejido blando en cuadrado lumbar y paravertebrales. Manipulación L4-L5. Técnica de energía muscular en psoas. Stretching isquiotibiales.',
+        recomendaciones: 'Ejercicios de estabilización lumbar (puente, plancha). Caminar 30 min/día. Evitar sedestación prolongada. Aplicar frío si dolor agudo, calor si contractura.'
+      },
+      hombro: {
+        motivo: 'Dolor de hombro',
+        exploracion: 'Limitación ABD y RE del hombro. Dolor en arco doloroso 60-120°. Test de Neer positivo. Contractura infraespinoso y deltoides.',
+        diagnostico: 'Síndrome subacromial / Tendinopatía del manguito rotador',
+        tratamiento_realizado: 'Técnicas miofasciales en manguito rotador. Movilización glenohumeral. Técnica de Jones en infraespinoso. Ejercicios de Codman.',
+        recomendaciones: 'Ejercicios pendulares de Codman (3x/día). Ejercicios de rotación externa con goma elástica. No cargar peso con el brazo afecto. Evitar movimientos por encima de la cabeza.'
+      },
+      deportivo: {
+        motivo: 'Recuperación deportiva / Contractura muscular',
+        exploracion: 'Hipertonía muscular generalizada. Puntos gatillo en zona afectada. Restricción de movilidad articular asociada.',
+        diagnostico: 'Contractura muscular post-esfuerzo',
+        tratamiento_realizado: 'Masaje deportivo profundo. Técnicas de compresión isquémica en puntos gatillo. Stretching analítico. Crioterapia local.',
+        recomendaciones: 'Hidratación abundante post-sesión. Stretching suave 24-48h post-tratamiento. Aplicar hielo 15 min si molestia. Vuelta gradual a la actividad deportiva.'
+      },
+      embarazo: {
+        motivo: 'Molestias propias del embarazo',
+        exploracion: 'Valoración postural adaptada al trimestre. Tensión en musculatura lumbar y piramidal. Edema leve en MMII.',
+        diagnostico: 'Adaptaciones musculoesqueléticas del embarazo',
+        tratamiento_realizado: 'Masaje prenatal en decúbito lateral. Técnicas suaves de tejido blando en lumbar y ciática. Drenaje linfático en MMII. Técnicas de relajación diafragmática.',
+        recomendaciones: 'Ejercicios de Kegel. Caminar a ritmo suave. Posición lateral para dormir con cojín entre piernas. Evitar permanecer mucho tiempo de pie. Próxima sesión recomendada en 2-3 semanas.'
+      },
+      valoracion: {
+        motivo: 'Primera visita - Valoración inicial',
+        exploracion: 'Anamnesis completa. Valoración postural estática y dinámica. Palpación tisular. Tests ortopédicos específicos según zona de queja.',
+        diagnostico: '',
+        tratamiento_realizado: 'Tratamiento inicial según hallazgos de la exploración.',
+        recomendaciones: 'Se recomienda seguimiento en 1-2 semanas para valorar evolución. Se pautan ejercicios específicos según diagnóstico.'
+      },
+      seguimiento: {
+        motivo: 'Seguimiento',
+        exploracion: 'Reevaluación de la zona tratada. Comparación con sesión anterior.',
+        diagnostico: 'En evolución - mejoría / sin cambios / empeoramiento',
+        tratamiento_realizado: '',
+        recomendaciones: 'Continuar con ejercicios pautados. Próxima revisión según evolución.'
+      }
+    };
+
+    document.querySelectorAll('.template-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var key = btn.getAttribute('data-template');
+        var t = templates[key];
+        if (!t) return;
+
+        var motivo = document.getElementById('motivo');
+        var exploracion = document.getElementById('exploracion');
+        var diagnostico = document.getElementById('diagnostico');
+        var tratamiento = document.getElementById('tratamiento_realizado');
+        var recomendaciones = document.getElementById('recomendaciones');
+
+        if (motivo) motivo.value = t.motivo;
+        if (exploracion) exploracion.value = t.exploracion;
+        if (diagnostico) diagnostico.value = t.diagnostico;
+        if (tratamiento) tratamiento.value = t.tratamiento_realizado;
+        if (recomendaciones) recomendaciones.value = t.recomendaciones;
+
+        document.querySelectorAll('.template-btn').forEach(function(b) { b.style.borderColor = '#ddd'; b.style.background = 'white'; });
+        btn.style.borderColor = '#5a7c59';
+        btn.style.background = '#f0f7f0';
+      });
+    });
+  </script>
 </AdminLayout>

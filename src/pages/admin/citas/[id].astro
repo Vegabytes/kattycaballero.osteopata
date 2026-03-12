@@ -64,6 +64,7 @@ const servicios = [
   <div style="display:flex;gap:8px;margin-bottom:20px;">
     <a href={`/admin/pacientes/${cita.paciente_id}`} class="btn btn-secondary btn-sm">Ver paciente: {cita.paciente_nombre} {cita.paciente_apellidos}</a>
     <a href={`/admin/tratamientos/nuevo?paciente=${cita.paciente_id}&cita=${id}`} class="btn btn-primary btn-sm">+ Registrar tratamiento</a>
+    <a href={`/admin/factura/${id}`} target="_blank" class="btn btn-secondary btn-sm">Factura</a>
   </div>
 
   <div class="card" style="margin-bottom:24px;">
