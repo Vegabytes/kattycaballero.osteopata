@@ -5,10 +5,24 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 import { getPacientes } from '../../../lib/db';
 
 const buscar = Astro.url.searchParams.get('buscar') || '';
-const pacientes = await getPacientes(Astro, buscar || undefined);
+let pacientes: any[] = [];
+let dbError = '';
+
+try {
+  pacientes = await getPacientes(Astro, buscar || undefined);
+} catch (e: any) {
+  dbError = e.message;
+  console.error('DB error in pacientes:', e);
+}
 ---
 
 <AdminLayout title="Pacientes" activeSection="pacientes">
+  {dbError && (
+    <div class="alert alert-error">
+      <strong>Error de base de datos:</strong> {dbError}
+      <br><small>Verifica que D1 esté vinculado en Cloudflare Pages → Settings → Functions → D1 database bindings.</small>
+    </div>
+  )}
   <div class="page-header">
     <h2>Pacientes ({pacientes.length})</h2>
     <a href="/admin/pacientes/nuevo" class="btn btn-primary">+ Nuevo paciente</a>

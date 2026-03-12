@@ -74,10 +74,23 @@ if (Astro.request.method === 'POST') {
   }
 }
 
-const s = await getSettings(Astro);
+let s: any = {};
+let dbError = '';
+try {
+  s = await getSettings(Astro);
+} catch (e: any) {
+  dbError = e.message;
+  console.error('DB error in ajustes:', e);
+}
 ---
 
 <AdminLayout title="Ajustes" activeSection="ajustes">
+  {dbError && (
+    <div class="alert alert-error">
+      <strong>Error de base de datos:</strong> {dbError}
+      <br><small>Verifica que D1 esté vinculado en Cloudflare Pages → Settings → Functions → D1 database bindings.</small>
+    </div>
+  )}
   {mensaje && <div class="alert alert-success">{mensaje}</div>}
   {error && <div class="alert alert-error">{error}</div>}
 

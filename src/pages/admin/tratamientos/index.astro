@@ -2,13 +2,27 @@
 export const prerender = false;
 
 import AdminLayout from '../../../layouts/AdminLayout.astro';
-import { getTratamientos, getPacientes } from '../../../lib/db';
+import { getTratamientos } from '../../../lib/db';
 
 const pacienteId = Astro.url.searchParams.get('paciente');
-const tratamientos = await getTratamientos(Astro, pacienteId ? Number(pacienteId) : undefined);
+let tratamientos: any[] = [];
+let dbError = '';
+
+try {
+  tratamientos = await getTratamientos(Astro, pacienteId ? Number(pacienteId) : undefined);
+} catch (e: any) {
+  dbError = e.message;
+  console.error('DB error in tratamientos:', e);
+}
 ---
 
 <AdminLayout title="Tratamientos" activeSection="tratamientos">
+  {dbError && (
+    <div class="alert alert-error">
+      <strong>Error de base de datos:</strong> {dbError}
+      <br><small>Verifica que D1 esté vinculado en Cloudflare Pages → Settings → Functions → D1 database bindings.</small>
+    </div>
+  )}
   <div class="page-header">
     <h2>Tratamientos ({tratamientos.length})</h2>
     <a href="/admin/tratamientos/nuevo" class="btn btn-primary">+ Nuevo tratamiento</a>

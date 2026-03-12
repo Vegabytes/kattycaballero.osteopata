@@ -13,7 +13,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
       }
     } catch (e) {
       console.error('Middleware auth error:', e);
-      return context.redirect('/admin/login');
+      // Don't redirect to login on error — show the error so we can debug
+      return new Response(`Error de autenticación: ${e instanceof Error ? e.message : String(e)}`, {
+        status: 500,
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+      });
     }
   }
 

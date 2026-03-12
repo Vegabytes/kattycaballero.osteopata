@@ -2,15 +2,30 @@
 export const prerender = false;
 
 import AdminLayout from '../../layouts/AdminLayout.astro';
-import { getEstadisticas, getCitas, getCitasSemana } from '../../lib/db';
+import { getEstadisticas, getCitas } from '../../lib/db';
 
-const stats = await getEstadisticas(Astro);
+let stats = { totalPacientes: 0, citasHoy: 0, citasSemana: 0, citasPendientes: 0 };
+let citasHoy: any[] = [];
+let dbError = '';
 
 const hoy = new Date().toISOString().split('T')[0];
-const citasHoy = await getCitas(Astro, hoy);
+
+try {
+  stats = await getEstadisticas(Astro);
+  citasHoy = await getCitas(Astro, hoy);
+} catch (e: any) {
+  dbError = `Error conectando a la base de datos: ${e.message}`;
+  console.error('DB error in admin/index:', e);
+}
 ---
 
 <AdminLayout title="Dashboard" activeSection="dashboard">
+  {dbError && (
+    <div class="alert alert-error">
+      <strong>Error de base de datos:</strong> {dbError}
+      <br><small>Verifica que D1 esté correctamente vinculado en Cloudflare Pages → Settings → Functions → D1 database bindings.</small>
+    </div>
+  )}
   <div class="stats-grid">
     <div class="stat-card">
       <div class="stat-icon green">

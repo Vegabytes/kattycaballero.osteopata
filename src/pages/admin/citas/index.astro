@@ -2,7 +2,9 @@
 export const prerender = false;
 
 import AdminLayout from '../../../layouts/AdminLayout.astro';
-import { getCitas, getCitasSemana } from '../../../lib/db';
+import { getCitasSemana } from '../../../lib/db';
+
+let dbError = '';
 
 const fechaParam = Astro.url.searchParams.get('fecha') || '';
 const hoy = new Date().toISOString().split('T')[0];
@@ -19,7 +21,13 @@ domingo.setDate(lunes.getDate() + 6);
 const lunesStr = lunes.toISOString().split('T')[0];
 const domingoStr = domingo.toISOString().split('T')[0];
 
-const citasSemana = await getCitasSemana(Astro, lunesStr, domingoStr);
+let citasSemana: any[] = [];
+try {
+  citasSemana = await getCitasSemana(Astro, lunesStr, domingoStr);
+} catch (e: any) {
+  dbError = e.message;
+  console.error('DB error in citas:', e);
+}
 
 // Group by date
 const citasPorDia: Record<string, typeof citasSemana> = {};
@@ -44,6 +52,12 @@ function formatFechaCorta(fecha: string) {
 ---
 
 <AdminLayout title="Citas" activeSection="citas">
+  {dbError && (
+    <div class="alert alert-error">
+      <strong>Error de base de datos:</strong> {dbError}
+      <br><small>Verifica que D1 esté vinculado en Cloudflare Pages → Settings → Functions → D1 database bindings.</small>
+    </div>
+  )}
   <div class="page-header">
     <h2>Citas — Semana del {formatFechaCorta(lunesStr)} al {formatFechaCorta(domingoStr)}</h2>
     <div style="display:flex;gap:8px;align-items:center;">
