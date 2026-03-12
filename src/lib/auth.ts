@@ -1,84 +1,78 @@
 const COOKIE_NAME = 'katy_admin_session';
 const SESSION_DURATION_HOURS = 72;
+const SECRET_SALT = 'katy-clinica-2024-salt';
 
-function getDB(context: any) {
-  // Works with both AstroGlobal and middleware APIContext
-  return context.locals?.runtime?.env?.DB;
+// HMAC-based auth — no DB needed for session verification
+async function createSignedToken(password: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(SECRET_SALT),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  const expiry = Date.now() + SESSION_DURATION_HOURS * 60 * 60 * 1000;
+  const data = `${password}:${expiry}`;
+  const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(data));
+  const sigHex = Array.from(new Uint8Array(signature), b => b.toString(16).padStart(2, '0')).join('');
+  return `${expiry}:${sigHex}`;
+}
+
+async function verifyToken(token: string, password: string): Promise<boolean> {
+  try {
+    const [expiryStr, sigHex] = token.split(':');
+    const expiry = Number(expiryStr);
+
+    // Check expiry
+    if (Date.now() > expiry) return false;
+
+    // Verify signature
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+      'raw',
+      encoder.encode(SECRET_SALT),
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['verify']
+    );
+    const data = `${password}:${expiry}`;
+    const sigBytes = new Uint8Array(sigHex.match(/.{2}/g)!.map(byte => parseInt(byte, 16)));
+    return await crypto.subtle.verify('HMAC', key, sigBytes, encoder.encode(data));
+  } catch {
+    return false;
+  }
 }
 
 function getPassword(context: any): string {
   return context.locals?.runtime?.env?.ADMIN_PASSWORD || 'katy2024';
 }
 
-function generateToken(): string {
-  const array = new Uint8Array(32);
-  crypto.getRandomValues(array);
-  return Array.from(array, (b) => b.toString(16).padStart(2, '0')).join('');
-}
-
 export async function login(context: any, password: string): Promise<boolean> {
   const correctPassword = getPassword(context);
   if (password !== correctPassword) return false;
 
-  const db = getDB(context);
-  if (!db) return false;
+  const token = await createSignedToken(password);
 
-  const token = generateToken();
-  const expiresAt = new Date(Date.now() + SESSION_DURATION_HOURS * 60 * 60 * 1000).toISOString();
+  context.cookies.set(COOKIE_NAME, token, {
+    path: '/',
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    maxAge: SESSION_DURATION_HOURS * 60 * 60,
+  });
 
-  try {
-    // Clean expired sessions
-    await db.prepare("DELETE FROM sessions WHERE expires_at < datetime('now')").run();
-
-    // Create new session
-    await db.prepare('INSERT INTO sessions (token, expires_at) VALUES (?, ?)').bind(token, expiresAt).run();
-
-    context.cookies.set(COOKIE_NAME, token, {
-      path: '/',
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      maxAge: SESSION_DURATION_HOURS * 60 * 60,
-    });
-
-    return true;
-  } catch (e) {
-    console.error('Login error:', e);
-    return false;
-  }
+  return true;
 }
 
 export async function isAuthenticated(context: any): Promise<boolean> {
-  try {
-    const token = context.cookies.get(COOKIE_NAME)?.value;
-    if (!token) return false;
+  const token = context.cookies.get(COOKIE_NAME)?.value;
+  if (!token) return false;
 
-    const db = getDB(context);
-    if (!db) return false;
-
-    const session = await db
-      .prepare("SELECT token FROM sessions WHERE token = ? AND expires_at > datetime('now')")
-      .bind(token)
-      .first();
-
-    return !!session;
-  } catch (e) {
-    console.error('Auth check error:', e);
-    return false;
-  }
+  const password = getPassword(context);
+  return verifyToken(token, password);
 }
 
 export async function logout(context: any): Promise<void> {
-  try {
-    const token = context.cookies.get(COOKIE_NAME)?.value;
-    if (token) {
-      const db = getDB(context);
-      if (db) {
-        await db.prepare('DELETE FROM sessions WHERE token = ?').bind(token).run();
-      }
-    }
-  } catch (e) {
-    console.error('Logout error:', e);
-  }
   context.cookies.delete(COOKIE_NAME, { path: '/' });
 }
