@@ -56,11 +56,10 @@ export async function login(context: any, password: string): Promise<{ success: 
 
   const token = await createSignedToken(password);
 
-  // Set via Astro API
   const maxAge = SESSION_DURATION_HOURS * 60 * 60;
   context.cookies.set(COOKIE_NAME, token, {
     path: '/',
-    httpOnly: false,
+    httpOnly: true,
     secure: true,
     sameSite: 'lax',
     maxAge,

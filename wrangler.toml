@@ -1,8 +1,7 @@
 name = "katy-caballero-osteopata"
 compatibility_date = "2024-12-01"
 
-[vars]
-ADMIN_PASSWORD = "katy2024"
+# ADMIN_PASSWORD se configura en Cloudflare Pages → Settings → Variables and Secrets
 
 [[d1_databases]]
 binding = "DB"
