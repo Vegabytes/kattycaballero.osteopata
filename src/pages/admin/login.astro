@@ -3,8 +3,8 @@ export const prerender = false;
 
 import { login, logout } from '../../lib/auth';
 
-// Handle logout
-if (Astro.url.searchParams.get('logout') === '1') {
+// Handle logout - only on direct navigation, not prefetch
+if (Astro.url.searchParams.get('logout') === '1' && Astro.request.headers.get('sec-fetch-dest') !== 'empty') {
   await logout(Astro);
 }
 

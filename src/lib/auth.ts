@@ -61,7 +61,7 @@ export async function login(context: any, password: string): Promise<{ success: 
   context.cookies.set(COOKIE_NAME, token, {
     path: '/',
     httpOnly: false,
-    secure: false,
+    secure: true,
     sameSite: 'lax',
     maxAge,
   });
