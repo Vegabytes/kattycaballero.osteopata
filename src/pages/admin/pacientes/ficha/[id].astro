@@ -1,0 +1,535 @@
+---
+export const prerender = false;
+
+import { getPaciente, getCitas, getTratamientos } from '../../../../lib/db';
+
+const id = Number(Astro.params.id);
+const db = (Astro.locals as any).runtime.env.DB;
+
+const paciente = await getPaciente(Astro, id);
+if (!paciente) {
+  return Astro.redirect('/admin/pacientes');
+}
+
+// Clinical fields
+let clinico = { motivo_consulta: '', antecedentes: '', alergias: '', profesion: '' };
+try {
+  const row = await db.prepare('SELECT motivo_consulta, antecedentes, alergias, profesion FROM pacientes WHERE id = ?').bind(id).first();
+  if (row) clinico = row as any;
+} catch { /* columns may not exist yet */ }
+
+// Citas
+let citas: any[] = [];
+try {
+  citas = await getCitas(Astro, undefined, id);
+} catch { /* table may not exist */ }
+
+// Notas clínicas
+let notasClinicas: any[] = [];
+try {
+  notasClinicas = (await db.prepare('SELECT * FROM notas_clinicas WHERE paciente_id = ? ORDER BY fecha DESC').bind(id).all()).results;
+} catch { /* table may not exist */ }
+
+// Bonos
+let bonos: any[] = [];
+try {
+  bonos = (await db.prepare("SELECT * FROM bonos WHERE paciente_id = ? ORDER BY created_at DESC").bind(id).all()).results;
+} catch { /* table may not exist */ }
+
+const fechaImpresion = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+const formatFecha = (f: string) => {
+  if (!f) return '-';
+  try {
+    return new Date(f).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  } catch { return f; }
+};
+---
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha - {paciente.nombre} {paciente.apellidos}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #3d3d3d;
+      background: #f5f5f5;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .page-wrapper {
+      max-width: 210mm;
+      margin: 20px auto;
+      background: #fff;
+      padding: 40px 50px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+
+    .print-actions {
+      text-align: center;
+      margin: 20px auto;
+      max-width: 210mm;
+    }
+
+    .print-actions button {
+      background: #5a7c59;
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 0 8px;
+    }
+
+    .print-actions button:hover {
+      background: #4a6548;
+    }
+
+    .print-actions a {
+      display: inline-block;
+      padding: 12px 32px;
+      font-size: 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #5a7c59;
+      border: 1px solid #5a7c59;
+    }
+
+    .print-actions a:hover {
+      background: #f0f5f0;
+    }
+
+    /* Header */
+    .ficha-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 3px solid #5a7c59;
+    }
+
+    .ficha-header h1 {
+      font-size: 22px;
+      color: #5a7c59;
+      font-weight: 700;
+    }
+
+    .ficha-header .clinic-name {
+      font-size: 13px;
+      color: #6b6b6b;
+      margin-top: 4px;
+    }
+
+    .ficha-header .fecha-impresion {
+      font-size: 12px;
+      color: #999;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #5a7c59;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #e0e8e0;
+    }
+
+    /* Patient info grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 6px;
+    }
+
+    .info-item .label {
+      font-weight: 600;
+      color: #5a7c59;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      min-width: 120px;
+      flex-shrink: 0;
+    }
+
+    .info-item .value {
+      font-size: 13px;
+      color: #3d3d3d;
+    }
+
+    .info-full {
+      grid-column: 1 / -1;
+    }
+
+    /* Clinical block */
+    .clinical-block {
+      background: #f8faf8;
+      border: 1px solid #e0e8e0;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-top: 12px;
+    }
+
+    .clinical-block .clinical-item {
+      margin-bottom: 10px;
+    }
+
+    .clinical-block .clinical-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .clinical-block .clinical-label {
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #5a7c59;
+      margin-bottom: 2px;
+    }
+
+    .clinical-block .clinical-value {
+      font-size: 13px;
+      color: #3d3d3d;
+      white-space: pre-line;
+    }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .data-table thead th {
+      background: #5a7c59;
+      color: #fff;
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .data-table tbody td {
+      padding: 7px 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 12px;
+    }
+
+    .data-table tbody tr:nth-child(even) {
+      background: #fafcfa;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .badge-confirmada, .badge-completada { background: #e8f5e9; color: #2e7d32; }
+    .badge-pendiente { background: #fff8e1; color: #f57f17; }
+    .badge-cancelada { background: #fce4ec; color: #c62828; }
+
+    .empty-msg {
+      color: #999;
+      font-size: 12px;
+      font-style: italic;
+      padding: 8px 0;
+    }
+
+    /* Notas clínicas cards */
+    .nota-card {
+      border: 1px solid #e0e8e0;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+    }
+
+    .nota-card .nota-fecha {
+      font-size: 11px;
+      color: #999;
+      margin-bottom: 6px;
+    }
+
+    .nota-card .nota-field {
+      margin-bottom: 6px;
+    }
+
+    .nota-card .nota-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .nota-card .nota-label {
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #5a7c59;
+    }
+
+    .nota-card .nota-text {
+      font-size: 12px;
+      color: #3d3d3d;
+      white-space: pre-line;
+    }
+
+    /* Footer */
+    .ficha-footer {
+      margin-top: 40px;
+      padding-top: 12px;
+      border-top: 1px solid #e0e0e0;
+      text-align: center;
+    }
+
+    .ficha-footer p {
+      font-size: 10px;
+      color: #999;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: #fff;
+        font-size: 12px;
+      }
+
+      .print-actions {
+        display: none !important;
+      }
+
+      .page-wrapper {
+        box-shadow: none;
+        margin: 0;
+        padding: 20px 30px;
+      }
+
+      .section {
+        page-break-inside: avoid;
+      }
+
+      .nota-card {
+        page-break-inside: avoid;
+      }
+
+      .data-table thead th {
+        background: #5a7c59 !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .data-table tbody tr:nth-child(even) {
+        background: #fafcfa !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      @page {
+        size: A4;
+        margin: 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-actions">
+    <button onclick="window.print()">Imprimir / Guardar PDF</button>
+    <a href={`/admin/pacientes/${id}`}>Volver al paciente</a>
+  </div>
+
+  <div class="page-wrapper">
+    <!-- Header -->
+    <div class="ficha-header">
+      <div>
+        <h1>Ficha del Paciente</h1>
+        <div class="clinic-name">Katy Caballero - Osteopatia</div>
+      </div>
+      <div class="fecha-impresion">
+        Fecha de impresion: {fechaImpresion}
+      </div>
+    </div>
+
+    <!-- Datos personales -->
+    <div class="section">
+      <div class="section-title">Datos personales</div>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">Nombre:</span>
+          <span class="value">{paciente.nombre} {paciente.apellidos}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Telefono:</span>
+          <span class="value">{paciente.telefono || '-'}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Email:</span>
+          <span class="value">{paciente.email || '-'}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">F. nacimiento:</span>
+          <span class="value">{paciente.fecha_nacimiento ? formatFecha(paciente.fecha_nacimiento) : '-'}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Direccion:</span>
+          <span class="value">{paciente.direccion || '-'}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Profesion:</span>
+          <span class="value">{clinico.profesion || '-'}</span>
+        </div>
+      </div>
+
+      {(clinico.motivo_consulta || clinico.antecedentes || clinico.alergias) && (
+        <div class="clinical-block">
+          {clinico.motivo_consulta && (
+            <div class="clinical-item">
+              <div class="clinical-label">Motivo de consulta</div>
+              <div class="clinical-value">{clinico.motivo_consulta}</div>
+            </div>
+          )}
+          {clinico.antecedentes && (
+            <div class="clinical-item">
+              <div class="clinical-label">Antecedentes medicos</div>
+              <div class="clinical-value">{clinico.antecedentes}</div>
+            </div>
+          )}
+          {clinico.alergias && (
+            <div class="clinical-item">
+              <div class="clinical-label">Alergias / Contraindicaciones</div>
+              <div class="clinical-value">{clinico.alergias}</div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+
+    <!-- Historial de citas -->
+    <div class="section">
+      <div class="section-title">Historial de citas ({citas.length})</div>
+      {citas.length === 0 ? (
+        <p class="empty-msg">Sin citas registradas</p>
+      ) : (
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Servicio</th>
+              <th>Duracion</th>
+              <th>Precio</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {citas.map((c: any) => (
+              <tr>
+                <td>{c.fecha}</td>
+                <td>{c.hora || '-'}</td>
+                <td>{c.servicio || '-'}</td>
+                <td>{c.duracion ? `${c.duracion} min` : '-'}</td>
+                <td>{c.precio ? `${Number(c.precio).toFixed(2)} \u20AC` : '-'}</td>
+                <td><span class={`badge badge-${c.estado}`}>{c.estado}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+
+    <!-- Notas clinicas -->
+    <div class="section">
+      <div class="section-title">Notas clinicas ({notasClinicas.length})</div>
+      {notasClinicas.length === 0 ? (
+        <p class="empty-msg">Sin notas clinicas registradas</p>
+      ) : (
+        notasClinicas.map((n: any) => (
+          <div class="nota-card">
+            <div class="nota-fecha">{formatFecha(n.fecha)}</div>
+            {n.motivo && (
+              <div class="nota-field">
+                <div class="nota-label">Motivo</div>
+                <div class="nota-text">{n.motivo}</div>
+              </div>
+            )}
+            {n.diagnostico && (
+              <div class="nota-field">
+                <div class="nota-label">Diagnostico</div>
+                <div class="nota-text">{n.diagnostico}</div>
+              </div>
+            )}
+            {n.tratamiento && (
+              <div class="nota-field">
+                <div class="nota-label">Tratamiento</div>
+                <div class="nota-text">{n.tratamiento}</div>
+              </div>
+            )}
+          </div>
+        ))
+      )}
+    </div>
+
+    <!-- Bonos -->
+    <div class="section">
+      <div class="section-title">Bonos ({bonos.length})</div>
+      {bonos.length === 0 ? (
+        <p class="empty-msg">Sin bonos registrados</p>
+      ) : (
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Bono</th>
+              <th>Sesiones</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bonos.map((b: any) => (
+              <tr>
+                <td>{b.nombre}</td>
+                <td>{b.sesiones_usadas} / {b.sesiones_total}</td>
+                <td><span class={`badge badge-${b.estado === 'activo' ? 'confirmada' : b.estado === 'completado' ? 'completada' : 'cancelada'}`}>{b.estado}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+
+    <!-- Footer -->
+    <div class="ficha-footer">
+      <p>Katy Caballero - Osteopatia | Documento generado el {fechaImpresion} | Confidencial - Uso exclusivo profesional</p>
+    </div>
+  </div>
+</body>
+</html>

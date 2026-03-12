@@ -1,0 +1,394 @@
+---
+export const prerender = false;
+
+const id = Number(Astro.params.id);
+const db = (Astro.locals as any).runtime.env.DB;
+
+let paciente: any = null;
+try {
+  paciente = await db.prepare('SELECT nombre, apellidos, telefono, email, fecha_nacimiento, direccion FROM pacientes WHERE id = ?').bind(id).first();
+} catch {}
+
+if (!paciente) {
+  return Astro.redirect('/admin/pacientes');
+}
+
+const nombreCompleto = `${paciente.nombre} ${paciente.apellidos}`;
+const hoy = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+---
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consentimiento Informado - {nombreCompleto}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .page {
+      max-width: 210mm;
+      margin: 0 auto;
+      background: #fff;
+      padding: 25mm 20mm 20mm;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .no-print {
+      max-width: 210mm;
+      margin: 0 auto 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .btn-print {
+      background: #5a7c59;
+    }
+
+    .btn-print:hover {
+      background: #4a6548;
+    }
+
+    .btn-back {
+      background: #6b6b6b;
+    }
+
+    .btn-back:hover {
+      background: #555;
+    }
+
+    /* Document styles */
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #3d3d3d;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .header h2 {
+      font-size: 14px;
+      font-weight: 400;
+      color: #555;
+      margin-bottom: 2px;
+    }
+
+    .header .subtitle {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+
+    .clinic-info {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .section {
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 3px;
+    }
+
+    .patient-data {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+      margin-bottom: 6px;
+    }
+
+    .patient-data .field {
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+    }
+
+    .patient-data .field .label {
+      font-weight: 700;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .patient-data .field .value {
+      flex: 1;
+      border-bottom: 1px dotted #999;
+      min-width: 60px;
+      padding-bottom: 1px;
+      font-size: 13px;
+    }
+
+    .body-text {
+      text-align: justify;
+      margin-bottom: 10px;
+      font-size: 12.5px;
+    }
+
+    .body-text p {
+      margin-bottom: 8px;
+    }
+
+    ol {
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    ol li {
+      margin-bottom: 6px;
+      font-size: 12.5px;
+      text-align: justify;
+    }
+
+    .signatures {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .signature-block {
+      text-align: center;
+    }
+
+    .signature-line {
+      border-top: 1px solid #333;
+      margin-top: 70px;
+      padding-top: 6px;
+      font-size: 12px;
+    }
+
+    .signature-line .name {
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .signature-line .role {
+      font-size: 11px;
+      color: #555;
+    }
+
+    .date-line {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12.5px;
+    }
+
+    .date-line .value {
+      border-bottom: 1px dotted #999;
+      padding: 0 8px 1px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      padding-top: 12px;
+      border-top: 1px solid #ccc;
+      text-align: center;
+      font-size: 10px;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+        font-size: 12px;
+      }
+
+      .page {
+        box-shadow: none;
+        padding: 15mm 18mm 15mm;
+        max-width: none;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      @page {
+        size: A4;
+        margin: 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="no-print">
+    <button class="btn btn-print" onclick="window.print()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" /></svg>
+      Imprimir
+    </button>
+    <a href={`/admin/pacientes/${id}`} class="btn btn-back">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" /></svg>
+      Volver al paciente
+    </a>
+  </div>
+
+  <div class="page">
+    <div class="header">
+      <h1>Consentimiento Informado</h1>
+      <h2>Tratamiento de Osteopatia</h2>
+      <div class="clinic-info">
+        Katy Caballero - Osteopata Colegiada<br />
+        katycaballeroosteopata.com
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Datos del paciente</div>
+      <div class="patient-data">
+        <div class="field">
+          <span class="label">Nombre completo:</span>
+          <span class="value">{nombreCompleto}</span>
+        </div>
+        <div class="field">
+          <span class="label">DNI/NIE:</span>
+          <span class="value">&nbsp;</span>
+        </div>
+        <div class="field">
+          <span class="label">Fecha de nacimiento:</span>
+          <span class="value">{paciente.fecha_nacimiento || ''}</span>
+        </div>
+        <div class="field">
+          <span class="label">Direccion:</span>
+          <span class="value">{paciente.direccion || ''}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Informacion sobre el tratamiento</div>
+      <div class="body-text">
+        <p>
+          Yo, <strong>{nombreCompleto}</strong>, declaro que he sido informado/a de forma clara y comprensible
+          por la osteópata sobre los siguientes aspectos del tratamiento al que voy a someterme:
+        </p>
+
+        <ol>
+          <li>
+            <strong>Naturaleza del tratamiento:</strong> La osteopatía es una disciplina terapéutica manual que se basa en
+            la valoración y el tratamiento del cuerpo humano mediante técnicas manuales específicas. El tratamiento puede
+            incluir técnicas estructurales, viscerales y/o craneales, según la valoración del profesional.
+          </li>
+          <li>
+            <strong>Objetivos y beneficios esperados:</strong> El tratamiento osteopático tiene como objetivo aliviar el dolor,
+            restaurar la movilidad y mejorar la función del organismo. Los beneficios esperados incluyen la reducción de
+            síntomas, mejora de la calidad de vida y prevención de futuras dolencias.
+          </li>
+          <li>
+            <strong>Riesgos y efectos secundarios posibles:</strong> Como en cualquier terapia manual, pueden aparecer efectos
+            transitorios tras el tratamiento, tales como: molestias o dolor leve en la zona tratada, fatiga, sensación de
+            cansancio general, mareo leve o cefalea. Estos efectos suelen desaparecer en las 24-72 horas posteriores al
+            tratamiento.
+          </li>
+          <li>
+            <strong>Contraindicaciones:</strong> He informado verazmente sobre mi estado de salud, enfermedades, intervenciones
+            quirúrgicas, medicación actual, alergias y cualquier otra circunstancia relevante. Entiendo que ocultar información
+            puede afectar la seguridad del tratamiento.
+          </li>
+          <li>
+            <strong>Alternativas:</strong> Se me ha informado de que existen otras alternativas terapéuticas y que tengo
+            derecho a solicitar una segunda opinión profesional.
+          </li>
+          <li>
+            <strong>Derecho a revocar el consentimiento:</strong> Entiendo que puedo revocar este consentimiento en cualquier
+            momento, sin necesidad de justificación, y que puedo interrumpir el tratamiento cuando lo desee, sin que ello
+            suponga perjuicio alguno en mi atención.
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Proteccion de datos personales</div>
+      <div class="body-text">
+        <p>
+          De conformidad con el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 de Protección
+          de Datos Personales y Garantía de los Derechos Digitales (LOPDGDD), autorizo el tratamiento de mis datos personales
+          y de salud con la única finalidad de gestionar mi historial clínico y la prestación de servicios de osteopatía.
+          Mis datos no serán cedidos a terceros salvo obligación legal. Puedo ejercer mis derechos de acceso, rectificación,
+          supresión, limitación, portabilidad y oposición dirigiéndome al profesional responsable del tratamiento.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Declaracion y firma</div>
+      <div class="body-text">
+        <p>
+          Declaro que he leído y comprendido la información proporcionada, que he podido formular las preguntas que he
+          considerado oportunas y que he recibido respuestas satisfactorias. En consecuencia, doy mi consentimiento libre,
+          voluntario e informado para recibir el tratamiento osteopático propuesto.
+        </p>
+      </div>
+
+      <div class="date-line">
+        En _________________________, a <span class="value">{hoy}</span>
+      </div>
+
+      <div class="signatures">
+        <div class="signature-block">
+          <div class="signature-line">
+            <div class="name">{nombreCompleto}</div>
+            <div class="role">El/La Paciente</div>
+          </div>
+        </div>
+        <div class="signature-block">
+          <div class="signature-line">
+            <div class="name">Katy Caballero</div>
+            <div class="role">Osteópata</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Katy Caballero - Osteópata &middot; katycaballeroosteopata.com<br />
+      Este documento tiene validez como consentimiento informado según la Ley 41/2002 de Autonomía del Paciente.
+    </div>
+  </div>
+</body>
+</html>

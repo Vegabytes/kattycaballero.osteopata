@@ -6,9 +6,11 @@ import { getEstadisticas, getCitas } from '../../lib/db';
 
 let stats = { totalPacientes: 0, citasHoy: 0, citasSemana: 0, citasPendientes: 0 };
 let citasHoy: any[] = [];
+let agendaHoy: any[] = [];
 let dbError = '';
 
 const hoy = new Date().toISOString().split('T')[0];
+const hoyDisplay = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
 const mesActual = new Date().toISOString().slice(0, 7); // YYYY-MM
 
 let pacientesNuevosMes = 0;
@@ -25,6 +27,21 @@ try {
 } catch (e: any) {
   dbError = `Error conectando a la base de datos: ${e.message}`;
   console.error('DB error in admin/index:', e);
+}
+
+// Agenda del día - query with phone number for WhatsApp links
+try {
+  const db = (Astro.locals as any).runtime.env.DB;
+  const agendaResult = await db.prepare(
+    `SELECT citas.*, pacientes.nombre, pacientes.apellidos, pacientes.telefono
+     FROM citas
+     LEFT JOIN pacientes ON citas.paciente_id = pacientes.id
+     WHERE citas.fecha = ?
+     ORDER BY citas.hora ASC`
+  ).bind(hoy).all();
+  agendaHoy = (agendaResult as any)?.results || [];
+} catch (e: any) {
+  console.error('DB error fetching agenda:', e);
 }
 
 // New stats queries - wrapped in own try-catch so they don't break the page
@@ -148,17 +165,17 @@ try {
     </a>
   </div>
 
-  <!-- Citas de hoy -->
-  <div class="card">
+  <!-- Agenda del día -->
+  <div class="card agenda-card">
     <div class="page-header">
-      <h2>Citas de hoy ({hoy}){citasHoy.length > 0 && ingresosHoy > 0 ? ` — Ingresos: ${ingresosHoy.toFixed(0)}\u20AC` : ''}</h2>
+      <h2>Agenda del d&iacute;a &mdash; {hoyDisplay}{citasHoy.length > 0 && ingresosHoy > 0 ? ` — Ingresos: ${ingresosHoy.toFixed(0)}\u20AC` : ''}</h2>
       <a href="/admin/citas/nueva" class="btn btn-primary btn-sm">+ Nueva cita</a>
     </div>
 
-    {citasHoy.length === 0 ? (
+    {agendaHoy.length === 0 ? (
       <div class="empty-state">
         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
-        <p>No hay citas para hoy</p>
+        <p>No hay citas programadas para hoy</p>
       </div>
     ) : (
       <div class="table-wrapper">
@@ -168,25 +185,34 @@ try {
               <th>Hora</th>
               <th>Paciente</th>
               <th>Servicio</th>
-              <th>Precio</th>
               <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {citasHoy.map((cita) => (
+            {agendaHoy.map((cita: any) => (
               <tr>
                 <td><strong>{cita.hora}</strong></td>
                 <td>
-                  <a href={`/admin/pacientes/${cita.paciente_id}`}>{cita.paciente_nombre} {cita.paciente_apellidos}</a>
+                  <a href={`/admin/pacientes/${cita.paciente_id}`}>{cita.nombre} {cita.apellidos}</a>
                 </td>
                 <td>{cita.servicio || '-'}</td>
-                <td>{cita.precio ? `${cita.precio}\u20AC` : '-'}</td>
                 <td>
                   <span class={`badge badge-${cita.estado}`}>{cita.estado}</span>
                 </td>
-                <td>
+                <td class="agenda-actions">
                   <a href={`/admin/citas/${cita.id}`} class="btn btn-secondary btn-sm">Ver</a>
+                  {cita.telefono && (
+                    <a
+                      href={`https://wa.me/${cita.telefono.replace(/\s+/g, '').replace(/^(\d)/, '34$1')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn-whatsapp btn-sm"
+                      title={`WhatsApp a ${cita.nombre}`}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </a>
+                  )}
                 </td>
               </tr>
             ))}
@@ -231,5 +257,40 @@ try {
     height: 20px !important;
     max-width: 20px;
     max-height: 20px;
+  }
+
+  .agenda-card {
+    margin-top: 8px;
+  }
+
+  .agenda-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #25d366;
+    color: #fff !important;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-whatsapp:hover {
+    background: #1da851;
+  }
+
+  .btn-whatsapp svg {
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 16px;
+    max-height: 16px;
   }
 </style>
