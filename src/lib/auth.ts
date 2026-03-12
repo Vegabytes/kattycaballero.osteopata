@@ -16,18 +16,20 @@ async function createSignedToken(password: string): Promise<string> {
   const data = `${password}:${expiry}`;
   const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(data));
   const sigHex = Array.from(new Uint8Array(signature), b => b.toString(16).padStart(2, '0')).join('');
-  return `${expiry}:${sigHex}`;
+  // Use . separator to avoid URL-encoding issues with : in cookies
+  return `${expiry}.${sigHex}`;
 }
 
 async function verifyToken(token: string, password: string): Promise<boolean> {
   try {
-    const [expiryStr, sigHex] = token.split(':');
+    const dotIndex = token.indexOf('.');
+    if (dotIndex === -1) return false;
+    const expiryStr = token.substring(0, dotIndex);
+    const sigHex = token.substring(dotIndex + 1);
     const expiry = Number(expiryStr);
 
-    // Check expiry
-    if (Date.now() > expiry) return false;
+    if (!expiry || Date.now() > expiry) return false;
 
-    // Verify signature
     const encoder = new TextEncoder();
     const key = await crypto.subtle.importKey(
       'raw',
@@ -54,19 +56,33 @@ export async function login(context: any, password: string): Promise<boolean> {
 
   const token = await createSignedToken(password);
 
+  // Set cookie manually via header to avoid Astro's URL encoding
+  const maxAge = SESSION_DURATION_HOURS * 60 * 60;
+  const cookieStr = `${COOKIE_NAME}=${token}; Max-Age=${maxAge}; Path=/; HttpOnly; Secure; SameSite=Lax`;
   context.cookies.set(COOKIE_NAME, token, {
     path: '/',
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
-    maxAge: SESSION_DURATION_HOURS * 60 * 60,
+    maxAge,
   });
 
   return true;
 }
 
 export async function isAuthenticated(context: any): Promise<boolean> {
-  const token = context.cookies.get(COOKIE_NAME)?.value;
+  // Try Astro's cookie API first
+  let token = context.cookies.get(COOKIE_NAME)?.value;
+
+  // Fallback: parse Cookie header manually in case Astro's decode mismatches
+  if (!token) {
+    const cookieHeader = context.request.headers.get('cookie') || '';
+    const match = cookieHeader.match(new RegExp(`${COOKIE_NAME}=([^;]+)`));
+    if (match) {
+      token = decodeURIComponent(match[1]);
+    }
+  }
+
   if (!token) return false;
 
   const password = getPassword(context);
