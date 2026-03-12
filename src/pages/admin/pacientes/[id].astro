@@ -7,6 +7,7 @@ import { getPaciente, actualizarPaciente, eliminarPaciente, getCitas, getTratami
 const id = Number(Astro.params.id);
 let mensaje = '';
 let error = '';
+const db = (Astro.locals as any).runtime.env.DB;
 
 // Handle DELETE
 if (Astro.request.method === 'POST') {
@@ -34,6 +35,19 @@ if (Astro.request.method === 'POST') {
       direccion: form.get('direccion') as string,
       notas: form.get('notas') as string,
     });
+
+    // Update clinical fields
+    try {
+      await db.prepare('UPDATE pacientes SET motivo_consulta = ?, antecedentes = ?, alergias = ?, profesion = ? WHERE id = ?')
+        .bind(
+          form.get('motivo_consulta') as string || null,
+          form.get('antecedentes') as string || null,
+          form.get('alergias') as string || null,
+          form.get('profesion') as string || null,
+          id
+        ).run();
+    } catch { /* columns may not exist yet */ }
+
     mensaje = 'Paciente actualizado correctamente';
   }
 }
@@ -43,8 +57,25 @@ if (!paciente) {
   return Astro.redirect('/admin/pacientes');
 }
 
+// Get clinical fields
+let clinico = { motivo_consulta: '', antecedentes: '', alergias: '', profesion: '' };
+try {
+  const row = await db.prepare('SELECT motivo_consulta, antecedentes, alergias, profesion FROM pacientes WHERE id = ?').bind(id).first();
+  if (row) clinico = row as any;
+} catch { /* columns may not exist yet */ }
+
 const citas = await getCitas(Astro, undefined, id);
 const tratamientos = await getTratamientos(Astro, id);
+
+// Get notas clínicas and bonos
+let notasClinicas: any[] = [];
+let bonos: any[] = [];
+try {
+  notasClinicas = (await db.prepare('SELECT * FROM notas_clinicas WHERE paciente_id = ? ORDER BY fecha DESC').bind(id).all()).results;
+} catch { /* table may not exist yet */ }
+try {
+  bonos = (await db.prepare("SELECT * FROM bonos WHERE paciente_id = ? ORDER BY created_at DESC").bind(id).all()).results;
+} catch { /* table may not exist yet */ }
 ---
 
 <AdminLayout title={`${paciente.nombre} ${paciente.apellidos}`} activeSection="pacientes">
@@ -73,8 +104,10 @@ const tratamientos = await getTratamientos(Astro, id);
         Llamar
       </a>
     )}
-    <a href={`/admin/citas/nueva?paciente=${id}`} class="btn btn-primary btn-sm">+ Nueva cita</a>
-    <a href={`/admin/tratamientos/nuevo?paciente=${id}`} class="btn btn-primary btn-sm">+ Nuevo tratamiento</a>
+    <a href={`/admin/citas/nueva?paciente=${id}`} class="btn btn-primary btn-sm">+ Cita</a>
+    <a href={`/admin/tratamientos/nuevo?paciente=${id}`} class="btn btn-primary btn-sm">+ Tratamiento</a>
+    <a href={`/admin/historial/nuevo?paciente=${id}`} class="btn btn-primary btn-sm">+ Nota clínica</a>
+    <a href={`/admin/bonos/nuevo?paciente=${id}`} class="btn btn-secondary btn-sm">+ Bono</a>
   </div>
 
   <!-- Ficha del paciente -->
@@ -115,8 +148,30 @@ const tratamientos = await getTratamientos(Astro, id);
       </div>
 
       <div class="form-group">
-        <label for="notas">Notas</label>
+        <label for="profesion">Profesión</label>
+        <input type="text" id="profesion" name="profesion" value={clinico.profesion || ''}>
+      </div>
+
+      <div class="form-group">
+        <label for="notas">Notas generales</label>
         <textarea id="notas" name="notas">{paciente.notas || ''}</textarea>
+      </div>
+
+      <h3 style="font-size:0.95rem;font-weight:600;margin:20px 0 12px;color:var(--admin-primary);">Información clínica</h3>
+
+      <div class="form-group">
+        <label for="motivo_consulta">Motivo de consulta principal</label>
+        <textarea id="motivo_consulta" name="motivo_consulta" placeholder="Dolor lumbar, cervicalgias, etc.">{clinico.motivo_consulta || ''}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="antecedentes">Antecedentes médicos</label>
+        <textarea id="antecedentes" name="antecedentes" placeholder="Cirugías, enfermedades previas, medicación...">{clinico.antecedentes || ''}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="alergias">Alergias / Contraindicaciones</label>
+        <textarea id="alergias" name="alergias" placeholder="Alergias, medicamentos, contraindicaciones...">{clinico.alergias || ''}</textarea>
       </div>
 
       <div style="display:flex;gap:12px;align-items:center;">
@@ -169,7 +224,7 @@ const tratamientos = await getTratamientos(Astro, id);
   </div>
 
   <!-- Historial de tratamientos -->
-  <div class="card">
+  <div class="card" style="margin-bottom:24px;">
     <div class="page-header">
       <h2 style="font-size:1rem;font-weight:600;">Tratamientos ({tratamientos.length})</h2>
       <a href={`/admin/tratamientos/nuevo?paciente=${id}`} class="btn btn-primary btn-sm">+ Nuevo tratamiento</a>
@@ -202,4 +257,68 @@ const tratamientos = await getTratamientos(Astro, id);
       </div>
     )}
   </div>
+
+  <!-- Notas clínicas -->
+  {notasClinicas.length > 0 && (
+    <div class="card" style="margin-bottom:24px;">
+      <div class="page-header">
+        <h2 style="font-size:1rem;font-weight:600;">Notas clínicas ({notasClinicas.length})</h2>
+        <a href={`/admin/historial/nuevo?paciente=${id}`} class="btn btn-primary btn-sm">+ Nueva nota</a>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Motivo</th>
+              <th>Diagnóstico</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {notasClinicas.map((n: any) => (
+              <tr>
+                <td>{n.fecha}</td>
+                <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{n.motivo || '-'}</td>
+                <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{n.diagnostico || '-'}</td>
+                <td><a href={`/admin/historial/${n.id}`} class="btn btn-secondary btn-sm">Ver</a></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+
+  <!-- Bonos -->
+  {bonos.length > 0 && (
+    <div class="card">
+      <div class="page-header">
+        <h2 style="font-size:1rem;font-weight:600;">Bonos ({bonos.length})</h2>
+        <a href={`/admin/bonos/nuevo?paciente=${id}`} class="btn btn-primary btn-sm">+ Nuevo bono</a>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Bono</th>
+              <th>Sesiones</th>
+              <th>Estado</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {bonos.map((b: any) => (
+              <tr>
+                <td>{b.nombre}</td>
+                <td>{b.sesiones_usadas} / {b.sesiones_total}</td>
+                <td><span class={`badge badge-${b.estado === 'activo' ? 'confirmada' : b.estado === 'completado' ? 'completada' : 'cancelada'}`}>{b.estado}</span></td>
+                <td><a href={`/admin/bonos/${b.id}`} class="btn btn-secondary btn-sm">Ver</a></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
 </AdminLayout>

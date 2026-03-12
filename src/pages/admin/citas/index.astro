@@ -64,6 +64,7 @@ function formatFechaCorta(fecha: string) {
       <a href={`/admin/citas?fecha=${semanaAnterior.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">← Anterior</a>
       <a href="/admin/citas" class="btn btn-secondary btn-sm">Hoy</a>
       <a href={`/admin/citas?fecha=${semanaSiguiente.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">Siguiente →</a>
+      <a href={`/admin/citas/mensual?fecha=${fecha}`} class="btn btn-secondary btn-sm">Vista mensual</a>
       <a href="/admin/citas/nueva" class="btn btn-primary btn-sm">+ Nueva cita</a>
     </div>
   </div>

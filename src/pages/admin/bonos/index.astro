@@ -1,0 +1,122 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getBonos } from '../../../lib/db';
+
+const buscar = Astro.url.searchParams.get('buscar') || '';
+let bonos: any[] = [];
+let dbError = '';
+
+try {
+  bonos = await getBonos(Astro, buscar || undefined);
+} catch (e: any) {
+  dbError = e.message;
+  console.error('DB error in bonos:', e);
+}
+---
+
+<AdminLayout title="Bonos" activeSection="bonos">
+  {dbError && (
+    <div class="alert alert-error">
+      <strong>Error de base de datos:</strong> {dbError}
+      <br><small>Verifica que D1 esté vinculado en Cloudflare Pages → Settings → Functions → D1 database bindings.</small>
+    </div>
+  )}
+  <div class="page-header">
+    <h2>Bonos ({bonos.length})</h2>
+    <a href="/admin/bonos/nuevo" class="btn btn-primary">+ Nuevo bono</a>
+  </div>
+
+  <form class="search-bar" method="GET">
+    <input type="text" name="buscar" placeholder="Buscar por paciente o nombre del bono..." value={buscar}>
+    <button type="submit" class="btn btn-secondary">Buscar</button>
+    {buscar && <a href="/admin/bonos" class="btn btn-secondary">Limpiar</a>}
+  </form>
+
+  {bonos.length === 0 ? (
+    <div class="card empty-state">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" /></svg>
+      <p>{buscar ? 'No se encontraron bonos' : 'Aún no hay bonos registrados'}</p>
+      <a href="/admin/bonos/nuevo" class="btn btn-primary">Añadir primer bono</a>
+    </div>
+  ) : (
+    <div class="card">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Bono</th>
+              <th>Sesiones</th>
+              <th>Precio</th>
+              <th>Estado</th>
+              <th>Caducidad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bonos.map((b) => {
+              const porcentaje = b.sesiones_total > 0 ? Math.round((b.sesiones_usadas / b.sesiones_total) * 100) : 0;
+              const badgeClass = b.estado === 'activo' ? 'badge-activo' : b.estado === 'completado' ? 'badge-completado' : 'badge-caducado';
+              return (
+                <tr>
+                  <td>
+                    <a href={`/admin/pacientes/${b.paciente_id}`}>
+                      <strong>{b.paciente_apellidos}, {b.paciente_nombre}</strong>
+                    </a>
+                  </td>
+                  <td>
+                    <a href={`/admin/bonos/${b.id}`}>{b.nombre}</a>
+                  </td>
+                  <td>
+                    <div class="sesiones-cell">
+                      <span>{b.sesiones_usadas} / {b.sesiones_total}</span>
+                      <div class="progress-mini">
+                        <div class="progress-mini-bar" style={`width: ${porcentaje}%`}></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{b.precio ? `${b.precio.toFixed(2)} €` : '-'}</td>
+                  <td><span class={`badge ${badgeClass}`}>{b.estado}</span></td>
+                  <td>{b.fecha_caducidad || '-'}</td>
+                  <td>
+                    <a href={`/admin/bonos/${b.id}`} class="btn btn-secondary btn-sm">Ver / Editar</a>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+</AdminLayout>
+
+<style is:global>
+  .badge-activo { background: #e8f5e9; color: #2e7d32; }
+  .badge-completado { background: #e3f2fd; color: #1565c0; }
+  .badge-caducado { background: #fce4ec; color: #c62828; }
+
+  .sesiones-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 100px;
+  }
+
+  .progress-mini {
+    width: 100%;
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-mini-bar {
+    height: 100%;
+    background: var(--admin-primary);
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+</style>

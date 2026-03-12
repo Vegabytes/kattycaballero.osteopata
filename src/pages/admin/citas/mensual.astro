@@ -1,0 +1,274 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getCitasSemana } from '../../../lib/db';
+
+let dbError = '';
+
+const fechaParam = Astro.url.searchParams.get('fecha') || '';
+const hoy = new Date().toISOString().split('T')[0];
+
+const fecha = fechaParam || hoy;
+const fechaObj = new Date(fecha + 'T00:00:00');
+const anio = fechaObj.getFullYear();
+const mes = fechaObj.getMonth(); // 0-indexed
+
+// Month name
+const nombresMes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+const nombreMes = nombresMes[mes];
+
+// First and last day of month
+const primerDia = new Date(anio, mes, 1);
+const ultimoDia = new Date(anio, mes + 1, 0);
+const primerDiaStr = primerDia.toISOString().split('T')[0];
+const ultimoDiaStr = ultimoDia.toISOString().split('T')[0];
+
+// Navigation
+const mesAnterior = new Date(anio, mes - 1, 1);
+const mesSiguiente = new Date(anio, mes + 1, 1);
+
+// Get all citas for the month
+let citasMes: any[] = [];
+try {
+  citasMes = await getCitasSemana(Astro, primerDiaStr, ultimoDiaStr);
+} catch (e: any) {
+  dbError = e.message;
+  console.error('DB error in citas/mensual:', e);
+}
+
+// Group citas by date
+const citasPorDia: Record<string, any[]> = {};
+for (const cita of citasMes) {
+  if (!citasPorDia[cita.fecha]) {
+    citasPorDia[cita.fecha] = [];
+  }
+  citasPorDia[cita.fecha].push(cita);
+}
+
+// Build calendar grid
+// Day of week for first day (0=Sun, we want Mon=0)
+const primerDiaSemana = primerDia.getDay();
+const offsetInicio = primerDiaSemana === 0 ? 6 : primerDiaSemana - 1; // Mon=0
+
+// Total cells needed
+const totalDias = ultimoDia.getDate();
+const totalCeldas = Math.ceil((offsetInicio + totalDias) / 7) * 7;
+
+interface CeldaCalendario {
+  dia: number;
+  fecha: string;
+  esMesActual: boolean;
+  esHoy: boolean;
+  citas: any[];
+  color: string;
+}
+
+const celdas: CeldaCalendario[] = [];
+for (let i = 0; i < totalCeldas; i++) {
+  const diaOffset = i - offsetInicio;
+  const fechaCelda = new Date(anio, mes, diaOffset + 1);
+  const fechaStr = fechaCelda.toISOString().split('T')[0];
+  const esMesActual = fechaCelda.getMonth() === mes;
+  const citasDia = citasPorDia[fechaStr] || [];
+
+  let color = '';
+  if (citasDia.length > 0) {
+    const todasCompletadas = citasDia.every((c: any) => c.estado === 'completada');
+    const algunaCancelada = citasDia.some((c: any) => c.estado === 'cancelada');
+    const algunaPendiente = citasDia.some((c: any) => c.estado === 'pendiente');
+    if (todasCompletadas) {
+      color = 'green';
+    } else if (algunaCancelada && !algunaPendiente) {
+      color = 'red';
+    } else {
+      color = 'orange';
+    }
+  }
+
+  celdas.push({
+    dia: fechaCelda.getDate(),
+    fecha: fechaStr,
+    esMesActual,
+    esHoy: fechaStr === hoy,
+    citas: citasDia,
+    color,
+  });
+}
+
+const diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+---
+
+<AdminLayout title="Calendario Mensual" activeSection="citas">
+  {dbError && (
+    <div class="alert alert-error">
+      <strong>Error de base de datos:</strong> {dbError}
+      <br><small>Verifica que D1 esté vinculado en Cloudflare Pages → Settings → Functions → D1 database bindings.</small>
+    </div>
+  )}
+  <div class="page-header">
+    <h2>{nombreMes} {anio}</h2>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <a href={`/admin/citas/mensual?fecha=${mesAnterior.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">&larr; Anterior</a>
+      <a href="/admin/citas/mensual" class="btn btn-secondary btn-sm">Hoy</a>
+      <a href={`/admin/citas/mensual?fecha=${mesSiguiente.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">Siguiente &rarr;</a>
+      <a href={`/admin/citas?fecha=${fecha}`} class="btn btn-secondary btn-sm">Vista semanal</a>
+      <a href="/admin/citas/nueva" class="btn btn-primary btn-sm">+ Nueva cita</a>
+    </div>
+  </div>
+
+  <!-- Leyenda -->
+  <div class="cal-legend">
+    <span class="cal-legend-item"><span class="cal-legend-dot cal-dot-green"></span> Completadas</span>
+    <span class="cal-legend-item"><span class="cal-legend-dot cal-dot-orange"></span> Pendientes</span>
+    <span class="cal-legend-item"><span class="cal-legend-dot cal-dot-red"></span> Canceladas</span>
+  </div>
+
+  <!-- Calendar Grid -->
+  <div class="cal-grid">
+    {diasSemana.map((dia) => (
+      <div class="cal-header">{dia}</div>
+    ))}
+    {celdas.map((celda) => (
+      <a
+        href={celda.esMesActual ? `/admin/citas?fecha=${celda.fecha}` : '#'}
+        class={`cal-cell ${!celda.esMesActual ? 'cal-cell-other' : ''} ${celda.esHoy ? 'cal-cell-today' : ''} ${celda.color ? 'cal-cell-' + celda.color : ''}`}
+      >
+        <span class="cal-day">{celda.dia}</span>
+        {celda.citas.length > 0 && celda.esMesActual && (
+          <span class="cal-count">{celda.citas.length} {celda.citas.length === 1 ? 'cita' : 'citas'}</span>
+        )}
+      </a>
+    ))}
+  </div>
+</AdminLayout>
+
+<style is:global>
+  .cal-legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+    font-size: 0.8rem;
+    color: var(--admin-text-light);
+  }
+
+  .cal-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .cal-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .cal-dot-green { background: var(--admin-success); }
+  .cal-dot-orange { background: var(--admin-warning); }
+  .cal-dot-red { background: var(--admin-danger); }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--admin-border);
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .cal-header {
+    background: var(--admin-primary-dark);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .cal-cell {
+    background: var(--admin-card);
+    padding: 10px;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-decoration: none;
+    color: var(--admin-text);
+    transition: background 0.2s;
+  }
+
+  .cal-cell:hover {
+    background: #f5f5f5;
+  }
+
+  .cal-cell-other {
+    background: #fafafa;
+    pointer-events: none;
+  }
+
+  .cal-cell-other .cal-day {
+    color: #ccc;
+  }
+
+  .cal-cell-today {
+    border: 2px solid var(--admin-primary) !important;
+    background: #f0f7f0;
+  }
+
+  .cal-cell-today .cal-day {
+    color: var(--admin-primary);
+    font-weight: 700;
+  }
+
+  .cal-cell-green {
+    background: #e8f5e9;
+  }
+
+  .cal-cell-orange {
+    background: #fff3e0;
+  }
+
+  .cal-cell-red {
+    background: #fce4ec;
+  }
+
+  .cal-day {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--admin-text);
+  }
+
+  .cal-count {
+    font-size: 0.7rem;
+    color: var(--admin-text-light);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .cal-grid {
+      font-size: 0.75rem;
+    }
+
+    .cal-cell {
+      min-height: 50px;
+      padding: 6px;
+    }
+
+    .cal-header {
+      padding: 6px;
+      font-size: 0.7rem;
+    }
+
+    .cal-day {
+      font-size: 0.75rem;
+    }
+
+    .cal-count {
+      font-size: 0.6rem;
+    }
+  }
+</style>

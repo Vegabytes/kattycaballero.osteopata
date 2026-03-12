@@ -1,0 +1,111 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { crearBono, getPacientes } from '../../../lib/db';
+
+let error = '';
+let pacientes: any[] = [];
+let dbError = '';
+
+try {
+  pacientes = await getPacientes(Astro);
+} catch (e: any) {
+  dbError = e.message;
+  console.error('DB error loading pacientes:', e);
+}
+
+const preselectedPaciente = Astro.url.searchParams.get('paciente') || '';
+const hoy = new Date().toISOString().split('T')[0];
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const paciente_id = Number(form.get('paciente_id'));
+  const nombre = form.get('nombre') as string;
+  const sesiones_total = Number(form.get('sesiones_total'));
+
+  if (!paciente_id || !nombre || !sesiones_total) {
+    error = 'Paciente, nombre del bono y sesiones totales son obligatorios';
+  } else {
+    try {
+      await crearBono(Astro, {
+        paciente_id,
+        nombre,
+        sesiones_total,
+        precio: form.get('precio') ? Number(form.get('precio')) : null,
+        fecha_compra: (form.get('fecha_compra') as string) || hoy,
+        fecha_caducidad: (form.get('fecha_caducidad') as string) || null,
+        notas: form.get('notas') as string,
+      });
+      return Astro.redirect('/admin/bonos');
+    } catch (e: any) {
+      error = e.message;
+    }
+  }
+}
+---
+
+<AdminLayout title="Nuevo bono" activeSection="bonos">
+  <a href="/admin/bonos" class="back-link">&larr; Volver a bonos</a>
+
+  {dbError && (
+    <div class="alert alert-error">
+      <strong>Error de base de datos:</strong> {dbError}
+    </div>
+  )}
+  {error && <div class="alert alert-error">{error}</div>}
+
+  <div class="card">
+    <form method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="paciente_id">Paciente *</label>
+          <select id="paciente_id" name="paciente_id" required>
+            <option value="">Seleccionar paciente...</option>
+            {pacientes.map((p) => (
+              <option value={p.id} selected={String(p.id) === preselectedPaciente}>
+                {p.apellidos}, {p.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nombre">Nombre del bono *</label>
+          <input type="text" id="nombre" name="nombre" required placeholder="Ej: Bono 5 sesiones osteopatía">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sesiones_total">Sesiones totales *</label>
+          <input type="number" id="sesiones_total" name="sesiones_total" min="1" required value="5">
+        </div>
+        <div class="form-group">
+          <label for="precio">Precio (&euro;)</label>
+          <input type="number" id="precio" name="precio" step="0.01" min="0" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fecha_compra">Fecha de compra *</label>
+          <input type="date" id="fecha_compra" name="fecha_compra" value={hoy} required>
+        </div>
+        <div class="form-group">
+          <label for="fecha_caducidad">Fecha de caducidad</label>
+          <input type="date" id="fecha_caducidad" name="fecha_caducidad">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="notas">Notas</label>
+        <textarea id="notas" name="notas" placeholder="Observaciones sobre el bono..."></textarea>
+      </div>
+
+      <div style="display:flex;gap:12px;">
+        <button type="submit" class="btn btn-primary">Guardar bono</button>
+        <a href="/admin/bonos" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</AdminLayout>

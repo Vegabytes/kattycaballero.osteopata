@@ -1,0 +1,234 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getBono, actualizarBono, usarSesionBono, eliminarBono, getPacientes } from '../../../lib/db';
+
+const id = Number(Astro.params.id);
+let mensaje = '';
+let error = '';
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const action = form.get('_action');
+
+  if (action === 'eliminar') {
+    try {
+      await eliminarBono(Astro, id);
+      return Astro.redirect('/admin/bonos');
+    } catch (e: any) {
+      error = e.message;
+    }
+  } else if (action === 'usar_sesion') {
+    try {
+      await usarSesionBono(Astro, id);
+      mensaje = 'Sesión registrada correctamente';
+    } catch (e: any) {
+      error = e.message;
+    }
+  } else {
+    const paciente_id = Number(form.get('paciente_id'));
+    const nombre = form.get('nombre') as string;
+    const sesiones_total = Number(form.get('sesiones_total'));
+
+    if (!paciente_id || !nombre || !sesiones_total) {
+      error = 'Paciente, nombre del bono y sesiones totales son obligatorios';
+    } else {
+      try {
+        await actualizarBono(Astro, id, {
+          paciente_id,
+          nombre,
+          sesiones_total,
+          precio: form.get('precio') ? Number(form.get('precio')) : null,
+          fecha_compra: form.get('fecha_compra') as string,
+          fecha_caducidad: (form.get('fecha_caducidad') as string) || null,
+          estado: form.get('estado') as string || 'activo',
+          notas: form.get('notas') as string,
+        });
+        mensaje = 'Bono actualizado correctamente';
+      } catch (e: any) {
+        error = e.message;
+      }
+    }
+  }
+}
+
+let bono: any = null;
+let pacientes: any[] = [];
+let dbError = '';
+
+try {
+  bono = await getBono(Astro, id);
+  pacientes = await getPacientes(Astro);
+} catch (e: any) {
+  dbError = e.message;
+  console.error('DB error in bono detail:', e);
+}
+
+if (!bono && !dbError) {
+  return Astro.redirect('/admin/bonos');
+}
+
+const porcentaje = bono && bono.sesiones_total > 0 ? Math.round((bono.sesiones_usadas / bono.sesiones_total) * 100) : 0;
+---
+
+<AdminLayout title={bono ? `Bono: ${bono.nombre}` : 'Bono'} activeSection="bonos">
+  <a href="/admin/bonos" class="back-link">&larr; Volver a bonos</a>
+
+  {dbError && (
+    <div class="alert alert-error">
+      <strong>Error de base de datos:</strong> {dbError}
+    </div>
+  )}
+  {mensaje && <div class="alert alert-success">{mensaje}</div>}
+  {error && <div class="alert alert-error">{error}</div>}
+
+  {bono && (
+    <>
+      <div style="display:flex;gap:8px;margin-bottom:20px;">
+        <a href={`/admin/pacientes/${bono.paciente_id}`} class="btn btn-secondary btn-sm">Ver paciente: {bono.paciente_nombre} {bono.paciente_apellidos}</a>
+      </div>
+
+      <!-- Progress card -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="progress-header">
+          <h3>Progreso de sesiones</h3>
+          <span class={`badge ${bono.estado === 'activo' ? 'badge-activo' : bono.estado === 'completado' ? 'badge-completado' : 'badge-caducado'}`}>{bono.estado}</span>
+        </div>
+        <div class="progress-info">
+          <span class="progress-count">{bono.sesiones_usadas} / {bono.sesiones_total} sesiones usadas</span>
+          <span class="progress-percent">{porcentaje}%</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" style={`width: ${porcentaje}%`}></div>
+        </div>
+        {bono.estado === 'activo' && bono.sesiones_usadas < bono.sesiones_total && (
+          <form method="POST" style="margin-top:16px;">
+            <input type="hidden" name="_action" value="usar_sesion">
+            <button type="submit" class="btn btn-success" onclick="return confirm('¿Registrar una sesión usada?')">
+              + Usar sesión ({bono.sesiones_usadas + 1} de {bono.sesiones_total})
+            </button>
+          </form>
+        )}
+      </div>
+
+      <!-- Edit form -->
+      <div class="card" style="margin-bottom:24px;">
+        <form method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="paciente_id">Paciente *</label>
+              <select id="paciente_id" name="paciente_id" required>
+                {pacientes.map((p) => (
+                  <option value={p.id} selected={p.id === bono.paciente_id}>
+                    {p.apellidos}, {p.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="nombre">Nombre del bono *</label>
+              <input type="text" id="nombre" name="nombre" value={bono.nombre} required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sesiones_total">Sesiones totales *</label>
+              <input type="number" id="sesiones_total" name="sesiones_total" min="1" value={bono.sesiones_total} required>
+            </div>
+            <div class="form-group">
+              <label for="precio">Precio (&euro;)</label>
+              <input type="number" id="precio" name="precio" step="0.01" min="0" value={bono.precio || ''}>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fecha_compra">Fecha de compra *</label>
+              <input type="date" id="fecha_compra" name="fecha_compra" value={bono.fecha_compra} required>
+            </div>
+            <div class="form-group">
+              <label for="fecha_caducidad">Fecha de caducidad</label>
+              <input type="date" id="fecha_caducidad" name="fecha_caducidad" value={bono.fecha_caducidad || ''}>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="estado">Estado</label>
+            <select id="estado" name="estado">
+              <option value="activo" selected={bono.estado === 'activo'}>Activo</option>
+              <option value="completado" selected={bono.estado === 'completado'}>Completado</option>
+              <option value="caducado" selected={bono.estado === 'caducado'}>Caducado</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="notas">Notas</label>
+            <textarea id="notas" name="notas">{bono.notas || ''}</textarea>
+          </div>
+
+          <div style="display:flex;gap:12px;">
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          </div>
+        </form>
+
+        <form method="POST" style="margin-top:24px;padding-top:16px;border-top:1px solid #eee;" onsubmit="return confirm('¿Eliminar este bono?')">
+          <input type="hidden" name="_action" value="eliminar">
+          <button type="submit" class="btn btn-danger btn-sm">Eliminar bono</button>
+        </form>
+      </div>
+    </>
+  )}
+</AdminLayout>
+
+<style is:global>
+  .badge-activo { background: #e8f5e9; color: #2e7d32; }
+  .badge-completado { background: #e3f2fd; color: #1565c0; }
+  .badge-caducado { background: #fce4ec; color: #c62828; }
+
+  .progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .progress-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+
+  .progress-count {
+    color: var(--admin-text);
+    font-weight: 500;
+  }
+
+  .progress-percent {
+    color: var(--admin-text-light);
+    font-weight: 600;
+  }
+
+  .progress-bar-container {
+    width: 100%;
+    height: 12px;
+    background: #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--admin-primary);
+    border-radius: 6px;
+    transition: width 0.3s;
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getNotaClinica, actualizarNotaClinica, eliminarNotaClinica, getPacientes } from '../../../lib/db';
+
+const id = Number(Astro.params.id);
+let mensaje = '';
+let error = '';
+
+// Handle POST (update or delete)
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const action = form.get('_action');
+
+  if (action === 'eliminar') {
+    const nota = await getNotaClinica(Astro, id);
+    await eliminarNotaClinica(Astro, id);
+    return Astro.redirect(nota ? `/admin/pacientes/${nota.paciente_id}` : '/admin/historial');
+  }
+
+  // Handle UPDATE
+  const paciente_id = Number(form.get('paciente_id'));
+  const fecha = form.get('fecha') as string;
+
+  if (!paciente_id || !fecha) {
+    error = 'Paciente y fecha son obligatorios';
+  } else {
+    await actualizarNotaClinica(Astro, id, {
+      paciente_id,
+      cita_id: form.get('cita_id') ? Number(form.get('cita_id')) : null,
+      fecha,
+      motivo: form.get('motivo') as string,
+      exploracion: form.get('exploracion') as string,
+      diagnostico: form.get('diagnostico') as string,
+      tratamiento_realizado: form.get('tratamiento_realizado') as string,
+      recomendaciones: form.get('recomendaciones') as string,
+    });
+    mensaje = 'Nota clínica actualizada correctamente';
+  }
+}
+
+const nota = await getNotaClinica(Astro, id);
+if (!nota) {
+  return Astro.redirect('/admin/historial');
+}
+
+const pacientes = await getPacientes(Astro);
+---
+
+<AdminLayout title="Nota clínica" activeSection="historial">
+  <a href="/admin/historial" class="back-link">← Volver a historial clínico</a>
+
+  {mensaje && <div class="alert alert-success">{mensaje}</div>}
+  {error && <div class="alert alert-error">{error}</div>}
+
+  <div style="margin-bottom:12px;">
+    <a href={`/admin/pacientes/${nota.paciente_id}`} class="btn btn-secondary btn-sm">
+      ← Ver paciente: {nota.paciente_nombre} {nota.paciente_apellidos}
+    </a>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:1rem;font-weight:600;margin-bottom:16px;">Editar nota clínica</h2>
+    <form method="POST">
+      <input type="hidden" name="cita_id" value={nota.cita_id || ''}>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="paciente_id">Paciente *</label>
+          <select id="paciente_id" name="paciente_id" required>
+            <option value="">Seleccionar paciente...</option>
+            {pacientes.map((p) => (
+              <option value={p.id} selected={p.id === nota.paciente_id}>
+                {p.apellidos}, {p.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="fecha">Fecha *</label>
+          <input type="date" id="fecha" name="fecha" value={nota.fecha} required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="motivo">Motivo de consulta</label>
+        <input type="text" id="motivo" name="motivo" value={nota.motivo || ''}>
+      </div>
+
+      <div class="form-group">
+        <label for="exploracion">Exploración / Hallazgos</label>
+        <textarea id="exploracion" name="exploracion" style="min-height:120px;">{nota.exploracion || ''}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="diagnostico">Diagnóstico / Impresión clínica</label>
+        <textarea id="diagnostico" name="diagnostico" style="min-height:120px;">{nota.diagnostico || ''}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="tratamiento_realizado">Tratamiento realizado</label>
+        <textarea id="tratamiento_realizado" name="tratamiento_realizado" style="min-height:120px;">{nota.tratamiento_realizado || ''}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="recomendaciones">Recomendaciones / Ejercicios para casa</label>
+        <textarea id="recomendaciones" name="recomendaciones" style="min-height:120px;">{nota.recomendaciones || ''}</textarea>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center;">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </form>
+
+    <!-- Delete form -->
+    <form method="POST" style="margin-top:24px;padding-top:16px;border-top:1px solid #eee;" onsubmit="return confirm('¿Estás segura de que quieres eliminar esta nota clínica?')">
+      <input type="hidden" name="_action" value="eliminar">
+      <button type="submit" class="btn btn-danger btn-sm">Eliminar nota clínica</button>
+    </form>
+  </div>
+</AdminLayout>
