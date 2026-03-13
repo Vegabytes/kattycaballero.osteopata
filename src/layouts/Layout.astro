@@ -231,6 +231,21 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Katy Caballero - Osteópata y Masajista",
+    "url": "https://katycaballeroosteopata.com",
+    "description": "Centro de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid",
+    "inLanguage": "es",
+    "publisher": {
+      "@type": "HealthAndBeautyBusiness",
+      "name": "Katy Caballero - Osteópata y Masajista",
+      "url": "https://katycaballeroosteopata.com"
+    }
+  }
+  </script>
   {breadcrumbSchema && (
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   )}

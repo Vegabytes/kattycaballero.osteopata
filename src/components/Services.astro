@@ -76,6 +76,28 @@ const services: Service[] = [
 ];
 ---
 
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Servicios de osteopatía y masajes en Alpedrete",
+  "numberOfItems": services.length,
+  "itemListElement": services.map((s, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "item": {
+      "@type": "Service",
+      "name": s.title,
+      "description": s.description,
+      "url": `https://katycaballeroosteopata.com/servicios/${s.slug}`,
+      "provider": {
+        "@type": "HealthAndBeautyBusiness",
+        "name": "Katy Caballero - Osteópata y Masajista"
+      },
+      "areaServed": { "@type": "City", "name": "Alpedrete" },
+      "image": `https://katycaballeroosteopata.com${s.image}`
+    }
+  }))
+})} />
 <section class="services" id="servicios">
   <div class="container">
     <div class="section-header">
