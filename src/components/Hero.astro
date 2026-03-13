@@ -96,7 +96,7 @@ const {
 
 <style>
   .hero {
-    min-height: 100vh;
+    min-height: auto;
     display: flex;
     align-items: center;
     position: relative;
@@ -135,10 +135,10 @@ const {
   .hero-container {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
-    gap: 60px;
+    gap: 40px;
     align-items: center;
-    padding-top: 120px;
-    padding-bottom: 80px;
+    padding-top: 100px;
+    padding-bottom: 40px;
   }
   
   .hero-content {
@@ -150,13 +150,13 @@ const {
     align-items: center;
     gap: 8px;
     background: rgba(196, 163, 90, 0.2);
-    color: #2d2d2d;
-    padding: 12px 20px;
+    color: var(--color-text);
+    padding: 8px 16px;
     border-radius: 30px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 30px;
-    border: 1px solid rgba(196, 163, 90, 0.4);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    border: 1px solid rgba(196, 163, 90, 0.3);
   }
   
   .hero-badge svg {
@@ -166,42 +166,42 @@ const {
   }
   
   .hero h1 {
-    margin-bottom: 28px;
+    margin-bottom: 16px;
     line-height: 1.1;
   }
-  
+
   .hero-title-line {
     display: block;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: #2e4a2d;
-    font-weight: 600;
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    color: var(--color-primary-dark);
+    font-weight: 500;
   }
-  
+
   .hero-title-accent {
     display: block;
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 6vw, 5rem);
-    color: #a07d2e;
+    font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+    color: var(--color-secondary);
     font-style: italic;
-    font-weight: 600;
-    margin-top: -5px;
+    font-weight: 500;
+    margin-top: -3px;
   }
-  
+
   .hero-tagline {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-style: italic;
-    color: #3d6b3c;
-    margin-bottom: 20px;
-    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 14px;
+    font-weight: 500;
   }
 
   .hero-description {
-    font-size: 1.15rem;
-    margin-bottom: 40px;
-    line-height: 1.9;
-    max-width: 520px;
-    color: #444;
+    font-size: 1.05rem;
+    margin-bottom: 28px;
+    line-height: 1.7;
+    max-width: 500px;
+    color: var(--color-text-light);
   }
   
   .hero-buttons {
@@ -216,7 +216,7 @@ const {
     gap: 10px;
     background: var(--color-primary-dark);
     color: white;
-    padding: 16px 32px;
+    padding: 14px 28px;
     border-radius: 50px;
     font-family: var(--font-body);
     font-size: 1rem;
@@ -240,7 +240,7 @@ const {
     gap: 10px;
     background: #25D366;
     color: white;
-    padding: 16px 28px;
+    padding: 14px 24px;
     border-radius: 50px;
     font-family: var(--font-body);
     font-size: 1rem;
@@ -276,58 +276,55 @@ const {
   
   .hero-stats {
     display: flex;
-    gap: 50px;
-    margin-top: 50px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(90, 124, 89, 0.15);
+    gap: 40px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(90, 124, 89, 0.12);
   }
-  
+
   .hero-stat-number {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: #2e4a2d;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
     line-height: 1;
   }
 
   .hero-stat-label {
-    font-size: 0.85rem;
-    color: #555;
-    margin-top: 6px;
-    font-weight: 500;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 4px;
   }
-  
+
   .hero-review {
-    margin-top: 30px;
-    padding: 20px 24px;
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 16px;
-    border: 1px solid rgba(90, 124, 89, 0.15);
-    max-width: 420px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    margin-top: 20px;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    max-width: 380px;
   }
 
   .hero-review-stars {
     color: #FBBC05;
-    font-size: 1rem;
+    font-size: 0.85rem;
     letter-spacing: 2px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .hero-review-text {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     color: var(--color-text);
-    line-height: 1.5;
-    margin: 0 0 6px;
+    line-height: 1.4;
+    margin: 0 0 4px;
     max-width: none;
   }
 
   .hero-review-author {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--color-text-muted);
-    font-weight: 500;
   }
 
   .hero-image {
@@ -338,7 +335,7 @@ const {
   
   .hero-logo {
     width: 100%;
-    max-width: 380px;
+    max-width: 300px;
     height: auto;
     filter: drop-shadow(0 10px 30px rgba(90, 124, 89, 0.15));
     animation: float 6s ease-in-out infinite;
