@@ -261,6 +261,11 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
   <Footer />
   <WhatsAppButton />
   <CookieBanner />
+
+  <!-- Scroll to top button -->
+  <button id="scroll-top" class="scroll-top-btn" aria-label="Volver arriba">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
   
   <script>
     // Smooth scroll for anchor links
@@ -292,7 +297,16 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
       }
     });
 
-    // Navbar shadow on scroll (handled by Header component)
+    // Scroll to top button
+    const scrollBtn = document.getElementById('scroll-top');
+    if (scrollBtn) {
+      window.addEventListener('scroll', () => {
+        scrollBtn.classList.toggle('visible', window.scrollY > 500);
+      });
+      scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   </script>
 </body>
 </html>
