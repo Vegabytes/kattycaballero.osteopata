@@ -844,7 +844,7 @@ const services = [
     const prevBtn = document.getElementById('cal-prev') as HTMLButtonElement;
     prevBtn.disabled = state.currentYear === today.getFullYear() && state.currentMonth === today.getMonth();
 
-    const maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+    const maxDate = new Date(today.getFullYear(), today.getMonth() + 3, 0);
     const nextBtn = document.getElementById('cal-next') as HTMLButtonElement;
     nextBtn.disabled = state.currentYear > maxDate.getFullYear() ||
       (state.currentYear === maxDate.getFullYear() && state.currentMonth >= maxDate.getMonth());
