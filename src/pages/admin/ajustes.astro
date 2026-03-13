@@ -61,6 +61,14 @@ if (Astro.request.method === 'POST') {
         whatsapp_recordatorio_horas: numField('whatsapp_recordatorio_horas'),
         whatsapp_recordatorio_mensaje: textField('whatsapp_recordatorio_mensaje'),
       });
+    } else if (section === 'notificaciones') {
+      await saveSettings(Astro, {
+        notificacion_email_activo: boolField('notificacion_email_activo'),
+        notificacion_email_destino: textField('notificacion_email_destino'),
+        notificacion_telegram_activo: boolField('notificacion_telegram_activo'),
+        telegram_bot_token: textField('telegram_bot_token'),
+        telegram_chat_id: textField('telegram_chat_id'),
+      } as any);
     } else if (section === 'facturacion') {
       await saveSettings(Astro, {
         facturacion_activa: boolField('facturacion_activa'),
@@ -150,6 +158,64 @@ try {
         </div>
       </div>
       <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <!-- Notificaciones de nuevas reservas -->
+  <div class="card settings-section" id="notificaciones">
+    <div class="settings-header">
+      <h3 class="settings-title">Notificaciones de nuevas reservas</h3>
+    </div>
+    <p class="settings-desc">Recibe una alerta instantánea cuando alguien reserva desde la web. Puedes activar email, Telegram o ambos.</p>
+    <form method="POST">
+      <input type="hidden" name="_section" value="notificaciones">
+
+      <div style="background:#f0f7f0;border-radius:8px;padding:16px;margin-bottom:16px;border:1px solid #c8e6c9;">
+        <h4 style="font-size:0.9rem;margin-bottom:10px;">Email</h4>
+        <div class="form-group">
+          <label class="toggle-label">
+            <input type="checkbox" name="notificacion_email_activo" checked={(s as any).notificacion_email_activo}>
+            Recibir email cuando llegue una reserva
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="notificacion_email_destino">Email donde recibir avisos</label>
+          <input type="email" id="notificacion_email_destino" name="notificacion_email_destino" value={(s as any).notificacion_email_destino || s.email_clinica || ''} placeholder="katycaballero.osteopata@gmail.com">
+          <small style="color:#999;">Requiere el servicio de email (Resend) configurado arriba</small>
+        </div>
+      </div>
+
+      <div style="background:#e3f2fd;border-radius:8px;padding:16px;margin-bottom:16px;border:1px solid #90caf9;">
+        <h4 style="font-size:0.9rem;margin-bottom:10px;">Telegram</h4>
+        <div class="form-group">
+          <label class="toggle-label">
+            <input type="checkbox" name="notificacion_telegram_activo" checked={(s as any).notificacion_telegram_activo}>
+            Recibir mensaje en Telegram
+          </label>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="telegram_bot_token">Bot Token</label>
+            <input type="password" id="telegram_bot_token" name="telegram_bot_token" value={(s as any).telegram_bot_token || ''} placeholder="123456:ABC-DEF...">
+          </div>
+          <div class="form-group">
+            <label for="telegram_chat_id">Chat ID</label>
+            <input type="text" id="telegram_chat_id" name="telegram_chat_id" value={(s as any).telegram_chat_id || ''} placeholder="-100123456789">
+          </div>
+        </div>
+        <details style="font-size:0.8rem;color:#666;margin-top:4px;">
+          <summary style="cursor:pointer;font-weight:500;">¿Cómo configurar Telegram?</summary>
+          <ol style="margin:8px 0 0 16px;line-height:1.8;">
+            <li>Abre Telegram y busca <strong>@BotFather</strong></li>
+            <li>Escribe <code>/newbot</code> y sigue las instrucciones</li>
+            <li>Copia el <strong>token</strong> que te da y pégalo aquí</li>
+            <li>Busca <strong>@userinfobot</strong> y escríbele para obtener tu <strong>Chat ID</strong></li>
+            <li>Inicia conversación con tu bot (búscalo por nombre) y envíale un mensaje</li>
+          </ol>
+        </details>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-sm">Guardar notificaciones</button>
     </form>
   </div>
 

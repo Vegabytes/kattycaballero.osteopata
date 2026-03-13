@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
+import { notifyNewBooking } from '../../lib/notifications';
 
 export const POST: APIRoute = async ({ request, locals }) => {
   const headers = {
@@ -51,6 +52,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
       .prepare('INSERT INTO citas (paciente_id, fecha, hora, duracion, servicio, estado, notas) VALUES (?, ?, ?, ?, ?, \'pendiente\', ?)')
       .bind(pacienteId, fecha, hora, duracion || 60, servicio || null, notas || null)
       .run();
+
+    // Send notifications (non-blocking)
+    notifyNewBooking(db, { nombre, telefono, servicio, fecha, hora, duracion: duracion || 60, notas })
+      .catch(e => console.error('Notification error:', e));
 
     return new Response(
       JSON.stringify({ success: true, citaId: result.meta.last_row_id }),
