@@ -99,10 +99,50 @@ if (Astro.request.method === 'POST') {
         <textarea id="notas" name="notas" placeholder="Observaciones adicionales..."></textarea>
       </div>
 
+      <div id="duplicado-aviso" style="display:none;" class="alert alert-error">
+        <strong>Posible duplicado:</strong> <span id="duplicado-texto"></span>
+      </div>
+
       <div style="display:flex;gap:12px;">
         <button type="submit" class="btn btn-primary">Guardar paciente</button>
         <a href="/admin/pacientes" class="btn btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>
+
+<script>
+  let checkTimer: any;
+  function checkDuplicado() {
+    clearTimeout(checkTimer);
+    checkTimer = setTimeout(async () => {
+      const nombre = (document.getElementById('nombre') as HTMLInputElement).value.trim();
+      const apellidos = (document.getElementById('apellidos') as HTMLInputElement).value.trim();
+      const telefono = (document.getElementById('telefono') as HTMLInputElement).value.trim();
+      const aviso = document.getElementById('duplicado-aviso')!;
+      const texto = document.getElementById('duplicado-texto')!;
+
+      if ((!nombre && !apellidos) && !telefono) { aviso.style.display = 'none'; return; }
+
+      const query = telefono || `${nombre} ${apellidos}`.trim();
+      if (query.length < 3) { aviso.style.display = 'none'; return; }
+
+      try {
+        const res = await fetch(`/api/buscar-paciente?q=${encodeURIComponent(query)}`);
+        const data = await res.json();
+        if (data.length > 0) {
+          texto.innerHTML = data.map((p: any) =>
+            `<a href="/admin/pacientes/${p.id}" style="color:inherit;text-decoration:underline;">${p.apellidos}, ${p.nombre}</a> (tel: ${p.telefono || 'sin tel'})`
+          ).join(', ');
+          aviso.style.display = 'block';
+        } else {
+          aviso.style.display = 'none';
+        }
+      } catch { aviso.style.display = 'none'; }
+    }, 500);
+  }
+
+  document.getElementById('nombre')?.addEventListener('input', checkDuplicado);
+  document.getElementById('apellidos')?.addEventListener('input', checkDuplicado);
+  document.getElementById('telefono')?.addEventListener('input', checkDuplicado);
+</script>
 </AdminLayout>

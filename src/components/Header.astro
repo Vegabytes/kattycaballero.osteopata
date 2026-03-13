@@ -21,7 +21,7 @@ const toolLinks = [
 <nav class="nav" id="main-nav">
   <div class="nav-container">
     <a href="/" class="nav-logo">
-      <img src="/images/logo.webp" alt="Katy Caballero - Osteópata y Masajista" width="90" height="90" loading="eager" />
+      <img src="/images/logo.webp" alt="Katy Caballero - Osteópata y Masajista" width="70" height="70" loading="eager" />
     </a>
     
     <ul class="nav-links">
@@ -110,37 +110,29 @@ const toolLinks = [
     left: 0;
     right: 0;
     z-index: 1000;
-    background: transparent;
-    transition: all 0.4s ease;
-  }
-  
-  .nav.scrolled {
     background: rgba(255, 254, 251, 0.97);
     backdrop-filter: blur(20px);
-    box-shadow: 0 4px 30px rgba(90, 124, 89, 0.1);
+    box-shadow: 0 1px 8px rgba(90, 124, 89, 0.08);
+    transition: box-shadow 0.3s ease;
   }
-  
-  .nav.scrolled .nav-logo img {
-    height: 70px;
-  }
-  
-  .nav.scrolled .nav-links a {
-    color: var(--color-text);
+
+  .nav.scrolled {
+    box-shadow: 0 4px 20px rgba(90, 124, 89, 0.12);
   }
   
   .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding: 10px 40px;
     max-width: 1400px;
     margin: 0 auto;
   }
   
   .nav-logo img {
-    height: 90px;
+    height: 70px;
     width: auto;
-    transition: all 0.4s ease;
+    transition: height 0.3s ease;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
   }
   
@@ -153,10 +145,10 @@ const toolLinks = [
   
   .nav-links a {
     text-decoration: none;
-    color: var(--color-text);
+    color: #2d2d2d;
     font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
     transition: var(--transition);
     position: relative;
     padding: 8px 0;
@@ -213,9 +205,9 @@ const toolLinks = [
     cursor: pointer;
     font-family: inherit;
     font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    color: var(--color-text);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: #2d2d2d;
     padding: 8px 0;
     transition: var(--transition);
   }
@@ -440,11 +432,7 @@ const toolLinks = [
     }
     
     .nav-logo img {
-      height: 70px;
-    }
-    
-    .nav.scrolled .nav-logo img {
-      height: 60px;
+      height: 55px;
     }
     
     .nav-links {

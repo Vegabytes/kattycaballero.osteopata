@@ -64,6 +64,7 @@ function formatFechaCorta(fecha: string) {
       <a href={`/admin/citas?fecha=${semanaAnterior.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">← Anterior</a>
       <a href="/admin/citas" class="btn btn-secondary btn-sm">Hoy</a>
       <a href={`/admin/citas?fecha=${semanaSiguiente.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">Siguiente →</a>
+      <a href={`/admin/citas/dia?fecha=${hoy}`} class="btn btn-secondary btn-sm">Vista día</a>
       <a href={`/admin/citas/mensual?fecha=${fecha}`} class="btn btn-secondary btn-sm">Vista mensual</a>
       <a href="/admin/citas/nueva" class="btn btn-primary btn-sm">+ Nueva cita</a>
       <a href="/api/export/citas" class="btn btn-secondary btn-sm" style="background:#5a7c59;color:#fff;border-color:#5a7c59;" title="Exportar citas a CSV">
@@ -79,14 +80,14 @@ function formatFechaCorta(fecha: string) {
       const esHoy = fechaDia === hoy;
       return (
         <div class="card" style={`padding:16px;${esHoy ? 'border-color:#5a7c59;border-width:2px;' : ''}`}>
-          <div style="text-align:center;margin-bottom:12px;">
+          <a href={`/admin/citas/dia?fecha=${fechaDia}`} style="text-align:center;margin-bottom:12px;display:block;text-decoration:none;">
             <div style={`font-size:0.75rem;font-weight:600;text-transform:uppercase;color:${esHoy ? '#5a7c59' : '#666'};`}>
               {diasSemana[i]}
             </div>
             <div style={`font-size:1.25rem;font-weight:700;color:${esHoy ? '#5a7c59' : '#333'};`}>
               {new Date(fechaDia + 'T00:00:00').getDate()}
             </div>
-          </div>
+          </a>
 
           {(() => {
             const ingDia = citas.filter((c: any) => c.estado === 'completada' && c.precio).reduce((s: number, c: any) => s + (c.precio || 0), 0);

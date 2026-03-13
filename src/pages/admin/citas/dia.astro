@@ -1,0 +1,142 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+
+const fechaParam = Astro.url.searchParams.get('fecha') || new Date().toISOString().split('T')[0];
+const db = (Astro.locals as any).runtime.env.DB;
+
+let citas: any[] = [];
+try {
+  citas = (await db
+    .prepare(`SELECT c.*, p.nombre as paciente_nombre, p.apellidos as paciente_apellidos, p.telefono as paciente_telefono
+      FROM citas c JOIN pacientes p ON c.paciente_id = p.id
+      WHERE c.fecha = ? ORDER BY c.hora`)
+    .bind(fechaParam)
+    .all()).results;
+} catch { /* ok */ }
+
+const fechaObj = new Date(fechaParam + 'T00:00:00');
+const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const titulo = `${diasSemana[fechaObj.getDay()]} ${fechaObj.getDate()} de ${meses[fechaObj.getMonth()]}`;
+
+// Build hourly slots from 9:00 to 20:00
+const slots: { hora: string; cita: any | null }[] = [];
+for (let h = 9; h <= 20; h++) {
+  for (const m of ['00', '30']) {
+    const horaStr = `${String(h).padStart(2, '0')}:${m}`;
+    const citaEnSlot = citas.find(c => c.hora === horaStr || c.hora === horaStr + ':00');
+    slots.push({ hora: horaStr, cita: citaEnSlot || null });
+  }
+}
+
+// Navigation
+const ayer = new Date(fechaObj); ayer.setDate(ayer.getDate() - 1);
+const manana = new Date(fechaObj); manana.setDate(manana.getDate() + 1);
+
+const totalIngresos = citas.filter(c => c.estado === 'completada' && c.precio).reduce((s, c) => s + (c.precio || 0), 0);
+---
+
+<AdminLayout title={`Citas — ${titulo}`} activeSection="citas">
+  <div class="page-header">
+    <h2>{titulo}</h2>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <a href={`/admin/citas/dia?fecha=${ayer.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">← Anterior</a>
+      <a href="/admin/citas/dia" class="btn btn-secondary btn-sm">Hoy</a>
+      <a href={`/admin/citas/dia?fecha=${manana.toISOString().split('T')[0]}`} class="btn btn-secondary btn-sm">Siguiente →</a>
+      <a href={`/admin/citas?fecha=${fechaParam}`} class="btn btn-secondary btn-sm">Vista semanal</a>
+      <a href={`/admin/citas/nueva?fecha=${fechaParam}`} class="btn btn-primary btn-sm">+ Nueva cita</a>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:16px;margin-bottom:16px;font-size:0.85rem;">
+    <span><strong>{citas.length}</strong> citas</span>
+    <span><strong>{citas.filter(c => c.estado === 'completada').length}</strong> completadas</span>
+    {totalIngresos > 0 && <span style="color:#4caf50;font-weight:600;">{totalIngresos.toFixed(0)}€ ingresos</span>}
+  </div>
+
+  <div class="card">
+    <div class="day-grid">
+      {slots.map(({ hora, cita }) => (
+        <div class={`day-slot ${cita ? 'day-slot-busy' : ''} ${cita?.estado === 'completada' ? 'slot-completed' : cita?.estado === 'cancelada' ? 'slot-cancelled' : cita?.estado === 'confirmada' ? 'slot-confirmed' : ''}`}>
+          <div class="slot-time">{hora}</div>
+          {cita ? (
+            <a href={`/admin/citas/${cita.id}`} class="slot-content">
+              <strong>{cita.paciente_nombre} {cita.paciente_apellidos}</strong>
+              <span class="slot-service">{cita.servicio || 'Sin servicio'} · {cita.duracion || 60}min</span>
+              <span class={`badge badge-${cita.estado}`}>{cita.estado}</span>
+            </a>
+          ) : (
+            <a href={`/admin/citas/nueva?fecha=${fechaParam}&hora=${hora}`} class="slot-empty">
+              Disponible
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <style>
+    .day-grid {
+      display: flex;
+      flex-direction: column;
+    }
+    .day-slot {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      min-height: 48px;
+    }
+    .day-slot:last-child { border-bottom: none; }
+    .slot-time {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #666;
+      width: 50px;
+      flex-shrink: 0;
+    }
+    .day-slot-busy {
+      background: #f8fdf8;
+    }
+    .slot-completed { background: #e8f5e9; }
+    .slot-cancelled { background: #fce4ec; opacity: 0.6; }
+    .slot-confirmed { background: #e3f2fd; }
+    .slot-content {
+      flex: 1;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .slot-content strong {
+      color: #333;
+      font-size: 0.9rem;
+    }
+    .slot-service {
+      font-size: 0.8rem;
+      color: #666;
+    }
+    .slot-empty {
+      flex: 1;
+      text-decoration: none;
+      color: #ccc;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+    .slot-empty:hover {
+      color: var(--admin-primary, #5a7c59);
+    }
+    @media (max-width: 600px) {
+      .slot-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+    }
+  </style>
+</AdminLayout>

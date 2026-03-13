@@ -172,6 +172,29 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
       <button type="submit" class="btn btn-danger btn-sm">Eliminar cita</button>
     </form>
   </div>
+
+  {/* Suggest next appointment when completed */}
+  {cita.estado === 'completada' && (
+    <div class="card" style="background:#e8f5e9;border-color:#4caf50;">
+      <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:12px;color:#2e7d32;">Cita completada — ¿Programar siguiente?</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        {[3, 7, 14, 21, 30].map(dias => {
+          const nextDate = new Date(cita.fecha + 'T00:00:00');
+          nextDate.setDate(nextDate.getDate() + dias);
+          const nextStr = nextDate.toISOString().split('T')[0];
+          const label = dias < 7 ? `${dias} días` : dias === 7 ? '1 semana' : dias === 14 ? '2 semanas' : dias === 21 ? '3 semanas' : '1 mes';
+          return (
+            <a href={`/admin/citas/nueva?paciente=${cita.paciente_id}&fecha=${nextStr}`} class="btn btn-primary btn-sm">
+              + En {label} ({nextDate.getDate()}/{nextDate.getMonth() + 1})
+            </a>
+          );
+        })}
+      </div>
+      <div style="margin-top:12px;">
+        <a href={`/admin/tratamientos/nuevo?paciente=${cita.paciente_id}&cita=${id}`} class="btn btn-secondary btn-sm">Registrar tratamiento de esta cita</a>
+      </div>
+    </div>
+  )}
 </AdminLayout>
 
 <script>

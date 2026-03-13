@@ -5,15 +5,38 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 import { getPacientes } from '../../../lib/db';
 
 const buscar = Astro.url.searchParams.get('buscar') || '';
+const orden = Astro.url.searchParams.get('orden') || 'nombre';
 let pacientes: any[] = [];
 let dbError = '';
 
 try {
   pacientes = await getPacientes(Astro, buscar || undefined);
+
+  // Add last visit date
+  const db = (Astro.locals as any).runtime.env.DB;
+  const lastVisits = (await db.prepare(
+    "SELECT paciente_id, MAX(fecha) as ultima_visita FROM citas WHERE estado = 'completada' GROUP BY paciente_id"
+  ).all()).results;
+  const visitMap = new Map(lastVisits.map((v: any) => [v.paciente_id, v.ultima_visita]));
+  pacientes = pacientes.map((p: any) => ({ ...p, ultima_visita: visitMap.get(p.id) || null }));
+
+  // Sort
+  if (orden === 'visita') {
+    pacientes.sort((a: any, b: any) => {
+      if (!a.ultima_visita && !b.ultima_visita) return 0;
+      if (!a.ultima_visita) return 1;
+      if (!b.ultima_visita) return -1;
+      return b.ultima_visita.localeCompare(a.ultima_visita);
+    });
+  } else if (orden === 'recientes') {
+    pacientes.sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
+  }
 } catch (e: any) {
   dbError = e.message;
   console.error('DB error in pacientes:', e);
 }
+
+const hoy = new Date().toISOString().split('T')[0];
 ---
 
 <AdminLayout title="Pacientes" activeSection="pacientes">
@@ -34,8 +57,13 @@ try {
     </div>
   </div>
 
-  <form class="search-bar" method="GET">
-    <input type="text" name="buscar" placeholder="Buscar por nombre, apellidos o teléfono..." value={buscar}>
+  <form class="search-bar" method="GET" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+    <input type="text" name="buscar" placeholder="Buscar por nombre, apellidos o teléfono..." value={buscar} style="flex:1;min-width:200px;">
+    <select name="orden" style="padding:8px 12px;border-radius:6px;border:1px solid #ddd;font-size:0.85rem;">
+      <option value="nombre" selected={orden === 'nombre'}>Ordenar: Nombre</option>
+      <option value="recientes" selected={orden === 'recientes'}>Ordenar: Más recientes</option>
+      <option value="visita" selected={orden === 'visita'}>Ordenar: Última visita</option>
+    </select>
     <button type="submit" class="btn btn-secondary">Buscar</button>
     {buscar && <a href="/admin/pacientes" class="btn btn-secondary">Limpiar</a>}
   </form>
@@ -54,7 +82,7 @@ try {
             <tr>
               <th>Nombre</th>
               <th>Teléfono</th>
-              <th>Email</th>
+              <th>Última visita</th>
               <th>Contactar</th>
               <th>Acciones</th>
             </tr>
@@ -68,7 +96,15 @@ try {
                   </a>
                 </td>
                 <td>{p.telefono || '-'}</td>
-                <td>{p.email || '-'}</td>
+                <td>
+                  {p.ultima_visita ? (
+                    (() => {
+                      const dias = Math.floor((new Date(hoy).getTime() - new Date(p.ultima_visita).getTime()) / 86400000);
+                      const color = dias > 90 ? '#e65100' : dias > 30 ? '#1565c0' : '#2e7d32';
+                      return <span style={`color:${color};font-size:0.8rem;`}>{p.ultima_visita}{dias > 60 ? ` (${dias}d)` : ''}</span>;
+                    })()
+                  ) : <span style="color:#ccc;font-size:0.8rem;">—</span>}
+                </td>
                 <td>
                   <div class="contact-actions">
                     {p.telefono && (
