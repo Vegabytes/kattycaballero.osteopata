@@ -100,6 +100,26 @@ try {
   }
 } catch { /* alertas are non-critical */ }
 
+// Reservas web recientes (pendientes, últimos 7 días)
+let reservasWeb: any[] = [];
+try {
+  const db = (Astro.locals as any).runtime.env.DB;
+  const hace7dias = new Date();
+  hace7dias.setDate(hace7dias.getDate() - 7);
+  const rwResult = await db.prepare(
+    `SELECT citas.*, pacientes.nombre, pacientes.apellidos, pacientes.telefono,
+            citas.created_at as fecha_reserva
+     FROM citas
+     LEFT JOIN pacientes ON citas.paciente_id = pacientes.id
+     WHERE citas.estado = 'pendiente'
+     ORDER BY citas.created_at DESC
+     LIMIT 15`
+  ).all();
+  reservasWeb = (rwResult as any)?.results || [];
+} catch (e: any) {
+  console.error('DB error fetching reservas web:', e);
+}
+
 // Próximas citas (próximos 7 días, excluyendo hoy)
 let proximasCitas: any[] = [];
 try {
@@ -140,6 +160,58 @@ try {
           <span style="margin-left:auto;opacity:0.6;">→</span>
         </a>
       ))}
+    </div>
+  )}
+
+  {reservasWeb.length > 0 && (
+    <div class="card reservas-web-card">
+      <div class="page-header">
+        <h2>
+          <span class="reservas-web-badge">{reservasWeb.length}</span>
+          Reservas pendientes
+        </h2>
+      </div>
+      <div class="reservas-web-list">
+        {reservasWeb.map((r: any) => {
+          const fechaDisplay = new Date(r.fecha + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+          const tiempoDesde = r.fecha_reserva ? (() => {
+            const diff = Date.now() - new Date(r.fecha_reserva).getTime();
+            const horas = Math.floor(diff / 3600000);
+            if (horas < 1) return 'hace menos de 1h';
+            if (horas < 24) return `hace ${horas}h`;
+            return `hace ${Math.floor(horas / 24)}d`;
+          })() : '';
+          return (
+            <div class="reserva-web-item">
+              <div class="reserva-web-info">
+                <div class="reserva-web-nombre">
+                  <strong>{r.nombre} {r.apellidos}</strong>
+                  {tiempoDesde && <span class="reserva-web-tiempo">{tiempoDesde}</span>}
+                </div>
+                <div class="reserva-web-detalle">
+                  <span>{fechaDisplay} a las <strong>{r.hora}</strong></span>
+                  {r.servicio && <span class="reserva-web-servicio">{r.servicio}</span>}
+                </div>
+              </div>
+              <div class="reserva-web-acciones">
+                <button class="btn btn-success btn-sm btn-quick-estado" data-id={r.id} data-estado="confirmada">Confirmar</button>
+                <a href={`/admin/citas/${r.id}`} class="btn btn-secondary btn-sm">Ver</a>
+                {r.telefono && (
+                  <a
+                    href={`https://wa.me/${r.telefono.replace(/\s+/g, '').replace(/^(\d)/, '34$1')}?text=${encodeURIComponent(`Hola ${r.nombre}, te confirmo tu cita el ${fechaDisplay} a las ${r.hora}. ¡Nos vemos! 😊`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-whatsapp btn-sm"
+                    title="Confirmar por WhatsApp"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  </a>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   )}
 
@@ -506,4 +578,98 @@ try {
     border: none;
   }
   .btn-info:hover { background: #1976d2; }
+
+  .reservas-web-card {
+    margin-bottom: 24px;
+    border-left: 4px solid #ff9800;
+    background: linear-gradient(135deg, #fff8e1 0%, #fff 40%);
+  }
+
+  .reservas-web-card .page-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+  }
+
+  .reservas-web-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: #ff9800;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .reservas-web-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .reserva-web-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #f0e6cc;
+  }
+
+  .reserva-web-nombre {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.92rem;
+  }
+
+  .reserva-web-tiempo {
+    font-size: 0.75rem;
+    color: #999;
+    background: #f5f5f5;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .reserva-web-detalle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    color: #666;
+    margin-top: 3px;
+  }
+
+  .reserva-web-servicio {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+
+  .reserva-web-acciones {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .reserva-web-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .reserva-web-acciones {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
 </style>
