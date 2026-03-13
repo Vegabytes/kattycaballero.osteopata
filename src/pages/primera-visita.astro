@@ -1,0 +1,436 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+
+const pageTitle = "Primera Visita | Osteópata en Alpedrete";
+const pageDescription = "Todo lo que necesitas saber antes de tu primera visita de osteopatía en Alpedrete. Qué esperar, cómo llegar, horarios y preguntas frecuentes.";
+const pageKeywords = "primera visita osteopata, osteopata alpedrete primera vez, que esperar osteopatia, consulta osteopatia alpedrete, osteopata sierra de madrid";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuánto dura la primera sesión de osteopatía?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La primera sesión dura aproximadamente 55 minutos. Incluye una valoración inicial completa (historial, postura, movilidad) y el tratamiento en sí."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Duele el tratamiento de osteopatía?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, la osteopatía no duele. Las técnicas son suaves y respetuosas con tu cuerpo. En algunas zonas con mucha tensión puedes notar una molestia leve que desaparece rápidamente."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito receta médica para ir al osteópata?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, no necesitas receta ni derivación médica. Puedes acudir directamente. Si tienes informes o pruebas recientes, puedes traerlos para completar la valoración."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo ir con niños a la consulta de osteopatía?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, los niños son bienvenidos. El espacio es tranquilo y seguro. Si vienes con niños pequeños, avísame para organizarnos mejor."
+      }
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Primera visita" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-tag">Primera visita</span>
+      <h1>Tu primera visita</h1>
+      <p>Todo lo que necesitas saber antes de venir</p>
+    </div>
+  </section>
+
+  <section class="steps-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">El proceso</span>
+        <h2>Qué esperar</h2>
+        <p>Tu primera sesión es especial: dedicamos tiempo a conocerte para ofrecerte el mejor tratamiento.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-number">1</span>
+          <h3>Cuestionario breve sobre tu historial</h3>
+          <p>Hablamos sobre tus molestias, antecedentes y hábitos. Me interesa entenderte como persona, no solo tu dolor.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-number">2</span>
+          <h3>Valoración postural y de movilidad</h3>
+          <p>Evalúo tu postura, movilidad articular y tensiones musculares para identificar el origen de tu problema.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-number">3</span>
+          <h3>Tratamiento personalizado</h3>
+          <p>Aplico las técnicas más adecuadas para ti: osteopatía estructural, visceral o craneal según lo que necesites.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-number">4</span>
+          <h3>Explicación y recomendaciones</h3>
+          <p>Te explico qué he encontrado, qué hemos trabajado y te doy pautas o ejercicios para casa si es necesario.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Antes de venir</span>
+        <h2>Información práctica</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Dirección</h3>
+          <p>C/ Río Guadarrama 2<br>28430 Alpedrete, Madrid</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Horario</h3>
+          <p>Lunes a Viernes: 9:00 - 20:00<br>Sábados: 10:00 - 14:00</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <h3>Pago</h3>
+          <p>Efectivo, Bizum y transferencia bancaria</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2 12 3.5 8 2 3.62 3.46a2 2 0 00-1.34 1.89v13.3a2 2 0 002.66 1.89L8 19l4-1.5L16 19l4.38-1.46a2 2 0 001.34-1.89V5.35a2 2 0 00-1.34-1.89z"/><line x1="8" y1="2" x2="8" y2="19"/><line x1="16" y1="2" x2="16" y2="19"/></svg>
+          </div>
+          <h3>Qué traer</h3>
+          <p>Ropa cómoda para masaje tailandés. Para los demás tratamientos, nada especial.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="location-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Ubicación</span>
+        <h2>Cómo llegar</h2>
+        <p>Parking gratuito en la zona. Fácil acceso desde Collado Villalba, Moralzarzal, Galapagar y toda la sierra.</p>
+      </div>
+      <div class="location-content">
+        <div class="location-image">
+          <img src="/images/entrada-exterior.webp" alt="Entrada exterior de la consulta de osteopatía de Katy Caballero en Alpedrete" width="800" height="600" loading="lazy" />
+          <span class="location-caption">Parking gratuito en la zona</span>
+        </div>
+        <div class="location-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3030.5!2d-4.027!3d40.6631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4176e0d5c6d6d5%3A0x0!2sC.+R%C3%ADo+Guadarrama%2C+2%2C+28430+Alpedrete%2C+Madrid!5e0!3m2!1ses!2ses!4v1"
+            width="100%"
+            height="400"
+            style="border:0; border-radius: 15px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa de ubicación de la consulta de osteopatía en Alpedrete">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Preguntas Frecuentes</span>
+        <h2>Preguntas frecuentes primera visita</h2>
+      </div>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>¿Cuánto dura la primera sesión?</summary>
+          <p>La primera sesión dura aproximadamente <strong>55 minutos</strong>. Incluye una valoración inicial completa (historial, postura, movilidad) y el tratamiento en sí. No hay coste extra por la valoración.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Duele el tratamiento?</summary>
+          <p>No, la osteopatía <strong>no duele</strong>. Las técnicas son suaves y respetuosas con tu cuerpo. En algunas zonas con mucha tensión puedes notar una molestia leve que desaparece rápidamente. Siempre trabajo dentro de tu umbral de confort.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Necesito receta médica?</summary>
+          <p><strong>No</strong>, no necesitas receta ni derivación médica. Puedes acudir directamente. Si tienes informes médicos o pruebas recientes (radiografías, resonancias...), puedes traerlos para completar la valoración.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Puedo ir con niños?</summary>
+          <p><strong>Sí</strong>, los niños son bienvenidos. El espacio es tranquilo y seguro. Si vienes con niños pequeños, avísame al reservar para organizarnos mejor y que todos estemos cómodos.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="¿Lista para tu primera visita?"
+    description="Reserva tu primera cita y empieza a sentirte mejor."
+    buttonText="Reservar primera cita"
+    buttonLink="/reservar"
+  />
+</Layout>
+
+<style>
+  .page-hero {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    margin-bottom: 20px;
+  }
+
+  .page-hero p {
+    margin: 0 auto;
+    max-width: 600px;
+    font-size: 1.15rem;
+  }
+
+  /* Steps Section */
+  .steps-section {
+    background: var(--color-warm-white);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .step-card {
+    background: white;
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(90, 124, 89, 0.12);
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: var(--color-primary);
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+
+  .step-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+    color: var(--color-text);
+    line-height: 1.4;
+  }
+
+  .step-card p {
+    color: var(--color-text-light);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    max-width: none;
+  }
+
+  /* Info Section */
+  .info-section {
+    background: var(--color-cream);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .info-card {
+    background: var(--color-warm-white);
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+  }
+
+  .info-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--color-secondary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--color-primary);
+  }
+
+  .info-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: var(--color-text);
+  }
+
+  .info-card p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: none;
+  }
+
+  /* Location Section */
+  .location-section {
+    background: var(--color-warm-white);
+  }
+
+  .location-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+  }
+
+  .location-image img {
+    border-radius: 15px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .location-caption {
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    font-style: italic;
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    background: var(--color-cream);
+  }
+
+  .faq-grid {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .faq-item {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .faq-item summary {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1.05rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    content: '\2212';
+  }
+
+  .faq-item summary:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-item p {
+    padding: 0 25px 20px;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    max-width: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .info-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+      max-width: 450px;
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+      max-width: 450px;
+    }
+
+    .location-content {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

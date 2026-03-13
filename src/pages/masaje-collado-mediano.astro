@@ -1,19 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pageTitle = "Osteópata cerca de Collado Villalba | Katy Caballero - Alpedrete (8 min)";
-const pageDescription = "Osteópata y masajista a solo 8 minutos de Collado Villalba. Osteopatía, masaje deportivo, tailandés, pindas herbales y más. Consulta en Alpedrete, Sierra Noroeste de Madrid. Desde 20€.";
-const pageKeywords = "osteopata collado villalba, osteopatia collado villalba, masajista collado villalba, masaje collado villalba, fisioterapia collado villalba, dolor espalda collado villalba, osteopata sierra noroeste madrid";
+const pageTitle = "Masaje y Osteopatía cerca de Collado Mediano | Katy Caballero - Alpedrete (12 min)";
+const pageDescription = "Masajista y osteópata a solo 12 minutos de Collado Mediano. Masaje deportivo, corporal, tailandés, pindas herbales y osteopatía. Consulta en Alpedrete, Sierra de Guadarrama. Desde 20€.";
+const pageKeywords = "masaje collado mediano, masajista collado mediano, osteopata collado mediano, osteopatia collado mediano, masaje deportivo collado mediano, masaje relajante collado mediano, osteopata sierra de guadarrama";
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "HealthAndBeautyBusiness",
   "name": "Katy Caballero - Osteópata y Masajista",
-  "description": "Centro de osteopatía y masajes en Alpedrete, a 8 minutos de Collado Villalba. Sierra Noroeste de Madrid.",
+  "description": "Centro de osteopatía y masajes en Alpedrete, a 12 minutos de Collado Mediano. Sierra de Guadarrama, Madrid.",
   "image": "https://katycaballeroosteopata.com/images/logo.png",
   "telephone": "+34643961065",
   "email": "katycaballero.osteopata@gmail.com",
-  "url": "https://katycaballeroosteopata.com/osteopata-collado-villalba",
+  "url": "https://katycaballeroosteopata.com/masaje-collado-mediano",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Calle Río Guadarrama 2",
@@ -29,7 +29,7 @@ const localBusinessSchema = {
   },
   "areaServed": {
     "@type": "City",
-    "name": "Collado Villalba"
+    "name": "Collado Mediano"
   },
   "openingHoursSpecification": [
     {
@@ -54,51 +54,51 @@ const faqSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "¿Cuánto se tarda en llegar desde Collado Villalba a la consulta?",
+      "name": "¿Cuánto se tarda en llegar desde Collado Mediano a la consulta?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "La consulta está en Alpedrete, a solo 8 minutos en coche desde Collado Villalba por la M-601. Es un trayecto corto y con parking gratuito en la zona."
+        "text": "La consulta está en Alpedrete, a unos 12 minutos en coche desde Collado Mediano por la M-601. Un trayecto corto y directo con parking gratuito."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Qué tratamientos ofreces para pacientes de Collado Villalba?",
+      "name": "¿Qué tipos de masaje ofreces para vecinos de Collado Mediano?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ofrezco osteopatía (estructural, visceral y craneal), masaje deportivo, masaje corporal con aceite, masaje tailandés, pindas herbales y masaje para embarazadas. Todos los servicios disponibles para pacientes de Collado Villalba."
+        "text": "Ofrezco masaje deportivo (20€/30min), masaje corporal con aceite (40€/60min), masaje tailandés (45€/60min), pindas herbales (70€/90min) y masaje para embarazadas (40€/60min). También osteopatía completa (40€/55min)."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Cuánto cuesta una sesión de osteopatía?",
+      "name": "¿Necesito cita previa?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "La sesión de osteopatía cuesta 40€ (55 minutos). El masaje deportivo desde 20€ (30 min). Consulta todos los precios en la web o contacta por WhatsApp."
+        "text": "Sí, trabajo con cita previa para garantizar tu tiempo y una atención personalizada. Puedes reservar por WhatsApp al 643 961 065 o a través de la reserva online."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Cómo puedo reservar cita desde Collado Villalba?",
+      "name": "¿Hay parking en la consulta?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Puedes reservar por WhatsApp al 643 961 065, llamando por teléfono, o a través de la reserva online en la web. Te confirmo la cita rápidamente."
+        "text": "Sí, hay estacionamiento gratuito en la zona. La consulta está en una calle tranquila de Alpedrete donde siempre hay sitio para aparcar."
       }
     }
   ]
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Osteópata cerca de Collado Villalba" }]}>
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Masaje y Osteopatía cerca de Collado Mediano" }]}>
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <section class="town-hero">
     <div class="container">
-      <span class="section-tag">Collado Villalba</span>
-      <h1>Osteópata cerca de Collado Villalba</h1>
-      <p class="town-hero-subtitle">Consulta de osteopatía y masajes en Alpedrete, a solo <strong>8 minutos en coche</strong> de Collado Villalba</p>
+      <span class="section-tag">Collado Mediano</span>
+      <h1>Masaje y Osteopatía cerca de Collado Mediano</h1>
+      <p class="town-hero-subtitle">Consulta de masajes y osteopatía en Alpedrete, a solo <strong>12 minutos en coche</strong> de Collado Mediano</p>
       <div class="town-hero-actions">
-        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Collado%20Villalba%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Reservar por WhatsApp</a>
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Collado%20Mediano%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Reservar por WhatsApp</a>
         <a href="/reservar" class="btn btn-outline">Reservar online</a>
       </div>
     </div>
@@ -107,16 +107,16 @@ const faqSchema = {
   <section class="town-intro">
     <div class="container">
       <div class="town-intro-content">
-        <h2>Tu osteópata de confianza a un paso de Collado Villalba</h2>
-        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia. Mi consulta está en <strong>Alpedrete</strong>, a tan solo 8 minutos en coche desde Collado Villalba por la M-601. Atiendo a numerosos pacientes de Collado Villalba que buscan un tratamiento personalizado, cercano y de calidad en la Sierra Noroeste de Madrid.</p>
-        <p>Si buscas un osteópata cerca de Collado Villalba, en mi consulta encontrarás un espacio tranquilo y profesional donde tratar tu dolor, mejorar tu movilidad o simplemente desconectar con un buen masaje.</p>
+        <h2>Tu masajista y osteópata de confianza cerca de Collado Mediano</h2>
+        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia. Mi consulta está en <strong>Alpedrete</strong>, a tan solo 12 minutos en coche desde Collado Mediano por la M-601. Si vives en Collado Mediano y buscas un buen masaje o un tratamiento de osteopatía profesional, estoy muy cerca de ti.</p>
+        <p>Collado Mediano, enclavado en la Sierra de Guadarrama, es un lugar perfecto para disfrutar del aire libre y el deporte. Para mantener tu cuerpo en equilibrio, mi consulta te ofrece desde masajes deportivos hasta sesiones de relajación profunda y tratamientos de osteopatía integral.</p>
       </div>
     </div>
   </section>
 
   <section class="town-services">
     <div class="container">
-      <h2>Servicios disponibles para pacientes de Collado Villalba</h2>
+      <h2>Servicios disponibles para pacientes de Collado Mediano</h2>
       <div class="services-grid">
         <div class="service-card">
           <h3>Osteopatía</h3>
@@ -127,7 +127,7 @@ const faqSchema = {
         <div class="service-card">
           <h3>Masaje Deportivo</h3>
           <p class="service-meta">20€ · 30 min</p>
-          <p>Recuperación muscular, prevención de lesiones y mejora del rendimiento. Ideal para runners y ciclistas de la Sierra.</p>
+          <p>Recuperación muscular, prevención de lesiones y mejora del rendimiento. Ideal para deportistas de la Sierra de Guadarrama.</p>
           <a href="/servicios/masaje-deportivo-alpedrete" class="service-link">Más información</a>
         </div>
         <div class="service-card">
@@ -160,23 +160,23 @@ const faqSchema = {
 
   <section class="town-reasons">
     <div class="container">
-      <h2>¿Por qué elegir mi consulta desde Collado Villalba?</h2>
+      <h2>¿Por qué elegir mi consulta desde Collado Mediano?</h2>
       <div class="reasons-grid">
         <div class="reason-card">
-          <h3>A 8 minutos de Villalba</h3>
-          <p>Mi consulta en Alpedrete está a un paso de Collado Villalba. Llegas en 8 minutos por la M-601 y tienes parking gratuito en la puerta. Sin atascos, sin problemas de aparcamiento.</p>
+          <h3>A 12 minutos de Collado Mediano</h3>
+          <p>Muy cerca por la M-601 dirección sur. Un trayecto directo y rápido con parking gratuito en la puerta de la consulta.</p>
         </div>
         <div class="reason-card">
           <h3>Más de 12 años de experiencia</h3>
-          <p>Formación en osteopatía, masaje tailandés y múltiples técnicas manuales. Más de una década tratando pacientes con resultados demostrados.</p>
+          <p>Formación en osteopatía, masaje tailandés y múltiples técnicas manuales. Experiencia tratando pacientes de toda la Sierra de Guadarrama.</p>
         </div>
         <div class="reason-card">
-          <h3>Atención personalizada</h3>
-          <p>Cada paciente es único. No aplico tratamientos genéricos: evalúo tu caso, busco el origen del problema y diseño un plan adaptado a ti.</p>
+          <h3>Ambiente tranquilo y profesional</h3>
+          <p>Consulta íntima y acogedora. Sin prisas, sin ruidos. Un espacio pensado para tu bienestar y recuperación.</p>
         </div>
         <div class="reason-card">
-          <h3>Horario flexible</h3>
-          <p>Atiendo de lunes a viernes de 9:00 a 20:00 y sábados de 10:00 a 14:00. Facilidad para encontrar hueco que se adapte a tu agenda.</p>
+          <h3>Precios accesibles</h3>
+          <p>Desde 20€ el masaje deportivo. Tratamientos de calidad a precios justos, sin sorpresas ni extras ocultos.</p>
         </div>
       </div>
     </div>
@@ -186,11 +186,11 @@ const faqSchema = {
     <div class="container">
       <div class="directions-grid">
         <div class="directions-text">
-          <h2>Cómo llegar desde Collado Villalba</h2>
+          <h2>Cómo llegar desde Collado Mediano</h2>
           <div class="directions-info">
             <div class="direction-detail">
-              <strong>En coche (8 min)</strong>
-              <p>Toma la M-601 dirección Alpedrete. Sigue recto hasta llegar al pueblo. La consulta está en Calle Río Guadarrama 2. Parking gratuito en la zona.</p>
+              <strong>En coche (12 min)</strong>
+              <p>Toma la M-601 dirección sur hacia Alpedrete. Es un trayecto directo y sencillo. La consulta está en Calle Río Guadarrama 2. Parking gratuito.</p>
             </div>
             <div class="direction-detail">
               <strong>Dirección</strong>
@@ -211,7 +211,7 @@ const faqSchema = {
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="Cómo llegar desde Collado Villalba a la consulta en Alpedrete">
+            title="Cómo llegar desde Collado Mediano a la consulta en Alpedrete">
           </iframe>
         </div>
       </div>
@@ -220,10 +220,10 @@ const faqSchema = {
 
   <section class="town-cta">
     <div class="container">
-      <h2>Reserva tu cita desde Collado Villalba</h2>
-      <p>Estoy a solo 8 minutos de ti. Contacta conmigo y te atenderé lo antes posible.</p>
+      <h2>Reserva tu masaje desde Collado Mediano</h2>
+      <p>Estoy a solo 12 minutos de ti. Contacta conmigo y te atenderé lo antes posible.</p>
       <div class="town-cta-actions">
-        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Collado%20Villalba%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp: 643 961 065</a>
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Collado%20Mediano%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp: 643 961 065</a>
         <a href="/reservar" class="btn btn-outline">Reservar online</a>
         <a href="tel:+34643961065" class="btn btn-outline">Llamar</a>
       </div>
@@ -232,23 +232,23 @@ const faqSchema = {
 
   <section class="town-faq">
     <div class="container">
-      <h2>Preguntas frecuentes desde Collado Villalba</h2>
+      <h2>Preguntas frecuentes desde Collado Mediano</h2>
       <div class="faq-grid">
         <details class="faq-item">
-          <summary>¿Cuánto se tarda en llegar desde Collado Villalba a la consulta?</summary>
-          <p>La consulta está en Alpedrete, a solo 8 minutos en coche desde Collado Villalba por la M-601. Es un trayecto corto y con parking gratuito en la zona.</p>
+          <summary>¿Cuánto se tarda en llegar desde Collado Mediano a la consulta?</summary>
+          <p>La consulta está en Alpedrete, a unos 12 minutos en coche desde Collado Mediano por la M-601. Parking gratuito en la zona.</p>
         </details>
         <details class="faq-item">
-          <summary>¿Qué tratamientos ofreces para pacientes de Collado Villalba?</summary>
-          <p>Ofrezco osteopatía (estructural, visceral y craneal), masaje deportivo, masaje corporal con aceite, masaje tailandés, pindas herbales y masaje para embarazadas. Todos los servicios disponibles para pacientes de Collado Villalba.</p>
+          <summary>¿Qué tipos de masaje ofreces?</summary>
+          <p>Ofrezco masaje deportivo (20€/30min), masaje corporal con aceite (40€/60min), masaje tailandés (45€/60min), pindas herbales (70€/90min) y masaje para embarazadas (40€/60min). También osteopatía completa (40€/55min).</p>
         </details>
         <details class="faq-item">
-          <summary>¿Cuánto cuesta una sesión de osteopatía?</summary>
-          <p>La sesión de osteopatía cuesta 40€ (55 minutos). El masaje deportivo desde 20€ (30 min). Puedes consultar todos los precios en la web o contactar por WhatsApp al <a href="tel:+34643961065">643 961 065</a>.</p>
+          <summary>¿Necesito cita previa?</summary>
+          <p>Sí, trabajo con cita previa para garantizar tu tiempo y una atención personalizada. Reserva por <a href="https://wa.me/34643961065" target="_blank" rel="noopener noreferrer">WhatsApp</a> o a través de la <a href="/reservar">reserva online</a>.</p>
         </details>
         <details class="faq-item">
-          <summary>¿Cómo puedo reservar cita desde Collado Villalba?</summary>
-          <p>Puedes reservar por <a href="https://wa.me/34643961065" target="_blank" rel="noopener noreferrer">WhatsApp</a>, llamando al <a href="tel:+34643961065">643 961 065</a>, o a través de la <a href="/reservar">reserva online</a>. Te confirmo la cita rápidamente.</p>
+          <summary>¿Hay parking en la consulta?</summary>
+          <p>Sí, hay estacionamiento gratuito en la zona. La consulta está en una calle tranquila de Alpedrete donde siempre hay sitio para aparcar.</p>
         </details>
       </div>
     </div>

@@ -1,0 +1,13 @@
+{
+  "name": "Katy Caballero - Osteópata",
+  "short_name": "Katy Osteo",
+  "description": "Panel de gestión - Katy Caballero Osteópata",
+  "start_url": "/admin",
+  "display": "standalone",
+  "background_color": "#f8f6f0",
+  "theme_color": "#4a6548",
+  "icons": [
+    { "src": "/images/logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/images/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

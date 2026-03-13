@@ -1,0 +1,551 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+
+const pageTitle = "Bonos de Osteopatía | Ahorra o Regala - Katy Caballero";
+const pageDescription = "Bonos de sesiones de osteopatía en Alpedrete. Bono 3 sesiones 114€, Bono 5 sesiones 180€. Ahorra en tus tratamientos o regala bienestar a quien más quieres.";
+const pageKeywords = "bonos osteopatia, regalar masaje, bono sesiones osteopatia alpedrete, regalar osteopatia madrid, regalo bienestar, bono masaje sierra de madrid";
+
+const offerSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Bonos de Osteopatía - Katy Caballero",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "Service",
+        "name": "Bono 3 sesiones de osteopatía",
+        "description": "3 sesiones de osteopatía de 55 minutos. 38€ por sesión, ahorro de 6€ respecto al precio individual.",
+        "provider": {
+          "@type": "HealthAndBeautyBusiness",
+          "name": "Katy Caballero - Osteópata y Masajista",
+          "url": "https://katycaballeroosteopata.com"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "114",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "Service",
+        "name": "Bono 5 sesiones de osteopatía",
+        "description": "5 sesiones de osteopatía de 55 minutos. 36€ por sesión, ahorro de 20€ respecto al precio individual.",
+        "provider": {
+          "@type": "HealthAndBeautyBusiness",
+          "name": "Katy Caballero - Osteópata y Masajista",
+          "url": "https://katycaballeroosteopata.com"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "180",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Bonos" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(offerSchema)} />
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-tag">Bonos</span>
+      <h1>Bonos de sesiones</h1>
+      <p>Ahorra en tus tratamientos o regala bienestar</p>
+    </div>
+  </section>
+
+  <section class="bonos-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Ahorra con los bonos</span>
+        <h2>Bonos de osteopatía</h2>
+        <p>Si necesitas varias sesiones, los bonos te permiten ahorrar en cada visita.</p>
+      </div>
+      <div class="bonos-grid">
+        <div class="bono-card">
+          <span class="bono-label">Sesión individual</span>
+          <div class="bono-price">40<span class="bono-currency">€</span></div>
+          <span class="bono-detail">Osteopatía · 55 min</span>
+          <span class="bono-per-session">Precio de referencia</span>
+        </div>
+        <div class="bono-card featured">
+          <span class="bono-badge">Más popular</span>
+          <span class="bono-label">Bono 3 sesiones</span>
+          <div class="bono-price">114<span class="bono-currency">€</span></div>
+          <span class="bono-per-session">38€ por sesión</span>
+          <span class="bono-saving">Ahorras 6€</span>
+        </div>
+        <div class="bono-card best">
+          <span class="bono-badge">Mejor precio</span>
+          <span class="bono-label">Bono 5 sesiones</span>
+          <div class="bono-price">180<span class="bono-currency">€</span></div>
+          <span class="bono-per-session">36€ por sesión</span>
+          <span class="bono-saving">Ahorras 20€</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gift-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Idea regalo</span>
+        <h2>Regala bienestar</h2>
+        <p>Un bono de osteopatía es un regalo original y que de verdad se agradece.</p>
+      </div>
+      <div class="gift-content">
+        <div class="gift-card">
+          <div class="gift-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+          </div>
+          <h3>Perfecto para cualquier ocasión</h3>
+          <p>Cumpleaños, Día de la Madre, Navidad, aniversarios... o simplemente para decirle a alguien que se merece un descanso. Regala un bono de sesiones de osteopatía y sorprende con algo diferente y útil.</p>
+          <div class="gift-occasions">
+            <span class="occasion-tag">Cumpleaños</span>
+            <span class="occasion-tag">Día de la Madre</span>
+            <span class="occasion-tag">Navidad</span>
+            <span class="occasion-tag">Aniversario</span>
+            <span class="occasion-tag">Autocuidado</span>
+          </div>
+          <p>Contacta conmigo por WhatsApp o teléfono y te lo preparo.</p>
+          <a href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustar%C3%ADa%20comprar%20un%20bono%20de%20regalo" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Comprar bono regalo por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Paso a paso</span>
+        <h2>Cómo funciona</h2>
+        <p>Comprar tu bono es rápido y sencillo.</p>
+      </div>
+      <div class="how-grid">
+        <div class="how-step">
+          <span class="how-number">1</span>
+          <h3>Contacta por WhatsApp o teléfono</h3>
+          <p>Escríbeme y dime qué bono te interesa o si es un regalo.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-number">2</span>
+          <h3>Realiza el pago</h3>
+          <p>Puedes pagar por Bizum o transferencia bancaria cómodamente.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-number">3</span>
+          <h3>Recibe tu bono y reserva</h3>
+          <p>Recibe tu bono y reserva tus sesiones cuando quieras, a tu ritmo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="conditions-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Información</span>
+        <h2>Condiciones</h2>
+      </div>
+      <div class="conditions-grid">
+        <div class="condition-item">
+          <div class="condition-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <h3>Validez de 6 meses</h3>
+            <p>Desde la fecha de compra. Tiempo de sobra para disfrutar todas tus sesiones.</p>
+          </div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <h3>Intransferible</h3>
+            <p>El bono es personal, salvo en el caso de los bonos regalo.</p>
+          </div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div>
+            <h3>No reembolsable</h3>
+            <p>Una vez adquirido, el bono no admite devolución del importe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="¿Quieres tu bono?"
+    description="Contacta conmigo por WhatsApp y te lo preparo en un momento."
+    buttonText="Comprar bono por WhatsApp"
+    buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustar%C3%ADa%20comprar%20un%20bono%20de%20osteopat%C3%ADa"
+  />
+</Layout>
+
+<style>
+  .page-hero {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    margin-bottom: 20px;
+  }
+
+  .page-hero p {
+    margin: 0 auto;
+    max-width: 600px;
+    font-size: 1.15rem;
+  }
+
+  /* Bonos Section */
+  .bonos-section {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+  }
+
+  .bonos-section .section-tag {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  .bonos-section h2 {
+    color: white;
+  }
+
+  .bonos-section .section-header p {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .bonos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .bono-card {
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .bono-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .bono-card.featured,
+  .bono-card.best {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-text);
+    border-color: transparent;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .bono-card.featured:hover,
+  .bono-card.best:hover {
+    background: white;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  }
+
+  .bono-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-secondary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .bono-label {
+    display: block;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    opacity: 0.9;
+  }
+
+  .bono-card.featured .bono-label,
+  .bono-card.best .bono-label {
+    color: var(--color-text);
+    opacity: 1;
+  }
+
+  .bono-price {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .bono-card.featured .bono-price,
+  .bono-card.best .bono-price {
+    color: var(--color-primary);
+  }
+
+  .bono-currency {
+    font-size: 1.5rem;
+    vertical-align: super;
+  }
+
+  .bono-per-session {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .bono-card.featured .bono-per-session,
+  .bono-card.best .bono-per-session {
+    color: var(--color-text-light);
+  }
+
+  .bono-detail {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+
+  .bono-saving {
+    display: inline-block;
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-top: 4px;
+  }
+
+  /* Gift Section */
+  .gift-section {
+    background: var(--color-warm-white);
+  }
+
+  .gift-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .gift-card {
+    background: white;
+    border-radius: 20px;
+    padding: 50px 40px;
+    text-align: center;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .gift-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--color-secondary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    color: var(--color-primary);
+  }
+
+  .gift-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+    color: var(--color-text);
+  }
+
+  .gift-card p {
+    color: var(--color-text-light);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: none;
+    margin: 0 auto 20px;
+  }
+
+  .gift-occasions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 25px;
+  }
+
+  .occasion-tag {
+    background: var(--color-cream);
+    color: var(--color-primary-dark);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(90, 124, 89, 0.15);
+  }
+
+  .gift-card .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  /* How Section */
+  .how-section {
+    background: var(--color-cream);
+  }
+
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .how-step {
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .how-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background: var(--color-primary);
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+
+  .how-step h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: var(--color-text);
+    line-height: 1.4;
+  }
+
+  .how-step p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: none;
+  }
+
+  /* Conditions Section */
+  .conditions-section {
+    background: var(--color-warm-white);
+  }
+
+  .conditions-grid {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .condition-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background: white;
+    border-radius: 15px;
+    padding: 25px 30px;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+  }
+
+  .condition-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--color-secondary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-primary);
+  }
+
+  .condition-item h3 {
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+    color: var(--color-text);
+  }
+
+  .condition-item p {
+    color: var(--color-text-light);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    max-width: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .bonos-grid {
+      grid-template-columns: 1fr;
+      max-width: 350px;
+    }
+
+    .bono-card.featured,
+    .bono-card.best {
+      order: -1;
+    }
+
+    .how-grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+    }
+
+    .gift-card {
+      padding: 35px 25px;
+    }
+
+    .condition-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>

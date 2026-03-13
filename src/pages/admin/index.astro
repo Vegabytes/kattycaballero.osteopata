@@ -17,6 +17,15 @@ let pacientesNuevosMes = 0;
 let ingresosMes = 0;
 let bonosActivos = 0;
 let ingresosHoy = 0;
+let citasMes = 0;
+let citasCompletadasMes = 0;
+let pacientesNuevosMesAnterior = 0;
+let ingresosMesAnterior = 0;
+let citasMesAnterior = 0;
+
+const mesAnterior = new Date();
+mesAnterior.setMonth(mesAnterior.getMonth() - 1);
+const mesAnteriorStr = mesAnterior.toISOString().slice(0, 7);
 
 try {
   stats = await getEstadisticas(Astro);
@@ -52,6 +61,22 @@ try {
 
   const ingResult = await db.prepare("SELECT COALESCE(SUM(precio), 0) as total FROM citas WHERE estado = 'completada' AND fecha LIKE ?").bind(mesActual + '%').first();
   ingresosMes = (ingResult as any)?.total || 0;
+
+  const cmResult = await db.prepare("SELECT COUNT(*) as total FROM citas WHERE fecha LIKE ?").bind(mesActual + '%').first();
+  citasMes = (cmResult as any)?.total || 0;
+
+  const ccResult = await db.prepare("SELECT COUNT(*) as total FROM citas WHERE estado = 'completada' AND fecha LIKE ?").bind(mesActual + '%').first();
+  citasCompletadasMes = (ccResult as any)?.total || 0;
+
+  // Mes anterior para comparativa
+  const pnAntResult = await db.prepare("SELECT COUNT(*) as total FROM pacientes WHERE created_at LIKE ?").bind(mesAnteriorStr + '%').first();
+  pacientesNuevosMesAnterior = (pnAntResult as any)?.total || 0;
+
+  const ingAntResult = await db.prepare("SELECT COALESCE(SUM(precio), 0) as total FROM citas WHERE estado = 'completada' AND fecha LIKE ?").bind(mesAnteriorStr + '%').first();
+  ingresosMesAnterior = (ingAntResult as any)?.total || 0;
+
+  const cmAntResult = await db.prepare("SELECT COUNT(*) as total FROM citas WHERE fecha LIKE ?").bind(mesAnteriorStr + '%').first();
+  citasMesAnterior = (cmAntResult as any)?.total || 0;
 } catch (e: any) {
   console.error('DB error fetching new stats:', e);
 }
@@ -297,6 +322,55 @@ try {
         </div>
       </div>
     )}
+  </div>
+
+  <!-- Monthly comparison -->
+  <div class="card" style="margin-top:20px;">
+    <div class="page-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <h2>Resumen mensual</h2>
+      <div style="display:flex;gap:8px;">
+        <a href="/api/admin/exportar?tipo=citas" class="btn btn-secondary btn-sm" download>Exportar citas CSV</a>
+        <a href="/api/admin/exportar?tipo=pacientes" class="btn btn-secondary btn-sm" download>Exportar pacientes CSV</a>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px;">
+      <div style="background:#f8f6f0;padding:16px;border-radius:10px;">
+        <div style="font-size:0.8rem;color:#888;margin-bottom:4px;">Citas este mes</div>
+        <div style="font-size:1.5rem;font-weight:700;color:#333;">{citasMes}</div>
+        {citasMesAnterior > 0 && (
+          <div style={`font-size:0.75rem;margin-top:4px;${citasMes >= citasMesAnterior ? 'color:#4caf50;' : 'color:#e65100;'}`}>
+            {citasMes >= citasMesAnterior ? '+' : ''}{citasMes - citasMesAnterior} vs mes anterior ({citasMesAnterior})
+          </div>
+        )}
+      </div>
+      <div style="background:#f8f6f0;padding:16px;border-radius:10px;">
+        <div style="font-size:0.8rem;color:#888;margin-bottom:4px;">Completadas</div>
+        <div style="font-size:1.5rem;font-weight:700;color:#333;">{citasCompletadasMes}</div>
+        {citasMes > 0 && (
+          <div style="font-size:0.75rem;margin-top:4px;color:#888;">
+            {citasMes > 0 ? Math.round(citasCompletadasMes / citasMes * 100) : 0}% del total
+          </div>
+        )}
+      </div>
+      <div style="background:#f8f6f0;padding:16px;border-radius:10px;">
+        <div style="font-size:0.8rem;color:#888;margin-bottom:4px;">Ingresos</div>
+        <div style="font-size:1.5rem;font-weight:700;color:#333;">{ingresosMes.toFixed(0)}&euro;</div>
+        {ingresosMesAnterior > 0 && (
+          <div style={`font-size:0.75rem;margin-top:4px;${ingresosMes >= ingresosMesAnterior ? 'color:#4caf50;' : 'color:#e65100;'}`}>
+            {ingresosMes >= ingresosMesAnterior ? '+' : ''}{(ingresosMes - ingresosMesAnterior).toFixed(0)}&euro; vs mes anterior ({ingresosMesAnterior.toFixed(0)}&euro;)
+          </div>
+        )}
+      </div>
+      <div style="background:#f8f6f0;padding:16px;border-radius:10px;">
+        <div style="font-size:0.8rem;color:#888;margin-bottom:4px;">Pacientes nuevos</div>
+        <div style="font-size:1.5rem;font-weight:700;color:#333;">{pacientesNuevosMes}</div>
+        {pacientesNuevosMesAnterior > 0 && (
+          <div style={`font-size:0.75rem;margin-top:4px;${pacientesNuevosMes >= pacientesNuevosMesAnterior ? 'color:#4caf50;' : 'color:#e65100;'}`}>
+            {pacientesNuevosMes >= pacientesNuevosMesAnterior ? '+' : ''}{pacientesNuevosMes - pacientesNuevosMesAnterior} vs mes anterior ({pacientesNuevosMesAnterior})
+          </div>
+        )}
+      </div>
+    </div>
   </div>
 
   {stats.totalPacientes === 0 && !dbError && (

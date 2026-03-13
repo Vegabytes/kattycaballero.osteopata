@@ -1,18 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CTASection from '../components/CTASection.astro';
-import { getLocalityBySlug } from '../data/localities';
-import { services } from '../data/services';
 
-const locality = getLocalityBySlug('osteopata-moralzarzal')!;
+const pageTitle = "Osteópata cerca de Moralzarzal | Katy Caballero - Alpedrete (10 min)";
+const pageDescription = "Osteópata y masajista a solo 10 minutos de Moralzarzal. Osteopatía, masaje deportivo, tailandés, pindas herbales y más. Consulta en Alpedrete, Sierra Noroeste de Madrid. Desde 20€.";
+const pageKeywords = "osteopata moralzarzal, osteopatia moralzarzal, masajista moralzarzal, masaje moralzarzal, fisioterapia moralzarzal, dolor espalda moralzarzal, osteopata sierra noroeste madrid";
 
-const businessSchema = {
+const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "HealthAndBeautyBusiness",
   "name": "Katy Caballero - Osteópata y Masajista",
+  "description": "Centro de osteopatía y masajes en Alpedrete, a 10 minutos de Moralzarzal. Sierra Noroeste de Madrid.",
   "image": "https://katycaballeroosteopata.com/images/logo.png",
   "telephone": "+34643961065",
-  "url": "https://katycaballeroosteopata.com",
+  "email": "katycaballero.osteopata@gmail.com",
+  "url": "https://katycaballeroosteopata.com/osteopata-moralzarzal",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Calle Río Guadarrama 2",
@@ -26,9 +27,10 @@ const businessSchema = {
     "latitude": "40.6631",
     "longitude": "-4.0270"
   },
-  "areaServed": { "@type": "City", "name": locality.name },
-  "priceRange": "€€",
-  "email": "katycaballero.osteopata@gmail.com",
+  "areaServed": {
+    "@type": "City",
+    "name": "Moralzarzal"
+  },
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
@@ -43,144 +45,566 @@ const businessSchema = {
       "closes": "14:00"
     }
   ],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5.0",
-    "bestRating": "5",
-    "worstRating": "1",
-    "ratingCount": "10",
-    "reviewCount": "10"
-  },
-  "sameAs": [
-    "https://www.instagram.com/katycaballero.osteopata",
-    "https://es.nextdoor.com/pages/sala-osteopatia-katy-caballero-alpedrete-comunidad-de-madrid/",
-    "https://www.bing.com/forbusiness/singleEntity?bizid=24de5fa7-ed7a-48d4-af66-dd995283aec4"
-  ]
+  "priceRange": "€€"
 };
 
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": locality.faq.map(f => ({
-    "@type": "Question",
-    "name": f.question,
-    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
-  }))
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuánto se tarda en llegar desde Moralzarzal a la consulta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La consulta está en Alpedrete, a solo 10 minutos en coche desde Moralzarzal por la M-608 y M-601. Es un trayecto rápido y con parking gratuito en la zona."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué tratamientos ofreces para pacientes de Moralzarzal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ofrezco osteopatía (estructural, visceral y craneal), masaje deportivo, masaje corporal con aceite, masaje tailandés, pindas herbales y masaje para embarazadas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta una sesión de osteopatía?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La sesión de osteopatía cuesta 40€ (55 minutos). El masaje deportivo desde 20€ (30 min). Consulta todos los precios en la web o contacta por WhatsApp."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Atiendes los sábados para pacientes de Moralzarzal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, atiendo los sábados de 10:00 a 14:00. Entre semana el horario es de 9:00 a 20:00, de lunes a viernes."
+      }
+    }
+  ]
 };
-
-const breadcrumbSchema = [
-  { name: "Inicio", url: "/" },
-  { name: `Osteópata ${locality.name}` }
-];
 ---
 
-<Layout title={locality.metaTitle} description={locality.metaDescription} keywords={locality.keywords} breadcrumbs={breadcrumbSchema}>
-  <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Osteópata cerca de Moralzarzal" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
-  <section class="locality-header">
+  <section class="town-hero">
     <div class="container">
-      <span class="section-tag">Osteópata cerca de {locality.name}</span>
-      <h1>Osteópata y Masajista cerca de {locality.name}</h1>
-      <p class="locality-distance">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-        Consulta en Alpedrete · {locality.distance} · {locality.driveTime} en coche
-      </p>
-      <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Moralzarzal%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Reservar cita</a>
-    </div>
-  </section>
-
-  <section class="locality-intro">
-    <div class="container">
-      <div class="intro-content">
-        {locality.intro.split('\n\n').map(p => <p>{p}</p>)}
+      <span class="section-tag">Moralzarzal</span>
+      <h1>Osteópata cerca de Moralzarzal</h1>
+      <p class="town-hero-subtitle">Consulta de osteopatía y masajes en Alpedrete, a solo <strong>10 minutos en coche</strong> de Moralzarzal</p>
+      <div class="town-hero-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Moralzarzal%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Reservar por WhatsApp</a>
+        <a href="/reservar" class="btn btn-outline">Reservar online</a>
       </div>
     </div>
   </section>
 
-  <section class="locality-services">
+  <section class="town-intro">
     <div class="container">
-      <h2>Servicios disponibles</h2>
+      <div class="town-intro-content">
+        <h2>Tu osteópata de confianza a un paso de Moralzarzal</h2>
+        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia. Mi consulta está en <strong>Alpedrete</strong>, a tan solo 10 minutos en coche desde Moralzarzal por la M-608. Muchos pacientes de Moralzarzal confían en mi para tratar sus dolencias y mejorar su calidad de vida.</p>
+        <p>En Moralzarzal, con una comunidad activa y deportista que disfruta de la Sierra, es habitual necesitar tratamientos de osteopatía o masaje para mantenerse en forma. En mi consulta encontrarás atención profesional, cercana y totalmente personalizada.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-services">
+    <div class="container">
+      <h2>Servicios disponibles para pacientes de Moralzarzal</h2>
       <div class="services-grid">
-        {services.map(s => (
-          <a href={`/servicios/${s.slug}`} class="service-link-card">
-            <h3>{s.title}</h3>
-            <div class="service-link-meta">
-              <span>{s.duration}</span>
-              <span class="service-link-price">{s.price}</span>
+        <div class="service-card">
+          <h3>Osteopatía</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Tratamiento integral: estructural, visceral y sacrocraneal. Para dolor de espalda, cervicales, migrañas, ciática y más.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Deportivo</h3>
+          <p class="service-meta">20€ · 30 min</p>
+          <p>Recuperación muscular, prevención de lesiones y mejora del rendimiento. Ideal para runners y ciclistas de la Sierra.</p>
+          <a href="/servicios/masaje-deportivo-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Corporal con Aceite</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Relajación profunda con aceites esenciales. Alivia tensiones, nutre la piel y mejora tu descanso.</p>
+          <a href="/servicios/masaje-corporal-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Tailandés</h3>
+          <p class="service-meta">45€ · 60 min</p>
+          <p>Técnica milenaria con estiramientos asistidos y presiones rítmicas. Mejora la flexibilidad y la energía vital.</p>
+          <a href="/servicios/masaje-tailandes-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Pindas Herbales</h3>
+          <p class="service-meta">70€ · 90 min</p>
+          <p>Saquitos de hierbas medicinales calientes con propiedades antiinflamatorias y relajantes. Experiencia premium.</p>
+          <a href="/servicios/masaje-pindas-herbales-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje para Embarazadas</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Técnicas suaves adaptadas a cada trimestre desde el 4º mes. Alivio lumbar, piernas ligeras y bienestar.</p>
+          <a href="/servicios/masaje-embarazadas-alpedrete" class="service-link">Más información</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-reasons">
+    <div class="container">
+      <h2>¿Por qué elegir mi consulta desde Moralzarzal?</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>A 10 minutos de Moralzarzal</h3>
+          <p>Mi consulta en Alpedrete está muy cerca de Moralzarzal. Un trayecto rápido por la M-608 y parking gratuito en la puerta. Sin complicaciones.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Más de 12 años de experiencia</h3>
+          <p>Formación en osteopatía, masaje tailandés y múltiples técnicas manuales. Experiencia demostrada tratando todo tipo de dolencias.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Ideal para deportistas de la Sierra</h3>
+          <p>Si eres runner, ciclista o senderista en la zona de Moralzarzal, el masaje deportivo y la osteopatía te ayudarán a rendir más y recuperarte mejor.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Horario amplio y flexible</h3>
+          <p>Atiendo de lunes a viernes de 9:00 a 20:00 y sábados de 10:00 a 14:00. Encontrarás hueco sin problema.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-directions">
+    <div class="container">
+      <div class="directions-grid">
+        <div class="directions-text">
+          <h2>Cómo llegar desde Moralzarzal</h2>
+          <div class="directions-info">
+            <div class="direction-detail">
+              <strong>En coche (10 min)</strong>
+              <p>Toma la M-608 dirección sur y conecta con la M-601 hacia Alpedrete. La consulta está en Calle Río Guadarrama 2. Parking gratuito en la zona.</p>
             </div>
-          </a>
-        ))}
+            <div class="direction-detail">
+              <strong>Dirección</strong>
+              <p>Calle Río Guadarrama 2, 28430 Alpedrete, Madrid</p>
+            </div>
+            <div class="direction-detail">
+              <strong>Horario</strong>
+              <p>Lunes a Viernes: 9:00 - 20:00<br>Sábados: 10:00 - 14:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="directions-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.5!2d-4.027!3d40.663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189d3f2e8e9e1%3A0x1!2sCalle%20R%C3%ADo%20Guadarrama%2C%202%2C%2028430%20Alpedrete%2C%20Madrid!5e0!3m2!1ses!2ses!4v1"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Cómo llegar desde Moralzarzal a la consulta en Alpedrete">
+          </iframe>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="locality-why">
+  <section class="town-cta">
     <div class="container">
-      <h2>¿Por qué elegirnos desde {locality.name}?</h2>
-      <ul class="why-list">
-        {locality.whyUs.map(item => (
-          <li>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            {item}
-          </li>
-        ))}
-      </ul>
+      <h2>Reserva tu cita desde Moralzarzal</h2>
+      <p>Estoy a solo 10 minutos de ti. Contacta conmigo y te atenderé lo antes posible.</p>
+      <div class="town-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Moralzarzal%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp: 643 961 065</a>
+        <a href="/reservar" class="btn btn-outline">Reservar online</a>
+        <a href="tel:+34643961065" class="btn btn-outline">Llamar</a>
+      </div>
     </div>
   </section>
 
-  <section class="locality-faq">
+  <section class="town-faq">
     <div class="container">
-      <h2>Preguntas frecuentes</h2>
+      <h2>Preguntas frecuentes desde Moralzarzal</h2>
       <div class="faq-grid">
-        {locality.faq.map(f => (
-          <details class="faq-item">
-            <summary>{f.question}</summary>
-            <p>{f.answer}</p>
-          </details>
-        ))}
+        <details class="faq-item">
+          <summary>¿Cuánto se tarda en llegar desde Moralzarzal a la consulta?</summary>
+          <p>La consulta está en Alpedrete, a solo 10 minutos en coche desde Moralzarzal por la M-608 y M-601. Parking gratuito en la zona.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué tratamientos ofreces para pacientes de Moralzarzal?</summary>
+          <p>Ofrezco osteopatía (estructural, visceral y craneal), masaje deportivo, masaje corporal con aceite, masaje tailandés, pindas herbales y masaje para embarazadas.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuánto cuesta una sesión de osteopatía?</summary>
+          <p>La sesión de osteopatía cuesta 40€ (55 minutos). El masaje deportivo desde 20€ (30 min). Puedes consultar todos los precios en la web o contactar por WhatsApp al <a href="tel:+34643961065">643 961 065</a>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Atiendes los sábados para pacientes de Moralzarzal?</summary>
+          <p>Sí, atiendo los sábados de 10:00 a 14:00. Entre semana el horario es de 9:00 a 20:00, de lunes a viernes. Reserva tu cita por <a href="https://wa.me/34643961065" target="_blank" rel="noopener noreferrer">WhatsApp</a>.</p>
+        </details>
       </div>
     </div>
   </section>
-
-  <CTASection
-    title={`¿Vienes desde ${locality.name}?`}
-    description="Reserva tu cita y en pocos minutos estarás en consulta."
-  />
 </Layout>
 
 <style>
-  .locality-header { padding-top: 150px; padding-bottom: 60px; background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
-  .locality-header h1 { margin-bottom: 15px; }
-  .locality-distance { display: inline-flex; align-items: center; gap: 8px; font-size: 1.1rem; color: var(--color-text-light); margin-bottom: 30px; }
-  .locality-distance svg { width: 22px; height: 22px; fill: var(--color-primary); }
-  .locality-intro { background: var(--color-warm-white); }
-  .intro-content { max-width: 800px; margin: 0 auto; }
-  .intro-content p { margin-bottom: 20px; line-height: 1.8; font-size: 1.05rem; }
-  .locality-services { background: var(--color-cream); }
-  .locality-services h2 { text-align: center; margin-bottom: 40px; }
-  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .service-link-card { background: var(--color-warm-white); padding: 25px; border-radius: 16px; text-decoration: none; color: inherit; transition: all 0.3s ease; border: 1px solid rgba(90, 124, 89, 0.1); }
-  .service-link-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(90, 124, 89, 0.12); border-color: var(--color-primary-light); }
-  .service-link-card h3 { font-size: 1.05rem; color: var(--color-primary); margin-bottom: 12px; }
-  .service-link-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--color-text-light); }
-  .service-link-price { background: var(--color-secondary-light); padding: 4px 14px; border-radius: 20px; font-weight: 600; color: var(--color-text); }
-  .locality-why { background: var(--color-warm-white); }
-  .locality-why h2 { text-align: center; margin-bottom: 40px; }
-  .why-list { max-width: 700px; margin: 0 auto; list-style: none; display: flex; flex-direction: column; gap: 15px; }
-  .why-list li { display: flex; align-items: center; gap: 12px; font-size: 1.02rem; line-height: 1.5; }
-  .why-list svg { width: 22px; height: 22px; fill: var(--color-primary); flex-shrink: 0; }
-  .locality-faq { background: var(--color-cream); }
-  .locality-faq h2 { text-align: center; margin-bottom: 40px; }
-  .faq-grid { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
-  .faq-item { background: var(--color-warm-white); border-radius: 15px; overflow: hidden; border: 1px solid rgba(90, 124, 89, 0.1); transition: all 0.3s ease; }
-  .faq-item[open] { box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1); }
-  .faq-item summary { padding: 20px 25px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 1.05rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
-  .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item summary::after { content: '+'; font-size: 1.4rem; color: var(--color-primary); font-weight: 300; flex-shrink: 0; }
-  .faq-item[open] summary::after { content: '−'; }
-  .faq-item summary:hover { color: var(--color-primary); }
-  .faq-item p { padding: 0 25px 20px; color: var(--color-text-light); line-height: 1.8; font-size: 0.95rem; max-width: none; }
-  @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
+  .town-hero {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .town-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 16px;
+    color: var(--color-text);
+  }
+
+  .town-hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  .town-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .town-intro {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .town-intro h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .town-intro p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    margin-bottom: 16px;
+  }
+
+  .town-services {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .town-services h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--color-warm-white);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .service-card h3 {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    margin-bottom: 8px;
+  }
+
+  .service-meta {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .service-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .service-link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  .town-reasons {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-reasons h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .reason-card {
+    background: var(--color-cream);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+  }
+
+  .reason-card h3 {
+    font-size: 1.05rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 10px;
+  }
+
+  .reason-card p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+  }
+
+  .town-directions {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .directions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .directions-text h2 {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    margin-bottom: 28px;
+  }
+
+  .directions-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .direction-detail strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin-bottom: 4px;
+  }
+
+  .direction-detail p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+
+  .directions-map {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    min-height: 350px;
+  }
+
+  .directions-map iframe {
+    display: block;
+    width: 100%;
+    min-height: 350px;
+    height: 100%;
+  }
+
+  .town-cta {
+    padding: var(--section-padding) 0;
+    background: var(--color-primary);
+    text-align: center;
+    color: white;
+  }
+
+  .town-cta h2 {
+    color: white;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 16px;
+  }
+
+  .town-cta p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+    margin-bottom: 32px;
+  }
+
+  .town-cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .town-cta .btn-primary {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .town-cta .btn-primary:hover {
+    background: var(--color-cream);
+  }
+
+  .town-cta .btn-outline {
+    border-color: white;
+    color: white;
+  }
+
+  .town-cta .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .town-faq {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-faq h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: var(--color-cream);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: var(--transition);
+  }
+
+  .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .faq-item summary {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .faq-item summary:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-item p {
+    padding: 0 25px 20px;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  .faq-item a {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .reasons-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .directions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .directions-map {
+      min-height: 280px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 </style>
