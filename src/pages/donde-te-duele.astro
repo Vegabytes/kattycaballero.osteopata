@@ -6,6 +6,26 @@ const pageTitle = "¿Dónde te duele? | Mapa Corporal Interactivo - Katy Caballe
 const pageDescription = "Descubre qué tratamiento necesitas según tu zona de dolor. Mapa corporal interactivo con diagnóstico orientativo y recomendación de tratamiento de osteopatía y masaje.";
 const pageKeywords = "donde me duele, dolor de espalda tratamiento, dolor cervical osteopata sierra noroeste, ciatica tratamiento, dolor lumbar masaje, osteopata sierra noroeste madrid, osteopata sierra de guadarrama";
 
+const medicalSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Mapa Corporal Interactivo - ¿Dónde te duele?",
+  "description": pageDescription,
+  "url": "https://katycaballeroosteopata.com/donde-te-duele",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Katy Caballero",
+    "jobTitle": "Osteópata y Masajista"
+  }
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -40,6 +60,7 @@ const faqSchema = {
 
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "¿Dónde te duele?" }]}>
 
+  <script type="application/ld+json" set:html={JSON.stringify(medicalSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <section class="page-header">

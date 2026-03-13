@@ -5,9 +5,30 @@ import CTASection from '../components/CTASection.astro';
 const pageTitle = "Test: ¿Qué Tratamiento Necesitas? | Katy Caballero - Alpedrete";
 const pageDescription = "Descubre qué tratamiento de osteopatía o masaje es el más adecuado para ti. Test rápido de 5 preguntas con recomendación personalizada.";
 const pageKeywords = "que tipo de masaje necesito, que tratamiento necesito, test osteopatia, test masaje, masaje sierra noroeste madrid, masaje sierra de guadarrama";
+
+const quizSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Test: ¿Qué Tratamiento Necesitas?",
+  "description": pageDescription,
+  "url": "https://katycaballeroosteopata.com/test-tratamiento",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Katy Caballero",
+    "jobTitle": "Osteópata y Masajista"
+  }
+};
 ---
 
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Test" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(quizSchema)} />
 
   <section class="page-header">
     <div class="container">

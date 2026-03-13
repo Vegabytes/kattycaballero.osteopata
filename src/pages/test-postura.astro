@@ -6,6 +6,26 @@ const pageTitle = "Test de Postura Gratuito | ¿Cómo está tu espalda? - Katy C
 const pageDescription = "Descubre tu nivel de riesgo postural con este test gratuito de 6 preguntas. Obtén recomendaciones personalizadas para mejorar tu postura y prevenir dolor de espalda.";
 const pageKeywords = "test postura, riesgo postural, dolor espalda postura, ergonomia puesto trabajo, mejorar postura, osteopata sierra noroeste madrid, osteopata sierra de guadarrama";
 
+const quizSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Test de Postura Gratuito",
+  "description": pageDescription,
+  "url": "https://katycaballeroosteopata.com/test-postura",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Katy Caballero",
+    "jobTitle": "Osteópata y Masajista"
+  }
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -40,6 +60,7 @@ const faqSchema = {
 
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Test de Postura" }]}>
 
+  <script type="application/ld+json" set:html={JSON.stringify(quizSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <section class="page-header">

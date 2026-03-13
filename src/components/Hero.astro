@@ -70,10 +70,16 @@ const {
           </div>
           <div class="hero-stat">
             <div class="hero-stat-number">5★</div>
-            <div class="hero-stat-label">Valoración media</div>
+            <div class="hero-stat-label">Valoración en Google</div>
           </div>
         </div>
       )}
+
+      <div class="hero-review">
+        <div class="hero-review-stars" aria-label="5 estrellas">★★★★★</div>
+        <p class="hero-review-text">"Gran profesional, detallista y cuidadosa. Te deja nueva."</p>
+        <span class="hero-review-author">— Natalia F. · Google</span>
+      </div>
     </div>
     
     <div class="hero-image">
@@ -290,6 +296,38 @@ const {
     margin-top: 6px;
   }
   
+  .hero-review {
+    margin-top: 30px;
+    padding: 20px 24px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    max-width: 420px;
+  }
+
+  .hero-review-stars {
+    color: #FBBC05;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .hero-review-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--color-text);
+    line-height: 1.5;
+    margin: 0 0 6px;
+    max-width: none;
+  }
+
+  .hero-review-author {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
   .hero-image {
     display: flex;
     align-items: center;
@@ -356,12 +394,17 @@ const {
     .hero-logo {
       max-width: 280px;
     }
-    
+
     .hero-image {
       order: -1;
     }
+
+    .hero-review {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
-  
+
   @media (max-width: 768px) {
     .hero {
       min-height: auto;
@@ -391,7 +434,11 @@ const {
     .scroll-indicator {
       display: none;
     }
-    
+
+    .hero-review {
+      display: none;
+    }
+
     .hero-logo {
       max-width: 220px;
     }
