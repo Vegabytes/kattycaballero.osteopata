@@ -97,19 +97,19 @@ const services = [
             <h2>Tus datos de contacto</h2>
             <div class="user-form">
               <div class="form-group">
-                <label for="user-name">Nombre</label>
-                <input type="text" id="user-name" placeholder="Tu nombre" autocomplete="given-name" required>
+                <label for="user-name">Nombre <span aria-hidden="true">*</span></label>
+                <input type="text" id="user-name" placeholder="Tu nombre" autocomplete="given-name" required aria-required="true">
               </div>
               <div class="form-group">
-                <label for="user-phone">Teléfono</label>
-                <input type="tel" id="user-phone" placeholder="Tu teléfono" autocomplete="tel" required>
+                <label for="user-phone">Teléfono <span aria-hidden="true">*</span></label>
+                <input type="tel" id="user-phone" placeholder="Tu teléfono" autocomplete="tel" required aria-required="true">
               </div>
               <div class="form-group">
                 <label for="user-notes">Notas (opcional)</label>
                 <textarea id="user-notes" placeholder="¿Algo que deba saber? Ej: primera visita, zona de dolor..." rows="3"></textarea>
               </div>
 
-              <div class="booking-summary" id="booking-summary"></div>
+              <div class="booking-summary" id="booking-summary" role="status" aria-live="polite"></div>
 
               <button class="btn-whatsapp-send" id="btn-send" disabled>
                 <svg viewBox="0 0 24 24" fill="currentColor">

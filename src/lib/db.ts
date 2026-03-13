@@ -164,7 +164,7 @@ export async function getCitasSemana(Astro: AstroGlobal, fechaInicio: string, fe
 export async function getCita(Astro: AstroGlobal, id: number): Promise<Cita | null> {
   const db = getDB(Astro);
   return await db
-    .prepare(`SELECT c.*, p.nombre as paciente_nombre, p.apellidos as paciente_apellidos, p.telefono as paciente_telefono
+    .prepare(`SELECT c.*, p.nombre as paciente_nombre, p.apellidos as paciente_apellidos, p.telefono as paciente_telefono, p.alergias as paciente_alergias, p.motivo_consulta as paciente_motivo, p.antecedentes as paciente_antecedentes
       FROM citas c JOIN pacientes p ON c.paciente_id = p.id WHERE c.id = ?`)
     .bind(id)
     .first() as Cita | null;

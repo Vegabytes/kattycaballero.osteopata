@@ -69,7 +69,18 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
   {mensaje && <div class="alert alert-success">{mensaje}</div>}
   {error && <div class="alert alert-error">{error}</div>}
 
-  <div style="display:flex;gap:8px;margin-bottom:20px;">
+  {(cita as any).paciente_alergias && (
+    <div class="alert alert-error" style="display:flex;align-items:center;gap:8px;">
+      <strong>⚠ Alergias / Contraindicaciones:</strong> {(cita as any).paciente_alergias}
+    </div>
+  )}
+  {(cita as any).paciente_antecedentes && (
+    <div class="alert" style="background:#fff3e0;border-color:#ff9800;display:flex;align-items:center;gap:8px;">
+      <strong>Antecedentes:</strong> {(cita as any).paciente_antecedentes}
+    </div>
+  )}
+
+  <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
     <a href={`/admin/pacientes/${cita.paciente_id}`} class="btn btn-secondary btn-sm">Ver paciente: {cita.paciente_nombre} {cita.paciente_apellidos}</a>
     <a href={`/admin/tratamientos/nuevo?paciente=${cita.paciente_id}&cita=${id}`} class="btn btn-primary btn-sm">+ Registrar tratamiento</a>
     <a href={`/admin/factura/${id}`} target="_blank" class="btn btn-secondary btn-sm">Factura</a>

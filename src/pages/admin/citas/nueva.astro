@@ -91,6 +91,14 @@ const servicios = [
         </div>
       </div>
 
+      <div id="citas-dia-preview" style="display:none;margin-bottom:16px;padding:12px 16px;background:#e3f2fd;border-radius:8px;font-size:0.85rem;">
+        <strong>Citas ese día:</strong>
+        <div id="citas-dia-list" style="margin-top:6px;"></div>
+      </div>
+      <div id="conflicto-aviso" style="display:none;" class="alert alert-error">
+        <strong>⚠ Posible solapamiento:</strong> <span id="conflicto-texto"></span>
+      </div>
+
       <div class="form-row">
         <div class="form-group">
           <label for="duracion">Duración (min)</label>
@@ -169,6 +177,61 @@ const servicios = [
       precioInput.value = option.dataset.precio || '';
     }
   });
+
+  // Double-booking check
+  let citasDia: any[] = [];
+  async function checkCitasDia() {
+    const fecha = (document.getElementById('fecha') as HTMLInputElement).value;
+    const preview = document.getElementById('citas-dia-preview')!;
+    const list = document.getElementById('citas-dia-list')!;
+    if (!fecha) { preview.style.display = 'none'; return; }
+    try {
+      const res = await fetch(`/api/citas-dia?fecha=${fecha}`);
+      citasDia = await res.json();
+      if (Array.isArray(citasDia) && citasDia.length > 0) {
+        list.innerHTML = citasDia.map((c: any) =>
+          `<div style="padding:2px 0;"><strong>${c.hora}</strong> (${c.duracion}min) — ${c.paciente_nombre} ${c.paciente_apellidos} · ${c.servicio || 'Sin servicio'}</div>`
+        ).join('');
+        preview.style.display = 'block';
+      } else {
+        preview.style.display = 'none';
+        citasDia = [];
+      }
+    } catch { preview.style.display = 'none'; }
+    checkConflicto();
+  }
+
+  function checkConflicto() {
+    const hora = (document.getElementById('hora') as HTMLInputElement).value;
+    const duracion = Number((document.getElementById('duracion') as HTMLSelectElement).value) || 60;
+    const aviso = document.getElementById('conflicto-aviso')!;
+    const texto = document.getElementById('conflicto-texto')!;
+    if (!hora || !Array.isArray(citasDia) || citasDia.length === 0) { aviso.style.display = 'none'; return; }
+
+    const [h, m] = hora.split(':').map(Number);
+    const newStart = h * 60 + m;
+    const newEnd = newStart + duracion;
+
+    const conflictos = citasDia.filter((c: any) => {
+      const [ch, cm] = c.hora.split(':').map(Number);
+      const cStart = ch * 60 + cm;
+      const cEnd = cStart + (c.duracion || 60);
+      return newStart < cEnd && newEnd > cStart;
+    });
+
+    if (conflictos.length > 0) {
+      texto.textContent = `Se solapa con: ${conflictos.map((c: any) => `${c.hora} (${c.paciente_nombre})`).join(', ')}`;
+      aviso.style.display = 'block';
+    } else {
+      aviso.style.display = 'none';
+    }
+  }
+
+  document.getElementById('fecha')?.addEventListener('change', checkCitasDia);
+  document.getElementById('hora')?.addEventListener('change', checkConflicto);
+  document.getElementById('duracion')?.addEventListener('change', checkConflicto);
+  // Initial check if fecha is pre-filled
+  if ((document.getElementById('fecha') as HTMLInputElement).value) checkCitasDia();
 
   // Modal nuevo paciente
   const modal = document.getElementById('modal-paciente')!;

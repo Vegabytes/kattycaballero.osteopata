@@ -85,6 +85,52 @@ try {
   console.error('Stats: error topServicios', e);
 }
 
+// --- Income by service ---
+interface ServiceIncomeData { servicio: string; total: number; count: number; }
+let ingresosPorServicio: ServiceIncomeData[] = [];
+
+try {
+  const rows = await db.prepare(`
+    SELECT servicio, COALESCE(SUM(precio), 0) as total, COUNT(*) as count
+    FROM citas
+    WHERE estado = 'completada' AND precio > 0 AND servicio IS NOT NULL AND servicio != ''
+    GROUP BY servicio
+    ORDER BY total DESC
+  `).all();
+  ingresosPorServicio = (rows.results || []) as ServiceIncomeData[];
+} catch (e: any) {
+  console.error('Stats: error ingresosPorServicio', e);
+}
+
+// --- Citas by status ---
+interface StatusData { estado: string; total: number; }
+let citasPorEstado: StatusData[] = [];
+
+try {
+  const rows = await db.prepare(`
+    SELECT estado, COUNT(*) as total
+    FROM citas
+    GROUP BY estado
+    ORDER BY total DESC
+  `).all();
+  citasPorEstado = (rows.results || []) as StatusData[];
+} catch (e: any) {
+  console.error('Stats: error citasPorEstado', e);
+}
+
+const estadoLabels: Record<string, string> = {
+  pendiente: 'Pendiente',
+  confirmada: 'Confirmada',
+  completada: 'Completada',
+  cancelada: 'Cancelada',
+};
+const estadoColors: Record<string, string> = {
+  pendiente: '#ff9800',
+  confirmada: '#2196f3',
+  completada: '#4caf50',
+  cancelada: '#f44336',
+};
+
 // --- Helpers ---
 const meses: Record<string, string> = {
   '01': 'Ene', '02': 'Feb', '03': 'Mar', '04': 'Abr',
@@ -206,6 +252,47 @@ const barColors = ['#5a7c59', '#7a9c79', '#c4a35a', '#2196f3', '#ff9800', '#f443
                 <div class="h-bar-fill" style={`width: ${Math.max((s.total / maxServicio) * 100, 4)}%; background: ${barColors[i % barColors.length]};`}></div>
               </div>
               <span class="h-bar-value">{s.total}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <!-- Income by service -->
+    <div class="card chart-card">
+      <h3 class="chart-title">Ingresos por servicio</h3>
+      {ingresosPorServicio.length === 0 ? (
+        <p class="chart-empty">Sin datos de ingresos</p>
+      ) : (
+        <div class="h-bar-chart">
+          {ingresosPorServicio.map((s, i) => (
+            <div class="h-bar-row">
+              <span class="h-bar-label" title={s.servicio}>{s.servicio}</span>
+              <div class="h-bar-track">
+                <div class="h-bar-fill" style={`width: ${Math.max((s.total / (ingresosPorServicio[0]?.total || 1)) * 100, 4)}%; background: ${barColors[i % barColors.length]};`}></div>
+              </div>
+              <span class="h-bar-value">{s.total.toFixed(0)}&euro;</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <!-- Citas by status -->
+    <div class="card chart-card">
+      <h3 class="chart-title">Citas por estado</h3>
+      {citasPorEstado.length === 0 ? (
+        <p class="chart-empty">Sin datos de citas</p>
+      ) : (
+        <div class="status-chart">
+          {citasPorEstado.map((s) => (
+            <div class="status-row">
+              <span class="status-dot" style={`background: ${estadoColors[s.estado] || '#999'};`}></span>
+              <span class="status-label">{estadoLabels[s.estado] || s.estado}</span>
+              <span class="status-count">{s.total}</span>
+              <div class="status-bar-track">
+                <div class="status-bar-fill" style={`width: ${Math.max((s.total / (citasPorEstado[0]?.total || 1)) * 100, 4)}%; background: ${estadoColors[s.estado] || '#999'};`}></div>
+              </div>
             </div>
           ))}
         </div>
@@ -340,6 +427,58 @@ const barColors = ['#5a7c59', '#7a9c79', '#c4a35a', '#2196f3', '#ff9800', '#f443
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--admin-text);
+  }
+
+  /* Status chart */
+  .status-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-label {
+    width: 90px;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    color: var(--admin-text);
+    font-weight: 500;
+  }
+
+  .status-count {
+    width: 35px;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    text-align: right;
+  }
+
+  .status-bar-track {
+    flex: 1;
+    height: 24px;
+    background: #f0f0f0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .status-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.4s ease;
+    min-width: 4px;
   }
 
   @media (max-width: 768px) {

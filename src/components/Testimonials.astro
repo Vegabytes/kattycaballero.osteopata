@@ -114,11 +114,11 @@ const reviewSchema = {
       </div>
     </div>
 
-    <div class="reviews-carousel-wrapper">
-      <button class="carousel-btn carousel-btn-prev" aria-label="Reseñas anteriores">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    <div class="reviews-carousel-wrapper" role="region" aria-label="Reseñas de pacientes" aria-roledescription="carrusel">
+      <button class="carousel-btn carousel-btn-prev" aria-label="Reseñas anteriores" aria-controls="reviews-carousel">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
       </button>
-      <div class="reviews-carousel">
+      <div class="reviews-carousel" id="reviews-carousel" aria-live="polite">
         {reviews.map((review) => (
           <article class="review-card">
             <div class="review-header">
@@ -137,7 +137,7 @@ const reviewSchema = {
           </article>
         ))}
       </div>
-      <button class="carousel-btn carousel-btn-next" aria-label="Siguientes reseñas">
+      <button class="carousel-btn carousel-btn-next" aria-label="Siguientes reseñas" aria-controls="reviews-carousel">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
       </button>
     </div>
