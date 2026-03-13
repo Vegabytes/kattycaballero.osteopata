@@ -101,6 +101,9 @@ try {
       <strong>Última visita:</strong> {ultimaVisita}
       {diasInactivo > 90 && <span> — Inactivo {diasInactivo} días</span>}
       {diasInactivo > 30 && diasInactivo <= 90 && <span> — Hace {diasInactivo} días</span>}
+      {diasInactivo > 30 && paciente.telefono && (
+        <a href={`https://wa.me/34${paciente.telefono.replace(/\s/g, '').replace(/^\+34/, '')}?text=${encodeURIComponent(`Hola ${paciente.nombre}, soy Katy de la consulta de osteopatía. ¿Qué tal estás? Hace tiempo que no nos vemos y quería saber cómo te encuentras. Si necesitas una sesión, estoy a tu disposición 😊`)}`} target="_blank" style="margin-left:8px;color:inherit;text-decoration:underline;font-size:0.8rem;">Enviar recordatorio</a>
+      )}
     </div>
   )}
 
@@ -277,7 +280,16 @@ try {
                 <td>{t.fecha}</td>
                 <td>{t.tipo}</td>
                 <td>{t.zona || '-'}</td>
-                <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{t.observaciones || '-'}</td>
+                <td style="max-width:350px;">
+                  {t.observaciones ? (
+                    t.observaciones.length > 60 ? (
+                      <details style="cursor:pointer;">
+                        <summary style="font-size:0.85rem;color:#555;list-style:none;">{t.observaciones.substring(0, 60)}...</summary>
+                        <p style="margin-top:6px;font-size:0.85rem;color:#333;line-height:1.5;white-space:pre-wrap;background:#f9f9f9;padding:8px;border-radius:6px;">{t.observaciones}</p>
+                      </details>
+                    ) : <span style="font-size:0.85rem;color:#555;">{t.observaciones}</span>
+                  ) : '-'}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -339,7 +351,14 @@ try {
             {bonos.map((b: any) => (
               <tr>
                 <td>{b.nombre}</td>
-                <td>{b.sesiones_usadas} / {b.sesiones_total}</td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div style={`width:80px;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;`}>
+                      <div style={`width:${Math.min(100, (b.sesiones_usadas / b.sesiones_total) * 100)}%;height:100%;background:${b.sesiones_usadas >= b.sesiones_total ? '#e65100' : b.sesiones_usadas / b.sesiones_total >= 0.8 ? '#f9a825' : '#2e7d32'};border-radius:4px;`}></div>
+                    </div>
+                    <span>{b.sesiones_usadas} / {b.sesiones_total}</span>
+                  </div>
+                </td>
                 <td><span class={`badge badge-${b.estado === 'activo' ? 'confirmada' : b.estado === 'completado' ? 'completada' : 'cancelada'}`}>{b.estado}</span></td>
                 <td><a href={`/admin/bonos/${b.id}`} class="btn btn-secondary btn-sm">Ver</a></td>
               </tr>
