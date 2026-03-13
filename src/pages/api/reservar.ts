@@ -53,9 +53,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
       .bind(pacienteId, fecha, hora, duracion || 60, servicio || null, notas || null)
       .run();
 
-    // Send notifications (non-blocking)
-    notifyNewBooking(db, { nombre, telefono, servicio, fecha, hora, duracion: duracion || 60, notas })
-      .catch(e => console.error('Notification error:', e));
+    // Send notifications (await before responding — Workers closes after Response)
+    try {
+      await notifyNewBooking(db, { nombre, telefono, servicio, fecha, hora, duracion: duracion || 60, notas });
+    } catch (e) {
+      console.error('Notification error:', e);
+    }
 
     return new Response(
       JSON.stringify({ success: true, citaId: result.meta.last_row_id }),

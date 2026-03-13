@@ -53,7 +53,7 @@ async function sendEmailNotification(settings: Record<string, string>, booking: 
   const fechaDisplay = formatFechaES(booking.fecha);
 
   const html = `<!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;padding:0;background:#f5f5f5;">
 <div style="max-width:500px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
   <div style="background:#4a6548;padding:18px 24px;text-align:center;">
@@ -74,7 +74,7 @@ async function sendEmailNotification(settings: Record<string, string>, booking: 
     </div>
   </div>
   <div style="padding:12px 24px;background:#f9f9f9;text-align:center;font-size:11px;color:#999;">
-    Katy Caballero · Osteópata y Masajista · Alpedrete
+    Katy Caballero - Osteopata y Masajista - Alpedrete
   </div>
 </div>
 </body></html>`;
@@ -89,7 +89,7 @@ async function sendEmailNotification(settings: Record<string, string>, booking: 
       body: JSON.stringify({
         from: emailFrom,
         to: [adminEmail],
-        subject: `Nueva reserva: ${booking.nombre} — ${fechaDisplay} ${booking.hora}`,
+        subject: `Nueva reserva: ${booking.nombre} - ${fechaDisplay} ${booking.hora}`,
         html,
       }),
     });
