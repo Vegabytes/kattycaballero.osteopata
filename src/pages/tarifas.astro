@@ -16,6 +16,38 @@ const shortDescriptions: Record<string, string> = {
   "masaje-embarazadas-alpedrete": "Masaje suave y adaptado a partir del cuarto mes de embarazo.",
 };
 
+// Offer schema for pricing (SEO: rich results for service prices)
+const offerSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Tarifas de Osteopatía y Masajes en Alpedrete",
+  "itemListElement": services.map((service, index) => {
+    const priceText = service.price.split(' / ')[0].replace('€', '');
+    return {
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Service",
+        "name": service.title,
+        "description": shortDescriptions[service.slug],
+        "url": `https://katycaballeroosteopata.com/servicios/${service.slug}`,
+        "provider": {
+          "@type": "HealthAndBeautyBusiness",
+          "name": "Katy Caballero - Osteópata y Masajista",
+          "url": "https://katycaballeroosteopata.com"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": priceText,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock",
+          "url": `https://katycaballeroosteopata.com/servicios/${service.slug}`
+        }
+      }
+    };
+  })
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -57,6 +89,7 @@ const faqSchema = {
 ---
 
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Tarifas" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(offerSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <section class="page-header">

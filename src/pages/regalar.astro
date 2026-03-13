@@ -60,6 +60,33 @@ function whatsappLink(serviceName: string): string {
   return `https://wa.me/34643961065?text=${message}`;
 }
 
+// Product schema for gift cards (SEO: rich results)
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Tarjetas Regalo de Masaje y Osteopatía",
+  "itemListElement": giftOptions.map((option, index) => {
+    const priceText = option.price.split(' / ')[0].replace('€', '');
+    return {
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Product",
+        "name": `Tarjeta Regalo: ${option.name}`,
+        "description": option.description,
+        "brand": { "@type": "Brand", "name": "Katy Caballero - Osteópata y Masajista" },
+        "offers": {
+          "@type": "Offer",
+          "price": priceText,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://katycaballeroosteopata.com/regalar"
+        }
+      }
+    };
+  })
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -93,6 +120,7 @@ const faqSchema = {
 ---
 
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Regalar" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <!-- Header -->
