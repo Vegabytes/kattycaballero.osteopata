@@ -64,6 +64,42 @@ try {
   console.error('DB error fetching bonos:', e);
 }
 
+// Alertas / acciones pendientes
+let alertas: { tipo: string; texto: string; link: string }[] = [];
+try {
+  const db = (Astro.locals as any).runtime.env.DB;
+
+  // Citas pendientes sin confirmar (próximos 3 días)
+  const en3dias = new Date(); en3dias.setDate(en3dias.getDate() + 3);
+  const pendientes = await db.prepare(
+    `SELECT COUNT(*) as total FROM citas WHERE estado = 'pendiente' AND fecha BETWEEN ? AND ?`
+  ).bind(hoy, en3dias.toISOString().split('T')[0]).first();
+  if ((pendientes as any)?.total > 0) {
+    alertas.push({ tipo: 'warning', texto: `${(pendientes as any).total} cita(s) sin confirmar en los próximos 3 días`, link: '/admin/citas' });
+  }
+
+  // Pacientes inactivos (>90 días sin visita completada)
+  const inactivos = await db.prepare(
+    `SELECT COUNT(DISTINCT p.id) as total FROM pacientes p
+     LEFT JOIN citas c ON c.paciente_id = p.id AND c.estado = 'completada'
+     GROUP BY p.id
+     HAVING MAX(c.fecha) < ? OR MAX(c.fecha) IS NULL`
+  ).bind(new Date(Date.now() - 90 * 86400000).toISOString().split('T')[0]).all();
+  const numInactivos = inactivos?.results?.length || 0;
+  if (numInactivos > 0) {
+    alertas.push({ tipo: 'info', texto: `${numInactivos} paciente(s) sin visita en +90 días`, link: '/admin/pacientes?orden=visita' });
+  }
+
+  // Bonos próximos a expirar (30 días)
+  const en30dias = new Date(); en30dias.setDate(en30dias.getDate() + 30);
+  const bonosExp = await db.prepare(
+    `SELECT COUNT(*) as total FROM bonos WHERE estado = 'activo' AND fecha_expiracion IS NOT NULL AND fecha_expiracion <= ?`
+  ).bind(en30dias.toISOString().split('T')[0]).first();
+  if ((bonosExp as any)?.total > 0) {
+    alertas.push({ tipo: 'warning', texto: `${(bonosExp as any).total} bono(s) expiran en los próximos 30 días`, link: '/admin/bonos' });
+  }
+} catch { /* alertas are non-critical */ }
+
 // Próximas citas (próximos 7 días, excluyendo hoy)
 let proximasCitas: any[] = [];
 try {
@@ -95,6 +131,18 @@ try {
       <br><small>Verifica que D1 esté correctamente vinculado en Cloudflare Pages → Settings → Functions → D1 database bindings.</small>
     </div>
   )}
+  {alertas.length > 0 && (
+    <div class="dashboard-alerts" style="margin-bottom:20px;display:flex;flex-direction:column;gap:8px;">
+      {alertas.map(a => (
+        <a href={a.link} style={`display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:500;${a.tipo === 'warning' ? 'background:#fff3e0;color:#e65100;border:1px solid #ffcc80;' : 'background:#e3f2fd;color:#1565c0;border:1px solid #90caf9;'}`}>
+          <span>{a.tipo === 'warning' ? '⚠' : 'ℹ'}</span>
+          <span>{a.texto}</span>
+          <span style="margin-left:auto;opacity:0.6;">→</span>
+        </a>
+      ))}
+    </div>
+  )}
+
   <div class="stats-grid">
     <div class="stat-card">
       <div class="stat-icon green">
@@ -165,6 +213,18 @@ try {
         <p>Bonos activos</p>
       </div>
     </div>
+
+    {ingresosHoy > 0 && (
+      <div class="stat-card" style="border-left:3px solid #4caf50;">
+        <div class="stat-icon green">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+        </div>
+        <div class="stat-info">
+          <h3>{ingresosHoy.toFixed(0)}&euro;</h3>
+          <p>Ingresos hoy</p>
+        </div>
+      </div>
+    )}
   </div>
 
   {stats.totalPacientes === 0 && !dbError && (

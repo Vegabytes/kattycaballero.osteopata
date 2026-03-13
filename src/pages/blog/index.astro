@@ -8,6 +8,28 @@ const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.val
 const pageTitle = "Blog de Osteopatía y Bienestar | Sierra Noroeste de Madrid";
 const pageDescription = "Artículos sobre osteopatía, masajes terapéuticos, ejercicios para el dolor de espalda, contracturas y consejos de salud. Blog de Katy Caballero, osteópata en Alpedrete, Sierra Noroeste de Madrid.";
 
+// Unique categories
+const categories = [...new Set(sortedPosts.map(p => p.data.category))].sort();
+
+// Blog schema
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Blog de Osteopatía y Bienestar - Katy Caballero",
+  "description": pageDescription,
+  "url": "https://katycaballeroosteopata.com/blog",
+  "author": { "@type": "Person", "name": "Katy Caballero" },
+  "blogPost": sortedPosts.slice(0, 10).map(post => ({
+    "@type": "BlogPosting",
+    "headline": post.data.title,
+    "description": post.data.excerpt,
+    "datePublished": post.data.date.toISOString(),
+    "url": `https://katycaballeroosteopata.com/blog/${post.slug}`,
+    "image": `https://katycaballeroosteopata.com${post.data.image}`,
+    "author": { "@type": "Person", "name": "Katy Caballero" },
+  }))
+};
+
 function formatDate(date: Date): string {
   return new Intl.DateTimeFormat('es-ES', {
     day: 'numeric',
@@ -18,6 +40,7 @@ function formatDate(date: Date): string {
 ---
 
 <Layout title={pageTitle} description={pageDescription} keywords="blog osteopatia, consejos dolor de espalda, ejercicios contracturas, masaje terapeutico beneficios, osteopatia sierra de madrid, osteopatia sierra noroeste madrid, osteopatia sierra de guadarrama, salud bienestar alpedrete, fisioterapia consejos" breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Blog" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
   <section class="page-header">
     <div class="container">
       <span class="section-tag">Blog</span>
@@ -28,9 +51,15 @@ function formatDate(date: Date): string {
   
   <section class="blog-list">
     <div class="container">
+      <div class="blog-categories" id="blog-categories">
+        <button class="category-tag active" data-category="all">Todos</button>
+        {categories.map(cat => (
+          <button class="category-tag" data-category={cat}>{cat}</button>
+        ))}
+      </div>
       <div class="blog-grid">
         {sortedPosts.map((post, index) => (
-          <article class="blog-card" class:list={[{ featured: index === 0 }]}>
+          <article class="blog-card" class:list={[{ featured: index === 0 }]} data-category={post.data.category}>
             <a href={`/blog/${post.slug}`} class="blog-card-image-link">
               <img src={post.data.image} alt={post.data.title} class="blog-card-image" width="600" height="280" loading={index === 0 ? "eager" : "lazy"} />
             </a>
@@ -253,4 +282,57 @@ function formatDate(date: Date): string {
       height: 280px;
     }
   }
+
+  .blog-categories {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    justify-content: center;
+  }
+
+  .category-tag {
+    padding: 8px 20px;
+    border-radius: 25px;
+    border: 1px solid rgba(90, 124, 89, 0.2);
+    background: var(--color-warm-white);
+    color: var(--color-text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .category-tag:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .category-tag.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
+
+  .blog-card.hidden-by-filter {
+    display: none;
+  }
 </style>
+
+<script>
+  document.querySelectorAll('.category-tag').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelector('.category-tag.active')?.classList.remove('active');
+      btn.classList.add('active');
+      const cat = (btn as HTMLElement).dataset.category;
+      document.querySelectorAll('.blog-card').forEach(card => {
+        if (cat === 'all' || (card as HTMLElement).dataset.category === cat) {
+          card.classList.remove('hidden-by-filter');
+        } else {
+          card.classList.add('hidden-by-filter');
+        }
+      });
+    });
+  });
+</script>
