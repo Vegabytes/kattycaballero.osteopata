@@ -18,6 +18,14 @@ const personSchema = {
   },
   "image": "https://katycaballeroosteopata.com/images/katy-trabajando.webp",
   "url": "https://katycaballeroosteopata.com/sobre-mi",
+  "description": "Osteópata y masajista profesional con más de 12 años de experiencia en terapias manuales. Especialista en osteopatía estructural, visceral y sacrocraneal, masaje deportivo y masaje tradicional tailandés en Alpedrete, Sierra Noroeste de Madrid.",
+  "hasCredential": [
+    { "@type": "EducationalOccupationalCredential", "credentialCategory": "Professional certification", "name": "Osteopatía Estructural, Visceral y Craneal" },
+    { "@type": "EducationalOccupationalCredential", "credentialCategory": "Professional certification", "name": "Quiromasaje Profesional" },
+    { "@type": "EducationalOccupationalCredential", "credentialCategory": "Professional certification", "name": "Masaje Deportivo" },
+    { "@type": "EducationalOccupationalCredential", "credentialCategory": "Professional certification", "name": "Masaje Tradicional Tailandés - Yomana Thai Concept" },
+    { "@type": "EducationalOccupationalCredential", "credentialCategory": "Professional certification", "name": "Masaje Cráneo Sacral" }
+  ],
   "knowsAbout": [
     "Osteopatía estructural",
     "Osteopatía visceral",
@@ -179,6 +187,22 @@ const personSchema = {
     </div>
   </section>
   
+  <section class="about-services-cta">
+    <div class="container">
+      <h2>Mis servicios</h2>
+      <p>Aplico toda mi formación y experiencia en cada sesión, adaptando las técnicas a lo que tu cuerpo necesita.</p>
+      <div class="about-services-grid">
+        <a href="/servicios/osteopatia-alpedrete" class="about-service-link">Osteopatía estructural, visceral y craneal</a>
+        <a href="/servicios/masaje-deportivo-alpedrete" class="about-service-link">Masaje deportivo</a>
+        <a href="/servicios/masaje-tailandes-alpedrete" class="about-service-link">Masaje tradicional tailandés</a>
+        <a href="/servicios/masaje-corporal-alpedrete" class="about-service-link">Masaje corporal con aceite</a>
+        <a href="/servicios/masaje-pindas-herbales-alpedrete" class="about-service-link">Masaje con pindas herbales</a>
+        <a href="/servicios/masaje-embarazadas-alpedrete" class="about-service-link">Masaje para embarazadas</a>
+      </div>
+      <a href="/servicios" class="btn btn-primary" style="margin-top:30px;">Ver todos los servicios y precios</a>
+    </div>
+  </section>
+
   <Gallery />
   
   <CTASection 
@@ -331,6 +355,48 @@ const personSchema = {
     color: var(--color-text-light);
   }
   
+  .about-services-cta {
+    background: var(--color-cream);
+    text-align: center;
+  }
+
+  .about-services-cta h2 {
+    margin-bottom: 15px;
+  }
+
+  .about-services-cta > .container > p {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    color: var(--color-text-light);
+  }
+
+  .about-services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .about-service-link {
+    display: block;
+    padding: 18px 20px;
+    background: var(--color-warm-white);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.92rem;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .about-service-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 124, 89, 0.12);
+    border-color: var(--color-primary);
+  }
+
   @media (max-width: 1024px) {
     .about-hero-container {
       grid-template-columns: 1fr;
@@ -343,6 +409,16 @@ const personSchema = {
     }
     
     .philosophy-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .about-services-grid {
       grid-template-columns: 1fr;
     }
   }

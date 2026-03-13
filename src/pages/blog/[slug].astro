@@ -58,6 +58,32 @@ const allPosts = await getCollection('blog');
 const relatedPosts = allPosts
   .filter(p => p.slug !== post.slug && p.data.category === post.data.category)
   .slice(0, 2);
+
+// Map blog categories to related service pages
+const categoryServiceMap: Record<string, { url: string; name: string }[]> = {
+  "Osteopatía": [
+    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía estructural, visceral y craneal" },
+  ],
+  "Masajes": [
+    { url: "/servicios/masaje-corporal-alpedrete", name: "Masaje corporal con aceite" },
+    { url: "/servicios/masaje-tailandes-alpedrete", name: "Masaje tradicional tailandés" },
+  ],
+  "Deporte": [
+    { url: "/servicios/masaje-deportivo-alpedrete", name: "Masaje deportivo" },
+    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía para deportistas" },
+  ],
+  "Dolor de espalda": [
+    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía estructural, visceral y craneal" },
+  ],
+  "Bienestar": [
+    { url: "/servicios/masaje-corporal-alpedrete", name: "Masaje corporal con aceite" },
+    { url: "/servicios/masaje-tailandes-alpedrete", name: "Masaje tradicional tailandés" },
+  ],
+  "Consejos": [
+    { url: "/servicios", name: "Ver todos nuestros servicios" },
+  ],
+};
+const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/servicios", name: "Ver todos nuestros servicios" }];
 ---
 
 <Layout
@@ -113,6 +139,18 @@ const relatedPosts = allPosts
         </div>
       </div>
       
+      <nav class="post-services" aria-label="Servicios relacionados">
+        <h3>Servicios relacionados</h3>
+        <div class="post-services-links">
+          {relatedServices.map(service => (
+            <a href={service.url} class="post-service-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              {service.name}
+            </a>
+          ))}
+        </div>
+      </nav>
+
       <div class="post-share">
         <span>Compartir:</span>
         <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${Astro.url}`} target="_blank" rel="noopener noreferrer" aria-label="Compartir en Twitter">
@@ -336,6 +374,50 @@ const relatedPosts = allPosts
     flex-wrap: wrap;
   }
   
+  .post-services {
+    max-width: 750px;
+    margin: 0 auto 40px;
+    padding: 25px 30px;
+    background: #f0f7f0;
+    border-radius: 16px;
+    border-left: 4px solid var(--color-primary);
+  }
+
+  .post-services h3 {
+    font-size: 1rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 12px;
+  }
+
+  .post-services-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .post-service-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: var(--transition);
+  }
+
+  .post-service-link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  .post-service-link svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--color-primary);
+    flex-shrink: 0;
+  }
+
   .post-share {
     max-width: 750px;
     margin: 0 auto 60px;

@@ -1,7 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import CTASection from '../../components/CTASection.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 import { getServiceBySlug } from '../../data/services';
+
+const relatedPosts = [
+  { slug: "osteopatia-para-deportistas", title: "Osteopatía para deportistas: prevención y recuperación de lesiones" },
+  { slug: "estiramientos-corredores-montana", title: "Estiramientos para corredores de montaña: cuida tu cuerpo en la sierra" },
+  { slug: "dolor-rodilla-causas-tratamiento-osteopatia", title: "Dolor de rodilla: causas y tratamiento con osteopatía" },
+];
 
 const service = getServiceBySlug('masaje-deportivo-alpedrete')!;
 
@@ -130,6 +137,8 @@ const breadcrumbSchema = [
       </div>
     </div>
   </section>
+
+  <RelatedPosts posts={relatedPosts} />
 
   <CTASection
     title="¿Necesitas recuperarte después de entrenar?"

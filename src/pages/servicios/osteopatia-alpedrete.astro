@@ -1,7 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import CTASection from '../../components/CTASection.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 import { getServiceBySlug } from '../../data/services';
+
+const relatedPosts = [
+  { slug: "contracturas-cervicales-causas-tratamiento", title: "Contracturas cervicales: causas, síntomas y tratamiento" },
+  { slug: "ciatica-causas-tratamiento-osteopatia", title: "Ciática: causas, síntomas y cómo la osteopatía puede ayudarte" },
+  { slug: "hernia-discal-osteopatia-tratamiento", title: "Hernia discal: qué es y cómo puede ayudarte la osteopatía" },
+];
 
 const service = getServiceBySlug('osteopatia-alpedrete')!;
 
@@ -130,6 +137,8 @@ const breadcrumbSchema = [
       </div>
     </div>
   </section>
+
+  <RelatedPosts posts={relatedPosts} />
 
   <CTASection
     title="¿Quieres probar la osteopatía?"

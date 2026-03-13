@@ -1,7 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import CTASection from '../../components/CTASection.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 import { getServiceBySlug } from '../../data/services';
+
+const relatedPosts = [
+  { slug: "beneficios-masaje-terapeutico", title: "Por qué deberías incluir el masaje terapéutico en tu rutina" },
+  { slug: "estres-tension-muscular-cuerpo", title: "Cómo el estrés afecta a tu cuerpo y genera tensión muscular" },
+  { slug: "masaje-tailandes-beneficios", title: "Masaje tailandés: qué es, beneficios y para quién está indicado" },
+];
 
 const service = getServiceBySlug('masaje-pindas-herbales-alpedrete')!;
 
@@ -119,6 +126,8 @@ const breadcrumbSchema = [
       </div>
     </div>
   </section>
+
+  <RelatedPosts posts={relatedPosts} />
 
   <CTASection
     title="¿Quieres probar las pindas herbales?"
