@@ -116,15 +116,38 @@ const services = [
                 <span>Acepto la <a href="/politica-privacidad" target="_blank">política de privacidad</a>. Mis datos se usarán solo para gestionar esta cita.</span>
               </label>
 
+              <button class="btn-reservar-web" id="btn-reservar" disabled>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+                Reservar cita
+              </button>
               <button class="btn-whatsapp-send" id="btn-send" disabled>
-                <svg viewBox="0 0 24 24" fill="currentColor">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
-                Confirmar por WhatsApp
+                O confirmar por WhatsApp
               </button>
+              <p class="btn-separator-text">Te confirmaré la cita por WhatsApp o teléfono</p>
             </div>
             <div class="step-nav">
               <button class="btn-back" id="back-to-2">Cambiar fecha</button>
+            </div>
+          </div>
+        </div>
+
+          <!-- Step 4: Confirmation -->
+          <div class="booking-step hidden" id="step-4">
+            <div class="confirmation-screen">
+              <div class="confirmation-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              </div>
+              <h2>Cita reservada</h2>
+              <p class="confirmation-subtitle">Tu solicitud se ha registrado correctamente</p>
+              <div class="confirmation-details" id="confirmation-details"></div>
+              <p class="confirmation-note">Te confirmaré la cita por teléfono o WhatsApp en las próximas horas.</p>
+              <div class="confirmation-actions">
+                <a href="/" class="btn-back-home">Volver al inicio</a>
+                <a href="/reservar" class="btn-otra-cita">Reservar otra cita</a>
+              </div>
             </div>
           </div>
         </div>
@@ -548,13 +571,13 @@ const services = [
     text-decoration: underline;
   }
 
-  .btn-whatsapp-send {
+  .btn-reservar-web {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     width: 100%;
-    background: #25D366;
+    background: var(--color-primary-dark);
     color: white;
     padding: 16px 28px;
     border-radius: 60px;
@@ -564,15 +587,132 @@ const services = [
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.35);
+    box-shadow: 0 8px 30px rgba(74, 101, 72, 0.35);
+  }
+  .btn-reservar-web:hover:not(:disabled) {
+    background: #3a5338;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(74, 101, 72, 0.45);
+  }
+  .btn-reservar-web:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-reservar-web svg { width: 22px; height: 22px; }
+
+  .btn-whatsapp-send {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    background: transparent;
+    color: #25D366;
+    padding: 14px 28px;
+    border-radius: 60px;
+    border: 2px solid #25D366;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 10px;
   }
   .btn-whatsapp-send:hover:not(:disabled) {
-    background: #20bd5a;
+    background: #25D366;
+    color: white;
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(37, 211, 102, 0.45);
   }
-  .btn-whatsapp-send:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-whatsapp-send svg { width: 22px; height: 22px; }
+  .btn-whatsapp-send:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-whatsapp-send svg { width: 20px; height: 20px; }
+
+  .btn-separator-text {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-top: 12px;
+  }
+
+  /* Confirmation screen */
+  .confirmation-screen {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px 0;
+  }
+  .confirmation-icon {
+    margin-bottom: 20px;
+  }
+  .confirmation-icon svg {
+    width: 72px;
+    height: 72px;
+    fill: var(--color-primary);
+  }
+  .confirmation-screen h2 {
+    color: var(--color-primary-dark);
+    margin-bottom: 8px;
+  }
+  .confirmation-subtitle {
+    color: var(--color-text-light);
+    margin-bottom: 24px;
+  }
+  .confirmation-details {
+    background: var(--color-cream);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: left;
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: var(--color-text);
+    border-left: 4px solid var(--color-primary);
+    margin-bottom: 20px;
+  }
+  .confirmation-details strong {
+    color: var(--color-primary-dark);
+  }
+  .confirmation-note {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    margin-bottom: 28px;
+    max-width: none;
+  }
+  .confirmation-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-back-home {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+  .btn-back-home:hover {
+    background: var(--color-primary-dark);
+    color: white;
+  }
+  .btn-otra-cita {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background: transparent;
+    color: var(--color-primary-dark);
+    border: 2px solid var(--color-primary-dark);
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+  .btn-otra-cita:hover {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
 
   .step-nav { text-align: center; margin-top: 20px; }
   .btn-back {
@@ -964,50 +1104,101 @@ const services = [
     const name = (document.getElementById('user-name') as HTMLInputElement).value.trim();
     const phone = (document.getElementById('user-phone') as HTMLInputElement).value.trim();
     const gdpr = (document.getElementById('gdpr-check') as HTMLInputElement).checked;
-    const btn = document.getElementById('btn-send') as HTMLButtonElement;
-    btn.disabled = !name || !phone || !gdpr;
+    const valid = !!(name && phone && gdpr);
+    (document.getElementById('btn-reservar') as HTMLButtonElement).disabled = !valid;
+    (document.getElementById('btn-send') as HTMLButtonElement).disabled = !valid;
   }
 
   document.getElementById('user-name')?.addEventListener('input', validateForm);
   document.getElementById('user-phone')?.addEventListener('input', validateForm);
   document.getElementById('gdpr-check')?.addEventListener('change', validateForm);
 
-  document.getElementById('btn-send')?.addEventListener('click', async () => {
-    if (!state.service || !state.date || !state.time) return;
+  function getBookingData() {
+    if (!state.service || !state.date || !state.time) return null;
     const name = (document.getElementById('user-name') as HTMLInputElement).value.trim();
     const phone = (document.getElementById('user-phone') as HTMLInputElement).value.trim();
     const notes = (document.getElementById('user-notes') as HTMLTextAreaElement).value.trim();
     const dayName = WEEKDAYS_SHORT[state.date.getDay() === 0 ? 6 : state.date.getDay() - 1];
-    const dateStr = `${dayName} ${state.date.getDate()} de ${MONTHS[state.date.getMonth()]} de ${state.date.getFullYear()}`;
+    const dateDisplay = `${dayName} ${state.date.getDate()} de ${MONTHS[state.date.getMonth()]} de ${state.date.getFullYear()}`;
+    const dateISO = `${state.date.getFullYear()}-${String(state.date.getMonth() + 1).padStart(2, '0')}-${String(state.date.getDate()).padStart(2, '0')}`;
+    return { name, phone, notes, dateDisplay, dateISO, time: state.time, service: state.service };
+  }
 
-    let message = `Hola Katy, me gustaría reservar una cita:\n\n`;
-    message += `*Servicio:* ${state.service.name}\n`;
-    message += `*Fecha:* ${dateStr}\n`;
-    message += `*Hora:* ${state.time}\n`;
-    message += `*Nombre:* ${name}\n`;
-    message += `*Teléfono:* ${phone}`;
-    if (notes) message += `\n*Notas:* ${notes}`;
-
-    // Save booking to database
+  async function saveBooking(data: ReturnType<typeof getBookingData>) {
+    if (!data) return false;
     try {
-      const dateStr = `${state.date.getFullYear()}-${String(state.date.getMonth() + 1).padStart(2, '0')}-${String(state.date.getDate()).padStart(2, '0')}`;
-      await fetch('/api/reservar', {
+      const res = await fetch('/api/reservar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nombre: name,
-          telefono: phone,
-          servicio: state.service.name,
-          fecha: dateStr,
-          hora: state.time,
-          duracion: parseInt(state.service.duration) || 60,
-          notas: notes || null,
+          nombre: data.name,
+          telefono: data.phone,
+          servicio: data.service!.name,
+          fecha: data.dateISO,
+          hora: data.time,
+          duracion: parseInt(data.service!.duration) || 60,
+          notas: data.notes || null,
         }),
       });
+      return res.ok;
     } catch (e) {
-      // Don't block WhatsApp if API fails
       console.error('Error saving booking:', e);
+      return false;
     }
+  }
+
+  function showConfirmation(data: ReturnType<typeof getBookingData>) {
+    if (!data) return;
+    const details = document.getElementById('confirmation-details')!;
+    details.innerHTML = `
+      <strong>Servicio:</strong> ${data.service!.name}<br>
+      <strong>Fecha:</strong> ${data.dateDisplay}<br>
+      <strong>Hora:</strong> ${data.time}<br>
+      <strong>Duración:</strong> ${data.service!.duration} · <strong>Precio:</strong> ${data.service!.price}<br>
+      <strong>Nombre:</strong> ${data.name}<br>
+      <strong>Teléfono:</strong> ${data.phone}
+      ${data.notes ? `<br><strong>Notas:</strong> ${data.notes}` : ''}
+    `;
+    // Show step 4
+    document.querySelectorAll('.booking-step').forEach(el => el.classList.add('hidden'));
+    document.getElementById('step-4')?.classList.remove('hidden');
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    document.querySelector('.booking-stepper')?.setAttribute('style', 'display:none;');
+    document.querySelector('.booking-main')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Primary button: Reservar cita (web only)
+  document.getElementById('btn-reservar')?.addEventListener('click', async () => {
+    const data = getBookingData();
+    if (!data) return;
+    const btn = document.getElementById('btn-reservar') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = 'Reservando...';
+    const saved = await saveBooking(data);
+    if (saved) {
+      showConfirmation(data);
+    } else {
+      btn.textContent = 'Error, inténtalo de nuevo';
+      btn.disabled = false;
+      setTimeout(() => { btn.textContent = 'Reservar cita'; validateForm(); }, 3000);
+    }
+  });
+
+  // Secondary button: Confirmar por WhatsApp
+  document.getElementById('btn-send')?.addEventListener('click', async () => {
+    const data = getBookingData();
+    if (!data) return;
+
+    // Save to DB in background
+    saveBooking(data);
+
+    let message = `Hola Katy, me gustaría reservar una cita:\n\n`;
+    message += `*Servicio:* ${data.service!.name}\n`;
+    message += `*Fecha:* ${data.dateDisplay}\n`;
+    message += `*Hora:* ${data.time}\n`;
+    message += `*Nombre:* ${data.name}\n`;
+    message += `*Teléfono:* ${data.phone}`;
+    if (data.notes) message += `\n*Notas:* ${data.notes}`;
 
     window.open(`https://wa.me/34643961065?text=${encodeURIComponent(message)}`, '_blank');
   });
