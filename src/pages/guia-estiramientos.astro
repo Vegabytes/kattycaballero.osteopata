@@ -112,9 +112,29 @@ const zones = [
     ],
   },
 ];
+
+const howToSchemas = zones.map(zone => ({
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": `Estiramientos para ${zone.name.toLowerCase()}`,
+  "description": `Guía de estiramientos para ${zone.name.toLowerCase()} que puedes hacer en casa para aliviar tensiones y prevenir dolores.`,
+  "totalTime": "PT10M",
+  "supply": [{ "@type": "HowToSupply", "name": "Esterilla o superficie cómoda" }],
+  "step": zone.stretches.map((s, i) => ({
+    "@type": "HowToStep",
+    "position": i + 1,
+    "name": s.name,
+    "text": s.description,
+    "url": `https://katycaballeroosteopata.com/guia-estiramientos#${zone.id}`,
+  })),
+}));
 ---
 
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Guía de Estiramientos" }]}>
+
+  {howToSchemas.map(schema => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
 
   <section class="page-header">
     <div class="container">
