@@ -19,13 +19,19 @@ if (Astro.request.method === 'POST') {
   if (!paciente_id || !fecha || !tipo) {
     error = 'Paciente, fecha y tipo son obligatorios';
   } else {
+    let observaciones = (form.get('observaciones') as string) || '';
+    const evolucion = form.get('evolucion') as string;
+    const proximaSesion = form.get('proxima_sesion') as string;
+    if (evolucion) observaciones += `\n[Evolución: ${evolucion}]`;
+    if (proximaSesion) observaciones += `\n[Próxima sesión: ${proximaSesion} días]`;
+
     await crearTratamiento(Astro, {
       paciente_id,
       cita_id: form.get('cita_id') ? Number(form.get('cita_id')) : null,
       fecha,
       tipo,
       zona: form.get('zona') as string,
-      observaciones: form.get('observaciones') as string,
+      observaciones: observaciones.trim(),
     });
     return Astro.redirect(`/admin/pacientes/${paciente_id}`);
   }
@@ -111,7 +117,35 @@ const zonasCorporales = [
 
       <div class="form-group">
         <label for="observaciones">Observaciones</label>
+        <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;">
+          <button type="button" class="btn btn-secondary btn-sm obs-template" data-text="Exploración: \nHallazgos: \nTécnicas aplicadas: \nRecomendaciones: ">Plantilla general</button>
+          <button type="button" class="btn btn-secondary btn-sm obs-template" data-text="Motivo: dolor en zona {zona}\nExploración: movilidad, palpación\nTécnica: \nRespuesta al tratamiento: \nPauta domiciliaria: ">Plantilla osteopatía</button>
+          <button type="button" class="btn btn-secondary btn-sm obs-template" data-text="Zona tratada: \nTensión muscular: leve / moderada / severa\nTécnicas: amasamiento, presiones, fricciones\nObservaciones: \nRecomendaciones: ">Plantilla masaje</button>
+        </div>
         <textarea id="observaciones" name="observaciones" placeholder="Hallazgos, técnicas aplicadas, recomendaciones..." style="min-height:150px;"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="evolucion">Evolución / Resultado</label>
+        <select id="evolucion" name="evolucion">
+          <option value="">Sin valorar</option>
+          <option value="mejoria">Mejoría</option>
+          <option value="sin_cambios">Sin cambios</option>
+          <option value="empeoramiento">Empeoramiento</option>
+          <option value="alta">Alta / Resuelto</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="proxima_sesion">Próxima sesión recomendada</label>
+        <select id="proxima_sesion" name="proxima_sesion">
+          <option value="">No especificar</option>
+          <option value="3">En 3 días</option>
+          <option value="7">En 1 semana</option>
+          <option value="14">En 2 semanas</option>
+          <option value="21">En 3 semanas</option>
+          <option value="30">En 1 mes</option>
+        </select>
       </div>
 
       <div style="display:flex;gap:12px;">
@@ -120,4 +154,16 @@ const zonasCorporales = [
       </div>
     </form>
   </div>
+
+<script>
+  document.querySelectorAll('.obs-template').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const textarea = document.getElementById('observaciones') as HTMLTextAreaElement;
+      const template = (btn as HTMLElement).dataset.text || '';
+      if (textarea.value && !confirm('¿Reemplazar el contenido actual?')) return;
+      textarea.value = template;
+      textarea.focus();
+    });
+  });
+</script>
 </AdminLayout>

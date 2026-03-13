@@ -24,10 +24,10 @@ function formatDate(date: Date): string {
     </div>
     
     <div class="blog-grid">
-      {latestPosts.map(post => (
-        <article class="blog-card">
+      {latestPosts.map((post, index) => (
+        <article class={`blog-card ${index === 0 ? 'blog-card-featured' : ''}`}>
           <a href={`/blog/${post.slug}`} class="blog-card-image-link">
-            <img src={post.data.image} alt={post.data.title} class="blog-card-image" width="400" height="220" loading="lazy" />
+            <img src={post.data.image} alt={post.data.title} class="blog-card-image" width="400" height={index === 0 ? 300 : 220} loading="lazy" />
           </a>
           <div class="blog-card-content">
             <span class="blog-card-tag">{post.data.category}</span>
@@ -144,15 +144,49 @@ function formatDate(date: Date): string {
     margin-top: 50px;
   }
   
+  .blog-card-featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  .blog-card-featured .blog-card-image {
+    height: 100%;
+    min-height: 280px;
+  }
+
+  .blog-card-featured .blog-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .blog-card-featured h3 {
+    font-size: 1.5rem;
+  }
+
   @media (max-width: 1024px) {
     .blog-grid {
       grid-template-columns: repeat(2, 1fr);
     }
+
+    .blog-card-featured {
+      grid-column: 1 / -1;
+    }
   }
-  
+
   @media (max-width: 600px) {
     .blog-grid {
       grid-template-columns: 1fr;
+    }
+
+    .blog-card-featured {
+      grid-template-columns: 1fr;
+    }
+
+    .blog-card-featured .blog-card-image {
+      height: 220px;
+      min-height: auto;
     }
   }
 </style>

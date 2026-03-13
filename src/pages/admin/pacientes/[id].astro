@@ -67,6 +67,17 @@ try {
 const citas = await getCitas(Astro, undefined, id);
 const tratamientos = await getTratamientos(Astro, id);
 
+// Calculate last visit and inactivity
+let ultimaVisita: string | null = null;
+let diasInactivo = 0;
+try {
+  const lastRow = await db.prepare("SELECT MAX(fecha) as ultima FROM citas WHERE paciente_id = ? AND estado = 'completada'").bind(id).first();
+  if (lastRow?.ultima) {
+    ultimaVisita = lastRow.ultima as string;
+    diasInactivo = Math.floor((Date.now() - new Date(ultimaVisita).getTime()) / (1000 * 60 * 60 * 24));
+  }
+} catch { /* ok */ }
+
 // Get notas clínicas and bonos
 let notasClinicas: any[] = [];
 let bonos: any[] = [];
@@ -83,6 +94,15 @@ try {
 
   {mensaje && <div class="alert alert-success">{mensaje}</div>}
   {error && <div class="alert alert-error">{error}</div>}
+
+  <!-- Last visit indicator -->
+  {ultimaVisita && (
+    <div style={`display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:8px;font-size:0.85rem;margin-bottom:12px;${diasInactivo > 90 ? 'background:#fff3e0;color:#e65100;' : diasInactivo > 30 ? 'background:#e3f2fd;color:#1565c0;' : 'background:#e8f5e9;color:#2e7d32;'}`}>
+      <strong>Última visita:</strong> {ultimaVisita}
+      {diasInactivo > 90 && <span> — Inactivo {diasInactivo} días</span>}
+      {diasInactivo > 30 && diasInactivo <= 90 && <span> — Hace {diasInactivo} días</span>}
+    </div>
+  )}
 
   <!-- Contact actions -->
   <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
