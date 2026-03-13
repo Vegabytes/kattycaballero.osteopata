@@ -5,6 +5,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 import { getTratamientos } from '../../../lib/db';
 
 const pacienteId = Astro.url.searchParams.get('paciente');
+const tipoFilter = Astro.url.searchParams.get('tipo') || '';
 let tratamientos: any[] = [];
 let dbError = '';
 
@@ -14,6 +15,14 @@ try {
   dbError = e.message;
   console.error('DB error in tratamientos:', e);
 }
+
+// Get unique types for filter
+const tipos = [...new Set(tratamientos.map(t => t.tipo).filter(Boolean))].sort();
+
+// Apply type filter
+const filteredTratamientos = tipoFilter
+  ? tratamientos.filter(t => t.tipo === tipoFilter)
+  : tratamientos;
 ---
 
 <AdminLayout title="Tratamientos" activeSection="tratamientos">
@@ -24,7 +33,7 @@ try {
     </div>
   )}
   <div class="page-header">
-    <h2>Tratamientos ({tratamientos.length})</h2>
+    <h2>Tratamientos ({filteredTratamientos.length}{tipoFilter ? ` de ${tipoFilter}` : ''})</h2>
     <a href="/admin/tratamientos/nuevo" class="btn btn-primary">+ Nuevo tratamiento</a>
   </div>
 
@@ -34,7 +43,21 @@ try {
     </div>
   )}
 
-  {tratamientos.length === 0 ? (
+  <!-- Filters -->
+  {tratamientos.length > 0 && (
+    <div class="filters-bar">
+      <input type="text" id="search-input" placeholder="Buscar paciente..." class="filter-input" />
+      <select id="tipo-filter" class="filter-select" onchange={`location.href='/admin/tratamientos?tipo='+this.value${pacienteId ? `+'&paciente=${pacienteId}'` : ''}`}>
+        <option value="">Todos los tipos</option>
+        {tipos.map(tipo => (
+          <option value={tipo} selected={tipo === tipoFilter}>{tipo}</option>
+        ))}
+      </select>
+      {tipoFilter && <a href={`/admin/tratamientos${pacienteId ? `?paciente=${pacienteId}` : ''}`} class="btn btn-sm">Limpiar filtro</a>}
+    </div>
+  )}
+
+  {filteredTratamientos.length === 0 ? (
     <div class="card empty-state">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15a2.25 2.25 0 0 1 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" /></svg>
       <p>Sin tratamientos registrados</p>
@@ -53,19 +76,24 @@ try {
               <th>Observaciones</th>
             </tr>
           </thead>
-          <tbody>
-            {tratamientos.map((t) => (
-              <tr>
+          <tbody id="tratamientos-tbody">
+            {filteredTratamientos.map((t) => (
+              <tr data-paciente={`${t.paciente_nombre} ${t.paciente_apellidos}`.toLowerCase()}>
                 <td>{t.fecha}</td>
                 <td>
                   <a href={`/admin/pacientes/${t.paciente_id}`}>
                     {t.paciente_nombre} {t.paciente_apellidos}
                   </a>
                 </td>
-                <td>{t.tipo}</td>
+                <td><span class="badge-tipo">{t.tipo}</span></td>
                 <td>{t.zona || '-'}</td>
-                <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                  {t.observaciones || '-'}
+                <td class="obs-cell">
+                  {t.observaciones ? (
+                    <details class="obs-details">
+                      <summary>{t.observaciones.substring(0, 60)}{t.observaciones.length > 60 ? '...' : ''}</summary>
+                      <p>{t.observaciones}</p>
+                    </details>
+                  ) : '-'}
                 </td>
               </tr>
             ))}
@@ -75,3 +103,87 @@ try {
     </div>
   )}
 </AdminLayout>
+
+<style is:global>
+  .filters-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-input {
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    min-width: 200px;
+  }
+  .filter-select {
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: white;
+    cursor: pointer;
+  }
+  .btn-sm {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    background: #f0f0f0;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #555;
+  }
+  .badge-tipo {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .obs-cell {
+    max-width: 350px;
+  }
+  .obs-details summary {
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #555;
+    list-style: none;
+  }
+  .obs-details summary::-webkit-details-marker { display: none; }
+  .obs-details summary::before {
+    content: '▶ ';
+    font-size: 0.7rem;
+    color: #999;
+  }
+  .obs-details[open] summary::before {
+    content: '▼ ';
+  }
+  .obs-details p {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #333;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 6px;
+  }
+</style>
+
+<script>
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  if (input) {
+    input.addEventListener('input', () => {
+      const q = input.value.toLowerCase();
+      document.querySelectorAll('#tratamientos-tbody tr').forEach(row => {
+        const name = (row as HTMLElement).dataset.paciente || '';
+        (row as HTMLElement).style.display = name.includes(q) ? '' : 'none';
+      });
+    });
+  }
+</script>

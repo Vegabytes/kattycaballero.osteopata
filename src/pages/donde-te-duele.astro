@@ -91,42 +91,42 @@ const faqSchema = {
               </g>
 
               <!-- Interactive zones -->
-              <g class="interactive-zones">
+              <g class="interactive-zones" role="list" aria-label="Zonas del cuerpo interactivas">
                 <!-- Cabeza -->
-                <ellipse class="zone" data-zone="cabeza" cx="150" cy="50" rx="30" ry="38" />
+                <ellipse class="zone" data-zone="cabeza" cx="150" cy="50" rx="30" ry="38" role="listitem" aria-label="Cabeza: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Cuello -->
-                <ellipse class="zone" data-zone="cuello" cx="150" cy="105" rx="18" ry="14" />
+                <ellipse class="zone" data-zone="cuello" cx="150" cy="105" rx="18" ry="14" role="listitem" aria-label="Cuello: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Hombro izquierdo -->
-                <ellipse class="zone" data-zone="hombro-izq" cx="105" cy="130" rx="18" ry="14" />
+                <ellipse class="zone" data-zone="hombro-izq" cx="105" cy="130" rx="18" ry="14" role="listitem" aria-label="Hombro izquierdo: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Hombro derecho -->
-                <ellipse class="zone" data-zone="hombro-der" cx="195" cy="130" rx="18" ry="14" />
+                <ellipse class="zone" data-zone="hombro-der" cx="195" cy="130" rx="18" ry="14" role="listitem" aria-label="Hombro derecho: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Espalda alta / dorsal -->
-                <ellipse class="zone" data-zone="espalda-alta" cx="150" cy="170" rx="38" ry="30" />
+                <ellipse class="zone" data-zone="espalda-alta" cx="150" cy="170" rx="38" ry="30" role="listitem" aria-label="Espalda dorsal: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Brazos (zona central entre ambos brazos) -->
-                <ellipse class="zone" data-zone="brazo" cx="72" cy="230" rx="14" ry="35" />
-                <ellipse class="zone zone-mirror" data-zone="brazo" cx="228" cy="230" rx="14" ry="35" />
+                <ellipse class="zone" data-zone="brazo" cx="72" cy="230" rx="14" ry="35" role="listitem" aria-label="Brazo izquierdo: haz clic para ver molestias y tratamientos" tabindex="0" />
+                <ellipse class="zone zone-mirror" data-zone="brazo" cx="228" cy="230" rx="14" ry="35" role="listitem" aria-label="Brazo derecho: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Lumbar -->
-                <ellipse class="zone" data-zone="lumbar" cx="150" cy="250" rx="35" ry="25" />
+                <ellipse class="zone" data-zone="lumbar" cx="150" cy="250" rx="35" ry="25" role="listitem" aria-label="Zona lumbar: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Cadera -->
-                <ellipse class="zone" data-zone="cadera" cx="150" cy="300" rx="38" ry="18" />
+                <ellipse class="zone" data-zone="cadera" cx="150" cy="300" rx="38" ry="18" role="listitem" aria-label="Cadera: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Rodilla -->
-                <ellipse class="zone" data-zone="rodilla" cx="130" cy="435" rx="14" ry="18" />
-                <ellipse class="zone zone-mirror" data-zone="rodilla" cx="170" cy="435" rx="14" ry="18" />
+                <ellipse class="zone" data-zone="rodilla" cx="130" cy="435" rx="14" ry="18" role="listitem" aria-label="Rodilla izquierda: haz clic para ver molestias y tratamientos" tabindex="0" />
+                <ellipse class="zone zone-mirror" data-zone="rodilla" cx="170" cy="435" rx="14" ry="18" role="listitem" aria-label="Rodilla derecha: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Pies -->
-                <ellipse class="zone" data-zone="pie" cx="116" cy="580" rx="16" ry="16" />
-                <ellipse class="zone zone-mirror" data-zone="pie" cx="184" cy="580" rx="16" ry="16" />
+                <ellipse class="zone" data-zone="pie" cx="116" cy="580" rx="16" ry="16" role="listitem" aria-label="Pie izquierdo: haz clic para ver molestias y tratamientos" tabindex="0" />
+                <ellipse class="zone zone-mirror" data-zone="pie" cx="184" cy="580" rx="16" ry="16" role="listitem" aria-label="Pie derecho: haz clic para ver molestias y tratamientos" tabindex="0" />
 
                 <!-- Embarazo (zona vientre) -->
-                <ellipse class="zone" data-zone="embarazo" cx="150" cy="220" rx="20" ry="20" />
+                <ellipse class="zone" data-zone="embarazo" cx="150" cy="220" rx="20" ry="20" role="listitem" aria-label="Embarazo: haz clic para ver molestias y tratamientos" tabindex="0" />
               </g>
 
               <!-- Zone labels (shown on hover via CSS) -->
@@ -1257,6 +1257,14 @@ const faqSchema = {
     });
 
     // Show labels on hover
+    // Keyboard support (Enter/Space)
+    zone.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+
     zone.addEventListener('mouseenter', function() {
       var zoneId = this.getAttribute('data-zone');
       document.querySelectorAll('.zone-label[data-zone="' + zoneId + '"]').forEach(function(label) {
