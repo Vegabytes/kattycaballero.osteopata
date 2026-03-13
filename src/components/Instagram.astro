@@ -12,8 +12,21 @@ const instagramUrl = `https://www.instagram.com/${instagramUsername}/`;
     </div>
   </div>
 
-  <div class="instagram-feed">
+  <div class="instagram-feed" id="instagram-feed">
     <behold-widget feed-id="DrkcCAEJCQOWOB0TdjnT"></behold-widget>
+    <div class="instagram-fallback" id="instagram-fallback">
+      <div class="instagram-fallback-content">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+        </svg>
+        <p>Visita mi perfil de Instagram para ver consejos, ejercicios y novedades</p>
+        <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          Ver @katycaballero.osteopata
+        </a>
+      </div>
+    </div>
   </div>
 
   <div class="container">
@@ -35,7 +48,20 @@ const instagramUrl = `https://www.instagram.com/${instagramUsername}/`;
     const d = document, s = d.createElement("script");
     s.type = "module";
     s.src = "https://w.behold.so/widget.js";
+    s.onerror = () => {
+      const fallback = d.getElementById('instagram-fallback');
+      if (fallback) fallback.style.display = 'flex';
+    };
     d.head.append(s);
+
+    // If widget doesn't render after 5s, show fallback
+    setTimeout(() => {
+      const widget = d.querySelector('behold-widget');
+      if (widget && widget.shadowRoot === null) {
+        const fallback = d.getElementById('instagram-fallback');
+        if (fallback) fallback.style.display = 'flex';
+      }
+    }, 5000);
   })();
 </script>
 
@@ -70,5 +96,28 @@ const instagramUrl = `https://www.instagram.com/${instagramUsername}/`;
 
   .instagram-cta-wrapper {
     text-align: center;
+  }
+
+  .instagram-fallback {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
+  }
+
+  .instagram-fallback-content {
+    text-align: center;
+    max-width: 400px;
+  }
+
+  .instagram-fallback-content svg {
+    color: var(--color-primary-light);
+    margin-bottom: 16px;
+  }
+
+  .instagram-fallback-content p {
+    color: var(--color-text-light);
+    margin: 0 auto 20px;
+    font-size: 1rem;
   }
 </style>
