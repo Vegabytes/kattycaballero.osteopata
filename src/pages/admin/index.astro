@@ -61,8 +61,30 @@ try {
   const bonosResult = await db.prepare("SELECT COUNT(*) as total FROM bonos WHERE estado = 'activo'").bind().first();
   bonosActivos = (bonosResult as any)?.total || 0;
 } catch (e: any) {
-  // bonos table might not exist yet
   console.error('DB error fetching bonos:', e);
+}
+
+// Próximas citas (próximos 7 días, excluyendo hoy)
+let proximasCitas: any[] = [];
+try {
+  const db = (Astro.locals as any).runtime.env.DB;
+  const manana = new Date();
+  manana.setDate(manana.getDate() + 1);
+  const en7dias = new Date();
+  en7dias.setDate(en7dias.getDate() + 7);
+  const mananaStr = manana.toISOString().split('T')[0];
+  const en7diasStr = en7dias.toISOString().split('T')[0];
+  const proxResult = await db.prepare(
+    `SELECT citas.*, pacientes.nombre, pacientes.apellidos, pacientes.telefono
+     FROM citas
+     LEFT JOIN pacientes ON citas.paciente_id = pacientes.id
+     WHERE citas.fecha BETWEEN ? AND ? AND citas.estado != 'cancelada'
+     ORDER BY citas.fecha ASC, citas.hora ASC
+     LIMIT 10`
+  ).bind(mananaStr, en7diasStr).all();
+  proximasCitas = (proxResult as any)?.results || [];
+} catch (e: any) {
+  console.error('DB error fetching proximas citas:', e);
 }
 ---
 
@@ -145,6 +167,22 @@ try {
     </div>
   </div>
 
+  {stats.totalPacientes === 0 && !dbError && (
+    <div class="card welcome-card">
+      <h2>Bienvenida a Katy Osteopatia</h2>
+      <p>Tu panel de gestion esta listo. Para empezar:</p>
+      <ol>
+        <li><strong>Crea tu primer paciente</strong> con sus datos de contacto</li>
+        <li><strong>Programa una cita</strong> — el precio y duracion se rellenan solos al elegir servicio</li>
+        <li><strong>Registra notas clinicas</strong> despues de cada sesion</li>
+      </ol>
+      <div style="margin-top:16px;display:flex;gap:12px;">
+        <a href="/admin/pacientes/nuevo" class="btn btn-primary">Crear primer paciente</a>
+        <a href="/admin/ajustes" class="btn btn-secondary">Revisar ajustes</a>
+      </div>
+    </div>
+  )}
+
   <!-- Quick Actions -->
   <div class="quick-actions">
     <a href="/admin/pacientes/nuevo" class="quick-action-btn">
@@ -201,6 +239,22 @@ try {
                   <span class={`badge badge-${cita.estado}`}>{cita.estado}</span>
                 </td>
                 <td class="agenda-actions">
+                  {cita.estado !== 'completada' && (
+                    <button
+                      class="btn btn-success btn-sm btn-quick-estado"
+                      data-id={cita.id}
+                      data-estado="completada"
+                      title="Marcar completada"
+                    >Completar</button>
+                  )}
+                  {cita.estado === 'pendiente' && (
+                    <button
+                      class="btn btn-info btn-sm btn-quick-estado"
+                      data-id={cita.id}
+                      data-estado="confirmada"
+                      title="Confirmar cita"
+                    >Confirmar</button>
+                  )}
                   <a href={`/admin/citas/${cita.id}`} class="btn btn-secondary btn-sm">Ver</a>
                   {cita.telefono && (
                     <a
@@ -221,9 +275,94 @@ try {
       </div>
     )}
   </div>
+
+  <!-- Próximas citas -->
+  {proximasCitas.length > 0 && (
+    <div class="card" style="margin-top:24px;">
+      <div class="page-header">
+        <h2>Proximas citas (7 dias)</h2>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Paciente</th>
+              <th>Servicio</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {proximasCitas.map((cita: any) => {
+              const fechaDisplay = new Date(cita.fecha + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+              return (
+                <tr>
+                  <td>{fechaDisplay}</td>
+                  <td><strong>{cita.hora}</strong></td>
+                  <td><a href={`/admin/pacientes/${cita.paciente_id}`}>{cita.nombre} {cita.apellidos}</a></td>
+                  <td>{cita.servicio || '-'}</td>
+                  <td><span class={`badge badge-${cita.estado}`}>{cita.estado}</span></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
 </AdminLayout>
 
+<script>
+  document.querySelectorAll('.btn-quick-estado').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const button = e.currentTarget as HTMLButtonElement;
+      const id = button.dataset.id;
+      const estado = button.dataset.estado;
+      button.disabled = true;
+      button.textContent = '...';
+      try {
+        const res = await fetch('/api/cita-estado', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: Number(id), estado }),
+        });
+        if (res.ok) {
+          window.location.reload();
+        } else {
+          button.textContent = 'Error';
+          button.disabled = false;
+        }
+      } catch {
+        button.textContent = 'Error';
+        button.disabled = false;
+      }
+    });
+  });
+</script>
+
 <style is:global>
+  .welcome-card {
+    background: linear-gradient(135deg, #f0f7f0 0%, #fff 100%);
+    border: 1px solid #c8e6c9;
+    margin-bottom: 24px;
+    padding: 28px;
+  }
+  .welcome-card h2 {
+    color: var(--admin-primary);
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  .welcome-card p {
+    color: #555;
+    margin-bottom: 12px;
+  }
+  .welcome-card ol {
+    margin: 0 0 0 20px;
+    color: #555;
+    line-height: 1.8;
+  }
+
   .quick-actions {
     display: flex;
     gap: 12px;
@@ -293,4 +432,18 @@ try {
     max-width: 16px;
     max-height: 16px;
   }
+
+  .btn-success {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+  }
+  .btn-success:hover { background: #388e3c; }
+
+  .btn-info {
+    background: #2196f3;
+    color: #fff;
+    border: none;
+  }
+  .btn-info:hover { background: #1976d2; }
 </style>

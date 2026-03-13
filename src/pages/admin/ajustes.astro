@@ -95,18 +95,18 @@ try {
   {error && <div class="alert alert-error">{error}</div>}
 
   <p style="color:#666;font-size:0.85rem;margin-bottom:24px;">
-    Configura las automatizaciones de la clínica. Todo está <strong>desactivado</strong> por defecto.
+    Configura las automatizaciones de la consulta. Todo está <strong>desactivado</strong> por defecto.
     Activa solo lo que necesites. Las variables entre llaves como <code>{'{nombre}'}</code> se reemplazan automáticamente.
   </p>
 
   <!-- General -->
   <div class="card settings-section" id="general">
-    <h3 class="settings-title">Datos de la clínica</h3>
+    <h3 class="settings-title">Datos de la consulta</h3>
     <form method="POST">
       <input type="hidden" name="_section" value="general">
       <div class="form-row">
         <div class="form-group">
-          <label for="nombre_clinica">Nombre de la clínica</label>
+          <label for="nombre_clinica">Nombre de la consulta</label>
           <input type="text" id="nombre_clinica" name="nombre_clinica" value={s.nombre_clinica}>
         </div>
         <div class="form-group">
@@ -115,7 +115,7 @@ try {
         </div>
       </div>
       <div class="form-group">
-        <label for="email_clinica">Email de la clínica</label>
+        <label for="email_clinica">Email de la consulta</label>
         <input type="email" id="email_clinica" name="email_clinica" value={s.email_clinica}>
       </div>
       <button type="submit" class="btn btn-primary btn-sm">Guardar</button>

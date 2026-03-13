@@ -46,12 +46,14 @@ if (!cita) {
 const pacientes = await getPacientes(Astro);
 
 const servicios = [
-  'Osteopatía',
-  'Masaje deportivo',
-  'Masaje corporal',
-  'Masaje tailandés',
-  'Masaje embarazadas',
-  'Masaje pindas herbales',
+  { nombre: 'Osteopatía Estructural, Visceral y Sacrocraneal', duracion: 55, precio: 40 },
+  { nombre: 'Masaje Deportivo', duracion: 30, precio: 20 },
+  { nombre: 'Masaje Corporal con Aceite (60 min)', duracion: 60, precio: 40 },
+  { nombre: 'Masaje Corporal con Aceite (90 min)', duracion: 90, precio: 55 },
+  { nombre: 'Masaje Tradicional Tailandés (60 min)', duracion: 60, precio: 45 },
+  { nombre: 'Masaje Tradicional Tailandés (90 min)', duracion: 90, precio: 60 },
+  { nombre: 'Masaje con Pindas Herbales Calientes', duracion: 90, precio: 70 },
+  { nombre: 'Masaje para Embarazadas', duracion: 60, precio: 40 },
 ];
 
 // WhatsApp reminder
@@ -94,8 +96,13 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
           <select id="servicio" name="servicio">
             <option value="">Seleccionar...</option>
             {servicios.map((s) => (
-              <option value={s} selected={s === cita.servicio}>{s}</option>
+              <option value={s.nombre} selected={s.nombre === cita.servicio} data-duracion={s.duracion} data-precio={s.precio}>
+                {s.nombre} — {s.precio}€
+              </option>
             ))}
+            {cita.servicio && !servicios.find(s => s.nombre === cita.servicio) && (
+              <option value={cita.servicio} selected>{cita.servicio}</option>
+            )}
           </select>
         </div>
       </div>
@@ -117,6 +124,7 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
           <select id="duracion" name="duracion">
             <option value="30" selected={cita.duracion === 30}>30 min</option>
             <option value="45" selected={cita.duracion === 45}>45 min</option>
+            <option value="55" selected={cita.duracion === 55}>55 min</option>
             <option value="60" selected={cita.duracion === 60}>60 min</option>
             <option value="90" selected={cita.duracion === 90}>90 min</option>
             <option value="120" selected={cita.duracion === 120}>120 min</option>
@@ -154,6 +162,22 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
     </form>
   </div>
 </AdminLayout>
+
+<script>
+  document.getElementById('servicio')?.addEventListener('change', (e) => {
+    const select = e.target as HTMLSelectElement;
+    const option = select.selectedOptions[0];
+    if (option && option.dataset.duracion) {
+      const durSelect = document.getElementById('duracion') as HTMLSelectElement;
+      const precioInput = document.getElementById('precio') as HTMLInputElement;
+      const dur = option.dataset.duracion;
+      for (const opt of durSelect.options) {
+        if (opt.value === dur) { durSelect.value = dur; break; }
+      }
+      precioInput.value = option.dataset.precio || '';
+    }
+  });
+</script>
 
 <style is:global>
   .btn-whatsapp {

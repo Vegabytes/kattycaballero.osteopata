@@ -34,12 +34,14 @@ if (Astro.request.method === 'POST') {
 }
 
 const servicios = [
-  'Osteopatía',
-  'Masaje deportivo',
-  'Masaje corporal',
-  'Masaje tailandés',
-  'Masaje embarazadas',
-  'Masaje pindas herbales',
+  { nombre: 'Osteopatía Estructural, Visceral y Sacrocraneal', duracion: 55, precio: 40 },
+  { nombre: 'Masaje Deportivo', duracion: 30, precio: 20 },
+  { nombre: 'Masaje Corporal con Aceite (60 min)', duracion: 60, precio: 40 },
+  { nombre: 'Masaje Corporal con Aceite (90 min)', duracion: 90, precio: 55 },
+  { nombre: 'Masaje Tradicional Tailandés (60 min)', duracion: 60, precio: 45 },
+  { nombre: 'Masaje Tradicional Tailandés (90 min)', duracion: 90, precio: 60 },
+  { nombre: 'Masaje con Pindas Herbales Calientes', duracion: 90, precio: 70 },
+  { nombre: 'Masaje para Embarazadas', duracion: 60, precio: 40 },
 ];
 ---
 
@@ -53,21 +55,26 @@ const servicios = [
       <div class="form-row">
         <div class="form-group">
           <label for="paciente_id">Paciente *</label>
-          <select id="paciente_id" name="paciente_id" required>
-            <option value="">Seleccionar paciente...</option>
-            {pacientes.map((p) => (
-              <option value={p.id} selected={String(p.id) === pacienteId}>
-                {p.apellidos}, {p.nombre}
-              </option>
-            ))}
-          </select>
+          <div style="display:flex;gap:8px;">
+            <select id="paciente_id" name="paciente_id" required style="flex:1;">
+              <option value="">Seleccionar paciente...</option>
+              {pacientes.map((p) => (
+                <option value={p.id} selected={String(p.id) === pacienteId}>
+                  {p.apellidos}, {p.nombre}
+                </option>
+              ))}
+            </select>
+            <button type="button" id="btn-nuevo-paciente" class="btn btn-secondary btn-sm" style="white-space:nowrap;" title="Crear paciente nuevo">+ Nuevo</button>
+          </div>
         </div>
         <div class="form-group">
           <label for="servicio">Servicio</label>
           <select id="servicio" name="servicio">
             <option value="">Seleccionar...</option>
             {servicios.map((s) => (
-              <option value={s}>{s}</option>
+              <option value={s.nombre} data-duracion={s.duracion} data-precio={s.precio}>
+                {s.nombre} — {s.precio}€
+              </option>
             ))}
           </select>
         </div>
@@ -90,6 +97,7 @@ const servicios = [
           <select id="duracion" name="duracion">
             <option value="30">30 min</option>
             <option value="45">45 min</option>
+            <option value="55">55 min</option>
             <option value="60" selected>60 min</option>
             <option value="90">90 min</option>
             <option value="120">120 min</option>
@@ -122,4 +130,105 @@ const servicios = [
       </div>
     </form>
   </div>
+<!-- Modal nuevo paciente rápido -->
+<div id="modal-paciente" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:24px;width:90%;max-width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+    <h3 style="margin-bottom:16px;font-size:1rem;">Nuevo paciente rapido</h3>
+    <div class="form-group">
+      <label for="np_nombre">Nombre *</label>
+      <input type="text" id="np_nombre" required>
+    </div>
+    <div class="form-group">
+      <label for="np_apellidos">Apellidos *</label>
+      <input type="text" id="np_apellidos" required>
+    </div>
+    <div class="form-group">
+      <label for="np_telefono">Telefono</label>
+      <input type="tel" id="np_telefono" placeholder="612345678">
+    </div>
+    <div style="display:flex;gap:8px;margin-top:16px;">
+      <button type="button" id="btn-guardar-paciente" class="btn btn-primary btn-sm">Guardar</button>
+      <button type="button" id="btn-cerrar-modal" class="btn btn-secondary btn-sm">Cancelar</button>
+    </div>
+    <div id="modal-error" style="color:#c62828;font-size:0.85rem;margin-top:8px;display:none;"></div>
+  </div>
+</div>
+
+<script>
+  // Auto-fill servicio → duración + precio
+  document.getElementById('servicio')?.addEventListener('change', (e) => {
+    const select = e.target as HTMLSelectElement;
+    const option = select.selectedOptions[0];
+    if (option && option.dataset.duracion) {
+      const durSelect = document.getElementById('duracion') as HTMLSelectElement;
+      const precioInput = document.getElementById('precio') as HTMLInputElement;
+      const dur = option.dataset.duracion;
+      for (const opt of durSelect.options) {
+        if (opt.value === dur) { durSelect.value = dur; break; }
+      }
+      precioInput.value = option.dataset.precio || '';
+    }
+  });
+
+  // Modal nuevo paciente
+  const modal = document.getElementById('modal-paciente')!;
+  document.getElementById('btn-nuevo-paciente')?.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    (document.getElementById('np_nombre') as HTMLInputElement).focus();
+  });
+  document.getElementById('btn-cerrar-modal')?.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+
+  document.getElementById('btn-guardar-paciente')?.addEventListener('click', async () => {
+    const nombre = (document.getElementById('np_nombre') as HTMLInputElement).value.trim();
+    const apellidos = (document.getElementById('np_apellidos') as HTMLInputElement).value.trim();
+    const telefono = (document.getElementById('np_telefono') as HTMLInputElement).value.trim();
+    const errorDiv = document.getElementById('modal-error')!;
+
+    if (!nombre || !apellidos) {
+      errorDiv.textContent = 'Nombre y apellidos son obligatorios';
+      errorDiv.style.display = 'block';
+      return;
+    }
+
+    errorDiv.style.display = 'none';
+    const btn = document.getElementById('btn-guardar-paciente') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = 'Guardando...';
+
+    try {
+      const res = await fetch('/api/paciente-rapido', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, apellidos, telefono }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        const select = document.getElementById('paciente_id') as HTMLSelectElement;
+        const opt = document.createElement('option');
+        opt.value = String(data.id);
+        opt.textContent = `${data.apellidos}, ${data.nombre}`;
+        opt.selected = true;
+        select.appendChild(opt);
+        modal.style.display = 'none';
+        // Reset form
+        (document.getElementById('np_nombre') as HTMLInputElement).value = '';
+        (document.getElementById('np_apellidos') as HTMLInputElement).value = '';
+        (document.getElementById('np_telefono') as HTMLInputElement).value = '';
+      } else {
+        errorDiv.textContent = data.error || 'Error al crear paciente';
+        errorDiv.style.display = 'block';
+      }
+    } catch (e) {
+      errorDiv.textContent = 'Error de conexión';
+      errorDiv.style.display = 'block';
+    }
+    btn.disabled = false;
+    btn.textContent = 'Guardar';
+  });
+</script>
 </AdminLayout>

@@ -74,7 +74,7 @@ function formatFechaCorta(fecha: string) {
   </div>
 
   <!-- Weekly calendar -->
-  <div style="display:grid;grid-template-columns:repeat(7, 1fr);gap:12px;">
+  <div class="week-grid">
     {Object.entries(citasPorDia).map(([fechaDia, citas], i) => {
       const esHoy = fechaDia === hoy;
       return (
@@ -113,9 +113,19 @@ function formatFechaCorta(fecha: string) {
   </div>
 
   <style>
-    @media (max-width: 768px) {
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px) {
       .week-grid {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .week-grid {
+        grid-template-columns: 1fr 1fr;
       }
     }
   </style>
