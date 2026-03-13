@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS citas (
   estado TEXT DEFAULT 'pendiente',
   notas TEXT,
   precio REAL,
+  recordatorio_enviado INTEGER DEFAULT 0,
+  review_enviado INTEGER DEFAULT 0,
   created_at TEXT DEFAULT (datetime('now')),
   FOREIGN KEY (paciente_id) REFERENCES pacientes(id) ON DELETE CASCADE
 );

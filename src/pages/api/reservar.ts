@@ -11,7 +11,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   try {
     const body = await request.json();
-    const { nombre, telefono, servicio, fecha, hora, duracion, notas } = body;
+    const { nombre, telefono, email, servicio, fecha, hora, duracion, notas } = body;
 
     // Validate required fields
     if (!nombre || !telefono || !fecha || !hora) {
@@ -33,6 +33,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     if (existing) {
       pacienteId = existing.id as number;
+      // Update email if patient didn't have one
+      if (email) {
+        await db.prepare('UPDATE pacientes SET email = ? WHERE id = ? AND (email IS NULL OR email = ?)').bind(email, pacienteId, '').run();
+      }
     } else {
       // Split nombre into nombre/apellidos if there's a space
       const parts = nombre.trim().split(/\s+/);
@@ -40,8 +44,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
       const apellidos = parts.length > 1 ? parts.slice(1).join(' ') : '';
 
       const insertResult = await db
-        .prepare('INSERT INTO pacientes (nombre, apellidos, telefono) VALUES (?, ?, ?)')
-        .bind(primerNombre, apellidos, telefono)
+        .prepare('INSERT INTO pacientes (nombre, apellidos, telefono, email) VALUES (?, ?, ?, ?)')
+        .bind(primerNombre, apellidos, telefono, email || null)
         .run();
 
       pacienteId = insertResult.meta.last_row_id;
@@ -55,7 +59,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     // Send notifications (await before responding — Workers closes after Response)
     try {
-      await notifyNewBooking(db, { nombre, telefono, servicio, fecha, hora, duracion: duracion || 60, notas });
+      await notifyNewBooking(db, { nombre, telefono, email, servicio, fecha, hora, duracion: duracion || 60, notas });
     } catch (e) {
       console.error('Notification error:', e);
     }

@@ -1,0 +1,11 @@
+name = "katy-cron"
+main = "cron.ts"
+compatibility_date = "2024-12-01"
+
+[triggers]
+crons = ["0 10 * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "katy-clinica"
+database_id = "209b7ac3-76b3-4293-aa1c-f1de5bf3c573"

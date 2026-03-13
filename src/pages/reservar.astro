@@ -105,6 +105,10 @@ const services = [
                 <input type="tel" id="user-phone" placeholder="Tu teléfono" autocomplete="tel" required aria-required="true">
               </div>
               <div class="form-group">
+                <label for="user-email">Email (opcional, para confirmaci&oacute;n)</label>
+                <input type="email" id="user-email" placeholder="tu@email.com" autocomplete="email">
+              </div>
+              <div class="form-group">
                 <label for="user-notes">Notas (opcional)</label>
                 <textarea id="user-notes" placeholder="¿Algo que deba saber? Ej: primera visita, zona de dolor..." rows="3"></textarea>
               </div>
@@ -1101,11 +1105,12 @@ const services = [
     if (!state.service || !state.date || !state.time) return null;
     const name = (document.getElementById('user-name') as HTMLInputElement).value.trim();
     const phone = (document.getElementById('user-phone') as HTMLInputElement).value.trim();
+    const email = (document.getElementById('user-email') as HTMLInputElement).value.trim();
     const notes = (document.getElementById('user-notes') as HTMLTextAreaElement).value.trim();
     const dayName = WEEKDAYS_SHORT[state.date.getDay() === 0 ? 6 : state.date.getDay() - 1];
     const dateDisplay = `${dayName} ${state.date.getDate()} de ${MONTHS[state.date.getMonth()]} de ${state.date.getFullYear()}`;
     const dateISO = `${state.date.getFullYear()}-${String(state.date.getMonth() + 1).padStart(2, '0')}-${String(state.date.getDate()).padStart(2, '0')}`;
-    return { name, phone, notes, dateDisplay, dateISO, time: state.time, service: state.service };
+    return { name, phone, email, notes, dateDisplay, dateISO, time: state.time, service: state.service };
   }
 
   async function saveBooking(data: ReturnType<typeof getBookingData>) {
@@ -1117,6 +1122,7 @@ const services = [
         body: JSON.stringify({
           nombre: data.name,
           telefono: data.phone,
+          email: data.email || null,
           servicio: data.service!.name,
           fecha: data.dateISO,
           hora: data.time,
