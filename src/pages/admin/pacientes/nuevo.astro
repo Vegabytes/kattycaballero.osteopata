@@ -22,6 +22,10 @@ if (Astro.request.method === 'POST') {
       fecha_nacimiento: form.get('fecha_nacimiento') as string,
       direccion: form.get('direccion') as string,
       notas: form.get('notas') as string,
+      motivo_consulta: form.get('motivo_consulta') as string,
+      antecedentes: form.get('antecedentes') as string,
+      alergias: form.get('alergias') as string,
+      profesion: form.get('profesion') as string,
     });
     return Astro.redirect(`/admin/pacientes/${id}`);
   }
@@ -68,9 +72,31 @@ if (Astro.request.method === 'POST') {
         </div>
       </div>
 
+      <details style="margin-bottom:20px;">
+        <summary style="cursor:pointer;font-weight:600;font-size:0.9rem;color:var(--admin-primary, #5a7c59);margin-bottom:12px;">Informacion clinica (opcional)</summary>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="profesion">Profesion</label>
+            <input type="text" id="profesion" name="profesion" placeholder="Oficinista, deportista...">
+          </div>
+          <div class="form-group">
+            <label for="motivo_consulta">Motivo de consulta</label>
+            <input type="text" id="motivo_consulta" name="motivo_consulta" placeholder="Dolor lumbar, cervical...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="antecedentes">Antecedentes medicos</label>
+          <textarea id="antecedentes" name="antecedentes" placeholder="Cirugias, enfermedades previas..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="alergias">Alergias / Contraindicaciones</label>
+          <textarea id="alergias" name="alergias" placeholder="Alergias a aceites, medicamentos..."></textarea>
+        </div>
+      </details>
+
       <div class="form-group">
-        <label for="notas">Notas</label>
-        <textarea id="notas" name="notas" placeholder="Alergias, condiciones previas, observaciones..."></textarea>
+        <label for="notas">Notas generales</label>
+        <textarea id="notas" name="notas" placeholder="Observaciones adicionales..."></textarea>
       </div>
 
       <div style="display:flex;gap:12px;">

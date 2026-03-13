@@ -120,8 +120,13 @@
     };
   }
 
+  let previouslyFocused: Element | null = null;
+
   function hideBanner() {
     banner?.classList.remove('visible');
+    if (previouslyFocused instanceof HTMLElement) {
+      previouslyFocused.focus();
+    }
   }
 
   const consent = localStorage.getItem('cookie-consent');
@@ -129,7 +134,11 @@
   if (consent === 'accepted') {
     loadGA();
   } else if (consent === null) {
-    setTimeout(() => banner?.classList.add('visible'), 1000);
+    setTimeout(() => {
+      previouslyFocused = document.activeElement;
+      banner?.classList.add('visible');
+      rejectBtn instanceof HTMLElement && rejectBtn.focus();
+    }, 1000);
   }
 
   acceptBtn?.addEventListener('click', () => {
@@ -141,5 +150,26 @@
   rejectBtn?.addEventListener('click', () => {
     localStorage.setItem('cookie-consent', 'rejected');
     hideBanner();
+  });
+
+  // Escape key rejects and closes the banner
+  banner?.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      localStorage.setItem('cookie-consent', 'rejected');
+      hideBanner();
+      return;
+    }
+
+    // Focus trap between reject and accept buttons
+    if (e.key === 'Tab' && rejectBtn && acceptBtn) {
+      if (e.shiftKey && document.activeElement === rejectBtn) {
+        e.preventDefault();
+        (acceptBtn as HTMLElement).focus();
+      } else if (!e.shiftKey && document.activeElement === acceptBtn) {
+        e.preventDefault();
+        (rejectBtn as HTMLElement).focus();
+      }
+    }
   });
 </script>

@@ -138,6 +138,9 @@ const diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
         {celda.citas.length > 0 && celda.esMesActual && (
           <span class="cal-count">{celda.citas.length} {celda.citas.length === 1 ? 'cita' : 'citas'}</span>
         )}
+        {celda.esMesActual && (
+          <span class="cal-add" onclick={`event.preventDefault();event.stopPropagation();window.location='/admin/citas/nueva?fecha=${celda.fecha}'`} title="Nueva cita">+</span>
+        )}
       </a>
     ))}
   </div>
@@ -247,6 +250,23 @@ const diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
     color: var(--admin-text-light);
     font-weight: 500;
   }
+
+  .cal-add {
+    display: none;
+    margin-top: auto;
+    align-self: flex-end;
+    width: 22px;
+    height: 22px;
+    line-height: 20px;
+    text-align: center;
+    background: var(--admin-primary);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .cal-cell:hover .cal-add { display: block; }
 
   @media (max-width: 768px) {
     .cal-grid {

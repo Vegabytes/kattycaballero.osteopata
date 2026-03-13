@@ -99,11 +99,11 @@ export async function getPaciente(Astro: AstroGlobal, id: number): Promise<Pacie
   return await db.prepare('SELECT * FROM pacientes WHERE id = ?').bind(id).first() as Paciente | null;
 }
 
-export async function crearPaciente(Astro: AstroGlobal, data: Partial<Paciente>): Promise<number> {
+export async function crearPaciente(Astro: AstroGlobal, data: Partial<Paciente> & Record<string, any>): Promise<number> {
   const db = getDB(Astro);
   const result = await db
-    .prepare('INSERT INTO pacientes (nombre, apellidos, telefono, email, fecha_nacimiento, direccion, notas) VALUES (?, ?, ?, ?, ?, ?, ?)')
-    .bind(data.nombre, data.apellidos, data.telefono || null, data.email || null, data.fecha_nacimiento || null, data.direccion || null, data.notas || null)
+    .prepare('INSERT INTO pacientes (nombre, apellidos, telefono, email, fecha_nacimiento, direccion, notas, motivo_consulta, antecedentes, alergias, profesion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(data.nombre, data.apellidos, data.telefono || null, data.email || null, data.fecha_nacimiento || null, data.direccion || null, data.notas || null, data.motivo_consulta || null, data.antecedentes || null, data.alergias || null, data.profesion || null)
     .run();
   return result.meta.last_row_id;
 }

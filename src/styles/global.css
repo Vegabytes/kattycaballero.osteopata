@@ -289,19 +289,17 @@ section {
   position: absolute;
   top: -100%;
   left: 16px;
-  background: var(--color-primary);
+  background: #5a7c59;
   color: white;
-  padding: 12px 24px;
+  padding: 8px 16px;
   border-radius: 0 0 8px 8px;
-  font-weight: 600;
   z-index: 10000;
+  font-size: 0.9rem;
   text-decoration: none;
-  transition: top 0.2s ease;
 }
 
 .skip-link:focus {
   top: 0;
-  color: white;
 }
 
 *:focus-visible {

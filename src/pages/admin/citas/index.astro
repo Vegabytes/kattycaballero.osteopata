@@ -88,22 +88,36 @@ function formatFechaCorta(fecha: string) {
             </div>
           </div>
 
+          {(() => {
+            const ingDia = citas.filter((c: any) => c.estado === 'completada' && c.precio).reduce((s: number, c: any) => s + (c.precio || 0), 0);
+            return ingDia > 0 ? <div style="text-align:center;font-size:0.7rem;font-weight:600;color:#4caf50;margin-bottom:4px;">{ingDia.toFixed(0)}&euro;</div> : null;
+          })()}
           {citas.length === 0 ? (
             <p style="text-align:center;color:#ccc;font-size:0.75rem;">Sin citas</p>
           ) : (
             <div style="display:flex;flex-direction:column;gap:8px;">
               {citas.map((c) => (
-                <a href={`/admin/citas/${c.id}`} style={`display:block;padding:8px;border-radius:6px;text-decoration:none;font-size:0.8rem;background:${
+                <div style={`padding:8px;border-radius:6px;font-size:0.8rem;background:${
                   c.estado === 'completada' ? '#e8f5e9' :
                   c.estado === 'cancelada' ? '#fce4ec' :
                   c.estado === 'confirmada' ? '#e3f2fd' : '#fff3e0'
                 };`}>
-                  <strong style="color:#333;">{c.hora}</strong>
-                  <div style="color:#666;font-size:0.7rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                    {c.paciente_nombre} {c.paciente_apellidos}
-                  </div>
-                  {c.servicio && <div style="color:#999;font-size:0.65rem;">{c.servicio}</div>}
-                </a>
+                  <a href={`/admin/citas/${c.id}`} style="text-decoration:none;">
+                    <strong style="color:#333;">{c.hora}</strong>
+                    <div style="color:#666;font-size:0.7rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                      {c.paciente_nombre} {c.paciente_apellidos}
+                    </div>
+                    {c.servicio && <div style="color:#999;font-size:0.65rem;">{c.servicio}</div>}
+                  </a>
+                  {c.estado !== 'completada' && c.estado !== 'cancelada' && (
+                    <button
+                      class="btn-cal-complete"
+                      data-id={c.id}
+                      data-estado="completada"
+                      title="Marcar completada"
+                    >&#10003;</button>
+                  )}
+                </div>
               ))}
             </div>
           )}
@@ -118,6 +132,21 @@ function formatFechaCorta(fecha: string) {
       grid-template-columns: repeat(7, 1fr);
       gap: 12px;
     }
+    .btn-cal-complete {
+      display: block;
+      width: 100%;
+      margin-top: 4px;
+      padding: 2px;
+      background: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .btn-cal-complete:hover { opacity: 1; }
     @media (max-width: 900px) {
       .week-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -129,4 +158,25 @@ function formatFechaCorta(fecha: string) {
       }
     }
   </style>
+
+  <script>
+    document.querySelectorAll('.btn-cal-complete').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const button = e.currentTarget as HTMLButtonElement;
+        const id = button.dataset.id;
+        const estado = button.dataset.estado;
+        button.disabled = true;
+        try {
+          const res = await fetch('/api/cita-estado', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: Number(id), estado }),
+          });
+          if (res.ok) window.location.reload();
+        } catch { /* ignore */ }
+        button.disabled = false;
+      });
+    });
+  </script>
 </AdminLayout>
