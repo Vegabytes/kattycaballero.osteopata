@@ -218,11 +218,11 @@ const faqSchema = {
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.5!2d-4.027!3d40.663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189d3f2e8e9e1%3A0x1!2sCalle%20R%C3%ADo%20Guadarrama%2C%202%2C%2028430%20Alpedrete%2C%20Madrid!5e0!3m2!1ses!2ses!4v1"
             width="100%"
             height="100%"
-            style="border:0;"
+            style="border:0; border-radius: 16px;"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="Ubicación de la consulta de Katy Caballero en Alpedrete">
+            title="Ubicación de la consulta de osteopatía en Alpedrete">
           </iframe>
         </div>
       </div>
@@ -455,14 +455,13 @@ const faqSchema = {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-    min-height: 400px;
+    height: 350px;
   }
 
   .contact-map iframe {
     display: block;
     width: 100%;
-    min-height: 400px;
-    height: 100%;
+    height: 350px;
   }
 
   .faq {
@@ -669,12 +668,72 @@ const faqSchema = {
     }
 
     .contact-map {
-      min-height: 280px;
+      height: 250px;
+    }
+
+    .contact-map iframe {
+      height: 250px;
     }
 
     .faq-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .contact-card {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+
+  :global([data-theme="dark"]) .contact-card:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    border-color: rgba(111, 155, 110, 0.25);
+  }
+
+  :global([data-theme="dark"]) .contact-card--wa {
+    background: rgba(37, 211, 102, 0.1);
+    border-color: rgba(37, 211, 102, 0.2);
+  }
+
+  :global([data-theme="dark"]) .contact-card--wa:hover {
+    background: rgba(37, 211, 102, 0.15);
+  }
+
+  :global([data-theme="dark"]) .contact-form input,
+  :global([data-theme="dark"]) .contact-form textarea {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.2);
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) .contact-form input:focus,
+  :global([data-theme="dark"]) .contact-form textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .contact-form input::placeholder,
+  :global([data-theme="dark"]) .contact-form textarea::placeholder {
+    color: #707070;
+  }
+
+  :global([data-theme="dark"]) .exterior-caption {
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .faq-item {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.1);
+  }
+
+  :global([data-theme="dark"]) .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+
+  :global([data-theme="dark"]) .response-promise {
+    background: rgba(111, 155, 110, 0.12);
   }
 </style>
 

@@ -52,6 +52,17 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script is:inline>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -265,6 +276,28 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
   <WhatsAppButton />
   <CookieBanner />
 
+  <!-- Scroll animation styles -->
+  <style is:global>
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-on-scroll {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+
   <!-- Scroll to top button -->
   <button id="scroll-top" class="scroll-top-btn" aria-label="Volver arriba">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
@@ -304,11 +337,27 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
     const scrollBtn = document.getElementById('scroll-top');
     if (scrollBtn) {
       window.addEventListener('scroll', () => {
-        scrollBtn.classList.toggle('visible', window.scrollY > 500);
+        scrollBtn.classList.toggle('visible', window.scrollY > 400);
       });
       scrollBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+    }
+
+    // Scroll animations with IntersectionObserver
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const animatedElements = document.querySelectorAll('.animate-on-scroll');
+      if (animatedElements.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        animatedElements.forEach((el) => observer.observe(el));
+      }
     }
   </script>
 </body>

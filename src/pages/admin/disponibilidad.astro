@@ -1,0 +1,433 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+// Parse week offset from query params
+const offsetParam = Astro.url.searchParams.get('semana') || '0';
+const weekOffset = parseInt(offsetParam, 10) || 0;
+
+// Calculate the Monday of the target week
+const today = new Date();
+const currentDay = today.getDay(); // 0=Sun, 1=Mon, ...
+const diffToMonday = currentDay === 0 ? -6 : 1 - currentDay;
+const monday = new Date(today);
+monday.setDate(today.getDate() + diffToMonday + weekOffset * 7);
+monday.setHours(0, 0, 0, 0);
+
+// Build array of 6 days (Mon-Sat)
+const diasSemana = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+const diasCortos = ['L', 'M', 'X', 'J', 'V', 'S'];
+const fechasDias: string[] = [];
+for (let i = 0; i < 6; i++) {
+  const d = new Date(monday);
+  d.setDate(monday.getDate() + i);
+  fechasDias.push(d.toISOString().split('T')[0]);
+}
+
+// Time slots: Mon-Fri 9:00-14:00, 16:00-20:00; Sat 9:00-13:00
+const slotsMorning = ['09:00', '10:00', '11:00', '12:00', '13:00'];
+const slotsAfternoon = ['16:00', '17:00', '18:00', '19:00'];
+const slotsSaturday = ['09:00', '10:00', '11:00', '12:00'];
+
+// All unique slots for row rendering
+const allSlots = ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00', '19:00'];
+
+// Determine which slots are valid for each day column (0-4 = Mon-Fri, 5 = Sat)
+function isValidSlot(dayIndex: number, hora: string): boolean {
+  if (dayIndex < 5) {
+    return slotsMorning.includes(hora) || slotsAfternoon.includes(hora);
+  }
+  // Saturday
+  return slotsSaturday.includes(hora);
+}
+
+// Query citas for the week
+let citasSemana: any[] = [];
+try {
+  const db = (Astro.locals as any).runtime.env.DB;
+  const lunesStr = fechasDias[0];
+  const sabadoStr = fechasDias[5];
+  const result = await db.prepare(
+    `SELECT citas.*, pacientes.nombre, pacientes.apellidos
+     FROM citas
+     LEFT JOIN pacientes ON citas.paciente_id = pacientes.id
+     WHERE citas.fecha BETWEEN ? AND ? AND citas.estado != 'cancelada'
+     ORDER BY citas.fecha, citas.hora`
+  ).bind(lunesStr, sabadoStr).all();
+  citasSemana = (result as any)?.results || [];
+} catch (e: any) {
+  console.error('DB error fetching weekly availability:', e);
+}
+
+// Build lookup: { "2026-03-14|10:00": { nombre, apellidos, id, servicio } }
+const ocupados: Record<string, any> = {};
+for (const cita of citasSemana) {
+  const horaKey = cita.hora ? cita.hora.substring(0, 5) : '';
+  const key = `${cita.fecha}|${horaKey}`;
+  ocupados[key] = {
+    nombre: cita.nombre,
+    apellidos: cita.apellidos,
+    id: cita.id,
+    servicio: cita.servicio,
+    paciente_id: cita.paciente_id,
+  };
+  // If duration > 60, mark subsequent slots too
+  if (cita.duracion && cita.duracion > 60) {
+    const [h, m] = horaKey.split(':').map(Number);
+    const extraSlots = Math.ceil(cita.duracion / 60) - 1;
+    for (let s = 1; s <= extraSlots; s++) {
+      const nextH = h + s;
+      const nextKey = `${cita.fecha}|${String(nextH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+      ocupados[nextKey] = {
+        nombre: cita.nombre,
+        apellidos: cita.apellidos,
+        id: cita.id,
+        servicio: `(cont.) ${cita.servicio || ''}`,
+        paciente_id: cita.paciente_id,
+      };
+    }
+  }
+}
+
+// Week display label
+const mondayDisplay = new Date(fechasDias[0] + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+const saturdayDisplay = new Date(fechasDias[5] + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+const weekLabel = `${mondayDisplay} — ${saturdayDisplay}`;
+
+// Is this the current week?
+const todayStr = today.toISOString().split('T')[0];
+const isCurrentWeek = fechasDias.includes(todayStr);
+---
+
+<AdminLayout title="Disponibilidad semanal" activeSection="disponibilidad">
+  <div class="page-header">
+    <h2>Disponibilidad semanal</h2>
+    <div class="week-nav">
+      <a href={`/admin/disponibilidad?semana=${weekOffset - 1}`} class="btn btn-secondary btn-sm">&larr; Anterior</a>
+      {!isCurrentWeek && (
+        <a href="/admin/disponibilidad" class="btn btn-secondary btn-sm">Hoy</a>
+      )}
+      <span class="week-label">{weekLabel}</span>
+      <a href={`/admin/disponibilidad?semana=${weekOffset + 1}`} class="btn btn-secondary btn-sm">Siguiente &rarr;</a>
+    </div>
+  </div>
+
+  <div class="disponibilidad-wrapper">
+    <table class="disponibilidad-table">
+      <thead>
+        <tr>
+          <th class="hora-col">Hora</th>
+          {fechasDias.map((fecha, i) => {
+            const d = new Date(fecha + 'T00:00:00');
+            const dayNum = d.getDate();
+            const isToday = fecha === todayStr;
+            return (
+              <th class={`dia-col ${isToday ? 'dia-hoy' : ''}`}>
+                <div class="dia-header">
+                  <span class="dia-nombre">{diasCortos[i]}</span>
+                  <span class="dia-num">{dayNum}</span>
+                </div>
+              </th>
+            );
+          })}
+        </tr>
+      </thead>
+      <tbody>
+        {allSlots.map((hora) => {
+          // Add separator row before afternoon
+          const showSep = hora === '16:00';
+          return (
+            <>
+              {showSep && (
+                <tr class="separator-row">
+                  <td colspan="7" class="separator-cell">
+                    <div class="separator-line">
+                      <span>Tarde</span>
+                    </div>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td class="hora-cell">{hora}</td>
+                {fechasDias.map((fecha, dayIndex) => {
+                  const valid = isValidSlot(dayIndex, hora);
+                  if (!valid) {
+                    return <td class="slot-cell slot-invalid"></td>;
+                  }
+                  const key = `${fecha}|${hora}`;
+                  const cita = ocupados[key];
+                  if (cita) {
+                    return (
+                      <td class="slot-cell slot-occupied">
+                        <a href={`/admin/citas/${cita.id}`} class="slot-link" title={`${cita.nombre} ${cita.apellidos} — ${cita.servicio || ''}`}>
+                          <span class="slot-patient">{cita.nombre} {cita.apellidos?.charAt(0)}.</span>
+                        </a>
+                      </td>
+                    );
+                  }
+                  return (
+                    <td class="slot-cell slot-free">
+                      <a href={`/admin/citas/nueva?fecha=${fecha}&hora=${hora}`} class="slot-free-link" title="Crear cita">
+                        +
+                      </a>
+                    </td>
+                  );
+                })}
+              </tr>
+            </>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:16px;display:flex;gap:16px;align-items:center;font-size:0.8rem;color:var(--admin-text-light);">
+    <span><span class="legend-dot legend-free"></span> Libre</span>
+    <span><span class="legend-dot legend-occupied"></span> Ocupado</span>
+    <span><span class="legend-dot legend-invalid"></span> Cerrado</span>
+  </div>
+</AdminLayout>
+
+<style is:global>
+  .week-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .week-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--admin-text);
+    padding: 0 8px;
+  }
+
+  .disponibilidad-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    background: var(--admin-card);
+  }
+
+  .disponibilidad-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+
+  .disponibilidad-table thead th {
+    position: sticky;
+    top: 0;
+    background: var(--admin-card);
+    z-index: 2;
+    border-bottom: 2px solid var(--admin-border);
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .hora-col {
+    width: 60px;
+    text-align: center !important;
+  }
+
+  .dia-col {
+    min-width: 90px;
+  }
+
+  .dia-hoy {
+    background: #e8f5e9 !important;
+  }
+
+  .dia-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .dia-nombre {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--admin-text-light);
+    font-weight: 600;
+  }
+
+  .dia-num {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--admin-text);
+  }
+
+  .dia-hoy .dia-num {
+    background: var(--admin-primary);
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hora-cell {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--admin-text-light);
+    padding: 8px 6px;
+    border-right: 1px solid var(--admin-border);
+    background: #fafafa;
+  }
+
+  .slot-cell {
+    padding: 4px;
+    border: 1px solid var(--admin-border);
+    height: 44px;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .slot-free {
+    background: #f0f9f0;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .slot-free:hover {
+    background: #c8e6c9;
+  }
+
+  .slot-free-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: var(--admin-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    opacity: 0.3;
+    transition: opacity 0.15s;
+  }
+
+  .slot-free:hover .slot-free-link {
+    opacity: 1;
+  }
+
+  .slot-occupied {
+    background: #fff3e0;
+  }
+
+  .slot-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: var(--admin-text);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 2px;
+  }
+
+  .slot-link:hover {
+    color: var(--admin-primary);
+  }
+
+  .slot-patient {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    display: block;
+  }
+
+  .slot-invalid {
+    background: #f5f5f5;
+    position: relative;
+  }
+
+  .slot-invalid::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 4px,
+      #e8e8e8 4px,
+      #e8e8e8 5px
+    );
+    opacity: 0.5;
+  }
+
+  .separator-row td {
+    padding: 0;
+    border: none;
+  }
+
+  .separator-cell {
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .separator-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 16px;
+    background: #fafafa;
+    border-top: 1px solid var(--admin-border);
+    border-bottom: 1px solid var(--admin-border);
+  }
+
+  .separator-line span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--admin-text-light);
+    letter-spacing: 0.5px;
+  }
+
+  .legend-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  .legend-free {
+    background: #c8e6c9;
+    border: 1px solid #a5d6a7;
+  }
+
+  .legend-occupied {
+    background: #ffe0b2;
+    border: 1px solid #ffcc80;
+  }
+
+  .legend-invalid {
+    background: #e8e8e8;
+    border: 1px solid #d0d0d0;
+  }
+
+  @media (max-width: 768px) {
+    .week-nav {
+      width: 100%;
+      justify-content: center;
+    }
+    .disponibilidad-table {
+      font-size: 0.8rem;
+    }
+    .dia-col {
+      min-width: 70px;
+    }
+  }
+</style>

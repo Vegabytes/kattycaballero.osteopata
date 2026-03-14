@@ -7,6 +7,10 @@ import { crearCita, getPacientes } from '../../../lib/db';
 const pacientes = await getPacientes(Astro);
 const pacienteId = Astro.url.searchParams.get('paciente') || '';
 const fechaParam = Astro.url.searchParams.get('fecha') || new Date().toISOString().split('T')[0];
+const horaParam = Astro.url.searchParams.get('hora') || '';
+const servicioParam = Astro.url.searchParams.get('servicio') || '';
+const duracionParam = Astro.url.searchParams.get('duracion') || '';
+const precioParam = Astro.url.searchParams.get('precio') || '';
 
 let error = '';
 
@@ -72,10 +76,13 @@ const servicios = [
           <select id="servicio" name="servicio">
             <option value="">Seleccionar...</option>
             {servicios.map((s) => (
-              <option value={s.nombre} data-duracion={s.duracion} data-precio={s.precio}>
+              <option value={s.nombre} selected={s.nombre === servicioParam} data-duracion={s.duracion} data-precio={s.precio}>
                 {s.nombre} — {s.precio}€
               </option>
             ))}
+            {servicioParam && !servicios.find(s => s.nombre === servicioParam) && (
+              <option value={servicioParam} selected>{servicioParam}</option>
+            )}
           </select>
         </div>
       </div>
@@ -87,7 +94,7 @@ const servicios = [
         </div>
         <div class="form-group">
           <label for="hora">Hora *</label>
-          <input type="time" id="hora" name="hora" required>
+          <input type="time" id="hora" name="hora" value={horaParam} required>
         </div>
       </div>
 
@@ -103,17 +110,17 @@ const servicios = [
         <div class="form-group">
           <label for="duracion">Duración (min)</label>
           <select id="duracion" name="duracion">
-            <option value="30">30 min</option>
-            <option value="45">45 min</option>
-            <option value="55">55 min</option>
-            <option value="60" selected>60 min</option>
-            <option value="90">90 min</option>
-            <option value="120">120 min</option>
+            <option value="30" selected={duracionParam === '30'}>30 min</option>
+            <option value="45" selected={duracionParam === '45'}>45 min</option>
+            <option value="55" selected={duracionParam === '55'}>55 min</option>
+            <option value="60" selected={!duracionParam || duracionParam === '60'}>60 min</option>
+            <option value="90" selected={duracionParam === '90'}>90 min</option>
+            <option value="120" selected={duracionParam === '120'}>120 min</option>
           </select>
         </div>
         <div class="form-group">
           <label for="precio">Precio (€)</label>
-          <input type="number" id="precio" name="precio" step="0.01" min="0">
+          <input type="number" id="precio" name="precio" step="0.01" min="0" value={precioParam}>
         </div>
       </div>
 

@@ -119,7 +119,12 @@ const howToSchemas = zones.map(zone => ({
   "name": `Estiramientos para ${zone.name.toLowerCase()}`,
   "description": `Guía de estiramientos para ${zone.name.toLowerCase()} que puedes hacer en casa para aliviar tensiones y prevenir dolores.`,
   "totalTime": "PT10M",
-  "supply": [{ "@type": "HowToSupply", "name": "Esterilla o superficie cómoda" }],
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "EUR",
+    "value": "0"
+  },
+  "tool": [{ "@type": "HowToTool", "name": "Esterilla o superficie cómoda" }],
   "step": zone.stretches.map((s, i) => ({
     "@type": "HowToStep",
     "position": i + 1,

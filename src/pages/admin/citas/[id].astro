@@ -84,6 +84,7 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
     <a href={`/admin/pacientes/${cita.paciente_id}`} class="btn btn-secondary btn-sm">Ver paciente: {cita.paciente_nombre} {cita.paciente_apellidos}</a>
     <a href={`/admin/tratamientos/nuevo?paciente=${cita.paciente_id}&cita=${id}`} class="btn btn-primary btn-sm">+ Registrar tratamiento</a>
     <a href={`/admin/factura/${id}`} target="_blank" class="btn btn-secondary btn-sm">Factura</a>
+    <a href={`/admin/citas/nueva?paciente=${cita.paciente_id}&servicio=${encodeURIComponent(cita.servicio || '')}&duracion=${cita.duracion || 60}&precio=${cita.precio || ''}`} class="btn btn-secondary btn-sm">Duplicar cita</a>
     {whatsappUrl && (
       <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-whatsapp">📱 Recordatorio WhatsApp</a>
     )}
