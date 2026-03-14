@@ -46,6 +46,12 @@ try {
   <meta name="robots" content="noindex, nofollow">
   <title>{title} | Panel Katy</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="manifest" href="/admin-manifest.json">
+  <meta name="theme-color" content="#4a6548">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Panel Katy">
+  <link rel="apple-touch-icon" href="/images/icon-192.png">
   <script is:inline>
     (function() {
       var theme = localStorage.getItem('admin-theme');
@@ -966,6 +972,12 @@ try {
         }
       });
     })();
+
+    // Register PWA service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/admin-sw.js', { scope: '/admin' })
+        .catch(function() {});
+    }
 
     // Notification bell
     (function() {
