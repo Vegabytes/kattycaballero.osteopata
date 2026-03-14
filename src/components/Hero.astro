@@ -15,7 +15,7 @@ const {
 <section class="hero" id="inicio">
   <!-- Video Background -->
   <div class="hero-video-container">
-    <video autoplay muted loop playsinline class="hero-video" id="hero-video" poster="/images/sala-1.webp" preload="none" aria-hidden="true">
+    <video muted loop playsinline class="hero-video hero-video--loading" id="hero-video" poster="/images/sala-1.webp" preload="none" aria-hidden="true">
       <source src="/images/video-hero.mp4" type="video/mp4">
     </video>
     <div class="hero-video-overlay"></div>
@@ -24,7 +24,22 @@ const {
   <script>
     const video = document.getElementById('hero-video') as HTMLVideoElement;
     if (video) {
-      video.playbackRate = 0.2;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.preload = 'auto';
+            video.play().then(() => {
+              video.playbackRate = 0.2;
+              video.classList.remove('hero-video--loading');
+            }).catch(() => {
+              // Autoplay blocked by browser, remove shimmer anyway
+              video.classList.remove('hero-video--loading');
+            });
+            observer.unobserve(video);
+          }
+        });
+      }, { rootMargin: '200px' });
+      observer.observe(video);
     }
   </script>
   
@@ -120,6 +135,22 @@ const {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .hero-video--loading {
+    background: linear-gradient(
+      90deg,
+      rgba(230, 225, 215, 0.4) 0%,
+      rgba(245, 240, 230, 0.6) 50%,
+      rgba(230, 225, 215, 0.4) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
 
   .hero-video-overlay {

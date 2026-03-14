@@ -46,6 +46,14 @@ try {
   <meta name="robots" content="noindex, nofollow">
   <title>{title} | Panel Katy</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script is:inline>
+    (function() {
+      var theme = localStorage.getItem('admin-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-admin-theme', 'dark');
+      }
+    })();
+  </script>
   <style is:global>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -66,6 +74,17 @@ try {
       --admin-danger: #f44336;
       --admin-info: #2196f3;
       --sidebar-width: 250px;
+    }
+
+    [data-admin-theme="dark"] {
+      --admin-bg: #1a1a2e;
+      --admin-card: #2a2a3e;
+      --admin-text: #e0e0e0;
+      --admin-text-light: #b0b0b0;
+      --admin-border: #3a3a4e;
+      --admin-primary: #6b9c6a;
+      --admin-primary-dark: #3a5039;
+      --admin-primary-light: #8abc89;
     }
 
     body {
@@ -720,6 +739,75 @@ try {
         right: -40px;
       }
     }
+
+    /* Dark theme toggle button */
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      color: var(--admin-text-light);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      background: var(--admin-bg);
+      color: var(--admin-text);
+    }
+
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    [data-admin-theme="dark"] .theme-toggle .icon-sun {
+      display: block;
+    }
+
+    [data-admin-theme="dark"] .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    /* Dark theme overrides */
+    [data-admin-theme="dark"] .admin-sidebar {
+      background: #151525;
+    }
+
+    [data-admin-theme="dark"] .form-group input,
+    [data-admin-theme="dark"] .form-group select,
+    [data-admin-theme="dark"] .form-group textarea {
+      background: #1e1e30;
+      color: var(--admin-text);
+      border-color: var(--admin-border);
+    }
+
+    [data-admin-theme="dark"] .topbar-search input {
+      background: #1e1e30;
+      color: var(--admin-text);
+      border-color: var(--admin-border);
+    }
+
+    [data-admin-theme="dark"] tr:hover td {
+      background: #32324a;
+    }
+
+    [data-admin-theme="dark"] .btn-secondary {
+      background: #3a3a4e;
+      color: var(--admin-text);
+    }
+
+    [data-admin-theme="dark"] .btn-secondary:hover {
+      background: #4a4a5e;
+    }
   </style>
 </head>
 <body>
@@ -814,6 +902,10 @@ try {
         <form action="/admin/buscar" method="GET" class="topbar-search">
           <input type="text" name="q" placeholder="Buscar paciente, cita..." aria-label="Buscar">
         </form>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" /></svg>
+        </button>
         <div class="notif-wrapper" id="notif-wrapper">
           <button class="notif-bell" id="notif-bell" type="button" aria-label={`Notificaciones: ${notifCount} pendientes`}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
@@ -857,6 +949,23 @@ try {
       document.getElementById('sidebar').classList.remove('open');
       document.getElementById('overlay').classList.remove('open');
     }
+
+    // Theme toggle
+    (function() {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      btn.addEventListener('click', function() {
+        var html = document.documentElement;
+        var current = html.getAttribute('data-admin-theme');
+        if (current === 'dark') {
+          html.removeAttribute('data-admin-theme');
+          localStorage.setItem('admin-theme', 'light');
+        } else {
+          html.setAttribute('data-admin-theme', 'dark');
+          localStorage.setItem('admin-theme', 'dark');
+        }
+      });
+    })();
 
     // Notification bell
     (function() {

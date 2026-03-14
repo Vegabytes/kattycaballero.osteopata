@@ -216,6 +216,49 @@ if (Astro.request.method === 'POST') {
   }
 }
 
+// Cumpleaños próximos (30 días)
+let cumpleaneros: { id: number; nombre: string; apellidos: string; telefono: string; fecha_nacimiento: string; diasHasta: number; fechaDisplay: string }[] = [];
+try {
+  const db = (Astro.locals as any).runtime.env.DB;
+  const bdayResult = await db.prepare(
+    "SELECT id, nombre, apellidos, telefono, fecha_nacimiento FROM pacientes WHERE fecha_nacimiento IS NOT NULL"
+  ).all();
+  const allPacientes = (bdayResult as any)?.results || [];
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  for (const p of allPacientes) {
+    if (!p.fecha_nacimiento) continue;
+    const parts = p.fecha_nacimiento.split('-');
+    if (parts.length < 3) continue;
+    const birthMonth = parseInt(parts[1], 10) - 1;
+    const birthDay = parseInt(parts[2], 10);
+
+    // Next birthday this year or next
+    let nextBday = new Date(today.getFullYear(), birthMonth, birthDay);
+    if (nextBday < today) {
+      nextBday = new Date(today.getFullYear() + 1, birthMonth, birthDay);
+    }
+    const diffMs = nextBday.getTime() - today.getTime();
+    const diffDays = Math.round(diffMs / 86400000);
+
+    if (diffDays >= 0 && diffDays <= 30) {
+      cumpleaneros.push({
+        id: p.id,
+        nombre: p.nombre,
+        apellidos: p.apellidos,
+        telefono: p.telefono || '',
+        fecha_nacimiento: p.fecha_nacimiento,
+        diasHasta: diffDays,
+        fechaDisplay: nextBday.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' }),
+      });
+    }
+  }
+  cumpleaneros.sort((a, b) => a.diasHasta - b.diasHasta);
+} catch (e: any) {
+  console.error('DB error fetching birthdays:', e);
+}
+
 // Occupancy rate this week (L-V: 8 slots/day, S: 4 = 44 total)
 let citasSemanaOcupacion = 0;
 const slotsSemanales = 44;
@@ -741,6 +784,52 @@ try {
       </button>
     </form>
   </div>
+
+  <!-- Cumpleaños próximos -->
+  <div class="card birthday-card" style="margin-top:24px;">
+    <div class="page-header">
+      <h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="vertical-align:middle;margin-right:6px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0L3 16.5m15-3.379a48.474 48.474 0 0 0-6-.371c-2.032 0-4.034.126-6 .371m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.169c0 .621-.504 1.125-1.125 1.125H4.125A1.125 1.125 0 0 1 3 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 0 1 6 13.12M12 8.25a2.25 2.25 0 0 1-2.248-2.146 4.497 4.497 0 0 0-.652-2.036 2.25 2.25 0 0 1 2.9-3.092 2.25 2.25 0 0 1 2.9 3.092 4.497 4.497 0 0 0-.652 2.036A2.25 2.25 0 0 1 12 8.25Z" /></svg>
+        Cumplea&ntilde;os pr&oacute;ximos
+      </h2>
+    </div>
+    {cumpleaneros.length === 0 ? (
+      <div class="empty-state" style="padding:20px 0;">
+        <p style="font-size:0.85rem;">Sin cumplea&ntilde;os en los pr&oacute;ximos 30 d&iacute;as</p>
+      </div>
+    ) : (
+      <div class="birthday-list">
+        {cumpleaneros.map((p) => {
+          const tel = p.telefono ? p.telefono.replace(/\s+/g, '').replace(/^(\d)/, '34$1') : '';
+          const mensajeFelicitacion = encodeURIComponent(`Hola ${p.nombre}, desde Katy Osteopatia te deseamos un muy feliz cumpleanos! Esperamos que pases un gran dia.`);
+          return (
+            <div class="birthday-item">
+              <div class="birthday-info">
+                <a href={`/admin/pacientes/${p.id}`} class="birthday-name">{p.nombre} {p.apellidos}</a>
+                <span class="birthday-date">{p.fechaDisplay}</span>
+              </div>
+              <div class="birthday-actions">
+                <span class={`badge ${p.diasHasta === 0 ? 'badge-completada' : 'badge-pendiente'}`}>
+                  {p.diasHasta === 0 ? 'Hoy' : `${p.diasHasta} dia${p.diasHasta !== 1 ? 's' : ''}`}
+                </span>
+                {tel && (
+                  <a
+                    href={`https://wa.me/${tel}?text=${mensajeFelicitacion}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-whatsapp btn-sm"
+                    title={`Felicitar a ${p.nombre} por WhatsApp`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  </a>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
+  </div>
 </AdminLayout>
 
 <script>
@@ -1103,5 +1192,62 @@ try {
 
   .bar-group:hover rect {
     opacity: 1 !important;
+  }
+
+  /* Birthday card */
+  .birthday-card .page-header h2 {
+    display: flex;
+    align-items: center;
+    font-size: 1.05rem;
+  }
+
+  .birthday-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .birthday-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: #fffde7;
+    border-radius: 8px;
+    border: 1px solid #fff9c4;
+  }
+
+  .birthday-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .birthday-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--admin-text);
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .birthday-name:hover {
+    color: var(--admin-primary);
+  }
+
+  .birthday-date {
+    font-size: 0.75rem;
+    color: var(--admin-text-light);
+  }
+
+  .birthday-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
   }
 </style>

@@ -1,0 +1,273 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => {
+  const dateA = a.data.date || a.data.pubDate || new Date(0);
+  const dateB = b.data.date || b.data.pubDate || new Date(0);
+  return new Date(dateB).getTime() - new Date(dateA).getTime();
+});
+
+const principales = [
+  { href: '/', label: 'Inicio' },
+  { href: '/sobre-mi', label: 'Sobre Mí' },
+  { href: '/tarifas', label: 'Tarifas' },
+  { href: '/primera-visita', label: 'Primera Visita' },
+  { href: '/bonos', label: 'Bonos' },
+  { href: '/promociones', label: 'Promociones' },
+  { href: '/contacto', label: 'Contacto' },
+  { href: '/opiniones', label: 'Opiniones' },
+  { href: '/preguntas-frecuentes', label: 'Preguntas Frecuentes' },
+  { href: '/reservar', label: 'Reservar Cita' },
+];
+
+const servicios = [
+  { href: '/servicios', label: 'Todos los Servicios' },
+  { href: '/servicios/osteopatia-alpedrete', label: 'Osteopatía' },
+  { href: '/servicios/masaje-deportivo-alpedrete', label: 'Masaje Deportivo' },
+  { href: '/servicios/masaje-tailandes-alpedrete', label: 'Masaje Tailandés' },
+  { href: '/servicios/masaje-corporal-alpedrete', label: 'Masaje Corporal' },
+  { href: '/servicios/masaje-embarazadas-alpedrete', label: 'Masaje Embarazadas' },
+  { href: '/servicios/masaje-pindas-herbales-alpedrete', label: 'Masaje con Pindas Herbales' },
+];
+
+const herramientas = [
+  { href: '/donde-te-duele', label: '¿Dónde te duele?' },
+  { href: '/test-tratamiento', label: '¿Qué tratamiento necesito?' },
+  { href: '/test-postura', label: 'Test de Postura' },
+  { href: '/guia-estiramientos', label: 'Guía de Estiramientos' },
+  { href: '/regalar', label: 'Regalar Sesión' },
+];
+
+const zonas = [
+  { href: '/osteopata-collado-villalba', label: 'Osteopatía en Collado Villalba' },
+  { href: '/osteopata-moralzarzal', label: 'Osteopatía en Moralzarzal' },
+  { href: '/osteopata-galapagar', label: 'Osteopatía en Galapagar' },
+  { href: '/osteopata-guadarrama', label: 'Osteopatía en Guadarrama' },
+  { href: '/osteopata-torrelodones', label: 'Osteopatía en Torrelodones' },
+  { href: '/osteopata-becerril-de-la-sierra', label: 'Osteopatía en Becerril de la Sierra' },
+  { href: '/osteopata-collado-mediano', label: 'Osteopatía en Collado Mediano' },
+  { href: '/osteopata-los-molinos', label: 'Osteopatía en Los Molinos' },
+  { href: '/osteopata-cercedilla', label: 'Osteopatía en Cercedilla' },
+  { href: '/osteopata-el-escorial', label: 'Osteopatía en El Escorial' },
+  { href: '/osteopata-navacerrada', label: 'Osteopatía en Navacerrada' },
+  { href: '/osteopata-las-rozas', label: 'Osteopatía en Las Rozas' },
+  { href: '/osteopata-sierra-noroeste-madrid', label: 'Osteopatía en Sierra Noroeste de Madrid' },
+  { href: '/masaje-collado-mediano', label: 'Masaje en Collado Mediano' },
+  { href: '/masaje-galapagar', label: 'Masaje en Galapagar' },
+];
+
+const legal = [
+  { href: '/politica-cookies', label: 'Política de Cookies' },
+  { href: '/politica-privacidad', label: 'Política de Privacidad' },
+];
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Mapa del sitio' },
+];
+---
+
+<Layout
+  title="Mapa del Sitio | Katy Caballero Osteópata"
+  description="Mapa del sitio de Katy Caballero Osteópata. Encuentra todas las páginas de nuestra web: servicios, blog, herramientas y zonas."
+  breadcrumbs={breadcrumbs}
+  noindex={true}
+>
+  <main class="sitemap-page">
+    <div class="container">
+      <h1>Mapa del Sitio</h1>
+      <p class="sitemap-intro">Encuentra todas las páginas de nuestra web organizadas por secciones.</p>
+
+      <div class="sitemap-grid">
+        <section class="sitemap-section">
+          <h2>Páginas Principales</h2>
+          <ul>
+            {principales.map(item => (
+              <li><a href={item.href}>{item.label}</a></li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="sitemap-section">
+          <h2>Servicios</h2>
+          <ul>
+            {servicios.map(item => (
+              <li><a href={item.href}>{item.label}</a></li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="sitemap-section">
+          <h2>Blog</h2>
+          <ul>
+            <li><a href="/blog">Todos los artículos</a></li>
+            {sortedPosts.map(post => (
+              <li><a href={`/blog/${post.slug}/`}>{post.data.title}</a></li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="sitemap-section">
+          <h2>Herramientas</h2>
+          <ul>
+            {herramientas.map(item => (
+              <li><a href={item.href}>{item.label}</a></li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="sitemap-section">
+          <h2>Zonas</h2>
+          <ul>
+            {zonas.map(item => (
+              <li><a href={item.href}>{item.label}</a></li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="sitemap-section">
+          <h2>Legal</h2>
+          <ul>
+            {legal.map(item => (
+              <li><a href={item.href}>{item.label}</a></li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .sitemap-page {
+    padding: 80px 0 60px;
+    min-height: 60vh;
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .sitemap-intro {
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+    margin-bottom: 50px;
+  }
+
+  .sitemap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .sitemap-section {
+    background: var(--color-bg, #fff);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 30px;
+    transition: var(--transition);
+  }
+
+  .sitemap-section:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  .sitemap-section h2 {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-secondary-light, #e8dcc4);
+  }
+
+  .sitemap-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sitemap-section li {
+    margin-bottom: 10px;
+  }
+
+  .sitemap-section a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    transition: var(--transition);
+    display: inline-block;
+  }
+
+  .sitemap-section a:hover {
+    color: var(--color-primary);
+    transform: translateX(4px);
+  }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .sitemap-section {
+    background: var(--color-bg-dark, #1a1a2e);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global([data-theme="dark"]) .sitemap-section:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .sitemap-section h2 {
+    color: var(--color-primary-light, #7a9c79);
+    border-bottom-color: rgba(196, 163, 90, 0.3);
+  }
+
+  :global([data-theme="dark"]) .sitemap-section a {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  :global([data-theme="dark"]) .sitemap-section a:hover {
+    color: var(--color-secondary);
+  }
+
+  :global([data-theme="dark"]) .sitemap-intro {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  :global([data-theme="dark"]) h1 {
+    color: var(--color-primary-light, #7a9c79);
+  }
+
+  @media (max-width: 1024px) {
+    .sitemap-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sitemap-page {
+      padding: 60px 0 40px;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .sitemap-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .sitemap-section {
+      padding: 24px;
+    }
+  }
+</style>

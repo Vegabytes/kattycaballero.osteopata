@@ -1,14 +1,75 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const allPages = [
+  { url: '/', label: 'Inicio', keywords: ['inicio', 'home', 'principal'] },
+  { url: '/servicios', label: 'Servicios', keywords: ['servicios', 'tratamientos'] },
+  { url: '/servicios/osteopatia-alpedrete', label: 'Osteopatia en Alpedrete', keywords: ['osteopatia', 'osteopata', 'osteo'] },
+  { url: '/servicios/masaje-deportivo-alpedrete', label: 'Masaje deportivo', keywords: ['masaje', 'deportivo'] },
+  { url: '/servicios/masaje-tailandes-alpedrete', label: 'Masaje tailandes', keywords: ['masaje', 'tailandes', 'thai'] },
+  { url: '/servicios/masaje-corporal-alpedrete', label: 'Masaje corporal con aceite', keywords: ['masaje', 'corporal', 'aceite'] },
+  { url: '/servicios/masaje-embarazadas-alpedrete', label: 'Masaje para embarazadas', keywords: ['masaje', 'embarazada', 'prenatal'] },
+  { url: '/servicios/masaje-pindas-herbales-alpedrete', label: 'Masaje con pindas herbales', keywords: ['masaje', 'pindas', 'herbales'] },
+  { url: '/blog', label: 'Blog', keywords: ['blog', 'articulos', 'noticias'] },
+  { url: '/tarifas', label: 'Tarifas y precios', keywords: ['tarifa', 'precio', 'coste', 'cuanto'] },
+  { url: '/reservar', label: 'Reservar cita', keywords: ['reservar', 'reserva', 'cita', 'pedir'] },
+  { url: '/contacto', label: 'Contacto', keywords: ['contacto', 'telefono', 'email', 'direccion'] },
+  { url: '/sobre-mi', label: 'Sobre mi', keywords: ['sobre', 'quien', 'katy', 'bio'] },
+  { url: '/primera-visita', label: 'Primera visita', keywords: ['primera', 'visita', 'consulta'] },
+  { url: '/donde-te-duele', label: 'Donde te duele', keywords: ['dolor', 'duele', 'molestia'] },
+  { url: '/preguntas-frecuentes', label: 'Preguntas frecuentes', keywords: ['pregunta', 'faq', 'duda'] },
+  { url: '/bonos', label: 'Bonos de sesiones', keywords: ['bono', 'pack', 'descuento'] },
+  { url: '/opiniones', label: 'Opiniones', keywords: ['opinion', 'resena', 'valoracion'] },
+  { url: '/regalar', label: 'Regalar un masaje', keywords: ['regalo', 'regalar', 'tarjeta'] },
+  { url: '/promociones', label: 'Promociones', keywords: ['promocion', 'oferta', 'descuento'] },
+  { url: '/guia-estiramientos', label: 'Guia de estiramientos', keywords: ['estiramiento', 'guia', 'ejercicio'] },
+  { url: '/test-postura', label: 'Test de postura', keywords: ['postura', 'test', 'evaluacion'] },
+  { url: '/test-tratamiento', label: 'Test de tratamiento', keywords: ['test', 'tratamiento', 'recomendacion'] },
+  { url: '/osteopata-collado-villalba', label: 'Osteopata en Collado Villalba', keywords: ['villalba', 'collado villalba'] },
+  { url: '/osteopata-moralzarzal', label: 'Osteopata en Moralzarzal', keywords: ['moralzarzal'] },
+  { url: '/osteopata-galapagar', label: 'Osteopata en Galapagar', keywords: ['galapagar'] },
+  { url: '/osteopata-guadarrama', label: 'Osteopata en Guadarrama', keywords: ['guadarrama'] },
+  { url: '/osteopata-torrelodones', label: 'Osteopata en Torrelodones', keywords: ['torrelodones'] },
+  { url: '/osteopata-el-escorial', label: 'Osteopata en El Escorial', keywords: ['escorial'] },
+  { url: '/osteopata-cercedilla', label: 'Osteopata en Cercedilla', keywords: ['cercedilla'] },
+  { url: '/osteopata-navacerrada', label: 'Osteopata en Navacerrada', keywords: ['navacerrada'] },
+  { url: '/osteopata-collado-mediano', label: 'Osteopata en Collado Mediano', keywords: ['collado mediano'] },
+  { url: '/osteopata-becerril-de-la-sierra', label: 'Osteopata en Becerril de la Sierra', keywords: ['becerril'] },
+  { url: '/osteopata-los-molinos', label: 'Osteopata en Los Molinos', keywords: ['molinos'] },
+  { url: '/osteopata-las-rozas', label: 'Osteopata en Las Rozas', keywords: ['rozas'] },
+  { url: '/osteopata-sierra-noroeste-madrid', label: 'Osteopata en la Sierra Noroeste', keywords: ['sierra', 'noroeste'] },
+  { url: '/masaje-collado-mediano', label: 'Masaje en Collado Mediano', keywords: ['masaje', 'collado mediano'] },
+  { url: '/masaje-galapagar', label: 'Masaje en Galapagar', keywords: ['masaje', 'galapagar'] },
+];
 ---
 
-<Layout title="Página no encontrada | Katy Caballero" description="La página que buscas no existe. Encuentra nuestros servicios de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid." noindex={true}>
+<Layout title="Pagina no encontrada | Katy Caballero" description="La pagina que buscas no existe. Encuentra nuestros servicios de osteopatia y masajes en Alpedrete, Sierra Noroeste de Madrid." noindex={true}>
   <section class="error-page">
     <div class="container text-center">
       <div class="error-content">
         <span class="error-code">404</span>
-        <h1>Página no encontrada</h1>
-        <p>Lo siento, la página que buscas no existe o ha sido movida. Pero puedo ayudarte a encontrar lo que necesitas:</p>
+        <h1>Pagina no encontrada</h1>
+        <p>Lo siento, la pagina que buscas no existe o ha sido movida. Pero puedo ayudarte a encontrar lo que necesitas:</p>
+
+        <!-- Smart suggestion based on URL -->
+        <div class="error-suggestion" id="smart-suggestion" style="display:none;">
+          <p class="suggestion-text" id="suggestion-text"></p>
+          <a href="/" class="suggestion-link" id="suggestion-link">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            <span id="suggestion-label"></span>
+            <span class="suggestion-arrow">&rarr;</span>
+          </a>
+        </div>
+
+        <!-- Search input -->
+        <div class="error-search">
+          <label for="page-search" class="sr-only">Buscar pagina</label>
+          <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="page-search" placeholder="Buscar pagina... ej: masaje, osteopatia, tarifas" autocomplete="off">
+          </div>
+        </div>
+
         <div class="error-links">
           <a href="/servicios" class="error-link">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
@@ -24,15 +85,23 @@ import Layout from '../layouts/Layout.astro';
           </a>
         </div>
         <div class="error-popular">
-          <h2>Páginas más visitadas</h2>
-          <div class="popular-links">
-            <a href="/servicios/osteopatia-alpedrete">Osteopatía en Alpedrete</a>
-            <a href="/servicios/masaje-deportivo-alpedrete">Masaje deportivo</a>
-            <a href="/servicios/masaje-tailandes-alpedrete">Masaje tailandés</a>
-            <a href="/tarifas">Tarifas y precios</a>
-            <a href="/primera-visita">Primera visita</a>
-            <a href="/donde-te-duele">¿Dónde te duele?</a>
-            <a href="/preguntas-frecuentes">Preguntas frecuentes</a>
+          <h2>Paginas mas visitadas</h2>
+          <div class="popular-links" id="popular-links">
+            <a href="/servicios/osteopatia-alpedrete" data-keywords="osteopatia osteopata osteo">Osteopatia en Alpedrete</a>
+            <a href="/servicios/masaje-deportivo-alpedrete" data-keywords="masaje deportivo">Masaje deportivo</a>
+            <a href="/servicios/masaje-tailandes-alpedrete" data-keywords="masaje tailandes thai">Masaje tailandes</a>
+            <a href="/tarifas" data-keywords="tarifa precio coste cuanto">Tarifas y precios</a>
+            <a href="/primera-visita" data-keywords="primera visita consulta">Primera visita</a>
+            <a href="/donde-te-duele" data-keywords="dolor duele molestia">Donde te duele</a>
+            <a href="/preguntas-frecuentes" data-keywords="pregunta faq duda">Preguntas frecuentes</a>
+            <a href="/reservar" data-keywords="reservar reserva cita pedir">Reservar cita</a>
+            <a href="/bonos" data-keywords="bono pack descuento">Bonos de sesiones</a>
+            <a href="/opiniones" data-keywords="opinion resena valoracion">Opiniones</a>
+            <a href="/blog" data-keywords="blog articulos noticias">Blog</a>
+            <a href="/sobre-mi" data-keywords="sobre quien katy bio">Sobre mi</a>
+          </div>
+          <div class="no-results" id="no-results" style="display:none;">
+            No se encontraron paginas. Prueba con otro termino o <a href="/contacto">contacta conmigo</a>.
           </div>
         </div>
         <div class="error-buttons">
@@ -43,6 +112,80 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 </Layout>
+
+<script>
+  // Smart URL-based suggestions
+  const path = window.location.pathname.toLowerCase();
+
+  const suggestions: { pattern: RegExp; text: string; url: string; label: string }[] = [
+    { pattern: /masaje/, text: 'Parece que buscas un masaje. Mira nuestros servicios de masaje:', url: '/servicios', label: 'Ver masajes disponibles' },
+    { pattern: /osteo/, text: 'Parece que buscas informacion sobre osteopatia:', url: '/servicios/osteopatia-alpedrete', label: 'Osteopatia en Alpedrete' },
+    { pattern: /blog/, text: 'Buscabas un articulo del blog?', url: '/blog', label: 'Ver todos los articulos' },
+    { pattern: /precio|tarifa/, text: 'Buscas nuestras tarifas y precios?', url: '/tarifas', label: 'Ver tarifas' },
+    { pattern: /reserv|cita/, text: 'Quieres reservar una cita?', url: '/reservar', label: 'Reservar cita ahora' },
+    { pattern: /villalba/, text: 'Buscas osteopata en Collado Villalba?', url: '/osteopata-collado-villalba', label: 'Osteopata en Collado Villalba' },
+    { pattern: /moralzarzal/, text: 'Buscas osteopata en Moralzarzal?', url: '/osteopata-moralzarzal', label: 'Osteopata en Moralzarzal' },
+    { pattern: /galapagar/, text: 'Buscas osteopata en Galapagar?', url: '/osteopata-galapagar', label: 'Osteopata en Galapagar' },
+    { pattern: /guadarrama/, text: 'Buscas osteopata en Guadarrama?', url: '/osteopata-guadarrama', label: 'Osteopata en Guadarrama' },
+    { pattern: /torrelodones/, text: 'Buscas osteopata en Torrelodones?', url: '/osteopata-torrelodones', label: 'Osteopata en Torrelodones' },
+    { pattern: /escorial/, text: 'Buscas osteopata en El Escorial?', url: '/osteopata-el-escorial', label: 'Osteopata en El Escorial' },
+    { pattern: /cercedilla/, text: 'Buscas osteopata en Cercedilla?', url: '/osteopata-cercedilla', label: 'Osteopata en Cercedilla' },
+    { pattern: /navacerrada/, text: 'Buscas osteopata en Navacerrada?', url: '/osteopata-navacerrada', label: 'Osteopata en Navacerrada' },
+    { pattern: /collado.?mediano/, text: 'Buscas osteopata en Collado Mediano?', url: '/osteopata-collado-mediano', label: 'Osteopata en Collado Mediano' },
+    { pattern: /becerril/, text: 'Buscas osteopata en Becerril de la Sierra?', url: '/osteopata-becerril-de-la-sierra', label: 'Osteopata en Becerril de la Sierra' },
+    { pattern: /molinos/, text: 'Buscas osteopata en Los Molinos?', url: '/osteopata-los-molinos', label: 'Osteopata en Los Molinos' },
+    { pattern: /rozas/, text: 'Buscas osteopata en Las Rozas?', url: '/osteopata-las-rozas', label: 'Osteopata en Las Rozas' },
+    { pattern: /sierra/, text: 'Buscas osteopata en la Sierra de Madrid?', url: '/osteopata-sierra-noroeste-madrid', label: 'Osteopata en la Sierra Noroeste' },
+    { pattern: /embaraz/, text: 'Buscas masaje para embarazadas?', url: '/servicios/masaje-embarazadas-alpedrete', label: 'Masaje para embarazadas' },
+    { pattern: /contacto|telefono|email/, text: 'Quieres contactar conmigo?', url: '/contacto', label: 'Ir a contacto' },
+  ];
+
+  const box = document.getElementById('smart-suggestion');
+  const textEl = document.getElementById('suggestion-text');
+  const linkEl = document.getElementById('suggestion-link') as HTMLAnchorElement | null;
+  const labelEl = document.getElementById('suggestion-label');
+
+  for (const s of suggestions) {
+    if (s.pattern.test(path)) {
+      if (box && textEl && linkEl && labelEl) {
+        textEl.textContent = s.text;
+        linkEl.href = s.url;
+        labelEl.textContent = s.label;
+        box.style.display = 'block';
+      }
+      break;
+    }
+  }
+
+  // Search/filter popular links
+  const searchInput = document.getElementById('page-search') as HTMLInputElement | null;
+  const linksContainer = document.getElementById('popular-links');
+  const noResults = document.getElementById('no-results');
+
+  if (searchInput && linksContainer && noResults) {
+    const allLinks = Array.from(linksContainer.querySelectorAll('a'));
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+      if (!query) {
+        allLinks.forEach(link => (link.style.display = ''));
+        noResults.style.display = 'none';
+        return;
+      }
+
+      let visibleCount = 0;
+      allLinks.forEach(link => {
+        const text = link.textContent?.toLowerCase() || '';
+        const keywords = link.getAttribute('data-keywords') || '';
+        const matches = text.includes(query) || keywords.includes(query);
+        link.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
+      });
+
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+  }
+</script>
 
 <style>
   .error-page {
@@ -55,7 +198,7 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .error-content {
-    max-width: 550px;
+    max-width: 600px;
   }
 
   .error-code {
@@ -76,6 +219,115 @@ import Layout from '../layouts/Layout.astro';
   .error-page p {
     margin-bottom: 35px;
     font-size: 1.1rem;
+  }
+
+  /* Smart suggestion */
+  .error-suggestion {
+    background: rgba(90, 124, 89, 0.08);
+    border: 1px solid rgba(90, 124, 89, 0.2);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+
+  .suggestion-text {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin-bottom: 12px !important;
+    font-weight: 500;
+  }
+
+  .suggestion-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .suggestion-link:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+    color: white;
+  }
+
+  .suggestion-link svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+  }
+
+  .suggestion-arrow {
+    opacity: 0.7;
+    transition: transform 0.3s ease;
+  }
+
+  .suggestion-link:hover .suggestion-arrow {
+    transform: translateX(3px);
+    opacity: 1;
+  }
+
+  /* Search */
+  .error-search {
+    margin-bottom: 30px;
+  }
+
+  .search-input-wrapper {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+
+  #page-search {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 1px solid rgba(90, 124, 89, 0.2);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-family: var(--font-body);
+    background: white;
+    color: var(--color-text);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #page-search:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(90, 124, 89, 0.12);
+  }
+
+  #page-search::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .error-links {
@@ -155,6 +407,17 @@ import Layout from '../layouts/Layout.astro';
     color: white;
   }
 
+  .no-results {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    padding: 12px;
+  }
+
+  .no-results a {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
   @media (max-width: 480px) {
     .error-code {
       font-size: 5rem;
@@ -169,7 +432,35 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  /* Dark mode overrides */
+  /* Dark mode */
+  :global([data-theme="dark"]) .error-page {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  }
+
+  :global([data-theme="dark"]) .error-suggestion {
+    background: rgba(111, 155, 110, 0.1);
+    border-color: rgba(111, 155, 110, 0.25);
+  }
+
+  :global([data-theme="dark"]) #page-search {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.2);
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) #page-search:focus {
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) #page-search::placeholder {
+    color: #777;
+  }
+
+  :global([data-theme="dark"]) .search-icon {
+    color: #777;
+  }
+
   :global([data-theme="dark"]) .error-link {
     background: #2a2a3e;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -186,5 +477,9 @@ import Layout from '../layouts/Layout.astro';
 
   :global([data-theme="dark"]) .popular-links a:hover {
     background: var(--color-primary);
+  }
+
+  :global([data-theme="dark"]) .no-results {
+    color: #909090;
   }
 </style>
