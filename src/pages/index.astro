@@ -107,6 +107,21 @@ import Contact from '../components/Contact.astro';
       display: none;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .section-nav-dot {
+    background: rgba(111, 155, 110, 0.25);
+  }
+
+  :global([data-theme="dark"]) .section-nav-dot:hover {
+    background: rgba(111, 155, 110, 0.5);
+  }
+
+  :global([data-theme="dark"]) .section-nav-dot span {
+    background: #2a2a3e;
+    color: #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
 </style>
 
 <script>

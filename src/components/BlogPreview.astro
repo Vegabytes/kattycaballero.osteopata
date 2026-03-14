@@ -189,4 +189,14 @@ function formatDate(date: Date): string {
       min-height: auto;
     }
   }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .blog-card {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .blog-card-meta {
+    border-top-color: rgba(111, 155, 110, 0.12);
+  }
 </style>

@@ -338,4 +338,23 @@ const faqSchema = {
       font-size: 0.9rem;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .faq-nav-link {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .faq-nav-section {
+    border-bottom-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .faq-item {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
 </style>

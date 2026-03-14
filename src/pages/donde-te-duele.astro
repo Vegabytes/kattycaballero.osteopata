@@ -1133,6 +1133,70 @@ const faqSchema = {
       font-size: 0.95rem;
     }
   }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .info-panel {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme="dark"]) .info-zone-tag {
+    background: rgba(212, 183, 106, 0.15);
+    color: var(--color-secondary);
+  }
+
+  :global([data-theme="dark"]) .info-zone-name {
+    color: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .info-list li {
+    background: #1e1e2a;
+  }
+
+  :global([data-theme="dark"]) .zone-card {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .zone-card:hover {
+    border-color: rgba(111, 155, 110, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme="dark"]) .zone-card-header:hover {
+    background: #1e1e2a;
+  }
+
+  :global([data-theme="dark"]) .zone-card.open {
+    border-color: var(--color-primary);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .zone-card-body > div:first-child {
+    border-top-color: rgba(111, 155, 110, 0.1);
+  }
+
+  :global([data-theme="dark"]) .zone-card-info li {
+    background: #1e1e2a;
+  }
+
+  :global([data-theme="dark"]) .placeholder-icon {
+    background: rgba(212, 183, 106, 0.1);
+  }
+
+  :global([data-theme="dark"]) .section-tag {
+    background: rgba(212, 183, 106, 0.15);
+    color: var(--color-secondary);
+  }
+
+  :global([data-theme="dark"]) .btn-outline-body:hover {
+    background: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .btn-primary-body:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  }
 </style>
 
 <script>

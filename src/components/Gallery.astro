@@ -444,6 +444,15 @@ const images = [
       height: 28px;
     }
   }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .gallery-item {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .gallery-features {
+    border-top-color: rgba(111, 155, 110, 0.12);
+  }
 </style>
 
 <script>

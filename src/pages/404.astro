@@ -168,4 +168,23 @@ import Layout from '../layouts/Layout.astro';
       flex-direction: column;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .error-link {
+    background: #2a2a3e;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme="dark"]) .error-link:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .popular-links a {
+    background: #2a2a3e;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme="dark"]) .popular-links a:hover {
+    background: var(--color-primary);
+  }
 </style>

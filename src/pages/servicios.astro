@@ -521,4 +521,18 @@ const servicesSchema = {
       height: 350px;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .comparison-table {
+    background: #2a2a3e;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme="dark"]) .comparison-table td {
+    border-bottom-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .comparison-table tbody tr:hover {
+    background: rgba(111, 155, 110, 0.08);
+  }
 </style>

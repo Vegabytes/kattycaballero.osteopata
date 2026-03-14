@@ -904,4 +904,43 @@ const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/serv
       grid-template-columns: 1fr;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .author-avatar {
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .post-content :global(th),
+  :global([data-theme="dark"]) .post-content :global(td) {
+    border-bottom-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .post-services {
+    background: #2a2a3e;
+    border-left-color: var(--color-primary);
+  }
+
+  :global([data-theme="dark"]) .post-share {
+    border-top-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .toc-item a:hover {
+    background: rgba(111, 155, 110, 0.08);
+  }
+
+  :global([data-theme="dark"]) .toc-item a.active {
+    background: rgba(111, 155, 110, 0.1);
+  }
+
+  :global([data-theme="dark"]) .toc-mobile {
+    border-color: rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .toc-mobile-list .toc-item a:hover {
+    background: rgba(111, 155, 110, 0.08);
+  }
+
+  :global([data-theme="dark"]) .related-card {
+    border: 1px solid rgba(111, 155, 110, 0.12);
+  }
 </style>

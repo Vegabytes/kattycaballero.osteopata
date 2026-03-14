@@ -297,6 +297,17 @@ const pageDescription = "Tarjeta digital de contacto de Katy Caballero, osteópa
       padding: 32px 24px;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .card-container {
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .card-input {
+    background: #1e1e2a;
+    color: #e0e0e0;
+    border-color: rgba(111, 155, 110, 0.15);
+  }
 </style>
 
 <script>

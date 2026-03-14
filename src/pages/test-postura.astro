@@ -1032,6 +1032,30 @@ const faqSchema = {
       padding: 18px;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .quiz-option {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .quiz-option:hover {
+    border-color: rgba(111, 155, 110, 0.3);
+  }
+
+  :global([data-theme="dark"]) .result-card {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .share-copy {
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .improve-card {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
 </style>
 
 <script>

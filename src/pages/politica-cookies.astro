@@ -159,4 +159,10 @@ import Layout from '../layouts/Layout.astro';
       padding: 8px 10px;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .policy-content table td,
+  :global([data-theme="dark"]) .policy-content table th {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
 </style>

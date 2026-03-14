@@ -405,6 +405,49 @@ const reviewSchema = {
       gap: 6px;
     }
   }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .testimonials {
+    background: #1a1a2e;
+  }
+
+  :global([data-theme="dark"]) .testimonials::before {
+    color: rgba(255, 255, 255, 0.02);
+  }
+
+  :global([data-theme="dark"]) .review-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(111, 155, 110, 0.1);
+  }
+
+  :global([data-theme="dark"]) .review-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  :global([data-theme="dark"]) .carousel-btn {
+    background: rgba(111, 155, 110, 0.15);
+    border-color: rgba(111, 155, 110, 0.2);
+  }
+
+  :global([data-theme="dark"]) .carousel-btn:hover {
+    background: rgba(111, 155, 110, 0.25);
+  }
+
+  :global([data-theme="dark"]) .testimonials-cta {
+    border-top-color: rgba(111, 155, 110, 0.1);
+  }
+
+  :global([data-theme="dark"]) .btn-google-review {
+    background: #2a2a3e;
+    color: #e0e0e0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .btn-google-review:hover {
+    background: #3a3a4e;
+    color: #e0e0e0;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
 </style>
 
 <script>

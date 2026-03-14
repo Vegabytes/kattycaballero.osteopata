@@ -433,4 +433,35 @@ const faqSchema = {
       grid-template-columns: 1fr;
     }
   }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .step-card {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .step-card:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .info-card {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .faq-item {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .faq-item summary:hover {
+    color: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .faq-item summary::after {
+    color: var(--color-primary-light);
+  }
 </style>

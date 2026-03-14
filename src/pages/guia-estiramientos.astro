@@ -513,6 +513,30 @@ const howToSchemas = zones.map(zone => ({
       align-self: flex-start;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .zone-tab {
+    border-color: rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .zone-tab:hover {
+    background: #2a2a3e;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme="dark"]) .stretch-card {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .stretch-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .notes-box {
+    background: #2a2a3e;
+    border-color: rgba(196, 163, 90, 0.2);
+  }
 </style>
 
 <script>

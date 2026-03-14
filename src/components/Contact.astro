@@ -228,4 +228,24 @@
       min-height: 250px;
     }
   }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .contact-card {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .contact-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(111, 155, 110, 0.25);
+  }
+
+  :global([data-theme="dark"]) .contact-card--whatsapp {
+    background: rgba(37, 211, 102, 0.1);
+  }
+
+  :global([data-theme="dark"]) .contact-card--whatsapp:hover {
+    background: rgba(37, 211, 102, 0.18);
+    border-color: rgba(37, 211, 102, 0.3);
+  }
 </style>

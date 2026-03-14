@@ -873,6 +873,70 @@ const faqSchema = {
     border-color: #2a2a3e;
   }
 
+  :global([data-theme="dark"]) .pricing-card {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .pricing-card:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    border-color: var(--color-primary);
+  }
+
+  :global([data-theme="dark"]) .faq-item {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .faq-item summary::after {
+    color: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .faq-item summary:hover {
+    color: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .info-card {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .bonos-section {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
+    border-top: 1px solid rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .bono-card {
+    background: rgba(111, 155, 110, 0.08);
+    border-color: rgba(111, 155, 110, 0.2);
+  }
+
+  :global([data-theme="dark"]) .bono-card:hover {
+    background: rgba(111, 155, 110, 0.14);
+  }
+
+  :global([data-theme="dark"]) .bono-card.featured,
+  :global([data-theme="dark"]) .bono-card.best {
+    background: #2a2a3e;
+    color: var(--color-text);
+    border-color: rgba(111, 155, 110, 0.2);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .bono-card.featured:hover,
+  :global([data-theme="dark"]) .bono-card.best:hover {
+    background: #3a3a4e;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  }
+
+  :global([data-theme="dark"]) .bono-card.featured .bono-price,
+  :global([data-theme="dark"]) .bono-card.best .bono-price {
+    color: var(--color-primary-light);
+  }
+
   /* Responsive */
   @media (max-width: 1024px) {
     .pricing-grid {

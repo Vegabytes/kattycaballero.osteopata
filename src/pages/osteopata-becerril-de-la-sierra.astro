@@ -183,4 +183,45 @@ const breadcrumbSchema = [
   .faq-item p { padding: 0 25px 20px; color: var(--color-text-light); line-height: 1.8; font-size: 0.95rem; max-width: none; }
   @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .service-card {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .reason-card {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .town-cta {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
+    border-top: 1px solid rgba(111, 155, 110, 0.15);
+    border-bottom: 1px solid rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-primary {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-primary:hover {
+    background: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-outline {
+    border-color: rgba(111, 155, 110, 0.4);
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-outline:hover {
+    background: rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .faq-item {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
 </style>

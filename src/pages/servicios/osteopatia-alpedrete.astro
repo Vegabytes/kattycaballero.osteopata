@@ -440,4 +440,13 @@ const breadcrumbSchema = [
       grid-template-columns: 1fr;
     }
   }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .faq-item {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
 </style>

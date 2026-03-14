@@ -123,4 +123,31 @@ const {
       padding: 60px 0;
     }
   }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .cta-section {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
+    border-top: 1px solid rgba(111, 155, 110, 0.15);
+    border-bottom: 1px solid rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .btn-cta {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  :global([data-theme="dark"]) .btn-cta:hover {
+    background: var(--color-primary-light);
+    color: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  :global([data-theme="dark"]) .btn-cta-whatsapp {
+    border-color: rgba(111, 155, 110, 0.4);
+  }
+
+  :global([data-theme="dark"]) .btn-cta-whatsapp:hover {
+    background: rgba(111, 155, 110, 0.15);
+    border-color: var(--color-primary-light);
+  }
 </style>

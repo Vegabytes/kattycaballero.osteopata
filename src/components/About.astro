@@ -154,10 +154,15 @@ const features = [
     .about-features {
       grid-template-columns: 1fr;
     }
-    
+
     .about-image {
       max-width: 320px;
       margin: 0 auto;
     }
+  }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .about-image img {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   }
 </style>

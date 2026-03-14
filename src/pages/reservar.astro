@@ -902,6 +902,103 @@ const services = [
       grid-template-columns: 1fr;
     }
   }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .service-option {
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .service-option:hover {
+    background: #3a3a4e;
+    border-color: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .service-option.selected {
+    background: rgba(111, 155, 110, 0.1);
+    border-color: var(--color-primary);
+  }
+
+  :global([data-theme="dark"]) .calendar-wrapper {
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .cal-nav {
+    background: #1e1e2a;
+  }
+
+  :global([data-theme="dark"]) .cal-nav:hover {
+    background: rgba(212, 183, 106, 0.15);
+  }
+
+  :global([data-theme="dark"]) .cal-nav svg {
+    fill: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) .cal-day:hover:not(:disabled):not(.empty) {
+    background: rgba(212, 183, 106, 0.15);
+  }
+
+  :global([data-theme="dark"]) .cal-day:disabled {
+    color: #555;
+  }
+
+  :global([data-theme="dark"]) .time-wrapper {
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .time-slot {
+    background: #1e1e2a;
+    border-color: rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .time-slot:hover {
+    border-color: var(--color-primary-light);
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .form-group input,
+  :global([data-theme="dark"]) .form-group textarea {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.15);
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) .form-group input:focus,
+  :global([data-theme="dark"]) .form-group textarea:focus {
+    border-color: var(--color-primary);
+    background: #1e1e2a;
+  }
+
+  :global([data-theme="dark"]) .booking-summary {
+    background: #2a2a3e;
+    border-left-color: var(--color-primary);
+  }
+
+  :global([data-theme="dark"]) .booking-summary strong {
+    color: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .sidebar-method {
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .sidebar-method:hover {
+    border-color: var(--color-primary-light);
+    background: #3a3a4e;
+  }
+
+  :global([data-theme="dark"]) .sidebar-info {
+    background: #2a2a3e;
+  }
+
+  :global([data-theme="dark"]) .confirmation-details {
+    background: #2a2a3e;
+    border-left-color: var(--color-primary);
+  }
+
+  :global([data-theme="dark"]) .confirmation-details strong {
+    color: var(--color-primary-light);
+  }
 </style>
 
 <script>

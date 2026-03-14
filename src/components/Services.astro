@@ -289,9 +289,34 @@ const services: Service[] = [
     .services-grid {
       grid-template-columns: 1fr;
     }
-    
+
     .service-card {
       padding: 30px 25px;
     }
+  }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .service-card {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .service-card:hover {
+    border-color: rgba(111, 155, 110, 0.25);
+  }
+
+  :global([data-theme="dark"]) .service-image {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .service-meta {
+    border-top-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .services-cta {
+    border-top-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .services-cta p {
+    color: var(--color-primary-light);
   }
 </style>

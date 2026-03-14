@@ -427,4 +427,37 @@ const personSchema = {
       grid-template-columns: 1fr;
     }
   }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .philosophy-card {
+    background: #2a2a3e;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  :global([data-theme="dark"]) .philosophy-card h3 {
+    color: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .formation-item {
+    border-bottom-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .about-service-link {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.15);
+    color: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .about-service-link:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-color: var(--color-primary);
+  }
+
+  :global([data-theme="dark"]) .about-hero-content h1 {
+    color: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .about-hero-image img {
+    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.4);
+  }
 </style>
