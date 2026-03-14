@@ -373,10 +373,10 @@ const formatFecha = (f: string) => {
     <div class="ficha-header">
       <div>
         <h1>Ficha del Paciente</h1>
-        <div class="clinic-name">Katy Caballero - Osteopatia</div>
+        <div class="clinic-name">Katy Caballero - Osteopatía</div>
       </div>
       <div class="fecha-impresion">
-        Fecha de impresion: {fechaImpresion}
+        Fecha de impresión: {fechaImpresion}
       </div>
     </div>
 
@@ -389,7 +389,7 @@ const formatFecha = (f: string) => {
           <span class="value">{paciente.nombre} {paciente.apellidos}</span>
         </div>
         <div class="info-item">
-          <span class="label">Telefono:</span>
+          <span class="label">Teléfono:</span>
           <span class="value">{paciente.telefono || '-'}</span>
         </div>
         <div class="info-item">
@@ -401,11 +401,11 @@ const formatFecha = (f: string) => {
           <span class="value">{paciente.fecha_nacimiento ? formatFecha(paciente.fecha_nacimiento) : '-'}</span>
         </div>
         <div class="info-item">
-          <span class="label">Direccion:</span>
+          <span class="label">Dirección:</span>
           <span class="value">{paciente.direccion || '-'}</span>
         </div>
         <div class="info-item">
-          <span class="label">Profesion:</span>
+          <span class="label">Profesión:</span>
           <span class="value">{clinico.profesion || '-'}</span>
         </div>
       </div>
@@ -420,7 +420,7 @@ const formatFecha = (f: string) => {
           )}
           {clinico.antecedentes && (
             <div class="clinical-item">
-              <div class="clinical-label">Antecedentes medicos</div>
+              <div class="clinical-label">Antecedentes médicos</div>
               <div class="clinical-value">{clinico.antecedentes}</div>
             </div>
           )}
@@ -446,7 +446,7 @@ const formatFecha = (f: string) => {
               <th>Fecha</th>
               <th>Hora</th>
               <th>Servicio</th>
-              <th>Duracion</th>
+              <th>Duración</th>
               <th>Precio</th>
               <th>Estado</th>
             </tr>
@@ -469,9 +469,9 @@ const formatFecha = (f: string) => {
 
     <!-- Notas clinicas -->
     <div class="section">
-      <div class="section-title">Notas clinicas ({notasClinicas.length})</div>
+      <div class="section-title">Notas clínicas ({notasClinicas.length})</div>
       {notasClinicas.length === 0 ? (
-        <p class="empty-msg">Sin notas clinicas registradas</p>
+        <p class="empty-msg">Sin notas clínicas registradas</p>
       ) : (
         notasClinicas.map((n: any) => (
           <div class="nota-card">
@@ -484,7 +484,7 @@ const formatFecha = (f: string) => {
             )}
             {n.diagnostico && (
               <div class="nota-field">
-                <div class="nota-label">Diagnostico</div>
+                <div class="nota-label">Diagnóstico</div>
                 <div class="nota-text">{n.diagnostico}</div>
               </div>
             )}
@@ -528,7 +528,7 @@ const formatFecha = (f: string) => {
 
     <!-- Footer -->
     <div class="ficha-footer">
-      <p>Katy Caballero - Osteopatia | Documento generado el {fechaImpresion} | Confidencial - Uso exclusivo profesional</p>
+      <p>Katy Caballero - Osteopatía | Documento generado el {fechaImpresion} | Confidencial - Uso exclusivo profesional</p>
     </div>
   </div>
 </body>
