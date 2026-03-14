@@ -319,6 +319,16 @@ const tools = [
     color: rgba(255, 255, 255, 0.5);
   }
   
+  /* Dark mode */
+  :global([data-theme="dark"]) .footer {
+    background: #111122;
+  }
+
+  :global([data-theme="dark"]) .footer-section a:hover,
+  :global([data-theme="dark"]) .footer-legal a:hover {
+    color: var(--color-secondary);
+  }
+
   @media (max-width: 1024px) {
     .footer-grid {
       grid-template-columns: 1fr 1fr;

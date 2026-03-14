@@ -429,6 +429,43 @@ const {
     }
   }
 
+  /* Dark mode */
+  :global([data-theme="dark"]) .hero-video-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(26, 26, 46, 0.95) 0%,
+      rgba(30, 30, 42, 0.93) 50%,
+      rgba(26, 26, 46, 0.95) 100%
+    );
+  }
+
+  :global([data-theme="dark"]) .hero-badge {
+    background: rgba(212, 183, 106, 0.15);
+    border-color: rgba(212, 183, 106, 0.25);
+  }
+
+  :global([data-theme="dark"]) .hero-review {
+    background: rgba(42, 42, 62, 0.9);
+    border-color: rgba(111, 155, 110, 0.2);
+  }
+
+  :global([data-theme="dark"]) .hero-review:hover {
+    border-color: rgba(111, 155, 110, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .hero-stat-label {
+    color: #909090;
+  }
+
+  :global([data-theme="dark"]) .hero-stats {
+    border-top-color: rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .scroll-indicator {
+    color: #909090;
+  }
+
   @media (max-width: 768px) {
     .hero {
       min-height: auto;
