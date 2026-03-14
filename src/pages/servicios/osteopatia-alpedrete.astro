@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import CTASection from '../../components/CTASection.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
+import StickyCtaBar from '../../components/StickyCtaBar.astro';
+import CrossSelling from '../../components/CrossSelling.astro';
 import { getServiceBySlug } from '../../data/services';
 
 const relatedPosts = [
@@ -136,6 +138,8 @@ const breadcrumbSchema = [
     </div>
   </section>
 
+  <CrossSelling currentSlug="osteopatia-alpedrete" />
+
   <section class="service-faq">
     <div class="container">
       <h2>Preguntas frecuentes</h2>
@@ -157,6 +161,8 @@ const breadcrumbSchema = [
     description="Reserva tu primera sesión y descubre cómo la osteopatía puede ayudarte."
     buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20una%20cita%20de%20osteopatía"
   />
+
+  <StickyCtaBar serviceName={service.title} price={service.price} bookingUrl="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20una%20cita%20de%20osteopatía" />
 </Layout>
 
 <style>

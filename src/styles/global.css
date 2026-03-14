@@ -297,7 +297,7 @@ section {
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.02);
   box-shadow: var(--shadow-medium);
 }
 
@@ -474,5 +474,67 @@ section {
     right: 16px;
     width: 40px;
     height: 40px;
+  }
+}
+
+/* ============================================
+   MICRO-INTERACTIONS
+   ============================================ */
+
+/* Buttons: press effect on active */
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Section tags: subtle pulse on hover */
+@keyframes subtlePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.section-tag:hover {
+  animation: subtlePulse 1.2s ease-in-out infinite;
+}
+
+/* Form inputs: glow effect on focus */
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow: 0 0 0 3px rgba(90, 124, 89, 0.2);
+  border-color: var(--color-primary) !important;
+  outline: none;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  box-shadow: 0 0 0 3px rgba(111, 155, 110, 0.25);
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .card:hover {
+    transform: none;
+  }
+
+  .btn:active {
+    transform: none;
+  }
+
+  .section-tag:hover {
+    animation: none;
+  }
+
+  .scroll-top-btn:hover {
+    transform: none;
+  }
+
+  .whatsapp-float:hover {
+    transform: none;
+  }
+
+  .btn-primary:hover {
+    transform: none;
   }
 }

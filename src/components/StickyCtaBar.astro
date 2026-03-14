@@ -1,0 +1,145 @@
+---
+interface Props {
+  serviceName: string;
+  price: string;
+  bookingUrl: string;
+}
+
+const { serviceName, price, bookingUrl } = Astro.props;
+---
+
+<div class="sticky-cta-bar" id="sticky-cta-bar" aria-hidden="true">
+  <div class="sticky-cta-inner">
+    <div class="sticky-cta-info">
+      <span class="sticky-cta-name">{serviceName}</span>
+      <span class="sticky-cta-price">{price}</span>
+    </div>
+    <a href={bookingUrl} class="btn btn-primary sticky-cta-btn" target="_blank" rel="noopener noreferrer">Reservar cita</a>
+  </div>
+</div>
+
+<script>
+  const stickyBar = document.getElementById('sticky-cta-bar');
+  if (stickyBar) {
+    let lastScrollY = 0;
+    let isVisible = false;
+
+    function updateStickyBar() {
+      const scrollY = window.scrollY;
+      const shouldShow = scrollY > 500;
+
+      if (shouldShow && !isVisible) {
+        stickyBar.classList.add('visible');
+        stickyBar.setAttribute('aria-hidden', 'false');
+        isVisible = true;
+      } else if (!shouldShow && isVisible) {
+        stickyBar.classList.remove('visible');
+        stickyBar.setAttribute('aria-hidden', 'true');
+        isVisible = false;
+      }
+
+      lastScrollY = scrollY;
+    }
+
+    window.addEventListener('scroll', updateStickyBar, { passive: true });
+  }
+</script>
+
+<style>
+  .sticky-cta-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-warm-white);
+    border-top: 1px solid rgba(90, 124, 89, 0.15);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 990;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 12px 0;
+  }
+
+  .sticky-cta-bar.visible {
+    transform: translateY(0);
+  }
+
+  .sticky-cta-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .sticky-cta-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .sticky-cta-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sticky-cta-price {
+    background: var(--color-secondary-light);
+    padding: 4px 14px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .sticky-cta-btn {
+    flex-shrink: 0;
+    padding: 10px 28px;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 600px) {
+    .sticky-cta-inner {
+      gap: 10px;
+    }
+
+    .sticky-cta-name {
+      font-size: 0.88rem;
+    }
+
+    .sticky-cta-price {
+      font-size: 0.85rem;
+      padding: 3px 10px;
+    }
+
+    .sticky-cta-btn {
+      padding: 8px 18px;
+      font-size: 0.88rem;
+    }
+  }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .sticky-cta-bar {
+    background: var(--color-bg, #1a1a2e);
+    border-top-color: rgba(111, 155, 110, 0.2);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  :global([data-theme="dark"]) .sticky-cta-name {
+    color: var(--color-text, #e0e0e0);
+  }
+
+  :global([data-theme="dark"]) .sticky-cta-price {
+    background: rgba(196, 163, 90, 0.2);
+    color: var(--color-secondary, #c4a35a);
+  }
+</style>

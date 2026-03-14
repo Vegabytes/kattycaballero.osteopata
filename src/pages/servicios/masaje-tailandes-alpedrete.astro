@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import CTASection from '../../components/CTASection.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
+import StickyCtaBar from '../../components/StickyCtaBar.astro';
+import CrossSelling from '../../components/CrossSelling.astro';
 import { getServiceBySlug } from '../../data/services';
 
 const relatedPosts = [
@@ -123,6 +125,8 @@ const breadcrumbSchema = [
     </div>
   </section>
 
+  <CrossSelling currentSlug="masaje-tailandes-alpedrete" />
+
   <section class="service-faq">
     <div class="container">
       <h2>Preguntas frecuentes</h2>
@@ -144,6 +148,8 @@ const breadcrumbSchema = [
     description="Reserva tu sesión y descubre esta técnica milenaria."
     buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20un%20masaje%20tailandés"
   />
+
+  <StickyCtaBar serviceName={service.title} price={service.price} bookingUrl="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20un%20masaje%20tailandés" />
 </Layout>
 
 <style>

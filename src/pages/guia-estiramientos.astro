@@ -540,7 +540,7 @@ const howToSchemas = zones.map(zone => ({
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('astro:page-load', () => {
     const tabs = document.querySelectorAll('.zone-tab');
     const panels = document.querySelectorAll('.zone-panel');
 

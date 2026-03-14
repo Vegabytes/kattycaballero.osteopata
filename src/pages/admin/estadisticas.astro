@@ -148,6 +148,59 @@ const maxPacientes = pacientesMensuales.length > 0 ? Math.max(...pacientesMensua
 const maxServicio = topServicios.length > 0 ? Math.max(...topServicios.map(s => s.total)) : 1;
 
 const barColors = ['#5a7c59', '#7a9c79', '#c4a35a', '#2196f3', '#ff9800', '#f44336'];
+
+// --- Patient origin (donut chart) ---
+interface OrigenData { origen: string; total: number; }
+let origenes: OrigenData[] = [];
+
+try {
+  const rows = await db.prepare(`
+    SELECT origen, COUNT(*) as total
+    FROM pacientes
+    WHERE origen IS NOT NULL AND origen != ''
+    GROUP BY origen
+    ORDER BY total DESC
+  `).all();
+  origenes = (rows.results || []) as OrigenData[];
+} catch (e: any) {
+  console.error('Stats: error origenes', e);
+}
+
+const origenColors = ['#5a7c59', '#c4a35a', '#2196f3', '#ff9800', '#7a9c79', '#f44336', '#9c27b0', '#00bcd4', '#795548', '#607d8b'];
+const totalOrigenes = origenes.reduce((sum, o) => sum + o.total, 0);
+
+// Compute donut arcs
+function describeArc(cx: number, cy: number, r: number, startAngle: number, endAngle: number): string {
+  const startRad = (startAngle - 90) * Math.PI / 180;
+  const endRad = (endAngle - 90) * Math.PI / 180;
+  const x1 = cx + r * Math.cos(startRad);
+  const y1 = cy + r * Math.sin(startRad);
+  const x2 = cx + r * Math.cos(endRad);
+  const y2 = cy + r * Math.sin(endRad);
+  const largeArc = (endAngle - startAngle) > 180 ? 1 : 0;
+  return `M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2}`;
+}
+
+interface ArcData { path: string; color: string; label: string; total: number; pct: number; }
+let arcs: ArcData[] = [];
+if (totalOrigenes > 0) {
+  let currentAngle = 0;
+  arcs = origenes.map((o, i) => {
+    const pct = o.total / totalOrigenes;
+    const angle = pct * 360;
+    // Avoid exactly 360 degrees (full circle) — cap at 359.99
+    const endAngle = currentAngle + Math.min(angle, 359.99);
+    const path = describeArc(100, 100, 70, currentAngle, endAngle);
+    currentAngle = endAngle;
+    return {
+      path,
+      color: origenColors[i % origenColors.length],
+      label: o.origen,
+      total: o.total,
+      pct: Math.round(pct * 100),
+    };
+  });
+}
 ---
 
 <AdminLayout title="Estadísticas" activeSection="estadisticas">
@@ -295,6 +348,44 @@ const barColors = ['#5a7c59', '#7a9c79', '#c4a35a', '#2196f3', '#ff9800', '#f443
               </div>
             </div>
           ))}
+        </div>
+      )}
+    </div>
+
+    <!-- Patient origin donut chart -->
+    <div class="card chart-card">
+      <h3 class="chart-title">Como nos encuentran</h3>
+      {origenes.length === 0 ? (
+        <p class="chart-empty">Sin datos de origen registrados</p>
+      ) : (
+        <div class="origen-chart-container">
+          <div class="origen-donut">
+            <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+              {arcs.map((arc) => (
+                <path
+                  d={arc.path}
+                  fill="none"
+                  stroke={arc.color}
+                  stroke-width="28"
+                  stroke-linecap="butt"
+                >
+                  <title>{arc.label}: {arc.total} ({arc.pct}%)</title>
+                </path>
+              ))}
+              <text x="100" y="96" text-anchor="middle" fill="#333" font-size="22" font-weight="700">{totalOrigenes}</text>
+              <text x="100" y="116" text-anchor="middle" fill="#888" font-size="11">pacientes</text>
+            </svg>
+          </div>
+          <div class="origen-legend">
+            {arcs.map((arc) => (
+              <div class="origen-legend-item">
+                <span class="origen-legend-dot" style={`background: ${arc.color};`}></span>
+                <span class="origen-legend-label">{arc.label}</span>
+                <span class="origen-legend-count">{arc.total}</span>
+                <span class="origen-legend-pct">({arc.pct}%)</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -481,6 +572,71 @@ const barColors = ['#5a7c59', '#7a9c79', '#c4a35a', '#2196f3', '#ff9800', '#f443
     min-width: 4px;
   }
 
+  /* Origin donut chart */
+  .origen-chart-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .origen-donut {
+    flex-shrink: 0;
+  }
+
+  .origen-donut svg path {
+    transition: opacity 0.2s;
+    cursor: pointer;
+  }
+
+  .origen-donut svg path:hover {
+    opacity: 0.75;
+  }
+
+  .origen-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 160px;
+  }
+
+  .origen-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+  }
+
+  .origen-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .origen-legend-label {
+    flex: 1;
+    color: var(--admin-text);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .origen-legend-count {
+    font-weight: 700;
+    color: var(--admin-text);
+    min-width: 24px;
+    text-align: right;
+  }
+
+  .origen-legend-pct {
+    font-size: 0.78rem;
+    color: var(--admin-text-light);
+    min-width: 40px;
+  }
+
   @media (max-width: 768px) {
     .charts-grid {
       grid-template-columns: 1fr;
@@ -493,6 +649,10 @@ const barColors = ['#5a7c59', '#7a9c79', '#c4a35a', '#2196f3', '#ff9800', '#f443
 
     .vertical-chart {
       height: 180px;
+    }
+
+    .origen-chart-container {
+      flex-direction: column;
     }
   }
 </style>

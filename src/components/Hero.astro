@@ -74,17 +74,17 @@ const {
       </div>
       
       {showStats && (
-        <div class="hero-stats">
+        <div class="hero-stats" id="hero-stats">
           <div class="hero-stat">
-            <div class="hero-stat-number">12+</div>
+            <div class="hero-stat-number" data-count-target="12" data-count-suffix="+">0</div>
             <div class="hero-stat-label">Años de experiencia</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-number">1500+</div>
+            <div class="hero-stat-number" data-count-target="1500" data-count-suffix="+">0</div>
             <div class="hero-stat-label">Pacientes tratados</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-number">5★</div>
+            <div class="hero-stat-number" data-count-target="5" data-count-suffix="★">0</div>
             <div class="hero-stat-label">Valoración en Google</div>
           </div>
         </div>
@@ -111,6 +111,66 @@ const {
     <span>Descubre más</span>
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
   </div>
+
+  <script>
+    (function() {
+      const statsContainer = document.getElementById('hero-stats');
+      if (!statsContainer) return;
+
+      let animated = false;
+
+      function easeOutCubic(t: number): number {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function animateCounter(el: HTMLElement) {
+        const target = parseInt(el.getAttribute('data-count-target') || '0', 10);
+        const suffix = el.getAttribute('data-count-suffix') || '';
+        const duration = 2000;
+        const startTime = performance.now();
+
+        function update(currentTime: number) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easedProgress = easeOutCubic(progress);
+          const currentValue = Math.round(easedProgress * target);
+
+          if (progress < 1) {
+            el.textContent = String(currentValue);
+            requestAnimationFrame(update);
+          } else {
+            el.textContent = target + suffix;
+          }
+        }
+
+        requestAnimationFrame(update);
+      }
+
+      // Respect reduced motion preference
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        statsContainer.querySelectorAll<HTMLElement>('[data-count-target]').forEach(el => {
+          const target = el.getAttribute('data-count-target') || '0';
+          const suffix = el.getAttribute('data-count-suffix') || '';
+          el.textContent = target + suffix;
+        });
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animated) {
+            animated = true;
+            statsContainer.querySelectorAll<HTMLElement>('[data-count-target]').forEach(el => {
+              animateCounter(el);
+            });
+            observer.unobserve(statsContainer);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(statsContainer);
+    })();
+  </script>
 </section>
 
 <style>

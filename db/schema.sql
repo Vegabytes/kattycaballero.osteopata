@@ -102,3 +102,4 @@ CREATE INDEX IF NOT EXISTS idx_bonos_estado ON bonos(estado);
 -- ALTER TABLE pacientes ADD COLUMN antecedentes TEXT;
 -- ALTER TABLE pacientes ADD COLUMN alergias TEXT;
 -- ALTER TABLE pacientes ADD COLUMN profesion TEXT;
+-- ALTER TABLE pacientes ADD COLUMN origen TEXT;
