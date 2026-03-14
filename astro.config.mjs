@@ -20,14 +20,14 @@ export default defineConfig({
       changefreq: 'weekly',
       lastmod: new Date(),
       filter(page) {
-        return !page.includes('/admin/') && !page.includes('/api/') && !page.includes('/politica-');
+        return !page.includes('/admin/') && !page.includes('/api/') && !page.includes('/politica-') && !page.includes('/gracias') && !page.includes('/404');
       },
       serialize(item) {
         if (item.url === 'https://katycaballeroosteopata.com/') {
           item.priority = 1.0;
         } else if (item.url.includes('/servicios/') && item.url !== 'https://katycaballeroosteopata.com/servicios/') {
           item.priority = 0.9;
-        } else if (item.url.includes('/osteopata-')) {
+        } else if (item.url.includes('/osteopata-') || item.url.includes('/masaje-')) {
           item.priority = 0.85;
         } else if (item.url.includes('/reservar') || item.url.includes('/tarifas') || item.url.includes('/contacto')) {
           item.priority = 0.8;
