@@ -17,13 +17,23 @@ const serviceSchema = {
   "@type": "Service",
   "name": service.h1,
   "description": service.metaDescription,
+  "url": "https://katycaballeroosteopata.com/servicios/masaje-pindas-herbales-alpedrete",
+  "image": `https://katycaballeroosteopata.com${service.image}`,
   "provider": {
     "@type": "HealthAndBeautyBusiness",
     "name": "Katy Caballero - Osteópata y Masajista",
+    "url": "https://katycaballeroosteopata.com",
+    "telephone": "+34643961065",
     "address": { "@type": "PostalAddress", "streetAddress": "Calle Río Guadarrama 2", "addressLocality": "Alpedrete", "addressRegion": "Madrid", "postalCode": "28430", "addressCountry": "ES" }
   },
-  "areaServed": { "@type": "City", "name": "Alpedrete" },
-  "offers": { "@type": "Offer", "price": "70", "priceCurrency": "EUR" }
+  "areaServed": [
+    { "@type": "City", "name": "Alpedrete" },
+    { "@type": "City", "name": "Collado Villalba" },
+    { "@type": "City", "name": "Moralzarzal" },
+    { "@type": "City", "name": "Galapagar" },
+    { "@type": "AdministrativeArea", "name": "Sierra Noroeste de Madrid" }
+  ],
+  "offers": { "@type": "Offer", "price": "70", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "validFrom": "2024-01-01" }
 };
 
 const faqSchema = {

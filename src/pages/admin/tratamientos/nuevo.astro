@@ -76,6 +76,20 @@ const zonasCorporales = [
     <form method="POST">
       {citaId && <input type="hidden" name="cita_id" value={citaId}>}
 
+      <div class="form-group">
+        <label for="plantilla">Plantilla</label>
+        <select id="plantilla">
+          <option value="">Seleccionar plantilla...</option>
+          <option value="Osteopatía estructural|Osteopatía estructural|Columna vertebral">Osteopatía estructural</option>
+          <option value="Osteopatía visceral|Osteopatía visceral|Abdomen">Osteopatía visceral</option>
+          <option value="Osteopatía craneal|Osteopatía craneal|Cráneo">Osteopatía craneal</option>
+          <option value="Masaje deportivo|Masaje deportivo|Piernas/Espalda">Masaje deportivo</option>
+          <option value="Masaje relajante|Masaje corporal descontracturante|Cuerpo completo">Masaje relajante</option>
+          <option value="Masaje tailandés|Masaje tailandés|Cuerpo completo">Masaje tailandés</option>
+          <option value="Embarazo|Masaje embarazadas|Espalda/Piernas">Embarazo</option>
+        </select>
+      </div>
+
       <div class="form-row">
         <div class="form-group">
           <label for="paciente_id">Paciente *</label>
@@ -156,6 +170,50 @@ const zonasCorporales = [
   </div>
 
 <script>
+  // Treatment template auto-fill
+  document.getElementById('plantilla')?.addEventListener('change', (e) => {
+    const value = (e.target as HTMLSelectElement).value;
+    if (!value) return;
+
+    const parts = value.split('|');
+    const tipoValue = parts[1];
+    const zonaValue = parts[2];
+
+    const tipoSelect = document.getElementById('tipo') as HTMLSelectElement;
+    const zonaSelect = document.getElementById('zona') as HTMLSelectElement;
+
+    // Set tipo
+    if (tipoSelect) {
+      for (let i = 0; i < tipoSelect.options.length; i++) {
+        if (tipoSelect.options[i].value === tipoValue) {
+          tipoSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
+    // Set zona - may be a custom value not in the select
+    if (zonaSelect) {
+      let found = false;
+      for (let i = 0; i < zonaSelect.options.length; i++) {
+        if (zonaSelect.options[i].value === zonaValue) {
+          zonaSelect.selectedIndex = i;
+          found = true;
+          break;
+        }
+      }
+      // If zona not found in existing options, add it temporarily
+      if (!found && zonaValue) {
+        const option = document.createElement('option');
+        option.value = zonaValue;
+        option.textContent = zonaValue;
+        option.selected = true;
+        zonaSelect.appendChild(option);
+      }
+    }
+  });
+
+  // Observation templates
   document.querySelectorAll('.obs-template').forEach(btn => {
     btn.addEventListener('click', () => {
       const textarea = document.getElementById('observaciones') as HTMLTextAreaElement;

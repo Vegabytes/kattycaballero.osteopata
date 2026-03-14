@@ -10,7 +10,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   try {
     const body = await request.json();
-    const { nombre, email, telefono, mensaje } = body;
+    const { nombre, email, telefono, servicio, origen, mensaje } = body;
 
     if (!nombre || !mensaje || (!email && !telefono)) {
       return new Response(
@@ -40,6 +40,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
         `Nombre: ${nombre}`,
         telefono ? `Telefono: ${telefono}` : '',
         email ? `Email: ${email}` : '',
+        servicio ? `Servicio: ${servicio}` : '',
+        origen ? `Nos encontro via: ${origen}` : '',
         '',
         `Mensaje: ${mensaje}`,
       ].filter(Boolean).join('\n');
@@ -64,6 +66,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     <p><strong>Nombre:</strong> ${nombre}</p>
     ${telefono ? `<p><strong>Telefono:</strong> <a href="tel:${telefono}" style="color:#4a6548;">${telefono}</a></p>` : ''}
     ${email ? `<p><strong>Email:</strong> <a href="mailto:${email}" style="color:#4a6548;">${email}</a></p>` : ''}
+    ${servicio ? `<p><strong>Servicio de inter&eacute;s:</strong> ${servicio}</p>` : ''}
+    ${origen ? `<p><strong>Nos encontr&oacute; v&iacute;a:</strong> ${origen}</p>` : ''}
     <div style="background:#f8f6f0;padding:16px;border-radius:10px;border-left:4px solid #4a6548;margin-top:12px;">
       <p style="margin:0;white-space:pre-wrap;">${mensaje}</p>
     </div>

@@ -51,15 +51,21 @@ function formatDate(date: Date): string {
   
   <section class="blog-list">
     <div class="container">
-      <div class="blog-categories" id="blog-categories">
-        <button class="category-tag active" data-category="all">Todos</button>
-        {categories.map(cat => (
-          <button class="category-tag" data-category={cat}>{cat}</button>
-        ))}
+      <div class="blog-filters">
+        <div class="blog-search">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="blog-search-input" placeholder="Buscar artículos..." autocomplete="off" />
+        </div>
+        <div class="blog-categories" id="blog-categories">
+          <button class="category-tag active" data-category="all">Todos</button>
+          {categories.map(cat => (
+            <button class="category-tag" data-category={cat}>{cat}</button>
+          ))}
+        </div>
       </div>
       <div class="blog-grid">
         {sortedPosts.map((post, index) => (
-          <article class="blog-card" class:list={[{ featured: index === 0 }]} data-category={post.data.category}>
+          <article class="blog-card" class:list={[{ featured: index === 0 }]} data-category={post.data.category} data-title={post.data.title.toLowerCase()} data-excerpt={post.data.excerpt.toLowerCase()}>
             <a href={`/blog/${post.slug}`} class="blog-card-image-link">
               <img src={post.data.image} alt={post.data.title} class="blog-card-image" width="600" height="280" loading={index === 0 ? "eager" : "lazy"} />
             </a>
@@ -83,6 +89,12 @@ function formatDate(date: Date): string {
         ))}
       </div>
       
+      <div class="no-results" id="no-results" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        <p class="no-results-title">No se encontraron artículos</p>
+        <p class="no-results-text">Prueba con otros términos de búsqueda o selecciona otra categoría.</p>
+      </div>
+
       {sortedPosts.length === 0 && (
         <div class="no-posts">
           <p>Próximamente publicaré artículos sobre osteopatía, masajes y bienestar.</p>
@@ -283,11 +295,54 @@ function formatDate(date: Date): string {
     }
   }
 
+  .blog-filters {
+    margin-bottom: 40px;
+  }
+
+  .blog-search {
+    position: relative;
+    max-width: 480px;
+    margin: 0 auto 24px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-muted, #767676);
+    pointer-events: none;
+  }
+
+  #blog-search-input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    border: 1px solid rgba(90, 124, 89, 0.2);
+    border-radius: 30px;
+    background: var(--color-warm-white, #fff);
+    color: var(--color-text, #3d3d3d);
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  #blog-search-input::placeholder {
+    color: var(--color-text-muted, #767676);
+  }
+
+  #blog-search-input:focus {
+    border-color: var(--color-primary, #5a7c59);
+    box-shadow: 0 0 0 3px rgba(90, 124, 89, 0.15);
+  }
+
   .blog-categories {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 40px;
     justify-content: center;
   }
 
@@ -318,21 +373,121 @@ function formatDate(date: Date): string {
   .blog-card.hidden-by-filter {
     display: none;
   }
+
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .no-results svg {
+    width: 48px;
+    height: 48px;
+    color: var(--color-text-muted, #767676);
+    margin-bottom: 16px;
+  }
+
+  .no-results-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text, #3d3d3d);
+    margin-bottom: 8px;
+  }
+
+  .no-results-text {
+    font-size: 0.95rem;
+    color: var(--color-text-muted, #767676);
+  }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) #blog-search-input {
+    background: #2a2a2a;
+    border-color: rgba(122, 156, 121, 0.3);
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) #blog-search-input::placeholder {
+    color: #888;
+  }
+
+  :global([data-theme="dark"]) #blog-search-input:focus {
+    border-color: var(--color-primary-light, #7a9c79);
+    box-shadow: 0 0 0 3px rgba(122, 156, 121, 0.2);
+  }
+
+  :global([data-theme="dark"]) .search-icon {
+    color: #888;
+  }
+
+  :global([data-theme="dark"]) .category-tag {
+    background: #2a2a2a;
+    border-color: rgba(122, 156, 121, 0.3);
+    color: #ccc;
+  }
+
+  :global([data-theme="dark"]) .category-tag:hover {
+    border-color: var(--color-primary-light, #7a9c79);
+    color: var(--color-primary-light, #7a9c79);
+  }
+
+  :global([data-theme="dark"]) .category-tag.active {
+    background: var(--color-primary, #5a7c59);
+    color: white;
+    border-color: var(--color-primary, #5a7c59);
+  }
+
+  :global([data-theme="dark"]) .no-results svg {
+    color: #888;
+  }
+
+  :global([data-theme="dark"]) .no-results-title {
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) .no-results-text {
+    color: #888;
+  }
 </style>
 
 <script>
+  function filterBlog() {
+    const searchInput = document.getElementById('blog-search-input') as HTMLInputElement;
+    const activeBtn = document.querySelector('.category-tag.active') as HTMLElement;
+    const noResults = document.getElementById('no-results') as HTMLElement;
+    const query = (searchInput?.value || '').toLowerCase().trim();
+    const cat = activeBtn?.dataset.category || 'all';
+    const cards = document.querySelectorAll('.blog-card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const el = card as HTMLElement;
+      const matchesCategory = cat === 'all' || el.dataset.category === cat;
+      const title = el.dataset.title || '';
+      const excerpt = el.dataset.excerpt || '';
+      const matchesSearch = !query || title.includes(query) || excerpt.includes(query);
+
+      if (matchesCategory && matchesSearch) {
+        el.classList.remove('hidden-by-filter');
+        visibleCount++;
+      } else {
+        el.classList.add('hidden-by-filter');
+      }
+    });
+
+    if (noResults) {
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  }
+
   document.querySelectorAll('.category-tag').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelector('.category-tag.active')?.classList.remove('active');
       btn.classList.add('active');
-      const cat = (btn as HTMLElement).dataset.category;
-      document.querySelectorAll('.blog-card').forEach(card => {
-        if (cat === 'all' || (card as HTMLElement).dataset.category === cat) {
-          card.classList.remove('hidden-by-filter');
-        } else {
-          card.classList.add('hidden-by-filter');
-        }
-      });
+      filterBlog();
     });
   });
+
+  const searchInput = document.getElementById('blog-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', filterBlog);
+  }
 </script>

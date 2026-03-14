@@ -38,15 +38,28 @@ if (Astro.request.method === 'POST') {
 
     // Update clinical fields
     try {
-      await db.prepare('UPDATE pacientes SET motivo_consulta = ?, antecedentes = ?, alergias = ?, profesion = ? WHERE id = ?')
+      await db.prepare('UPDATE pacientes SET motivo_consulta = ?, antecedentes = ?, alergias = ?, profesion = ?, origen = ? WHERE id = ?')
         .bind(
           form.get('motivo_consulta') as string || null,
           form.get('antecedentes') as string || null,
           form.get('alergias') as string || null,
           form.get('profesion') as string || null,
+          form.get('origen') as string || null,
           id
         ).run();
-    } catch { /* columns may not exist yet */ }
+    } catch {
+      // origen column may not exist, try without it
+      try {
+        await db.prepare('UPDATE pacientes SET motivo_consulta = ?, antecedentes = ?, alergias = ?, profesion = ? WHERE id = ?')
+          .bind(
+            form.get('motivo_consulta') as string || null,
+            form.get('antecedentes') as string || null,
+            form.get('alergias') as string || null,
+            form.get('profesion') as string || null,
+            id
+          ).run();
+      } catch { /* columns may not exist yet */ }
+    }
 
     mensaje = 'Paciente actualizado correctamente';
   }
@@ -58,11 +71,17 @@ if (!paciente) {
 }
 
 // Get clinical fields
-let clinico = { motivo_consulta: '', antecedentes: '', alergias: '', profesion: '' };
+let clinico = { motivo_consulta: '', antecedentes: '', alergias: '', profesion: '', origen: '' };
 try {
-  const row = await db.prepare('SELECT motivo_consulta, antecedentes, alergias, profesion FROM pacientes WHERE id = ?').bind(id).first();
+  const row = await db.prepare('SELECT motivo_consulta, antecedentes, alergias, profesion, origen FROM pacientes WHERE id = ?').bind(id).first();
   if (row) clinico = row as any;
-} catch { /* columns may not exist yet */ }
+} catch {
+  // origen column may not exist, try without it
+  try {
+    const row = await db.prepare('SELECT motivo_consulta, antecedentes, alergias, profesion FROM pacientes WHERE id = ?').bind(id).first();
+    if (row) clinico = { ...(row as any), origen: '' };
+  } catch { /* columns may not exist yet */ }
+}
 
 const citas = await getCitas(Astro, undefined, id);
 const tratamientos = await getTratamientos(Astro, id);
@@ -240,9 +259,24 @@ try {
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="profesion">Profesión</label>
-        <input type="text" id="profesion" name="profesion" value={clinico.profesion || ''}>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="profesion">Profesión</label>
+          <input type="text" id="profesion" name="profesion" value={clinico.profesion || ''}>
+        </div>
+        <div class="form-group">
+          <label for="origen">¿Cómo nos encontró?</label>
+          <select id="origen" name="origen">
+            <option value="">Seleccionar...</option>
+            <option value="Google" selected={clinico.origen === 'Google'}>Google</option>
+            <option value="Recomendación" selected={clinico.origen === 'Recomendación'}>Recomendación</option>
+            <option value="Instagram" selected={clinico.origen === 'Instagram'}>Instagram</option>
+            <option value="Redes sociales" selected={clinico.origen === 'Redes sociales'}>Redes sociales</option>
+            <option value="Cartel/Flyer" selected={clinico.origen === 'Cartel/Flyer'}>Cartel/Flyer</option>
+            <option value="Repetidor" selected={clinico.origen === 'Repetidor'}>Repetidor</option>
+            <option value="Otro" selected={clinico.origen === 'Otro'}>Otro</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group">

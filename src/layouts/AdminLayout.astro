@@ -7,6 +7,35 @@ interface Props {
 }
 
 const { title, activeSection } = Astro.props;
+
+// Fetch pending appointments for notification bell
+let notificaciones: { id: number; paciente: string; fecha: string; hora: string; tipo: string }[] = [];
+let notifCount = 0;
+try {
+  const db = (Astro.locals as any).runtime.env.DB;
+  const now = new Date();
+  const today = now.toISOString().split('T')[0];
+  const tomorrow = new Date(now.getTime() + 86400000).toISOString().split('T')[0];
+
+  const result = await db.prepare(
+    `SELECT c.id, p.nombre || ' ' || p.apellidos AS paciente, c.fecha, c.hora, c.servicio
+     FROM citas c
+     JOIN pacientes p ON c.paciente_id = p.id
+     WHERE c.estado = 'pendiente' AND c.fecha IN (?, ?)
+     ORDER BY c.fecha ASC, c.hora ASC`
+  ).bind(today, tomorrow).all();
+
+  notificaciones = (result.results || []).map((r: any) => ({
+    id: r.id,
+    paciente: r.paciente,
+    fecha: r.fecha,
+    hora: r.hora,
+    tipo: r.fecha === today ? 'hoy' : 'mañana',
+  }));
+  notifCount = notificaciones.length;
+} catch (e) {
+  // DB not available (dev mode, etc.)
+}
 ---
 
 <!DOCTYPE html>
@@ -538,6 +567,159 @@ const { title, activeSection } = Astro.props;
         grid-template-columns: 1fr;
       }
     }
+
+    /* Notification bell */
+    .notif-wrapper {
+      position: relative;
+    }
+
+    .notif-bell {
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      padding: 6px;
+      border-radius: 8px;
+      color: var(--admin-text-light);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notif-bell:hover {
+      background: var(--admin-bg);
+      color: var(--admin-text);
+    }
+
+    .notif-badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: var(--admin-danger);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding: 0 4px;
+      pointer-events: none;
+    }
+
+    .notif-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 320px;
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      z-index: 200;
+      overflow: hidden;
+    }
+
+    .notif-dropdown.open {
+      display: block;
+    }
+
+    .notif-dropdown-header {
+      padding: 14px 16px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--admin-border);
+      color: var(--admin-text);
+    }
+
+    .notif-empty {
+      padding: 32px 16px;
+      text-align: center;
+      color: var(--admin-text-light);
+      font-size: 0.85rem;
+    }
+
+    .notif-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+
+    .notif-list li {
+      border-bottom: 1px solid var(--admin-border);
+    }
+
+    .notif-list li:last-child {
+      border-bottom: none;
+    }
+
+    .notif-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      text-decoration: none;
+      color: var(--admin-text);
+      transition: background 0.15s;
+    }
+
+    .notif-item:hover {
+      background: var(--admin-bg);
+    }
+
+    .notif-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      letter-spacing: 0.3px;
+    }
+
+    .notif-tag--hoy {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
+    .notif-tag--manana {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .notif-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .notif-detail strong {
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .notif-detail span {
+      font-size: 0.78rem;
+      color: var(--admin-text-light);
+    }
+
+    @media (max-width: 480px) {
+      .notif-dropdown {
+        width: 280px;
+        right: -40px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -592,6 +774,10 @@ const { title, activeSection } = Astro.props;
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" /></svg>
         Fiscal
       </a>
+      <a href="/admin/actividad" data-astro-prefetch="false" class={activeSection === 'actividad' ? 'active' : ''}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+        Actividad
+      </a>
       <a href="/admin/ajustes" data-astro-prefetch="false" class={activeSection === 'ajustes' ? 'active' : ''}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
         Ajustes
@@ -628,6 +814,32 @@ const { title, activeSection } = Astro.props;
         <form action="/admin/buscar" method="GET" class="topbar-search">
           <input type="text" name="q" placeholder="Buscar paciente, cita..." aria-label="Buscar">
         </form>
+        <div class="notif-wrapper" id="notif-wrapper">
+          <button class="notif-bell" id="notif-bell" type="button" aria-label={`Notificaciones: ${notifCount} pendientes`}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
+            {notifCount > 0 && <span class="notif-badge">{notifCount}</span>}
+          </button>
+          <div class="notif-dropdown" id="notif-dropdown">
+            <div class="notif-dropdown-header">Notificaciones</div>
+            {notificaciones.length === 0 ? (
+              <div class="notif-empty">Sin notificaciones pendientes</div>
+            ) : (
+              <ul class="notif-list">
+                {notificaciones.map((n) => (
+                  <li>
+                    <a href={`/admin/citas?id=${n.id}`} class="notif-item">
+                      <span class={`notif-tag notif-tag--${n.tipo === 'hoy' ? 'hoy' : 'manana'}`}>{n.tipo === 'hoy' ? 'Hoy' : 'Mañana'}</span>
+                      <div class="notif-detail">
+                        <strong>{n.paciente}</strong>
+                        <span>{n.hora}</span>
+                      </div>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
         <slot name="actions" />
       </div>
     </header>
@@ -645,6 +857,24 @@ const { title, activeSection } = Astro.props;
       document.getElementById('sidebar').classList.remove('open');
       document.getElementById('overlay').classList.remove('open');
     }
+
+    // Notification bell
+    (function() {
+      var bell = document.getElementById('notif-bell');
+      var dropdown = document.getElementById('notif-dropdown');
+      if (!bell || !dropdown) return;
+
+      bell.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!document.getElementById('notif-wrapper').contains(e.target)) {
+          dropdown.classList.remove('open');
+        }
+      });
+    })();
   </script>
 </body>
 </html>

@@ -173,6 +173,31 @@ const faqSchema = {
             <label for="cf-email">Email</label>
             <input type="email" id="cf-email" placeholder="tu@email.com">
           </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cf-servicio">Servicio de interés</label>
+              <select id="cf-servicio">
+                <option value="">Seleccionar...</option>
+                <option value="Osteopatía">Osteopatía</option>
+                <option value="Masaje deportivo">Masaje deportivo</option>
+                <option value="Masaje tailandés">Masaje tailandés</option>
+                <option value="Masaje corporal">Masaje corporal</option>
+                <option value="Pindas herbales">Pindas herbales</option>
+                <option value="Masaje embarazadas">Masaje embarazadas</option>
+                <option value="No estoy seguro/a">No estoy seguro/a</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cf-origen">¿Cómo nos encontraste?</label>
+              <select id="cf-origen">
+                <option value="">Seleccionar...</option>
+                <option value="Google">Google</option>
+                <option value="Recomendación">Recomendación</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+          </div>
           <div class="form-group">
             <label for="cf-mensaje">Mensaje *</label>
             <textarea id="cf-mensaje" rows="4" placeholder="¿En qué puedo ayudarte?" required></textarea>
@@ -574,7 +599,8 @@ const faqSchema = {
   }
 
   .contact-form input,
-  .contact-form textarea {
+  .contact-form textarea,
+  .contact-form select {
     width: 100%;
     padding: 13px 16px;
     border: 2px solid rgba(90, 124, 89, 0.12);
@@ -586,8 +612,18 @@ const faqSchema = {
     transition: all 0.3s ease;
   }
 
+  .contact-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8.825L0.375 3.2l0.85-0.85L6 7.125l4.775-4.775 0.85 0.85z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
   .contact-form input:focus,
-  .contact-form textarea:focus {
+  .contact-form textarea:focus,
+  .contact-form select:focus {
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(90, 124, 89, 0.08);
@@ -702,14 +738,25 @@ const faqSchema = {
   }
 
   :global([data-theme="dark"]) .contact-form input,
-  :global([data-theme="dark"]) .contact-form textarea {
+  :global([data-theme="dark"]) .contact-form textarea,
+  :global([data-theme="dark"]) .contact-form select {
     background: #2a2a3e;
     border-color: rgba(111, 155, 110, 0.2);
     color: #e0e0e0;
   }
 
+  :global([data-theme="dark"]) .contact-form select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8.825L0.375 3.2l0.85-0.85L6 7.125l4.775-4.775 0.85 0.85z'/%3E%3C/svg%3E");
+  }
+
+  :global([data-theme="dark"]) .contact-form select option {
+    background: #2a2a3e;
+    color: #e0e0e0;
+  }
+
   :global([data-theme="dark"]) .contact-form input:focus,
-  :global([data-theme="dark"]) .contact-form textarea:focus {
+  :global([data-theme="dark"]) .contact-form textarea:focus,
+  :global([data-theme="dark"]) .contact-form select:focus {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(111, 155, 110, 0.15);
   }
@@ -747,6 +794,8 @@ const faqSchema = {
     const nombre = (document.getElementById('cf-nombre') as HTMLInputElement).value.trim();
     const telefono = (document.getElementById('cf-telefono') as HTMLInputElement).value.trim();
     const email = (document.getElementById('cf-email') as HTMLInputElement).value.trim();
+    const servicio = (document.getElementById('cf-servicio') as HTMLSelectElement).value;
+    const origen = (document.getElementById('cf-origen') as HTMLSelectElement).value;
     const mensaje = (document.getElementById('cf-mensaje') as HTMLTextAreaElement).value.trim();
 
     if (!nombre || !mensaje) return;
@@ -765,7 +814,7 @@ const faqSchema = {
       const res = await fetch('/api/contacto', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, email: email || null, telefono: telefono || null, mensaje }),
+        body: JSON.stringify({ nombre, email: email || null, telefono: telefono || null, servicio: servicio || null, origen: origen || null, mensaje }),
       });
 
       if (res.ok) {

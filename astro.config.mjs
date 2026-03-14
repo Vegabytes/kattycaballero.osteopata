@@ -31,7 +31,7 @@ export default defineConfig({
           item.priority = 0.85;
         } else if (item.url.includes('/reservar') || item.url.includes('/tarifas') || item.url.includes('/contacto') || item.url.includes('/opiniones')) {
           item.priority = 0.8;
-        } else if (item.url.includes('/donde-te-duele') || item.url.includes('/test-') || item.url.includes('/guia-estiramientos')) {
+        } else if (item.url.includes('/promociones') || item.url.includes('/donde-te-duele') || item.url.includes('/test-') || item.url.includes('/guia-estiramientos')) {
           item.priority = 0.75;
         } else if (item.url.includes('/blog/') && item.url !== 'https://katycaballeroosteopata.com/blog/') {
           item.priority = 0.7;

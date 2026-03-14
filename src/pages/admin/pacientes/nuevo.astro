@@ -5,11 +5,13 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 import { crearPaciente } from '../../../lib/db';
 
 let error = '';
+const db = (Astro.locals as any).runtime.env.DB;
 
 if (Astro.request.method === 'POST') {
   const form = await Astro.request.formData();
   const nombre = form.get('nombre') as string;
   const apellidos = form.get('apellidos') as string;
+  const origen = form.get('origen') as string;
 
   if (!nombre || !apellidos) {
     error = 'Nombre y apellidos son obligatorios';
@@ -27,6 +29,20 @@ if (Astro.request.method === 'POST') {
       alergias: form.get('alergias') as string,
       profesion: form.get('profesion') as string,
     });
+
+    // Update origen field (column may not exist yet)
+    if (origen) {
+      try {
+        await db.prepare('UPDATE pacientes SET origen = ? WHERE id = ?').bind(origen, id).run();
+      } catch {
+        // Column doesn't exist yet, try to create it
+        try {
+          await db.prepare('ALTER TABLE pacientes ADD COLUMN origen TEXT').run();
+          await db.prepare('UPDATE pacientes SET origen = ? WHERE id = ?').bind(origen, id).run();
+        } catch { /* ignore if ALTER fails too */ }
+      }
+    }
+
     return Astro.redirect(`/admin/pacientes/${id}`);
   }
 }
@@ -70,6 +86,23 @@ if (Astro.request.method === 'POST') {
           <label for="direccion">Dirección</label>
           <input type="text" id="direccion" name="direccion">
         </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="origen">¿Cómo nos encontró?</label>
+          <select id="origen" name="origen">
+            <option value="">Seleccionar...</option>
+            <option value="Google">Google</option>
+            <option value="Recomendación">Recomendación</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Redes sociales">Redes sociales</option>
+            <option value="Cartel/Flyer">Cartel/Flyer</option>
+            <option value="Repetidor">Repetidor</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <div></div>
       </div>
 
       <details style="margin-bottom:20px;">
