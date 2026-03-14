@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const pageTitle = "Contacto | Osteópata en Alpedrete - Sierra Noroeste de Madrid";
 const pageDescription = "Contacta con Katy Caballero para reservar tu cita de osteopatía o masaje en Alpedrete, Sierra Noroeste de Madrid. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama. WhatsApp, teléfono y email.";
@@ -120,6 +121,7 @@ const faqSchema = {
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section class="contact-page">
     <div class="container">
+      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Contacto"}]} />
       <div class="contact-header">
         <span class="section-tag">Contacto</span>
         <h1>Reserva tu cita o consúltame sin compromiso</h1>

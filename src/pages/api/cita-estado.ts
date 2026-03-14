@@ -19,7 +19,7 @@ export async function POST(context: any) {
       });
     }
 
-    const estadosValidos = ['pendiente', 'confirmada', 'completada', 'cancelada'];
+    const estadosValidos = ['pendiente', 'confirmada', 'completada', 'cancelada', 'no_show'];
     if (!estadosValidos.includes(estado)) {
       return new Response(JSON.stringify({ error: 'Estado no válido' }), {
         status: 400,

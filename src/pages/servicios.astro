@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Services from '../components/Services.astro';
 import CTASection from '../components/CTASection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const pageTitle = "Servicios de Osteopatía y Masajes en Alpedrete | Sierra Noroeste de Madrid";
 const pageDescription = "Servicios de osteopatía estructural, visceral y craneal, masaje deportivo, tailandés y para embarazadas en Alpedrete, Sierra Noroeste de Madrid. Atendemos Collado Villalba, Moralzarzal, Galapagar y toda la Sierra de Guadarrama. Precios y duración.";
@@ -195,6 +196,7 @@ const servicesSchema = {
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section class="page-header">
     <div class="container">
+      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Servicios"}]} />
       <span class="section-tag">Servicios</span>
       <h1>Tratamientos de osteopatía y masajes</h1>
       <p>Cada cuerpo es único. Por eso, diseño cada sesión adaptada a tus necesidades específicas.</p>

@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { getReadingTime } from '../../lib/reading-time';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -17,6 +18,10 @@ interface Props {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+const readingTime = post.data.readTime ?? getReadingTime(post.body);
+const postUrl = `https://katycaballeroosteopata.com/blog/${post.slug}`;
+const shareTitle = encodeURIComponent(post.data.title);
+const shareUrl = encodeURIComponent(postUrl);
 
 const blogPostingSchema = {
   "@context": "https://schema.org",
@@ -121,7 +126,7 @@ const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/serv
           <img src="/images/logo.webp" alt="Katy Caballero" class="author-avatar" width="50" height="50" loading="lazy" />
           <div>
             <span class="author-name">{post.data.author}</span>
-            <span class="post-date">{formatDate(post.data.date)} · {post.data.readTime} min lectura</span>
+            <span class="post-date">{formatDate(post.data.date)} · {readingTime} min de lectura</span>
           </div>
         </div>
       </div>
@@ -176,28 +181,43 @@ const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/serv
       </nav>
 
       <div class="post-share">
-        <span>Compartir:</span>
-        <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${Astro.url}`} target="_blank" rel="noopener noreferrer" aria-label="Compartir en Twitter">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href={`https://www.facebook.com/sharer/sharer.php?u=${Astro.url}`} target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </a>
-        <a href={`https://wa.me/?text=${encodeURIComponent(post.data.title + ' ' + Astro.url)}`} target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </a>
-        <button class="share-copy" aria-label="Copiar enlace" data-url={Astro.url}>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-        </button>
+        <h3 class="share-heading">Comparte este art&iacute;culo</h3>
+        <div class="share-buttons">
+          <a href={`https://wa.me/?text=${shareTitle}%20${shareUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp" class="share-btn share-whatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span>WhatsApp</span>
+          </a>
+          <a href={`https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Compartir en X (Twitter)" class="share-btn share-twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>X</span>
+          </a>
+          <a href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook" class="share-btn share-facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            <span>Facebook</span>
+          </a>
+          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Compartir en LinkedIn" class="share-btn share-linkedin">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <span>LinkedIn</span>
+          </a>
+          <button class="share-btn share-copy" aria-label="Copiar enlace" data-url={postUrl}>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            <span class="copy-label">Copiar enlace</span>
+          </button>
+        </div>
       </div>
       <script>
         document.querySelector('.share-copy')?.addEventListener('click', async (e) => {
           const btn = e.currentTarget as HTMLButtonElement;
           const url = btn.dataset.url || window.location.href;
+          const label = btn.querySelector('.copy-label');
           try {
             await navigator.clipboard.writeText(url);
             btn.classList.add('copied');
-            setTimeout(() => btn.classList.remove('copied'), 2000);
+            if (label) label.textContent = 'Copiado!';
+            setTimeout(() => {
+              btn.classList.remove('copied');
+              if (label) label.textContent = 'Copiar enlace';
+            }, 2000);
           } catch {}
         });
 
@@ -571,71 +591,92 @@ const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/serv
   .post-share {
     max-width: 750px;
     margin: 0 0 60px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
     padding-top: 30px;
     border-top: 1px solid rgba(90, 124, 89, 0.1);
   }
-  
-  .post-share span {
+
+  .share-heading {
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--color-text);
-  }
-  
-  .post-share a {
-    width: 40px;
-    height: 40px;
-    background: var(--color-cream);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-  }
-  
-  .post-share a:hover {
-    background: var(--color-primary);
-  }
-  
-  .post-share a:hover svg {
-    fill: white;
-  }
-  
-  .post-share svg {
-    width: 18px;
-    height: 18px;
-    fill: var(--color-text);
-    transition: var(--transition);
+    margin-bottom: 16px;
   }
 
-  .share-copy {
-    width: 40px;
-    height: 40px;
-    background: var(--color-cream);
-    border-radius: 50%;
+  .share-buttons {
     display: flex;
     align-items: center;
-    justify-content: center;
-    border: none;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--color-cream);
+    border: 1px solid rgba(90, 124, 89, 0.12);
+    border-radius: 30px;
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: inherit;
     cursor: pointer;
     transition: var(--transition);
   }
 
-  .share-copy:hover {
-    background: var(--color-primary);
+  .share-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    flex-shrink: 0;
+    transition: var(--transition);
   }
 
-  .share-copy:hover svg {
-    fill: white;
+  .share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .share-whatsapp:hover {
+    background: #25d366;
+    color: white;
+    border-color: #25d366;
+  }
+
+  .share-twitter:hover {
+    background: #1a1a1a;
+    color: white;
+    border-color: #1a1a1a;
+  }
+
+  .share-facebook:hover {
+    background: #1877f2;
+    color: white;
+    border-color: #1877f2;
+  }
+
+  .share-linkedin:hover {
+    background: #0a66c2;
+    color: white;
+    border-color: #0a66c2;
+  }
+
+  .share-copy {
+    background: var(--color-cream);
+  }
+
+  .share-copy:hover {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
   }
 
   .share-copy.copied {
     background: var(--color-primary);
-  }
-
-  .share-copy.copied svg {
-    fill: white;
+    color: white;
+    border-color: var(--color-primary);
   }
   
   .related-posts {
@@ -903,6 +944,20 @@ const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/serv
     .related-grid {
       grid-template-columns: 1fr;
     }
+
+    .share-btn span {
+      display: none;
+    }
+
+    .share-btn {
+      padding: 12px;
+      border-radius: 50%;
+    }
+
+    .share-btn svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   /* Dark mode overrides */
@@ -922,6 +977,26 @@ const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/serv
 
   :global([data-theme="dark"]) .post-share {
     border-top-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .share-btn {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.15);
+    color: #ccc;
+  }
+
+  :global([data-theme="dark"]) .share-btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .share-twitter:hover {
+    background: #e7e9ea;
+    color: #1a1a1a;
+    border-color: #e7e9ea;
+  }
+
+  :global([data-theme="dark"]) .share-copy {
+    background: #2a2a3e;
   }
 
   :global([data-theme="dark"]) .toc-item a:hover {

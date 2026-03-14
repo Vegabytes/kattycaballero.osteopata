@@ -101,6 +101,7 @@ function formatFechaCorta(fecha: string) {
                 <div style={`padding:8px;border-radius:6px;font-size:0.8rem;background:${
                   c.estado === 'completada' ? '#e8f5e9' :
                   c.estado === 'cancelada' ? '#fce4ec' :
+                  c.estado === 'no_show' ? '#fff3e0' :
                   c.estado === 'confirmada' ? '#e3f2fd' : '#fff3e0'
                 };`}>
                   <a href={`/admin/citas/${c.id}`} style="text-decoration:none;">
@@ -110,7 +111,7 @@ function formatFechaCorta(fecha: string) {
                     </div>
                     {c.servicio && <div style="color:#999;font-size:0.65rem;">{c.servicio}</div>}
                   </a>
-                  {c.estado !== 'completada' && c.estado !== 'cancelada' && (
+                  {c.estado !== 'completada' && c.estado !== 'cancelada' && c.estado !== 'no_show' && (
                     <button
                       class="btn-cal-complete"
                       data-id={c.id}

@@ -159,6 +159,7 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
           <option value="confirmada" selected={cita.estado === 'confirmada'}>Confirmada</option>
           <option value="completada" selected={cita.estado === 'completada'}>Completada</option>
           <option value="cancelada" selected={cita.estado === 'cancelada'}>Cancelada</option>
+          <option value="no_show" selected={cita.estado === 'no_show'}>No acudio</option>
         </select>
       </div>
 
@@ -167,8 +168,11 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
         <textarea id="notas" name="notas">{cita.notas || ''}</textarea>
       </div>
 
-      <div style="display:flex;gap:12px;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        {cita.estado !== 'completada' && cita.estado !== 'cancelada' && cita.estado !== 'no_show' && (
+          <button type="button" class="btn btn-no-show btn-sm" id="btn-no-show">No acudio</button>
+        )}
       </div>
     </form>
 
@@ -177,6 +181,19 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
       <button type="submit" class="btn btn-danger btn-sm">Eliminar cita</button>
     </form>
   </div>
+
+  {/* No-show notice */}
+  {cita.estado === 'no_show' && (
+    <div class="card" style="background:#fff3e0;border-color:#ff9800;">
+      <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:12px;color:#e65100;">El paciente no acudio a esta cita</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <a href={`/admin/citas/nueva?paciente=${cita.paciente_id}&servicio=${encodeURIComponent(cita.servicio || '')}&duracion=${cita.duracion || 60}&precio=${cita.precio || ''}`} class="btn btn-primary btn-sm">Reprogramar cita</a>
+        {whatsappUrl && (
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-whatsapp">Contactar por WhatsApp</a>
+        )}
+      </div>
+    </div>
+  )}
 
   {/* Suggest next appointment when completed */}
   {cita.estado === 'completada' && (
@@ -203,6 +220,23 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
 </AdminLayout>
 
 <script>
+  document.getElementById('btn-no-show')?.addEventListener('click', async () => {
+    if (!confirm('Marcar esta cita como "No acudio"?')) return;
+    const btn = document.getElementById('btn-no-show') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = '...';
+    try {
+      const res = await fetch('/api/cita-estado', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: Number(window.location.pathname.split('/').pop()), estado: 'no_show' }),
+      });
+      if (res.ok) window.location.reload();
+    } catch { /* ignore */ }
+    btn.disabled = false;
+    btn.textContent = 'No acudio';
+  });
+
   document.getElementById('servicio')?.addEventListener('change', (e) => {
     const select = e.target as HTMLSelectElement;
     const option = select.selectedOptions[0];
@@ -238,5 +272,14 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
     height: 16px !important;
     max-width: 16px;
     max-height: 16px;
+  }
+  .btn-no-show {
+    background: #ff9800 !important;
+    color: #fff !important;
+    border: none;
+  }
+  .btn-no-show:hover {
+    background: #e68900 !important;
+    color: #fff !important;
   }
 </style>

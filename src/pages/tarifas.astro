@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CTASection from '../components/CTASection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { services } from '../data/services';
 
 const pageTitle = "Tarifas y Precios | Osteopat\u00eda y Masajes en Alpedrete - Sierra Noroeste de Madrid";
@@ -94,6 +95,7 @@ const faqSchema = {
 
   <section class="page-header">
     <div class="container">
+      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Tarifas"}]} />
       <span class="section-tag">Tarifas</span>
       <h1>Precios de los tratamientos</h1>
       <p>Precios claros y transparentes. Sin sorpresas ni costes ocultos. La primera valoración siempre está incluida.</p>

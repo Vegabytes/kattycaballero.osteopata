@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CTASection from '../components/CTASection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const pageTitle = "Test: ¿Qué Tratamiento Necesitas? | Katy Caballero - Alpedrete";
 const pageDescription = "Descubre qué tratamiento de osteopatía o masaje es el más adecuado para ti. Test rápido de 5 preguntas con recomendación personalizada.";
@@ -32,6 +33,7 @@ const quizSchema = {
 
   <section class="page-header">
     <div class="container">
+      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Test de Tratamiento"}]} />
       <span class="section-tag">Test</span>
       <h1>¿Qué tratamiento necesitas?</h1>
       <p>Responde 5 preguntas y te recomiendo el tratamiento ideal para ti</p>

@@ -3,9 +3,12 @@ export const prerender = false;
 
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import { getSettings, saveSettings, type AppSettings } from '../../lib/settings';
+import { verifyPassword, changePassword } from '../../lib/auth';
 
 let mensaje = '';
 let error = '';
+let passwordMsg = '';
+let passwordError = '';
 
 if (Astro.request.method === 'POST') {
   const form = await Astro.request.formData();
@@ -75,10 +78,32 @@ if (Astro.request.method === 'POST') {
         facturacion_nif: textField('facturacion_nif'),
         facturacion_direccion: textField('facturacion_direccion'),
       });
+    } else if (section === 'password') {
+      const currentPwd = textField('current_password');
+      const newPwd = textField('new_password');
+      const confirmPwd = textField('confirm_password');
+
+      const isValid = await verifyPassword(Astro, currentPwd);
+      if (!isValid) {
+        passwordError = 'La contraseña actual no es correcta';
+      } else if (newPwd.length < 6) {
+        passwordError = 'La nueva contraseña debe tener al menos 6 caracteres';
+      } else if (newPwd !== confirmPwd) {
+        passwordError = 'Las contraseñas nuevas no coinciden';
+      } else {
+        await changePassword(Astro, newPwd);
+        passwordMsg = 'Contraseña cambiada correctamente. Usa la nueva contraseña en tu próximo inicio de sesión.';
+      }
     }
-    mensaje = 'Configuración guardada correctamente';
+    if (section !== 'password') {
+      mensaje = 'Configuración guardada correctamente';
+    }
   } catch (e: any) {
-    error = `Error guardando: ${e.message}`;
+    if (form.get('_section') === 'password') {
+      passwordError = `Error cambiando contraseña: ${e.message}`;
+    } else {
+      error = `Error guardando: ${e.message}`;
+    }
   }
 }
 
@@ -396,6 +421,35 @@ try {
         <small style="color:#999;">Variables: {'{nombre}'}, {'{fecha}'}, {'{hora}'}, {'{servicio}'}</small>
       </div>
       <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+  </div>
+
+  <!-- Cambiar Contraseña -->
+  <div class="card settings-section" id="password">
+    <div class="settings-header">
+      <h3 class="settings-title">Cambiar contrasena</h3>
+    </div>
+    <p class="settings-desc">Cambia la contrasena de acceso al panel de administracion. La nueva contrasena se almacena de forma segura en la base de datos.</p>
+    {passwordMsg && <div class="alert alert-success">{passwordMsg}</div>}
+    {passwordError && <div class="alert alert-error">{passwordError}</div>}
+    <form method="POST">
+      <input type="hidden" name="_section" value="password">
+      <div class="form-group">
+        <label for="current_password">Contrasena actual</label>
+        <input type="password" id="current_password" name="current_password" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="new_password">Nueva contrasena</label>
+          <input type="password" id="new_password" name="new_password" required minlength="6">
+          <small style="color:#999;">Minimo 6 caracteres</small>
+        </div>
+        <div class="form-group">
+          <label for="confirm_password">Confirmar nueva contrasena</label>
+          <input type="password" id="confirm_password" name="confirm_password" required minlength="6">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Cambiar contrasena</button>
     </form>
   </div>
 

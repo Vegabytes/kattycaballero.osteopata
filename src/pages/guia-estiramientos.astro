@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CTASection from '../components/CTASection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const pageTitle = "Guía de Estiramientos por Zona | Katy Caballero - Osteópata en Alpedrete";
 const pageDescription = "Guía gratuita de estiramientos para cuello, espalda, lumbar y piernas. Ejercicios sencillos para hacer en casa y aliviar tensiones. Por Katy Caballero, osteópata.";
@@ -143,6 +144,7 @@ const howToSchemas = zones.map(zone => ({
 
   <section class="page-header">
     <div class="container">
+      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Gu\u00eda de Estiramientos"}]} />
       <span class="section-tag">Guía gratuita</span>
       <h1>Estiramientos para hacer en casa</h1>
       <p>Ejercicios sencillos que puedes hacer cada día para aliviar tensiones y prevenir dolores. Selecciona la zona que quieres trabajar.</p>

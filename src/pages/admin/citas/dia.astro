@@ -59,13 +59,13 @@ const totalIngresos = citas.filter(c => c.estado === 'completada' && c.precio).r
   <div class="card">
     <div class="day-grid">
       {slots.map(({ hora, cita }) => (
-        <div class={`day-slot ${cita ? 'day-slot-busy' : ''} ${cita?.estado === 'completada' ? 'slot-completed' : cita?.estado === 'cancelada' ? 'slot-cancelled' : cita?.estado === 'confirmada' ? 'slot-confirmed' : ''}`}>
+        <div class={`day-slot ${cita ? 'day-slot-busy' : ''} ${cita?.estado === 'completada' ? 'slot-completed' : cita?.estado === 'cancelada' ? 'slot-cancelled' : cita?.estado === 'no_show' ? 'slot-no-show' : cita?.estado === 'confirmada' ? 'slot-confirmed' : ''}`}>
           <div class="slot-time">{hora}</div>
           {cita ? (
             <a href={`/admin/citas/${cita.id}`} class="slot-content">
               <strong>{cita.paciente_nombre} {cita.paciente_apellidos}</strong>
               <span class="slot-service">{cita.servicio || 'Sin servicio'} · {cita.duracion || 60}min</span>
-              <span class={`badge badge-${cita.estado}`}>{cita.estado}</span>
+              <span class={`badge badge-${cita.estado}`}>{cita.estado === 'no_show' ? 'No acudio' : cita.estado}</span>
             </a>
           ) : (
             <a href={`/admin/citas/nueva?fecha=${fechaParam}&hora=${hora}`} class="slot-empty">
@@ -103,6 +103,7 @@ const totalIngresos = citas.filter(c => c.estado === 'completada' && c.precio).r
     }
     .slot-completed { background: #e8f5e9; }
     .slot-cancelled { background: #fce4ec; opacity: 0.6; }
+    .slot-no-show { background: #fff3e0; }
     .slot-confirmed { background: #e3f2fd; }
     .slot-content {
       flex: 1;

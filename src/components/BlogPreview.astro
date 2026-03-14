@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { getReadingTime } from '../lib/reading-time';
 
 const posts = await getCollection('blog');
 const latestPosts = posts
@@ -38,7 +39,7 @@ function formatDate(date: Date): string {
             <div class="blog-card-meta">
               <span>{formatDate(post.data.date)}</span>
               <span>•</span>
-              <span>{post.data.readTime} min lectura</span>
+              <span>{post.data.readTime ?? getReadingTime(post.body)} min de lectura</span>
             </div>
           </div>
         </article>

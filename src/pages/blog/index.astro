@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
+import { getReadingTime } from '../../lib/reading-time';
 
 const posts = await getCollection('blog');
 const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -43,6 +45,7 @@ function formatDate(date: Date): string {
   <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
   <section class="page-header">
     <div class="container">
+      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Blog"}]} />
       <span class="section-tag">Blog</span>
       <h1>Consejos de salud y bienestar</h1>
       <p>Artículos útiles para cuidar tu cuerpo en el día a día</p>
@@ -78,7 +81,7 @@ function formatDate(date: Date): string {
               <div class="blog-card-meta">
                 <span>{formatDate(post.data.date)}</span>
                 <span>•</span>
-                <span>{post.data.readTime} min lectura</span>
+                <span>{post.data.readTime ?? getReadingTime(post.body)} min de lectura</span>
               </div>
               <a href={`/blog/${post.slug}`} class="blog-card-link">
                 Leer artículo

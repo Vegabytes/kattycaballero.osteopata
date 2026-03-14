@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CTASection from '../components/CTASection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const pageTitle = "¿Dónde te duele? | Mapa Corporal Interactivo - Katy Caballero";
 const pageDescription = "Descubre qué tratamiento necesitas según tu zona de dolor. Mapa corporal interactivo con diagnóstico orientativo y recomendación de tratamiento de osteopatía y masaje.";
@@ -65,6 +66,7 @@ const faqSchema = {
 
   <section class="page-header">
     <div class="container">
+      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "\u00bfD\u00f3nde te duele?"}]} />
       <span class="section-tag">HERRAMIENTA INTERACTIVA</span>
       <h1>¿Dónde te duele?</h1>
       <p class="page-subtitle">Haz clic en la zona del cuerpo donde sientes molestia y te recomendaremos el tratamiento más adecuado para ti.</p>

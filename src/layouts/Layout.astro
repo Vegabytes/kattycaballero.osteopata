@@ -138,10 +138,50 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "HealthAndBeautyBusiness",
+    "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
     "name": "Katy Caballero - Osteópata y Masajista",
     "description": "Centro de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid. Tratamientos de osteopatía estructural, visceral y craneal, masaje deportivo, tailandés y terapéutico.",
     "image": "https://katycaballeroosteopata.com/images/logo.png",
+    "medicalSpecialty": "Osteopathic",
+    "isAcceptingNewPatients": true,
+    "availableService": [
+      {
+        "@type": "MedicalTherapy",
+        "name": "Osteopatía estructural, visceral y sacrocraneal",
+        "description": "Tratamiento osteopático integral que aborda problemas estructurales, viscerales y craneales mediante técnicas manuales suaves.",
+        "url": "https://katycaballeroosteopata.com/servicios/osteopatia-alpedrete"
+      },
+      {
+        "@type": "MedicalTherapy",
+        "name": "Masaje deportivo",
+        "description": "Masaje terapéutico enfocado en la recuperación muscular y prevención de lesiones deportivas.",
+        "url": "https://katycaballeroosteopata.com/servicios/masaje-deportivo-alpedrete"
+      },
+      {
+        "@type": "MedicalTherapy",
+        "name": "Masaje tradicional tailandés",
+        "description": "Técnica milenaria de masaje que combina presiones, estiramientos y movilizaciones articulares.",
+        "url": "https://katycaballeroosteopata.com/servicios/masaje-tailandes-alpedrete"
+      },
+      {
+        "@type": "MedicalTherapy",
+        "name": "Masaje corporal relajante con aceite",
+        "description": "Masaje corporal con aceites esenciales para aliviar tensiones y promover la relajación profunda.",
+        "url": "https://katycaballeroosteopata.com/servicios/masaje-corporal-alpedrete"
+      },
+      {
+        "@type": "MedicalTherapy",
+        "name": "Masaje con pindas herbales",
+        "description": "Terapia que utiliza saquitos de hierbas medicinales calientes para aliviar dolores musculares y articulares.",
+        "url": "https://katycaballeroosteopata.com/servicios/masaje-pindas-herbales-alpedrete"
+      },
+      {
+        "@type": "MedicalTherapy",
+        "name": "Masaje para embarazadas",
+        "description": "Masaje prenatal adaptado para aliviar las molestias del embarazo de forma segura y relajante.",
+        "url": "https://katycaballeroosteopata.com/servicios/masaje-embarazadas-alpedrete"
+      }
+    ],
     "telephone": "+34643961065",
     "email": "katycaballero.osteopata@gmail.com",
     "address": {
@@ -265,7 +305,7 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
     "description": "Centro de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid",
     "inLanguage": "es",
     "publisher": {
-      "@type": "HealthAndBeautyBusiness",
+      "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
       "name": "Katy Caballero - Osteópata y Masajista",
       "url": "https://katycaballeroosteopata.com"
     }
@@ -335,20 +375,109 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
         });
       });
 
-      // WhatsApp click tracking (GA4)
-      document.addEventListener('click', (e) => {
-        const link = e.target.closest('a[href*="wa.me"]');
-        if (link && typeof gtag === 'function') {
-          const url = new URL(link.href);
-          const text = url.searchParams.get('text') || '';
+      // --- GA4 Conversion Tracking ---
+      const pagePath = window.location.pathname;
+
+      // 1. Click-based tracking via event delegation on body
+      document.body.addEventListener('click', (e) => {
+        if (typeof gtag !== 'function') return;
+        const anchor = (e.target as Element).closest('a');
+        if (!anchor) return;
+        const href = anchor.getAttribute('href') || '';
+        const linkText = (anchor.textContent || '').trim();
+
+        // WhatsApp clicks
+        if (href.includes('wa.me') || href.includes('whatsapp')) {
           gtag('event', 'whatsapp_click', {
-            event_category: 'conversion',
-            event_label: text,
-            link_url: link.href,
-            page_path: window.location.pathname
+            page_path: pagePath,
+            link_text: linkText
+          });
+        }
+
+        // Phone clicks
+        if (href.startsWith('tel:')) {
+          gtag('event', 'phone_click', {
+            page_path: pagePath
+          });
+        }
+
+        // Booking / Reservar clicks
+        if (href.includes('/reservar')) {
+          gtag('event', 'booking_click', {
+            page_path: pagePath,
+            link_text: linkText
           });
         }
       });
+
+      // 2. Page-view based events
+      if (typeof gtag === 'function') {
+        // Pricing page view
+        if (pagePath === '/tarifas' || pagePath === '/tarifas/') {
+          gtag('event', 'view_pricing');
+        }
+
+        // Service page view
+        const serviceMatch = pagePath.match(/^\/servicios\/([^/]+)/);
+        if (serviceMatch) {
+          gtag('event', 'view_service', {
+            service_name: serviceMatch[1]
+          });
+        }
+      }
+
+      // 3. Form submit tracking
+      if (typeof gtag === 'function') {
+        // Contact form on /contacto
+        if (pagePath === '/contacto' || pagePath === '/contacto/') {
+          const contactForms = document.querySelectorAll('form');
+          contactForms.forEach((form) => {
+            form.addEventListener('submit', () => {
+              gtag('event', 'contact_submit');
+            });
+          });
+        }
+
+        // Review form on /opiniones
+        if (pagePath === '/opiniones' || pagePath === '/opiniones/') {
+          const reviewForms = document.querySelectorAll('form');
+          reviewForms.forEach((form) => {
+            form.addEventListener('submit', () => {
+              gtag('event', 'review_submit');
+            });
+          });
+        }
+      }
+
+      // 4. Scroll depth tracking (25%, 50%, 75%, 100%)
+      if (typeof gtag === 'function') {
+        const scrollThresholds = [25, 50, 75, 100];
+        const firedThresholds = new Set<number>();
+
+        const onScroll = () => {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          if (docHeight <= 0) return;
+          const percent = Math.round((scrollTop / docHeight) * 100);
+
+          for (const threshold of scrollThresholds) {
+            if (percent >= threshold && !firedThresholds.has(threshold)) {
+              firedThresholds.add(threshold);
+              gtag('event', 'scroll_depth', {
+                percent: threshold,
+                page_path: pagePath
+              });
+            }
+          }
+
+          // Clean up once all thresholds fired
+          if (firedThresholds.size === scrollThresholds.length) {
+            window.removeEventListener('scroll', onScroll);
+          }
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
 
       // Scroll to top button
       const scrollBtn = document.getElementById('scroll-top');

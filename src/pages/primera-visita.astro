@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CTASection from '../components/CTASection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const pageTitle = "Primera Visita | Osteópata en Alpedrete";
 const pageDescription = "Todo lo que necesitas saber antes de tu primera visita de osteopatía en Alpedrete. Qué esperar, cómo llegar, horarios y preguntas frecuentes.";
@@ -51,6 +52,7 @@ const faqSchema = {
 
   <section class="page-hero">
     <div class="container">
+      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Primera Visita"}]} />
       <span class="section-tag">Primera visita</span>
       <h1>Tu primera visita</h1>
       <p>Todo lo que necesitas saber antes de venir</p>

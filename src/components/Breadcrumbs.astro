@@ -1,7 +1,7 @@
 ---
 interface BreadcrumbItem {
-  name: string;
-  url?: string;
+  label: string;
+  href?: string;
 }
 
 interface Props {
@@ -9,19 +9,32 @@ interface Props {
 }
 
 const { items } = Astro.props;
-if (!items || items.length === 0) return;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.label,
+    ...(item.href ? { "item": `https://katycaballeroosteopata.com${item.href}` } : {})
+  }))
+};
 ---
 
-<nav class="breadcrumbs" aria-label="Migas de pan">
-  <ol>
-    {items.map((item, i) => (
-      <li>
-        {item.url && i < items.length - 1 ? (
-          <a href={item.url}>{item.name}</a>
+<nav class="breadcrumbs" aria-label="Breadcrumbs">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <ol class="breadcrumbs-list">
+    {items.map((item, index) => (
+      <li class="breadcrumbs-item">
+        {item.href ? (
+          <a href={item.href} class="breadcrumbs-link">{item.label}</a>
         ) : (
-          <span aria-current={i === items.length - 1 ? "page" : undefined}>{item.name}</span>
+          <span class="breadcrumbs-current" aria-current="page">{item.label}</span>
         )}
-        {i < items.length - 1 && <span class="separator" aria-hidden="true">/</span>}
+        {index < items.length - 1 && (
+          <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+        )}
       </li>
     ))}
   </ol>
@@ -29,56 +42,62 @@ if (!items || items.length === 0) return;
 
 <style>
   .breadcrumbs {
-    padding: 16px 0;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding: 0.75rem 0 0;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    line-height: 1.4;
   }
 
-  .breadcrumbs ol {
+  .breadcrumbs-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0;
-    list-style: none;
-    margin: 0;
-    padding: 0;
   }
 
-  .breadcrumbs li {
+  .breadcrumbs-item {
     display: flex;
     align-items: center;
-    font-size: 0.85rem;
-    color: var(--color-text-light, #6b6b6b);
   }
 
-  .breadcrumbs a {
-    color: var(--color-primary, #5a7c59);
+  .breadcrumbs-link {
+    color: var(--color-primary);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.2s ease;
   }
 
-  .breadcrumbs a:hover {
+  .breadcrumbs-link:hover {
     color: var(--color-primary-dark, #4a6548);
     text-decoration: underline;
   }
 
-  .breadcrumbs span[aria-current="page"] {
-    color: var(--color-text, #3d3d3d);
-    font-weight: 500;
+  .breadcrumbs-current {
+    color: var(--color-text-light);
   }
 
-  .separator {
-    margin: 0 8px;
-    color: var(--color-text-light, #6b6b6b);
+  .breadcrumbs-separator {
+    margin: 0 0.4rem;
+    color: var(--color-text-light);
+    opacity: 0.6;
     font-size: 0.75rem;
   }
 
-  @media (max-width: 768px) {
-    .breadcrumbs {
-      padding-left: 20px;
-      padding-right: 20px;
-    }
+  :global([data-theme="dark"]) .breadcrumbs-link {
+    color: var(--color-primary-light, #8bb98a);
+  }
+
+  :global([data-theme="dark"]) .breadcrumbs-link:hover {
+    color: var(--color-primary, #6f9b6e);
+  }
+
+  :global([data-theme="dark"]) .breadcrumbs-current {
+    color: var(--color-text-light);
+  }
+
+  :global([data-theme="dark"]) .breadcrumbs-separator {
+    color: var(--color-text-light);
   }
 </style>

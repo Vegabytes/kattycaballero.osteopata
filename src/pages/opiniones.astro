@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CTASection from '../components/CTASection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const reviews = [
   {
@@ -111,6 +112,7 @@ const pageDescription = "Lee las opiniones reales de pacientes sobre Katy Caball
 
   <section class="page-header">
     <div class="container">
+      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Opiniones"}]} />
       <span class="section-tag">Opiniones</span>
       <h1>Lo que dicen mis pacientes</h1>
       <p>Reseñas reales de Google de personas que han confiado en mí para su bienestar</p>
