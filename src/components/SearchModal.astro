@@ -1,0 +1,434 @@
+<!-- Search Modal (Ctrl+K / Cmd+K) -->
+<div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-label="Buscar en el sitio" style="display:none;">
+  <div class="search-backdrop" id="search-backdrop"></div>
+  <div class="search-dialog">
+    <div class="search-input-wrapper">
+      <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search-input" class="search-input" placeholder="Buscar..." autocomplete="off" aria-label="Buscar en el sitio" />
+      <kbd class="search-kbd">Esc</kbd>
+    </div>
+    <div class="search-results" id="search-results" role="listbox" aria-label="Resultados de búsqueda">
+      <!-- Results populated by JS -->
+    </div>
+    <div class="search-footer">
+      <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> navegar</span>
+      <span><kbd>Enter</kbd> ir</span>
+      <span><kbd>Esc</kbd> cerrar</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const searchData = [
+    // Servicios
+    { title: 'Servicios', desc: 'Todos los servicios de osteopatía y masaje', url: '/servicios', category: 'Servicios' },
+    { title: 'Osteopatía', desc: 'Osteopatía estructural, visceral y sacrocraneal en Alpedrete', url: '/servicios/osteopatia-alpedrete', category: 'Servicios' },
+    { title: 'Masaje Corporal', desc: 'Masaje corporal relajante y terapéutico con aceite', url: '/servicios/masaje-corporal-alpedrete', category: 'Servicios' },
+    { title: 'Masaje Deportivo', desc: 'Masaje deportivo para lesiones y recuperación muscular', url: '/servicios/masaje-deportivo-alpedrete', category: 'Servicios' },
+    { title: 'Masaje Tailandés', desc: 'Masaje tradicional tailandés en Alpedrete', url: '/servicios/masaje-tailandes-alpedrete', category: 'Servicios' },
+    { title: 'Masaje para Embarazadas', desc: 'Masaje prenatal adaptado para embarazadas', url: '/servicios/masaje-embarazadas-alpedrete', category: 'Servicios' },
+    { title: 'Masaje con Pindas Herbales', desc: 'Masaje con compresas de hierbas tailandesas', url: '/servicios/masaje-pindas-herbales-alpedrete', category: 'Servicios' },
+    { title: 'Tarifas', desc: 'Precios de todos los tratamientos y bonos', url: '/tarifas', category: 'Servicios' },
+    { title: 'Bonos', desc: 'Bonos de sesiones con descuento', url: '/bonos', category: 'Servicios' },
+    { title: 'Regalar', desc: 'Tarjetas regalo para osteopatía y masajes', url: '/regalar', category: 'Servicios' },
+    { title: 'Reservar Cita', desc: 'Reserva tu cita online', url: '/reservar', category: 'Servicios' },
+
+    // Blog
+    { title: 'Blog', desc: 'Artículos sobre salud, osteopatía y bienestar', url: '/blog', category: 'Blog' },
+    { title: 'Dolor de Hombro: Causas y Tratamiento', desc: 'Causas comunes del dolor de hombro y cómo tratarlo', url: '/blog/dolor-hombro-causas-tratamiento', category: 'Blog' },
+    { title: 'Ejercicios para Dolor Lumbar en la Oficina', desc: 'Ejercicios sencillos para aliviar el dolor lumbar', url: '/blog/ejercicios-dolor-lumbar-oficina', category: 'Blog' },
+    { title: 'Contracturas Cervicales', desc: 'Causas y tratamiento de las contracturas cervicales', url: '/blog/contracturas-cervicales-causas-tratamiento', category: 'Blog' },
+    { title: 'Osteopatía para Deportistas', desc: 'Cómo la osteopatía ayuda a los deportistas', url: '/blog/osteopatia-para-deportistas', category: 'Blog' },
+    { title: 'Osteopatía Craneal', desc: 'Qué es la osteopatía craneal y sus beneficios', url: '/blog/osteopatia-craneal-que-es', category: 'Blog' },
+    { title: 'Beneficios del Masaje Terapéutico', desc: 'Todos los beneficios del masaje terapéutico', url: '/blog/beneficios-masaje-terapeutico', category: 'Blog' },
+    { title: 'Masaje Tailandés: Beneficios', desc: 'Beneficios del masaje tradicional tailandés', url: '/blog/masaje-tailandes-beneficios', category: 'Blog' },
+    { title: 'Estrés y Tensión Muscular', desc: 'Cómo el estrés afecta al cuerpo y cómo aliviarlo', url: '/blog/estres-tension-muscular-cuerpo', category: 'Blog' },
+    { title: 'Masaje para Embarazadas', desc: 'Beneficios y seguridad del masaje prenatal', url: '/blog/masaje-embarazadas-beneficios-seguridad', category: 'Blog' },
+    { title: 'Osteopatía vs Fisioterapia', desc: 'Diferencias entre osteopatía y fisioterapia', url: '/blog/diferencias-osteopatia-fisioterapia', category: 'Blog' },
+    { title: 'Ciática: Causas y Tratamiento', desc: 'Tratamiento de la ciática con osteopatía', url: '/blog/ciatica-causas-tratamiento-osteopatia', category: 'Blog' },
+    { title: 'Dolor de Espalda y Teletrabajo', desc: 'Prevenir el dolor de espalda trabajando desde casa', url: '/blog/dolor-espalda-teletrabajo', category: 'Blog' },
+    { title: 'Osteopatía Infantil', desc: 'Beneficios de la osteopatía para niños', url: '/blog/osteopatia-infantil-beneficios', category: 'Blog' },
+    { title: 'Masaje o Osteopatía: ¿Qué Elegir?', desc: 'Guía para elegir entre masaje y osteopatía', url: '/blog/masaje-o-osteopatia-que-elegir', category: 'Blog' },
+    { title: 'Estiramientos para Corredores', desc: 'Guía de estiramientos para corredores de montaña', url: '/blog/estiramientos-corredores-montana', category: 'Blog' },
+    { title: 'Dolor de Rodilla', desc: 'Causas y tratamiento del dolor de rodilla', url: '/blog/dolor-rodilla-causas-tratamiento-osteopatia', category: 'Blog' },
+    { title: 'Hernia Discal y Osteopatía', desc: 'Tratamiento de la hernia discal con osteopatía', url: '/blog/hernia-discal-osteopatia-tratamiento', category: 'Blog' },
+    { title: 'Dolor de Cabeza y Migrañas', desc: 'Tratamiento osteopático para cefaleas y migrañas', url: '/blog/dolor-cabeza-migranas-osteopatia', category: 'Blog' },
+    { title: 'Bruxismo y Dolor Mandibular', desc: 'Tratamiento del bruxismo con osteopatía', url: '/blog/bruxismo-dolor-mandibula-osteopatia', category: 'Blog' },
+    { title: 'Osteopatía Visceral', desc: 'Qué es la osteopatía visceral y sus aplicaciones', url: '/blog/osteopatia-visceral-que-es', category: 'Blog' },
+    { title: 'Fascitis Plantar', desc: 'Causas y tratamiento de la fascitis plantar', url: '/blog/fascitis-plantar-causas-tratamiento', category: 'Blog' },
+    { title: 'Síndrome del Piramidal', desc: 'Causas y síntomas del síndrome piramidal', url: '/blog/sindrome-piramidal-causas-sintomas', category: 'Blog' },
+    { title: 'Recuperación Deportiva en la Sierra', desc: 'Servicios de recuperación deportiva en Sierra de Madrid', url: '/blog/recuperacion-deportiva-sierra-madrid', category: 'Blog' },
+    { title: 'Dolor de Espalda: Ejercicios en Casa', desc: 'Ejercicios para aliviar el dolor de espalda en casa', url: '/blog/dolor-espalda-ejercicios-casa', category: 'Blog' },
+
+    // Herramientas
+    { title: '¿Dónde te duele?', desc: 'Mapa interactivo para localizar tu dolor', url: '/donde-te-duele', category: 'Herramientas' },
+    { title: '¿Qué Tratamiento Necesito?', desc: 'Test para descubrir el tratamiento ideal para ti', url: '/test-tratamiento', category: 'Herramientas' },
+    { title: 'Test de Postura', desc: 'Evalúa tu postura y recibe recomendaciones', url: '/test-postura', category: 'Herramientas' },
+    { title: 'Guía de Estiramientos', desc: 'Guía completa de estiramientos por zona corporal', url: '/guia-estiramientos', category: 'Herramientas' },
+
+    // Información
+    { title: 'Inicio', desc: 'Página principal de Katy Caballero Osteópata', url: '/', category: 'Información' },
+    { title: 'Sobre Mí', desc: 'Conoce a Katy Caballero: formación y experiencia', url: '/sobre-mi', category: 'Información' },
+    { title: 'Primera Visita', desc: 'Qué esperar en tu primera visita de osteopatía', url: '/primera-visita', category: 'Información' },
+    { title: 'Opiniones', desc: 'Reseñas reales de pacientes en Google', url: '/opiniones', category: 'Información' },
+    { title: 'Contacto', desc: 'Contacta con la consulta de osteopatía', url: '/contacto', category: 'Información' },
+    { title: 'Preguntas Frecuentes', desc: 'Respuestas a las preguntas más comunes', url: '/preguntas-frecuentes', category: 'Información' },
+    { title: 'Promociones', desc: 'Ofertas y promociones actuales', url: '/promociones', category: 'Información' },
+    { title: 'Mapa del Sitio', desc: 'Todas las páginas del sitio web', url: '/mapa-del-sitio', category: 'Información' },
+  ];
+
+  const categoryOrder = ['Servicios', 'Blog', 'Herramientas', 'Información'];
+
+  const modal = document.getElementById('search-modal') as HTMLElement;
+  const backdrop = document.getElementById('search-backdrop') as HTMLElement;
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const resultsContainer = document.getElementById('search-results') as HTMLElement;
+  let activeIndex = -1;
+  let filteredResults: typeof searchData = [];
+
+  function openSearch() {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    input.value = '';
+    activeIndex = -1;
+    renderResults('');
+    requestAnimationFrame(() => input.focus());
+  }
+
+  function closeSearch() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function normalize(str: string): string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function renderResults(query: string) {
+    const q = normalize(query.trim());
+
+    if (q) {
+      filteredResults = searchData.filter(item =>
+        normalize(item.title).includes(q) ||
+        normalize(item.desc).includes(q) ||
+        normalize(item.category).includes(q)
+      );
+    } else {
+      filteredResults = [...searchData];
+    }
+
+    // Group by category
+    const grouped: Record<string, typeof searchData> = {};
+    for (const cat of categoryOrder) {
+      const items = filteredResults.filter(r => r.category === cat);
+      if (items.length > 0) grouped[cat] = items;
+    }
+
+    if (filteredResults.length === 0) {
+      resultsContainer.innerHTML = '<div class="search-empty">No se encontraron resultados</div>';
+      return;
+    }
+
+    let html = '';
+    let globalIndex = 0;
+    for (const [cat, items] of Object.entries(grouped)) {
+      html += `<div class="search-category">${cat}</div>`;
+      for (const item of items) {
+        html += `<a href="${item.url}" class="search-result-item" role="option" data-index="${globalIndex}" aria-selected="false">
+          <span class="search-result-title">${highlightMatch(item.title, q)}</span>
+          <span class="search-result-desc">${highlightMatch(item.desc, q)}</span>
+        </a>`;
+        globalIndex++;
+      }
+    }
+
+    resultsContainer.innerHTML = html;
+    activeIndex = -1;
+  }
+
+  function highlightMatch(text: string, query: string): string {
+    if (!query) return text;
+    const normalizedText = normalize(text);
+    const idx = normalizedText.indexOf(query);
+    if (idx === -1) return text;
+    const before = text.slice(0, idx);
+    const match = text.slice(idx, idx + query.length);
+    const after = text.slice(idx + query.length);
+    return `${before}<mark>${match}</mark>${after}`;
+  }
+
+  function updateActive() {
+    const items = resultsContainer.querySelectorAll<HTMLAnchorElement>('.search-result-item');
+    items.forEach((item, i) => {
+      if (i === activeIndex) {
+        item.classList.add('active');
+        item.setAttribute('aria-selected', 'true');
+        item.scrollIntoView({ block: 'nearest' });
+      } else {
+        item.classList.remove('active');
+        item.setAttribute('aria-selected', 'false');
+      }
+    });
+  }
+
+  // Event listeners
+  input?.addEventListener('input', () => {
+    renderResults(input.value);
+  });
+
+  input?.addEventListener('keydown', (e) => {
+    const items = resultsContainer.querySelectorAll<HTMLAnchorElement>('.search-result-item');
+    const count = items.length;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIndex = (activeIndex + 1) % count;
+      updateActive();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIndex = activeIndex <= 0 ? count - 1 : activeIndex - 1;
+      updateActive();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (activeIndex >= 0 && items[activeIndex]) {
+        window.location.href = items[activeIndex].getAttribute('href') || '/';
+      }
+    }
+  });
+
+  backdrop?.addEventListener('click', closeSearch);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeSearch();
+      return;
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      if (modal.style.display === 'flex') {
+        closeSearch();
+      } else {
+        openSearch();
+      }
+    }
+  });
+
+  // Click on result items (event delegation)
+  resultsContainer?.addEventListener('click', (e) => {
+    const item = (e.target as HTMLElement).closest('.search-result-item') as HTMLAnchorElement;
+    if (item) {
+      closeSearch();
+    }
+  });
+
+  // Expose openSearch globally for the header button
+  (window as any).__openSearch = openSearch;
+</script>
+
+<style>
+  .search-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 12vh;
+  }
+
+  .search-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  .search-dialog {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    background: var(--color-warm-white);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 70vh;
+  }
+
+  .search-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(90, 124, 89, 0.1);
+  }
+
+  .search-input-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+  }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    font-family: inherit;
+    background: transparent;
+    color: var(--color-text);
+  }
+
+  .search-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .search-kbd {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(90, 124, 89, 0.08);
+    color: var(--color-text-muted);
+    border: 1px solid rgba(90, 124, 89, 0.15);
+    font-family: inherit;
+    line-height: 1;
+  }
+
+  .search-results {
+    overflow-y: auto;
+    flex: 1;
+    padding: 8px;
+  }
+
+  .search-category {
+    padding: 10px 12px 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .search-result-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.1s ease;
+  }
+
+  .search-result-item:hover,
+  .search-result-item.active {
+    background: rgba(90, 124, 89, 0.08);
+  }
+
+  .search-result-item::after {
+    display: none !important;
+  }
+
+  .search-result-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text);
+  }
+
+  .search-result-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    line-height: 1.4;
+  }
+
+  .search-result-item :global(mark) {
+    background: rgba(196, 163, 90, 0.3);
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  .search-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .search-footer {
+    display: flex;
+    gap: 20px;
+    padding: 10px 20px;
+    border-top: 1px solid rgba(90, 124, 89, 0.1);
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .search-footer kbd {
+    font-size: 0.72rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(90, 124, 89, 0.08);
+    border: 1px solid rgba(90, 124, 89, 0.15);
+    font-family: inherit;
+    margin-right: 3px;
+  }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .search-dialog {
+    background: #1e1e2a;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  :global([data-theme="dark"]) .search-input-wrapper {
+    border-bottom-color: rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .search-input {
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) .search-kbd,
+  :global([data-theme="dark"]) .search-footer kbd {
+    background: rgba(111, 155, 110, 0.1);
+    border-color: rgba(111, 155, 110, 0.2);
+    color: #aaa;
+  }
+
+  :global([data-theme="dark"]) .search-result-item:hover,
+  :global([data-theme="dark"]) .search-result-item.active {
+    background: rgba(111, 155, 110, 0.1);
+  }
+
+  :global([data-theme="dark"]) .search-result-title {
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) .search-result-desc {
+    color: #aaa;
+  }
+
+  :global([data-theme="dark"]) .search-result-item :global(mark) {
+    background: rgba(196, 163, 90, 0.35);
+  }
+
+  :global([data-theme="dark"]) .search-footer {
+    border-top-color: rgba(111, 155, 110, 0.15);
+  }
+
+  @media (max-width: 640px) {
+    .search-modal {
+      padding-top: 5vh;
+    }
+
+    .search-dialog {
+      max-height: 80vh;
+    }
+
+    .search-footer {
+      display: none;
+    }
+  }
+</style>

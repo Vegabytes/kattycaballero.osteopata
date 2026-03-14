@@ -259,6 +259,64 @@ try {
   console.error('DB error fetching birthdays:', e);
 }
 
+// Weekly summary (Mon-Sun)
+let semanaCitasTotal = 0;
+let semanaCompletadas = 0;
+let semanaCanceladas = 0;
+let semanaIngresos = 0;
+let semanaAnteriorCitas = 0;
+let semanaAnteriorCompletadas = 0;
+let semanaAnteriorCanceladas = 0;
+let semanaAnteriorIngresos = 0;
+
+try {
+  const db = (Astro.locals as any).runtime.env.DB;
+
+  // Current week (Monday to Sunday)
+  const swTotal = await db.prepare(
+    "SELECT COUNT(*) as total FROM citas WHERE fecha >= date('now', 'weekday 1', '-7 days') AND fecha <= date('now', 'weekday 0')"
+  ).first();
+  semanaCitasTotal = (swTotal as any)?.total || 0;
+
+  const swComp = await db.prepare(
+    "SELECT COUNT(*) as total FROM citas WHERE estado = 'completada' AND fecha >= date('now', 'weekday 1', '-7 days') AND fecha <= date('now', 'weekday 0')"
+  ).first();
+  semanaCompletadas = (swComp as any)?.total || 0;
+
+  const swCanc = await db.prepare(
+    "SELECT COUNT(*) as total FROM citas WHERE estado = 'cancelada' AND fecha >= date('now', 'weekday 1', '-7 days') AND fecha <= date('now', 'weekday 0')"
+  ).first();
+  semanaCanceladas = (swCanc as any)?.total || 0;
+
+  const swIng = await db.prepare(
+    "SELECT COALESCE(SUM(precio), 0) as total FROM citas WHERE estado = 'completada' AND precio > 0 AND fecha >= date('now', 'weekday 1', '-7 days') AND fecha <= date('now', 'weekday 0')"
+  ).first();
+  semanaIngresos = (swIng as any)?.total || 0;
+
+  // Previous week
+  const pwTotal = await db.prepare(
+    "SELECT COUNT(*) as total FROM citas WHERE fecha >= date('now', 'weekday 1', '-14 days') AND fecha < date('now', 'weekday 1', '-7 days')"
+  ).first();
+  semanaAnteriorCitas = (pwTotal as any)?.total || 0;
+
+  const pwComp = await db.prepare(
+    "SELECT COUNT(*) as total FROM citas WHERE estado = 'completada' AND fecha >= date('now', 'weekday 1', '-14 days') AND fecha < date('now', 'weekday 1', '-7 days')"
+  ).first();
+  semanaAnteriorCompletadas = (pwComp as any)?.total || 0;
+
+  const pwCanc = await db.prepare(
+    "SELECT COUNT(*) as total FROM citas WHERE estado = 'cancelada' AND fecha >= date('now', 'weekday 1', '-14 days') AND fecha < date('now', 'weekday 1', '-7 days')"
+  ).first();
+  semanaAnteriorCanceladas = (pwCanc as any)?.total || 0;
+
+  const pwIng = await db.prepare(
+    "SELECT COALESCE(SUM(precio), 0) as total FROM citas WHERE estado = 'completada' AND precio > 0 AND fecha >= date('now', 'weekday 1', '-14 days') AND fecha < date('now', 'weekday 1', '-7 days')"
+  ).first();
+  semanaAnteriorIngresos = (pwIng as any)?.total || 0;
+} catch (e: any) {
+  console.error('DB error fetching weekly summary:', e);
+}
+
 // Occupancy rate this week (L-V: 8 slots/day, S: 4 = 44 total)
 let citasSemanaOcupacion = 0;
 const slotsSemanales = 44;
@@ -315,6 +373,55 @@ try {
       ))}
     </div>
   )}
+
+  <!-- Resumen de la semana -->
+  <div class="card weekly-summary-card">
+    <div class="page-header">
+      <h2>Resumen de la semana</h2>
+    </div>
+    <div class="weekly-stats-grid">
+      <div class="weekly-stat">
+        <div class="weekly-stat-value">{semanaCitasTotal}</div>
+        <div class="weekly-stat-label">Citas totales</div>
+        {semanaAnteriorCitas > 0 && (
+          <div class={`weekly-stat-compare ${semanaCitasTotal >= semanaAnteriorCitas ? 'up' : 'down'}`}>
+            <span class="weekly-arrow">{semanaCitasTotal >= semanaAnteriorCitas ? '\u2191' : '\u2193'}</span>
+            {semanaCitasTotal >= semanaAnteriorCitas ? '+' : ''}{semanaCitasTotal - semanaAnteriorCitas} vs anterior
+          </div>
+        )}
+      </div>
+      <div class="weekly-stat">
+        <div class="weekly-stat-value">{semanaCompletadas}</div>
+        <div class="weekly-stat-label">Completadas</div>
+        {semanaAnteriorCompletadas > 0 && (
+          <div class={`weekly-stat-compare ${semanaCompletadas >= semanaAnteriorCompletadas ? 'up' : 'down'}`}>
+            <span class="weekly-arrow">{semanaCompletadas >= semanaAnteriorCompletadas ? '\u2191' : '\u2193'}</span>
+            {semanaCompletadas >= semanaAnteriorCompletadas ? '+' : ''}{semanaCompletadas - semanaAnteriorCompletadas} vs anterior
+          </div>
+        )}
+      </div>
+      <div class="weekly-stat">
+        <div class="weekly-stat-value">{semanaCanceladas}</div>
+        <div class="weekly-stat-label">Canceladas</div>
+        {semanaAnteriorCanceladas > 0 && (
+          <div class={`weekly-stat-compare ${semanaCanceladas <= semanaAnteriorCanceladas ? 'up' : 'down'}`}>
+            <span class="weekly-arrow">{semanaCanceladas <= semanaAnteriorCanceladas ? '\u2193' : '\u2191'}</span>
+            {semanaCanceladas <= semanaAnteriorCanceladas ? '' : '+'}{semanaCanceladas - semanaAnteriorCanceladas} vs anterior
+          </div>
+        )}
+      </div>
+      <div class="weekly-stat">
+        <div class="weekly-stat-value">{semanaIngresos.toFixed(0)}&euro;</div>
+        <div class="weekly-stat-label">Ingresos</div>
+        {semanaAnteriorIngresos > 0 && (
+          <div class={`weekly-stat-compare ${semanaIngresos >= semanaAnteriorIngresos ? 'up' : 'down'}`}>
+            <span class="weekly-arrow">{semanaIngresos >= semanaAnteriorIngresos ? '\u2191' : '\u2193'}</span>
+            {semanaIngresos >= semanaAnteriorIngresos ? '+' : ''}{(semanaIngresos - semanaAnteriorIngresos).toFixed(0)}&euro; vs anterior
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
 
   {reservasWeb.length > 0 && (
     <div class="card reservas-web-card">
@@ -1249,5 +1356,67 @@ try {
     align-items: center;
     gap: 8px;
     flex-shrink: 0;
+  }
+
+  /* Weekly summary */
+  .weekly-summary-card {
+    margin-bottom: 20px;
+    border-left: 4px solid var(--admin-primary, #5a7c59);
+  }
+
+  .weekly-summary-card .page-header h2 {
+    font-size: 1.05rem;
+  }
+
+  .weekly-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .weekly-stat {
+    background: #f8f6f0;
+    padding: 16px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .weekly-stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.2;
+  }
+
+  .weekly-stat-label {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  .weekly-stat-compare {
+    font-size: 0.75rem;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  .weekly-stat-compare.up {
+    color: #4caf50;
+  }
+
+  .weekly-stat-compare.down {
+    color: #e65100;
+  }
+
+  .weekly-arrow {
+    font-size: 0.85rem;
+    margin-right: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .weekly-stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 </style>
