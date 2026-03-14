@@ -1,0 +1,766 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Osteópata en la Sierra Noroeste de Madrid | Katy Caballero - Alpedrete";
+const pageDescription = "Osteópata y masajista en la Sierra Noroeste de Madrid. Consulta en Alpedrete. Atiendo Collado Villalba, Moralzarzal, Galapagar, Cercedilla, Guadarrama, San Lorenzo de El Escorial, Las Rozas, Torrelodones y más. Desde 20€.";
+const pageKeywords = "osteopata sierra noroeste madrid, osteopatia sierra de guadarrama, masajista sierra madrid, osteopata alpedrete, masaje sierra noroeste, osteopata collado villalba, osteopata moralzarzal, osteopata galapagar, osteopata guadarrama, masaje sierra de guadarrama, osteopata las rozas, osteopata torrelodones";
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "description": "Centro de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid. Atendemos toda la Sierra de Guadarrama.",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "telephone": "+34643961065",
+  "email": "katycaballero.osteopata@gmail.com",
+  "url": "https://katycaballeroosteopata.com/osteopata-sierra-noroeste-madrid",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Río Guadarrama 2",
+    "addressLocality": "Alpedrete",
+    "addressRegion": "Madrid",
+    "postalCode": "28430",
+    "addressCountry": "ES"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "40.6631",
+    "longitude": "-4.0270"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Alpedrete" },
+    { "@type": "City", "name": "Collado Villalba" },
+    { "@type": "City", "name": "Moralzarzal" },
+    { "@type": "City", "name": "Galapagar" },
+    { "@type": "City", "name": "Cercedilla" },
+    { "@type": "City", "name": "Collado Mediano" },
+    { "@type": "City", "name": "Guadarrama" },
+    { "@type": "City", "name": "San Lorenzo de El Escorial" },
+    { "@type": "City", "name": "Las Rozas" },
+    { "@type": "City", "name": "Torrelodones" },
+    { "@type": "City", "name": "Becerril de la Sierra" },
+    { "@type": "City", "name": "Navacerrada" }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "14:00"
+    }
+  ],
+  "priceRange": "€€"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué pueblos de la Sierra Noroeste de Madrid atiende la consulta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Atiendo pacientes de toda la Sierra Noroeste: Alpedrete, Collado Villalba, Moralzarzal, Galapagar, Cercedilla, Collado Mediano, Guadarrama, San Lorenzo de El Escorial, Las Rozas, Torrelodones, Becerril de la Sierra y Navacerrada. La consulta está en Alpedrete, centro neurálgico de la zona."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto se tarda en llegar desde los pueblos de la Sierra?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Los tiempos aproximados en coche son: Collado Villalba 8 min, Moralzarzal 10 min, Galapagar 12 min, Collado Mediano 12 min, Cercedilla 20 min, Guadarrama 10 min, Becerril de la Sierra 8 min, Navacerrada 15 min, San Lorenzo de El Escorial 20 min, Las Rozas 25 min, Torrelodones 20 min."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué servicios ofreces en tu consulta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ofrezco osteopatía integral (40€/55min), masaje deportivo (20€/30min), masaje corporal con aceite (40€/60min), masaje tailandés (45€/60min), pindas herbales (70€/90min) y masaje para embarazadas (40€/60min)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Por qué elegir tu consulta frente a otras de la Sierra?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Más de 12 años de experiencia, atención totalmente personalizada, precios accesibles desde 20€, ubicación céntrica en la Sierra con parking gratuito, y horario amplio de lunes a sábado."
+      }
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Osteópata Sierra Noroeste de Madrid" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="town-hero">
+    <div class="container">
+      <span class="section-tag">Sierra Noroeste de Madrid</span>
+      <h1>Osteópata en la Sierra Noroeste de Madrid</h1>
+      <p class="town-hero-subtitle">Consulta de osteopatía y masajes en <strong>Alpedrete</strong>, en el corazón de la Sierra de Guadarrama. Atiendo toda la zona noroeste de Madrid.</p>
+      <div class="town-hero-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Reservar por WhatsApp</a>
+        <a href="/reservar" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-intro">
+    <div class="container">
+      <div class="town-intro-content">
+        <h2>Tu osteópata de referencia en la Sierra de Guadarrama</h2>
+        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia. Mi consulta está en <strong>Alpedrete</strong>, ubicación privilegiada en el centro de la Sierra Noroeste de Madrid que me permite atender con facilidad a pacientes de toda la zona: desde Collado Villalba y Moralzarzal hasta Cercedilla, Guadarrama o San Lorenzo de El Escorial.</p>
+        <p>La Sierra Noroeste de Madrid es una zona activa, deportista y con una calidad de vida envidiable. Mis pacientes son senderistas, ciclistas, familias jóvenes, teletrabajadores con tensiones posturales y personas que simplemente quieren cuidarse. Para todos ellos, ofrezco tratamientos profesionales, personalizados y a precios accesibles.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-services">
+    <div class="container">
+      <h2>Servicios de osteopatía y masaje en la Sierra Noroeste</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Osteopatía</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Tratamiento integral: estructural, visceral y sacrocraneal. Para dolor de espalda, cervicales, migrañas, ciática y más.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Deportivo</h3>
+          <p class="service-meta">20€ · 30 min</p>
+          <p>Recuperación muscular, prevención de lesiones y mejora del rendimiento. Ideal para deportistas de la Sierra de Guadarrama.</p>
+          <a href="/servicios/masaje-deportivo-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Corporal con Aceite</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Relajación profunda con aceites esenciales. Alivia tensiones, nutre la piel y mejora tu descanso.</p>
+          <a href="/servicios/masaje-corporal-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Tailandés</h3>
+          <p class="service-meta">45€ · 60 min</p>
+          <p>Técnica milenaria con estiramientos asistidos y presiones rítmicas. Mejora la flexibilidad y la energía vital.</p>
+          <a href="/servicios/masaje-tailandes-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Pindas Herbales</h3>
+          <p class="service-meta">70€ · 90 min</p>
+          <p>Saquitos de hierbas medicinales calientes con propiedades antiinflamatorias y relajantes. Experiencia premium.</p>
+          <a href="/servicios/masaje-pindas-herbales-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje para Embarazadas</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Técnicas suaves adaptadas a cada trimestre desde el 4º mes. Alivio lumbar, piernas ligeras y bienestar.</p>
+          <a href="/servicios/masaje-embarazadas-alpedrete" class="service-link">Más información</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-areas">
+    <div class="container">
+      <h2>Pueblos de la Sierra Noroeste que atendemos</h2>
+      <p class="areas-subtitle">Desde Alpedrete, mi consulta está a pocos minutos de los principales pueblos de la Sierra Noroeste de Madrid y la Sierra de Guadarrama.</p>
+      <div class="areas-grid">
+        <a href="/osteopata-collado-villalba" class="area-card">
+          <h3>Collado Villalba</h3>
+          <span class="area-time">8 min en coche</span>
+        </a>
+        <a href="/osteopata-moralzarzal" class="area-card">
+          <h3>Moralzarzal</h3>
+          <span class="area-time">10 min en coche</span>
+        </a>
+        <a href="/masaje-galapagar" class="area-card">
+          <h3>Galapagar</h3>
+          <span class="area-time">12 min en coche</span>
+        </a>
+        <a href="/masaje-collado-mediano" class="area-card">
+          <h3>Collado Mediano</h3>
+          <span class="area-time">12 min en coche</span>
+        </a>
+        <a href="/osteopata-cercedilla" class="area-card">
+          <h3>Cercedilla</h3>
+          <span class="area-time">20 min en coche</span>
+        </a>
+        <div class="area-card">
+          <h3>Guadarrama</h3>
+          <span class="area-time">10 min en coche</span>
+        </div>
+        <div class="area-card">
+          <h3>Becerril de la Sierra</h3>
+          <span class="area-time">8 min en coche</span>
+        </div>
+        <div class="area-card">
+          <h3>Navacerrada</h3>
+          <span class="area-time">15 min en coche</span>
+        </div>
+        <div class="area-card">
+          <h3>San Lorenzo de El Escorial</h3>
+          <span class="area-time">20 min en coche</span>
+        </div>
+        <div class="area-card">
+          <h3>Las Rozas</h3>
+          <span class="area-time">25 min en coche</span>
+        </div>
+        <div class="area-card">
+          <h3>Torrelodones</h3>
+          <span class="area-time">20 min en coche</span>
+        </div>
+        <div class="area-card area-card--home">
+          <h3>Alpedrete</h3>
+          <span class="area-time">Aquí estamos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-reasons">
+    <div class="container">
+      <h2>¿Por qué elegir mi consulta en la Sierra Noroeste?</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Ubicación céntrica en la Sierra</h3>
+          <p>Alpedrete está en el corazón de la Sierra Noroeste de Madrid, a pocos minutos de todos los pueblos principales. Fácil acceso y parking gratuito.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Más de 12 años de experiencia</h3>
+          <p>Formación en osteopatía, masaje tailandés y múltiples técnicas manuales. Más de una década cuidando a los vecinos de la Sierra.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Atención personalizada</h3>
+          <p>No soy una franquicia ni un centro con rotación de personal. Siempre te atiende la misma profesional, que conoce tu historial y evolución.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Precios accesibles</h3>
+          <p>Desde 20€ el masaje deportivo y 40€ la sesión de osteopatía. Calidad profesional a precios justos para la zona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-directions">
+    <div class="container">
+      <div class="directions-grid">
+        <div class="directions-text">
+          <h2>Cómo llegar a la consulta en Alpedrete</h2>
+          <div class="directions-info">
+            <div class="direction-detail">
+              <strong>Desde la A-6 / AP-6</strong>
+              <p>Toma la salida hacia Collado Villalba / Alpedrete por la M-601. La consulta está en Calle Río Guadarrama 2, Alpedrete.</p>
+            </div>
+            <div class="direction-detail">
+              <strong>Desde la M-601</strong>
+              <p>La M-601 conecta directamente Collado Villalba, Alpedrete, Collado Mediano y Cercedilla. La consulta está sobre esta misma vía.</p>
+            </div>
+            <div class="direction-detail">
+              <strong>Dirección</strong>
+              <p>Calle Río Guadarrama 2, 28430 Alpedrete, Madrid</p>
+            </div>
+            <div class="direction-detail">
+              <strong>Horario</strong>
+              <p>Lunes a Viernes: 9:00 - 20:00<br>Sábados: 10:00 - 14:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="directions-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.5!2d-4.027!3d40.663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189d3f2e8e9e1%3A0x1!2sCalle%20R%C3%ADo%20Guadarrama%2C%202%2C%2028430%20Alpedrete%2C%20Madrid!5e0!3m2!1ses!2ses!4v1"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Ubicación de la consulta en Alpedrete, Sierra Noroeste de Madrid">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-cta">
+    <div class="container">
+      <h2>Reserva tu cita en la Sierra Noroeste</h2>
+      <p>Estés donde estés en la Sierra, estoy cerca de ti. Contacta conmigo y te atenderé lo antes posible.</p>
+      <div class="town-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp: 643 961 065</a>
+        <a href="/reservar" class="btn btn-outline">Reservar online</a>
+        <a href="tel:+34643961065" class="btn btn-outline">Llamar</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>¿Qué pueblos de la Sierra Noroeste atiende la consulta?</summary>
+          <p>Atiendo pacientes de toda la Sierra Noroeste: Alpedrete, Collado Villalba, Moralzarzal, Galapagar, Cercedilla, Collado Mediano, Guadarrama, San Lorenzo de El Escorial, Las Rozas, Torrelodones, Becerril de la Sierra y Navacerrada.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuánto se tarda en llegar desde los pueblos de la Sierra?</summary>
+          <p>Collado Villalba 8 min, Moralzarzal 10 min, Galapagar 12 min, Collado Mediano 12 min, Cercedilla 20 min, Guadarrama 10 min, Becerril 8 min, Navacerrada 15 min, San Lorenzo de El Escorial 20 min, Las Rozas 25 min, Torrelodones 20 min.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué servicios ofreces en tu consulta?</summary>
+          <p>Osteopatía integral (40€/55min), masaje deportivo (20€/30min), masaje corporal con aceite (40€/60min), masaje tailandés (45€/60min), pindas herbales (70€/90min) y masaje para embarazadas (40€/60min).</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cómo puedo reservar cita?</summary>
+          <p>Puedes reservar por <a href="https://wa.me/34643961065" target="_blank" rel="noopener noreferrer">WhatsApp</a>, llamando al <a href="tel:+34643961065">643 961 065</a>, o a través de la <a href="/reservar">reserva online</a>. Te confirmo la cita rápidamente.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .town-hero {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .town-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 16px;
+    color: var(--color-text);
+  }
+
+  .town-hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-light);
+    max-width: 650px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  .town-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .town-intro {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .town-intro h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .town-intro p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    margin-bottom: 16px;
+  }
+
+  .town-services {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .town-services h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--color-warm-white);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .service-card h3 {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    margin-bottom: 8px;
+  }
+
+  .service-meta {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .service-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .service-link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  .town-areas {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-areas h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 12px;
+  }
+
+  .areas-subtitle {
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 1.05rem;
+    margin-bottom: 48px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .areas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .area-card {
+    background: var(--color-cream);
+    border-radius: 14px;
+    padding: 24px 20px;
+    text-align: center;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+    transition: var(--transition);
+    text-decoration: none;
+    display: block;
+  }
+
+  a.area-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--color-primary-light);
+  }
+
+  .area-card h3 {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin-bottom: 6px;
+    font-family: var(--font-body);
+    font-weight: 600;
+  }
+
+  a.area-card h3 {
+    color: var(--color-primary-dark);
+  }
+
+  .area-time {
+    font-size: 0.82rem;
+    color: var(--color-text-light);
+  }
+
+  .area-card--home {
+    background: rgba(90, 124, 89, 0.08);
+    border-color: rgba(90, 124, 89, 0.2);
+  }
+
+  .area-card--home h3 {
+    color: var(--color-primary-dark);
+  }
+
+  .area-card--home .area-time {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .town-reasons {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .town-reasons h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .reason-card {
+    background: var(--color-warm-white);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+  }
+
+  .reason-card h3 {
+    font-size: 1.05rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 10px;
+  }
+
+  .reason-card p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+  }
+
+  .town-directions {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .directions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .directions-text h2 {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    margin-bottom: 28px;
+  }
+
+  .directions-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .direction-detail strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin-bottom: 4px;
+  }
+
+  .direction-detail p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+
+  .directions-map {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    min-height: 350px;
+  }
+
+  .directions-map iframe {
+    display: block;
+    width: 100%;
+    min-height: 350px;
+    height: 100%;
+  }
+
+  .town-cta {
+    padding: var(--section-padding) 0;
+    background: var(--color-primary);
+    text-align: center;
+    color: white;
+  }
+
+  .town-cta h2 {
+    color: white;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 16px;
+  }
+
+  .town-cta p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+    margin-bottom: 32px;
+  }
+
+  .town-cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .town-cta .btn-primary {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .town-cta .btn-primary:hover {
+    background: var(--color-cream);
+  }
+
+  .town-cta .btn-outline {
+    border-color: white;
+    color: white;
+  }
+
+  .town-cta .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .town-faq {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .town-faq h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: var(--color-warm-white);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: var(--transition);
+  }
+
+  .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .faq-item summary {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .faq-item summary:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-item p {
+    padding: 0 25px 20px;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  .faq-item a {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .areas-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .reasons-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .directions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .directions-map {
+      min-height: 280px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .areas-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
