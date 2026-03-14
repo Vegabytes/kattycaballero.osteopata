@@ -18,14 +18,19 @@ const zones = [
   { href: '/osteopata-becerril-de-la-sierra', label: 'Becerril de la Sierra' },
   { href: '/osteopata-collado-mediano', label: 'Collado Mediano' },
   { href: '/osteopata-los-molinos', label: 'Los Molinos' },
+  { href: '/osteopata-cercedilla', label: 'Cercedilla' },
+  { href: '/osteopata-sierra-noroeste-madrid', label: 'Sierra Noroeste' },
 ];
 
 const links = [
   { href: '/', label: 'Inicio' },
   { href: '/sobre-mi', label: 'Sobre Mí' },
   { href: '/tarifas', label: 'Tarifas' },
+  { href: '/primera-visita', label: 'Primera Visita' },
+  { href: '/bonos', label: 'Bonos' },
   { href: '/blog', label: 'Blog' },
   { href: '/contacto', label: 'Contacto' },
+  { href: '/preguntas-frecuentes', label: 'Preguntas Frecuentes' },
   { href: '/reservar', label: 'Reservar Cita' },
 ];
 
@@ -122,6 +127,14 @@ const tools = [
       </div>
     </div>
     
+    <div class="footer-review">
+      <p>Tu opinión nos ayuda a mejorar</p>
+      <a href="https://search.google.com/local/writereview?placeid=ChIJYWumwCLUQQ0RdGfayVGcfAs" target="_blank" rel="noopener noreferrer" class="review-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        Déjanos tu reseña en Google
+      </a>
+    </div>
+
     <div class="footer-bottom">
       <p>© {currentYear} Katy Caballero - Osteópata y Masajista. Todos los derechos reservados.</p>
       <p class="footer-legal"><a href="/politica-cookies">Política de Cookies</a> · <a href="/politica-privacidad">Política de Privacidad</a></p>
@@ -232,9 +245,46 @@ const tools = [
     line-height: 1.6;
   }
   
+  .footer-review {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-review p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+  }
+
+  .review-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-secondary, #c4a35a);
+    color: white;
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .review-btn:hover {
+    background: #d4b36a;
+    transform: translateY(-2px);
+  }
+
+  .review-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
   .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 50px;
+    margin-top: 20px;
     padding-top: 30px;
     text-align: center;
     font-size: 0.85rem;

@@ -1,0 +1,341 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+
+const pageTitle = "Preguntas Frecuentes | Osteopatía y Masajes en Alpedrete - Sierra de Madrid";
+const pageDescription = "Resuelve tus dudas sobre osteopatía, masajes, citas y precios en Alpedrete. Preguntas frecuentes sobre tratamientos, primera visita, cancelaciones y más.";
+const pageKeywords = "preguntas frecuentes osteopatia, dudas osteopata alpedrete, faq osteopatia madrid, preguntas masaje terapeutico, osteopatia sierra de madrid preguntas";
+
+const faqData = [
+  {
+    category: "Sobre la Osteopatía",
+    questions: [
+      {
+        q: "¿Qué es la osteopatía y para qué sirve?",
+        a: "La osteopatía es una terapia manual que trata disfunciones del cuerpo mediante técnicas suaves y precisas. Se basa en la capacidad del organismo para autorregularse. Es eficaz para dolor de espalda, cervicalgias, migrañas, problemas digestivos, lesiones deportivas y muchas otras dolencias. En mi consulta de Alpedrete aplico un enfoque global: estructural, visceral y craneal."
+      },
+      {
+        q: "¿Duele el tratamiento de osteopatía?",
+        a: "No, la osteopatía no duele. Las técnicas que utilizo son suaves y respetuosas con tu cuerpo. En zonas con mucha tensión acumulada puedes notar una ligera molestia que desaparece rápidamente. Siempre trabajo dentro de tu umbral de confort y te voy explicando lo que hago en cada momento."
+      },
+      {
+        q: "¿Cuántas sesiones necesitaré?",
+        a: "Depende de cada caso. Muchos pacientes notan mejoría desde la primera sesión. Para problemas agudos suelen bastar 2-3 sesiones. Para dolencias crónicas o de larga evolución, puede necesitarse un plan de 4-6 sesiones espaciadas. En tu primera visita te daré una estimación honesta según tu situación."
+      },
+      {
+        q: "¿Necesito receta o derivación médica para ir al osteópata?",
+        a: "No, no necesitas receta ni derivación médica. Puedes acudir directamente a mi consulta en Alpedrete. Si tienes informes médicos, radiografías o resonancias recientes, puedes traerlos para completar la valoración, pero no es imprescindible."
+      },
+      {
+        q: "¿La osteopatía es compatible con otros tratamientos médicos?",
+        a: "Sí, la osteopatía es complementaria a la medicina convencional. Puede combinarse con fisioterapia, medicación u otros tratamientos. Siempre te preguntaré sobre tu historial y tratamientos actuales para adaptar la sesión de forma segura."
+      },
+      {
+        q: "¿Es normal sentir molestias después de una sesión?",
+        a: "Es posible notar algo de cansancio o una ligera sensación de agujetas las primeras 24-48 horas después del tratamiento. Esto es normal y forma parte del proceso de reajuste del cuerpo. Desaparece rápidamente y suele ir seguido de una mejoría significativa."
+      }
+    ]
+  },
+  {
+    category: "Sobre los Masajes",
+    questions: [
+      {
+        q: "¿Qué diferencia hay entre osteopatía y masaje?",
+        a: "La osteopatía es un tratamiento terapéutico global que busca el origen de la disfunción y trabaja sobre articulaciones, vísceras y sistema craneal. El masaje se centra en la musculatura y el tejido blando para aliviar tensión, mejorar la circulación y relajar. Ambos se complementan muy bien."
+      },
+      {
+        q: "¿Qué tipo de masaje me conviene más?",
+        a: "Depende de lo que busques. El masaje deportivo es ideal para recuperación muscular y prevención de lesiones. El masaje tailandés combina estiramientos y presiones para ganar flexibilidad. El masaje corporal con aceites es perfecto para relajación profunda. Las pindas herbales ofrecen un efecto terapéutico con calor. Puedo aconsejarte en la primera consulta."
+      },
+      {
+        q: "¿Puedo recibir un masaje durante el embarazo?",
+        a: "Sí, ofrezco masaje específico para embarazadas a partir del cuarto mes de gestación. Es un masaje suave, adaptado a cada trimestre, que alivia las molestias típicas del embarazo como dolor lumbar, piernas cansadas y tensión en la espalda. La posición y las técnicas se adaptan para tu comodidad y seguridad."
+      },
+      {
+        q: "¿Necesito traer ropa especial para el masaje?",
+        a: "Para el masaje tailandés conviene traer ropa cómoda y holgada (tipo chándal o leggings). Para los demás masajes y la osteopatía no necesitas nada especial, trabajamos con ropa interior y toallas. Siempre se cuida tu intimidad y comodidad."
+      }
+    ]
+  },
+  {
+    category: "Sobre las Citas",
+    questions: [
+      {
+        q: "¿Cómo puedo reservar una cita?",
+        a: "La forma más rápida es por WhatsApp al 643 96 10 65. También puedes reservar a través del formulario de la web o llamándome directamente. Te confirmo la cita en el momento y te envío un recordatorio el día anterior."
+      },
+      {
+        q: "¿Cuál es el horario de la consulta?",
+        a: "Atiendo de lunes a viernes de 9:00 a 20:00 y sábados de 10:00 a 14:00. Si necesitas un horario especial, consúltame y buscaremos la mejor opción."
+      },
+      {
+        q: "¿Puedo cancelar o cambiar mi cita?",
+        a: "Sí, puedes cancelar o modificar tu cita con al menos 24 horas de antelación sin ningún coste. Esto me permite ofrecer ese hueco a otro paciente que lo necesite. Avísame por WhatsApp o teléfono."
+      },
+      {
+        q: "¿Dónde está la consulta exactamente?",
+        a: "La consulta está en la calle Río Guadarrama 2, en Alpedrete (Madrid), en plena Sierra de Madrid. Hay parking gratuito en la zona. Es de fácil acceso desde Collado Villalba, Moralzarzal, Galapagar, Becerril de la Sierra y toda la Sierra Noroeste de Madrid."
+      }
+    ]
+  },
+  {
+    category: "Precios y Pagos",
+    questions: [
+      {
+        q: "¿Cuánto cuesta una sesión de osteopatía?",
+        a: "La sesión de osteopatía tiene un precio de 40€ y dura 55 minutos. La valoración inicial está incluida en el precio, sin costes extra. También ofrezco bonos con descuento: 3 sesiones por 114€ y 5 sesiones por 180€."
+      },
+      {
+        q: "¿Qué métodos de pago aceptáis?",
+        a: "Acepto efectivo, Bizum y transferencia bancaria. Puedes elegir el método que te resulte más cómodo. El pago se realiza al finalizar la sesión."
+      },
+      {
+        q: "¿La mutua o el seguro cubre la osteopatía?",
+        a: "Algunas mutuas y seguros privados reembolsan sesiones de osteopatía. Puedo emitirte factura para que la presentes a tu compañía. Te recomiendo consultar con tu aseguradora las condiciones concretas de tu póliza."
+      }
+    ]
+  },
+  {
+    category: "Primera Visita",
+    questions: [
+      {
+        q: "¿Qué puedo esperar en mi primera visita?",
+        a: "En tu primera visita dedicamos unos minutos a hablar sobre tu historial, molestias y hábitos. Después realizo una valoración postural y de movilidad. A continuación, aplico el tratamiento más adecuado para ti. Al finalizar, te explico lo que he encontrado y te doy recomendaciones o ejercicios para casa si es necesario. Todo en 55 minutos."
+      },
+      {
+        q: "¿Puedo ir con niños a la consulta?",
+        a: "Sí, los niños son bienvenidos. El espacio es tranquilo y seguro. Si vienes con niños pequeños, avísame al reservar para organizarnos mejor y que la sesión sea cómoda para todos."
+      },
+      {
+        q: "¿Tratas a niños y bebés?",
+        a: "Sí, la osteopatía pediátrica es muy suave y segura. Puede ayudar con cólicos del lactante, tortícolis congénita, problemas de sueño, otitis recurrentes y otras dolencias frecuentes en la infancia. Las técnicas son extremadamente delicadas y adaptadas a cada edad."
+      }
+    ]
+  }
+];
+
+// Build FAQPage schema from all questions
+const allQuestions = faqData.flatMap(cat => cat.questions);
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": allQuestions.map(q => ({
+    "@type": "Question",
+    "name": q.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": q.a
+    }
+  }))
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Preguntas Frecuentes" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-tag">FAQ</span>
+      <h1>Preguntas frecuentes</h1>
+      <p>Resuelve todas tus dudas sobre osteopatía, masajes, citas y precios en mi consulta de Alpedrete</p>
+    </div>
+  </section>
+
+  <section class="faq-nav-section">
+    <div class="container">
+      <div class="faq-nav">
+        {faqData.map((cat, i) => (
+          <a href={`#cat-${i}`} class="faq-nav-link">{cat.category}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {faqData.map((cat, i) => (
+    <section class={`faq-section ${i % 2 === 0 ? 'bg-warm' : 'bg-cream'}`} id={`cat-${i}`}>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">{cat.category}</span>
+          <h2>{cat.category}</h2>
+        </div>
+        <div class="faq-grid">
+          {cat.questions.map((item) => (
+            <details class="faq-item">
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CTASection
+    title="¿Tienes más dudas?"
+    description="Escríbeme por WhatsApp y te respondo personalmente. Sin compromiso."
+    buttonText="Pregúntame por WhatsApp"
+    buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20tengo%20una%20duda%20sobre%20los%20tratamientos"
+  />
+</Layout>
+
+<style>
+  .page-hero {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    margin-bottom: 20px;
+  }
+
+  .page-hero p {
+    margin: 0 auto;
+    max-width: 600px;
+    font-size: 1.15rem;
+  }
+
+  /* FAQ Navigation */
+  .faq-nav-section {
+    background: var(--color-warm-white);
+    padding: 30px 0;
+    border-bottom: 1px solid rgba(90, 124, 89, 0.1);
+    position: sticky;
+    top: 80px;
+    z-index: 10;
+  }
+
+  .faq-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .faq-nav-link {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background: white;
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 600;
+    border: 1px solid rgba(90, 124, 89, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .faq-nav-link:hover {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 124, 89, 0.2);
+  }
+
+  /* FAQ Sections */
+  .faq-section {
+    scroll-margin-top: 160px;
+  }
+
+  .faq-section.bg-warm {
+    background: var(--color-warm-white);
+  }
+
+  .faq-section.bg-cream {
+    background: var(--color-cream);
+  }
+
+  .faq-grid {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .faq-item {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .faq-item summary {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1.05rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    content: '\2212';
+  }
+
+  .faq-item summary:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-item p {
+    padding: 0 25px 20px;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    max-width: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .faq-nav-section {
+      position: static;
+    }
+
+    .faq-nav {
+      gap: 8px;
+    }
+
+    .faq-nav-link {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+    }
+
+    .faq-section {
+      scroll-margin-top: 80px;
+    }
+
+    .faq-item summary {
+      font-size: 0.98rem;
+      padding: 18px 20px;
+    }
+
+    .faq-item p {
+      padding: 0 20px 18px;
+      font-size: 0.9rem;
+    }
+  }
+</style>

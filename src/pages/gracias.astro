@@ -1,0 +1,316 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Reserva Confirmada | Katy Caballero Osteopata";
+const pageDescription = "Tu reserva ha sido recibida. Toda la informacion que necesitas antes de tu cita de osteopatia en Alpedrete.";
+---
+
+<Layout title={pageTitle} description={pageDescription} noindex={true} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Reservar", url: "/reservar" }, { name: "Confirmacion" }]}>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="check-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+      </div>
+      <h1>Reserva recibida</h1>
+      <p>Gracias por confiar en mi. He recibido tu solicitud de cita y te confirmare por WhatsApp o telefono lo antes posible.</p>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Antes de venir</span>
+        <h2>Informacion util</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <h3>Que traer</h3>
+          <p>Ven con <strong>ropa comoda</strong>. Si es tu primera visita, trae tu historial medico o informes recientes si los tienes.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Como llegar</h3>
+          <p>C/ Rio Guadarrama 2, Alpedrete.<br><strong>Parking gratuito</strong> en la puerta.</p>
+          <a href="https://maps.google.com/?q=Calle+Rio+Guadarrama+2+Alpedrete+Madrid" target="_blank" rel="noopener noreferrer" class="card-link">Ver en Google Maps</a>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h3>Tu primera visita</h3>
+          <p>Conoce como sera tu primera sesion: valoracion, tratamiento y recomendaciones.</p>
+          <a href="/primera-visita" class="card-link">Ver guia primera visita</a>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <h3>Contacto</h3>
+          <p>Telefono: <a href="tel:+34643961065">643 961 065</a></p>
+          <a href="https://wa.me/34643961065" target="_blank" rel="noopener noreferrer" class="card-link">Escribir por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="meanwhile-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Recursos</span>
+        <h2>Mientras tanto...</h2>
+        <p>Aprovecha la espera con contenido que puede ayudarte.</p>
+      </div>
+      <div class="meanwhile-grid">
+        <a href="/blog" class="meanwhile-card">
+          <div class="meanwhile-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          </div>
+          <h3>Blog de salud</h3>
+          <p>Articulos sobre osteopatia, bienestar y habitos saludables.</p>
+        </a>
+        <a href="/guia-estiramientos" class="meanwhile-card">
+          <div class="meanwhile-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+          </div>
+          <h3>Guia de estiramientos</h3>
+          <p>Ejercicios sencillos para mejorar tu movilidad desde casa.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cancel-note">
+    <div class="container">
+      <p>Si necesitas <strong>cancelar o cambiar tu cita</strong>, contactame por <a href="https://wa.me/34643961065" target="_blank" rel="noopener noreferrer">WhatsApp</a> o llamando al <a href="tel:+34643961065">643 961 065</a>.</p>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .page-hero {
+    padding-top: 150px;
+    padding-bottom: 60px;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .page-hero h1 {
+    margin-bottom: 20px;
+  }
+
+  .page-hero p {
+    margin: 0 auto;
+    max-width: 600px;
+    font-size: 1.15rem;
+  }
+
+  .check-icon {
+    width: 90px;
+    height: 90px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    color: white;
+    animation: scaleIn 0.5s ease-out;
+  }
+
+  @keyframes scaleIn {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Info Section */
+  .info-section {
+    background: var(--color-warm-white);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .info-card {
+    background: white;
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(90, 124, 89, 0.12);
+  }
+
+  .info-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--color-secondary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--color-primary);
+  }
+
+  .info-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: var(--color-text);
+  }
+
+  .info-card p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: none;
+  }
+
+  .info-card p a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .card-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .card-link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  /* Meanwhile Section */
+  .meanwhile-section {
+    background: var(--color-cream);
+  }
+
+  .meanwhile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .meanwhile-card {
+    background: var(--color-warm-white);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+  }
+
+  .meanwhile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(90, 124, 89, 0.12);
+    border-color: var(--color-primary);
+  }
+
+  .meanwhile-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--color-secondary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--color-primary);
+  }
+
+  .meanwhile-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--color-text);
+  }
+
+  .meanwhile-card p {
+    color: var(--color-text-light);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    max-width: none;
+  }
+
+  /* Cancel Note */
+  .cancel-note {
+    background: var(--color-warm-white);
+    padding: 40px 0;
+    text-align: center;
+    border-top: 1px solid rgba(90, 124, 89, 0.1);
+  }
+
+  .cancel-note p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .cancel-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .cancel-note a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .info-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .info-grid {
+      grid-template-columns: 1fr;
+      max-width: 450px;
+    }
+
+    .meanwhile-grid {
+      grid-template-columns: 1fr;
+      max-width: 450px;
+    }
+  }
+</style>

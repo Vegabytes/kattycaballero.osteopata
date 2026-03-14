@@ -1,0 +1,84 @@
+---
+interface BreadcrumbItem {
+  name: string;
+  url?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+if (!items || items.length === 0) return;
+---
+
+<nav class="breadcrumbs" aria-label="Migas de pan">
+  <ol>
+    {items.map((item, i) => (
+      <li>
+        {item.url && i < items.length - 1 ? (
+          <a href={item.url}>{item.name}</a>
+        ) : (
+          <span aria-current={i === items.length - 1 ? "page" : undefined}>{item.name}</span>
+        )}
+        {i < items.length - 1 && <span class="separator" aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    padding: 16px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--color-text-light, #6b6b6b);
+  }
+
+  .breadcrumbs a {
+    color: var(--color-primary, #5a7c59);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--color-primary-dark, #4a6548);
+    text-decoration: underline;
+  }
+
+  .breadcrumbs span[aria-current="page"] {
+    color: var(--color-text, #3d3d3d);
+    font-weight: 500;
+  }
+
+  .separator {
+    margin: 0 8px;
+    color: var(--color-text-light, #6b6b6b);
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .breadcrumbs {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+</style>

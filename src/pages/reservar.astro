@@ -1166,7 +1166,7 @@ const services = [
     btn.textContent = 'Reservando...';
     const saved = await saveBooking(data);
     if (saved) {
-      showConfirmation(data);
+      window.location.href = '/gracias';
     } else {
       btn.textContent = 'Error, inténtalo de nuevo';
       btn.disabled = false;
