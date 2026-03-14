@@ -413,6 +413,7 @@ try {
   <div class="card agenda-card">
     <div class="page-header">
       <h2>Agenda del d&iacute;a &mdash; {hoyDisplay}{citasHoy.length > 0 && ingresosHoy > 0 ? ` — Ingresos: ${ingresosHoy.toFixed(0)}\u20AC` : ''}</h2>
+      <a href={`/admin/agenda?fecha=${hoy}`} class="btn btn-secondary btn-sm">Imprimir</a>
       <a href="/admin/citas/nueva" class="btn btn-primary btn-sm">+ Nueva cita</a>
     </div>
 

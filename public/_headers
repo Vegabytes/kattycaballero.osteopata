@@ -6,6 +6,18 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://w.behold.so; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; media-src 'self' https://*.cdninstagram.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://katycaballeroosteopata.com https://feeds.behold.so; frame-src 'self' https://www.google.com; base-uri 'self'; form-action 'self' https://wa.me
 
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
 /admin/*
   Cache-Control: no-store, no-cache, must-revalidate, private
   X-Robots-Tag: noindex, nofollow

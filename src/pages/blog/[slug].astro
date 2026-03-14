@@ -82,6 +82,14 @@ const categoryServiceMap: Record<string, { url: string; name: string }[]> = {
   "Consejos": [
     { url: "/servicios", name: "Ver todos nuestros servicios" },
   ],
+  "Ejercicios": [
+    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía estructural, visceral y craneal" },
+    { url: "/guia-estiramientos", name: "Guía de estiramientos" },
+  ],
+  "Lesiones": [
+    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía estructural, visceral y craneal" },
+    { url: "/servicios/masaje-deportivo-alpedrete", name: "Masaje deportivo" },
+  ],
 };
 const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/servicios", name: "Ver todos nuestros servicios" }];
 ---
