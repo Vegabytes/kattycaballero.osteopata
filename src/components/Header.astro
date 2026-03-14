@@ -724,130 +724,133 @@ const toolLinks = [
 </style>
 
 <script>
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const nav = document.getElementById('main-nav');
-  
-  // Mobile menu toggle
-  mobileMenuBtn?.addEventListener('click', () => {
-    mobileMenuBtn.classList.toggle('active');
-    mobileMenu?.classList.toggle('active');
-    const isOpen = mobileMenu?.classList.contains('active');
-    mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
-  });
+  function initHeader() {
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const nav = document.getElementById('main-nav');
 
-  // Close mobile menu on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenu?.classList.contains('active')) {
-      mobileMenuBtn?.classList.remove('active');
-      mobileMenu.classList.remove('active');
-      mobileMenuBtn?.setAttribute('aria-expanded', 'false');
-      mobileMenuBtn?.focus();
+    // Mobile menu toggle
+    mobileMenuBtn?.addEventListener('click', () => {
+      mobileMenuBtn.classList.toggle('active');
+      mobileMenu?.classList.toggle('active');
+      const isOpen = mobileMenu?.classList.contains('active');
+      mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close mobile menu on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu?.classList.contains('active')) {
+        mobileMenuBtn?.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+        mobileMenuBtn?.focus();
+      }
+    });
+
+    // Mobile tools dropdown toggle
+    const mobileDropdownTrigger = document.querySelector('.mobile-dropdown-trigger');
+    const mobileDropdown = document.querySelector('.mobile-dropdown');
+    mobileDropdownTrigger?.addEventListener('click', () => {
+      const isOpen = mobileDropdown?.classList.toggle('active');
+      mobileDropdownTrigger.setAttribute('aria-expanded', String(!!isOpen));
+      const svg = mobileDropdownTrigger.querySelector('svg');
+      if (svg) (svg as HTMLElement).style.transform = isOpen ? 'rotate(180deg)' : '';
+    });
+
+    // Theme toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+
+      // Update mobile toggle text
+      const mobileToggleText = document.querySelector('.mobile-theme-toggle span');
+      if (mobileToggleText) {
+        mobileToggleText.textContent = newTheme === 'dark' ? 'Tema claro' : 'Tema oscuro';
+      }
     }
-  });
-  
-  // Mobile tools dropdown toggle
-  const mobileDropdownTrigger = document.querySelector('.mobile-dropdown-trigger');
-  const mobileDropdown = document.querySelector('.mobile-dropdown');
-  mobileDropdownTrigger?.addEventListener('click', () => {
-    const isOpen = mobileDropdown?.classList.toggle('active');
-    mobileDropdownTrigger.setAttribute('aria-expanded', String(!!isOpen));
-    const svg = mobileDropdownTrigger.querySelector('svg');
-    if (svg) svg.style.transform = isOpen ? 'rotate(180deg)' : '';
-  });
 
-  // Theme toggle
-  function toggleTheme() {
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
+    document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+    document.getElementById('mobile-theme-toggle')?.addEventListener('click', toggleTheme);
 
-    // Update mobile toggle text
+    // Update mobile toggle text on load
     const mobileToggleText = document.querySelector('.mobile-theme-toggle span');
     if (mobileToggleText) {
-      mobileToggleText.textContent = newTheme === 'dark' ? 'Tema claro' : 'Tema oscuro';
-    }
-  }
-
-  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
-  document.getElementById('mobile-theme-toggle')?.addEventListener('click', toggleTheme);
-
-  // Update mobile toggle text on load
-  const mobileToggleText = document.querySelector('.mobile-theme-toggle span');
-  if (mobileToggleText) {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    mobileToggleText.textContent = currentTheme === 'dark' ? 'Tema claro' : 'Tema oscuro';
-  }
-
-  // Scroll effect
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-
-    if (currentScroll > 80) {
-      nav?.classList.add('scrolled');
-    } else {
-      nav?.classList.remove('scrolled');
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      mobileToggleText.textContent = currentTheme === 'dark' ? 'Tema claro' : 'Tema oscuro';
     }
 
-    lastScroll = currentScroll;
-  });
+    // Scroll effect
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
 
-  // Share button: show only on mobile/tablet where navigator.share is available or as clipboard fallback
-  const shareBtn = document.getElementById('share-btn');
-  const mobileShareBtn = document.getElementById('mobile-share-btn');
-
-  function isMobileOrTablet() {
-    return window.matchMedia('(max-width: 1024px)').matches || 'ontouchstart' in window;
-  }
-
-  function showShareButtons() {
-    if (isMobileOrTablet()) {
-      if (shareBtn) shareBtn.style.display = 'flex';
-      if (mobileShareBtn) mobileShareBtn.style.display = 'flex';
-    }
-  }
-
-  async function handleShare() {
-    const shareData = {
-      title: document.title,
-      url: window.location.href,
-    };
-
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch (e) {
-        // User cancelled or error - ignore
+      if (currentScroll > 80) {
+        nav?.classList.add('scrolled');
+      } else {
+        nav?.classList.remove('scrolled');
       }
-    } else {
-      // Fallback: copy URL to clipboard
-      try {
-        await navigator.clipboard.writeText(window.location.href);
-        const btn = document.activeElement as HTMLElement;
-        const original = btn?.getAttribute('aria-label');
-        btn?.setAttribute('aria-label', 'URL copiada');
-        setTimeout(() => {
-          if (original) btn?.setAttribute('aria-label', original);
-        }, 2000);
-      } catch (e) {
-        // Clipboard not available
+    });
+
+    // Share button: show only on mobile/tablet where navigator.share is available or as clipboard fallback
+    const shareBtn = document.getElementById('share-btn');
+    const mobileShareBtn = document.getElementById('mobile-share-btn');
+
+    function isMobileOrTablet() {
+      return window.matchMedia('(max-width: 1024px)').matches || 'ontouchstart' in window;
+    }
+
+    function showShareButtons() {
+      if (isMobileOrTablet()) {
+        if (shareBtn) shareBtn.style.display = 'flex';
+        if (mobileShareBtn) mobileShareBtn.style.display = 'flex';
       }
     }
+
+    async function handleShare() {
+      const shareData = {
+        title: document.title,
+        url: window.location.href,
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (e) {
+          // User cancelled or error - ignore
+        }
+      } else {
+        // Fallback: copy URL to clipboard
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          const btn = document.activeElement as HTMLElement;
+          const original = btn?.getAttribute('aria-label');
+          btn?.setAttribute('aria-label', 'URL copiada');
+          setTimeout(() => {
+            if (original) btn?.setAttribute('aria-label', original);
+          }, 2000);
+        } catch (e) {
+          // Clipboard not available
+        }
+      }
+    }
+
+    showShareButtons();
+    window.matchMedia('(max-width: 1024px)').addEventListener('change', showShareButtons);
+
+    shareBtn?.addEventListener('click', handleShare);
+    mobileShareBtn?.addEventListener('click', handleShare);
+
+    // Search button
+    document.getElementById('search-btn')?.addEventListener('click', () => {
+      if (typeof (window as any).__openSearch === 'function') {
+        (window as any).__openSearch();
+      }
+    });
   }
 
-  showShareButtons();
-  window.matchMedia('(max-width: 1024px)').addEventListener('change', showShareButtons);
-
-  shareBtn?.addEventListener('click', handleShare);
-  mobileShareBtn?.addEventListener('click', handleShare);
-
-  // Search button
-  document.getElementById('search-btn')?.addEventListener('click', () => {
-    if (typeof (window as any).__openSearch === 'function') {
-      (window as any).__openSearch();
-    }
-  });
+  // Run on initial load and after View Transitions
+  initHeader();
+  document.addEventListener('astro:after-swap', initHeader);
 </script>
