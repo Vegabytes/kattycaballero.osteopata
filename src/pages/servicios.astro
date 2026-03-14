@@ -260,6 +260,66 @@ const servicesSchema = {
     </div>
   </section>
 
+  <section class="comparison-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Comparativa</span>
+        <h2>¿Qué tratamiento necesitas?</h2>
+        <p>Encuentra el servicio más adecuado según tu situación.</p>
+      </div>
+      <div class="comparison-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Tratamiento</th>
+              <th>Duración</th>
+              <th>Precio</th>
+              <th>Ideal para</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="/servicios/osteopatia-alpedrete"><strong>Osteopatía</strong></a></td>
+              <td>55 min</td>
+              <td>40€</td>
+              <td>Dolor crónico, cervicales, lumbalgias, migrañas, digestivo</td>
+            </tr>
+            <tr>
+              <td><a href="/servicios/masaje-deportivo-alpedrete"><strong>Masaje deportivo</strong></a></td>
+              <td>30 min</td>
+              <td>20€</td>
+              <td>Recuperación muscular, lesiones, preparación competición</td>
+            </tr>
+            <tr>
+              <td><a href="/servicios/masaje-tailandes-alpedrete"><strong>Masaje tailandés</strong></a></td>
+              <td>60 / 90 min</td>
+              <td>45€ / 60€</td>
+              <td>Rigidez, flexibilidad, tensión acumulada, estrés</td>
+            </tr>
+            <tr>
+              <td><a href="/servicios/masaje-corporal-alpedrete"><strong>Masaje corporal</strong></a></td>
+              <td>60 / 90 min</td>
+              <td>40€ / 55€</td>
+              <td>Relajación, bienestar general, descanso, regalo</td>
+            </tr>
+            <tr>
+              <td><a href="/servicios/masaje-pindas-herbales-alpedrete"><strong>Pindas herbales</strong></a></td>
+              <td>90 min</td>
+              <td>70€</td>
+              <td>Contracturas, inflamación, experiencia premium</td>
+            </tr>
+            <tr>
+              <td><a href="/servicios/masaje-embarazadas-alpedrete"><strong>Embarazadas</strong></a></td>
+              <td>60 min</td>
+              <td>40€</td>
+              <td>Molestias del embarazo (desde 4º mes), piernas, espalda</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <CTASection
     title="¿No sabes qué tratamiento necesitas?"
     description="Contacta conmigo sin compromiso y te orientaré sobre el tratamiento más adecuado para ti."
@@ -382,6 +442,69 @@ const servicesSchema = {
     line-height: 1.8;
     font-size: 0.95rem;
     max-width: none;
+  }
+
+  /* Comparison Table */
+  .comparison-section {
+    background: var(--color-warm-white);
+  }
+
+  .comparison-wrapper {
+    overflow-x: auto;
+    max-width: 950px;
+    margin: 0 auto;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(90, 124, 89, 0.08);
+  }
+
+  .comparison-table thead {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .comparison-table th {
+    padding: 16px 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .comparison-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(90, 124, 89, 0.08);
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    vertical-align: middle;
+  }
+
+  .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .comparison-table tbody tr:hover {
+    background: var(--color-cream);
+  }
+
+  .comparison-table td a {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .comparison-table td a:hover {
+    color: var(--color-primary);
+  }
+
+  .comparison-table td strong {
+    color: var(--color-text);
   }
 
   @media (max-width: 1024px) {

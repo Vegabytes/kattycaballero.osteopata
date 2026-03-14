@@ -1,0 +1,302 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const db = (Astro.locals as any).runtime.env.DB;
+
+const year = new Date().getFullYear();
+
+interface MesData {
+  mes: string;
+  total_citas: number;
+  ingresos: number;
+}
+
+let datosMensuales: MesData[] = [];
+
+try {
+  const rows = await db.prepare(
+    `SELECT strftime('%Y-%m', fecha) as mes, COUNT(*) as total_citas, SUM(CASE WHEN estado='completada' THEN precio ELSE 0 END) as ingresos FROM citas WHERE fecha LIKE ? GROUP BY mes ORDER BY mes`
+  ).bind(year + '%').all();
+  datosMensuales = (rows.results || []) as MesData[];
+} catch (e: any) {
+  console.error('Fiscal: error fetching data', e);
+}
+
+// Organize by quarter
+interface QuarterData {
+  nombre: string;
+  rango: string;
+  meses: { mes: string; label: string; citas: number; ingresos: number }[];
+  totalIngresos: number;
+  totalCitas: number;
+}
+
+const mesesNombres: Record<string, string> = {
+  '01': 'Enero', '02': 'Febrero', '03': 'Marzo',
+  '04': 'Abril', '05': 'Mayo', '06': 'Junio',
+  '07': 'Julio', '08': 'Agosto', '09': 'Septiembre',
+  '10': 'Octubre', '11': 'Noviembre', '12': 'Diciembre'
+};
+
+const trimestres: QuarterData[] = [
+  { nombre: 'T1', rango: 'Enero - Marzo', meses: [], totalIngresos: 0, totalCitas: 0 },
+  { nombre: 'T2', rango: 'Abril - Junio', meses: [], totalIngresos: 0, totalCitas: 0 },
+  { nombre: 'T3', rango: 'Julio - Septiembre', meses: [], totalIngresos: 0, totalCitas: 0 },
+  { nombre: 'T4', rango: 'Octubre - Diciembre', meses: [], totalIngresos: 0, totalCitas: 0 },
+];
+
+// Fill all months even if no data
+const quarterMonths = [
+  ['01', '02', '03'],
+  ['04', '05', '06'],
+  ['07', '08', '09'],
+  ['10', '11', '12'],
+];
+
+quarterMonths.forEach((months, qi) => {
+  months.forEach(m => {
+    const key = `${year}-${m}`;
+    const found = datosMensuales.find(d => d.mes === key);
+    const citas = found?.total_citas || 0;
+    const ingresos = found?.ingresos || 0;
+    trimestres[qi].meses.push({
+      mes: key,
+      label: mesesNombres[m],
+      citas,
+      ingresos,
+    });
+    trimestres[qi].totalIngresos += ingresos;
+    trimestres[qi].totalCitas += citas;
+  });
+});
+
+// Annual summary
+const totalAnualIngresos = trimestres.reduce((s, t) => s + t.totalIngresos, 0);
+const totalAnualCitas = trimestres.reduce((s, t) => s + t.totalCitas, 0);
+const mediaMensual = totalAnualCitas > 0 ? totalAnualIngresos / 12 : 0;
+---
+
+<AdminLayout title="Resumen Fiscal" activeSection="estadisticas">
+
+  <div class="page-header">
+    <h2>Resumen Fiscal &mdash; {year}</h2>
+    <button class="btn btn-secondary btn-sm" onclick="window.print()">Imprimir</button>
+    <button class="btn btn-primary btn-sm" id="btnExportCsv">Exportar CSV</button>
+  </div>
+
+  <!-- Annual Summary -->
+  <div class="fiscal-summary">
+    <div class="fiscal-summary-card">
+      <div class="fiscal-summary-label">Ingresos anuales</div>
+      <div class="fiscal-summary-value">{totalAnualIngresos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&euro;</div>
+    </div>
+    <div class="fiscal-summary-card">
+      <div class="fiscal-summary-label">Citas completadas</div>
+      <div class="fiscal-summary-value">{totalAnualCitas}</div>
+    </div>
+    <div class="fiscal-summary-card">
+      <div class="fiscal-summary-label">Media mensual</div>
+      <div class="fiscal-summary-value">{mediaMensual.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&euro;</div>
+    </div>
+  </div>
+
+  <!-- Quarter cards -->
+  <div class="fiscal-quarters">
+    {trimestres.map((t) => (
+      <div class="card fiscal-quarter-card">
+        <div class="fiscal-quarter-header">
+          <div>
+            <span class="fiscal-quarter-name">{t.nombre}</span>
+            <span class="fiscal-quarter-range">{t.rango}</span>
+          </div>
+          <div class="fiscal-quarter-total">{t.totalIngresos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&euro;</div>
+        </div>
+        <div class="fiscal-quarter-stats">
+          <span>{t.totalCitas} citas completadas</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Mes</th>
+                <th style="text-align:right;">Citas</th>
+                <th style="text-align:right;">Ingresos</th>
+              </tr>
+            </thead>
+            <tbody>
+              {t.meses.map((m) => (
+                <tr>
+                  <td>{m.label}</td>
+                  <td style="text-align:right;">{m.citas}</td>
+                  <td style="text-align:right;">{m.ingresos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&euro;</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    ))}
+  </div>
+
+</AdminLayout>
+
+<script define:vars={{ trimestres, year, totalAnualIngresos, totalAnualCitas }}>
+  document.getElementById('btnExportCsv')?.addEventListener('click', () => {
+    let csv = 'Trimestre,Mes,Citas,Ingresos\n';
+    trimestres.forEach(t => {
+      t.meses.forEach(m => {
+        csv += `${t.nombre},${m.label},${m.citas},"${m.ingresos.toFixed(2).replace('.', ',')}"\n`;
+      });
+    });
+    csv += `\nTotal Anual,,${totalAnualCitas},"${totalAnualIngresos.toFixed(2).replace('.', ',')}"\n`;
+
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `resumen-fiscal-${year}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+</script>
+
+<style is:global>
+  .fiscal-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .fiscal-summary-card {
+    background: linear-gradient(135deg, #f0f7f0 0%, #fff 100%);
+    border: 1px solid #c8e6c9;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .fiscal-summary-label {
+    font-size: 0.8rem;
+    color: var(--admin-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .fiscal-summary-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--admin-primary-dark);
+  }
+
+  .fiscal-quarters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .fiscal-quarter-card {
+    padding: 24px;
+  }
+
+  .fiscal-quarter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .fiscal-quarter-name {
+    display: inline-block;
+    background: var(--admin-primary);
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-right: 10px;
+  }
+
+  .fiscal-quarter-range {
+    font-size: 0.85rem;
+    color: var(--admin-text-light);
+  }
+
+  .fiscal-quarter-total {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--admin-primary-dark);
+  }
+
+  .fiscal-quarter-stats {
+    font-size: 0.82rem;
+    color: var(--admin-text-light);
+    margin-bottom: 16px;
+  }
+
+  .fiscal-quarter-card table th {
+    font-size: 0.75rem;
+  }
+
+  .fiscal-quarter-card table td {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 768px) {
+    .fiscal-summary {
+      grid-template-columns: 1fr;
+    }
+    .fiscal-quarters {
+      grid-template-columns: 1fr;
+    }
+    .fiscal-summary-value {
+      font-size: 1.4rem;
+    }
+  }
+
+  @media print {
+    .admin-sidebar,
+    .admin-topbar,
+    .mobile-toggle,
+    .sidebar-overlay,
+    .page-header .btn {
+      display: none !important;
+    }
+
+    .admin-main {
+      margin-left: 0 !important;
+    }
+
+    .admin-content {
+      padding: 0 !important;
+    }
+
+    .fiscal-quarters {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .fiscal-quarter-card {
+      break-inside: avoid;
+      border: 1px solid #ccc;
+      padding: 16px;
+    }
+
+    .fiscal-summary-card {
+      background: #f9f9f9 !important;
+      border: 1px solid #ccc;
+    }
+
+    body {
+      background: white !important;
+      font-size: 12px;
+    }
+
+    .page-header h2 {
+      display: block !important;
+    }
+  }
+</style>

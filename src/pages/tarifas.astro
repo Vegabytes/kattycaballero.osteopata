@@ -630,4 +630,80 @@ const faqSchema = {
       order: -1;
     }
   }
+
+  @media print {
+    .page-header {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      background: none;
+    }
+
+    .pricing-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .pricing-card {
+      border: 1px solid #ccc;
+      box-shadow: none;
+      padding: 15px;
+      break-inside: avoid;
+    }
+
+    .pricing-card:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .bonos-section {
+      background: white;
+      color: var(--color-text);
+    }
+
+    .bonos-section .section-tag {
+      background: #eee;
+      color: var(--color-text);
+    }
+
+    .bonos-section h2 {
+      color: var(--color-text);
+    }
+
+    .bonos-section .section-header p {
+      color: var(--color-text-light);
+    }
+
+    .bonos-grid {
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 100%;
+    }
+
+    .bono-card {
+      background: white;
+      border: 1px solid #ccc;
+      color: var(--color-text);
+    }
+
+    .bono-card.featured,
+    .bono-card.best {
+      box-shadow: none;
+    }
+
+    .bono-card.featured .bono-price,
+    .bono-card.best .bono-price {
+      color: var(--color-text);
+    }
+
+    .info-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .info-card {
+      break-inside: avoid;
+    }
+
+    .faq-section {
+      display: none;
+    }
+  }
 </style>

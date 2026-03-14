@@ -107,6 +107,7 @@ const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/serv
   ]}
 >
   <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
+  <div class="reading-progress" id="reading-progress"></div>
   <article class="blog-post">
     <header class="post-header">
       <div class="container">
@@ -184,6 +185,16 @@ const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/serv
             setTimeout(() => btn.classList.remove('copied'), 2000);
           } catch {}
         });
+
+        // Reading progress bar
+        const progressBar = document.getElementById('reading-progress');
+        if (progressBar) {
+          window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / docHeight) * 100;
+            progressBar.style.width = Math.min(scrolled, 100) + '%';
+          });
+        }
       </script>
     </div>
   </article>
@@ -211,6 +222,17 @@ const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/serv
 </Layout>
 
 <style>
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    z-index: 9999;
+    transition: width 0.1s linear;
+  }
+
   .post-header {
     padding-top: 130px;
     padding-bottom: 50px;
