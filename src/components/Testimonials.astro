@@ -60,6 +60,12 @@ const reviews = [
     text: "Katy me ha ayudado en la recuperación de una lesión de rodilla y a desinflamar y tratar el dolor. Tiene un trato muy agradable y respetuoso, es una gran profesional. Sin duda la recomiendo.",
     badge: "",
   },
+  {
+    name: "Amanda",
+    rating: 5,
+    text: "He acudido en varias ocasiones por problemas de espalda. El masaje en sí está genial, graduando presión aplicada y movimientos adecuados. Pero lo que más me gusta es que tiene una visión global de la persona, no sólo ve el problema muscular concreto sino los hábitos de vida, características personales individuales... Me hace mucho bien acudir a su sala.",
+    badge: "",
+  },
 ];
 
 const avgRating = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
