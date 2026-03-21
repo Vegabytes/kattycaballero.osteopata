@@ -51,6 +51,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
       pacienteId = insertResult.meta.last_row_id;
     }
 
+    // Check for conflicts before creating
+    const conflict = await db
+      .prepare("SELECT id FROM citas WHERE fecha = ? AND hora = ? AND estado != 'cancelada' LIMIT 1")
+      .bind(fecha, hora)
+      .first();
+
+    if (conflict) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Esa hora ya esta reservada. Por favor elige otra.' }),
+        { status: 409, headers }
+      );
+    }
+
     // Create cita with estado='pendiente'
     const result = await db
       .prepare('INSERT INTO citas (paciente_id, fecha, hora, duracion, servicio, estado, notas) VALUES (?, ?, ?, ?, ?, \'pendiente\', ?)')

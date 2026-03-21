@@ -19,6 +19,7 @@ const toolLinks = [
 ];
 ---
 
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
 <nav class="nav" id="main-nav">
   <div class="nav-container">
     <a href="/" class="nav-logo">
@@ -166,6 +167,25 @@ const toolLinks = [
 </nav>
 
 <style>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    z-index: 10000;
+    background: var(--color-primary);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: top 0.2s ease;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
   .nav {
     position: fixed;
     top: 0;

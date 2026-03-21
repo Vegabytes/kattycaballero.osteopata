@@ -25,27 +25,63 @@ for (let i = 0; i < 6; i++) {
   fechasDias.push(d.toISOString().split('T')[0]);
 }
 
-// Time slots: Mon-Fri 9:00-14:00, 16:00-20:00; Sat 9:00-13:00
-const slotsMorning = ['09:00', '10:00', '11:00', '12:00', '13:00'];
-const slotsAfternoon = ['16:00', '17:00', '18:00', '19:00'];
-const slotsSaturday = ['09:00', '10:00', '11:00', '12:00'];
+const db = (Astro.locals as any).runtime.env.DB;
 
-// All unique slots for row rendering
-const allSlots = ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00', '19:00'];
+// Load schedule from DB
+const DEFAULT_HORARIO: Record<string, { activo: boolean; inicio: string; fin: string }> = {
+  lunes:    { activo: true, inicio: '09:00', fin: '20:00' },
+  martes:   { activo: true, inicio: '09:00', fin: '20:00' },
+  miercoles:{ activo: true, inicio: '09:00', fin: '20:00' },
+  jueves:   { activo: true, inicio: '09:00', fin: '20:00' },
+  viernes:  { activo: true, inicio: '09:00', fin: '20:00' },
+  sabado:   { activo: true, inicio: '10:00', fin: '14:00' },
+  domingo:  { activo: false, inicio: '00:00', fin: '00:00' },
+};
+const DIA_KEYS = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
 
-// Determine which slots are valid for each day column (0-4 = Mon-Fri, 5 = Sat)
-function isValidSlot(dayIndex: number, hora: string): boolean {
-  if (dayIndex < 5) {
-    return slotsMorning.includes(hora) || slotsAfternoon.includes(hora);
+let horario = DEFAULT_HORARIO;
+try {
+  const row = await db.prepare("SELECT valor FROM configuracion WHERE clave = 'horario_semanal'").first() as { valor: string } | null;
+  if (row) {
+    try { horario = JSON.parse(row.valor); } catch {}
   }
-  // Saturday
-  return slotsSaturday.includes(hora);
+} catch {}
+
+// Generate all unique hour slots from the schedule
+function generateSlots(config: { inicio: string; fin: string }): string[] {
+  const [startH] = config.inicio.split(':').map(Number);
+  const [endH] = config.fin.split(':').map(Number);
+  const slots: string[] = [];
+  for (let h = startH; h < endH; h++) {
+    slots.push(`${h.toString().padStart(2, '0')}:00`);
+  }
+  return slots;
+}
+
+// Collect all unique slots across all active days
+const allSlotsSet = new Set<string>();
+for (const dia of DIA_KEYS) {
+  const h = horario[dia];
+  if (h && h.activo) {
+    generateSlots(h).forEach(s => allSlotsSet.add(s));
+  }
+}
+const allSlots = Array.from(allSlotsSet).sort();
+
+// Determine which slots are valid for each day column
+function isValidSlot(dayIndex: number, hora: string): boolean {
+  const diaKey = DIA_KEYS[dayIndex];
+  const h = horario[diaKey];
+  if (!h || !h.activo) return false;
+  const [slotH] = hora.split(':').map(Number);
+  const [startH] = h.inicio.split(':').map(Number);
+  const [endH] = h.fin.split(':').map(Number);
+  return slotH >= startH && slotH < endH;
 }
 
 // Query citas for the week
 let citasSemana: any[] = [];
 try {
-  const db = (Astro.locals as any).runtime.env.DB;
   const lunesStr = fechasDias[0];
   const sabadoStr = fechasDias[5];
   const result = await db.prepare(

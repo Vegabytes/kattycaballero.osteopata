@@ -504,6 +504,17 @@ const services = [
     background: var(--color-primary);
     color: white;
   }
+  .time-slot.occupied {
+    opacity: 0.35;
+    text-decoration: line-through;
+    cursor: not-allowed;
+    background: #f0f0f0;
+    border-color: #ddd;
+  }
+  .time-slot.occupied:hover {
+    border-color: #ddd;
+    background: #f0f0f0;
+  }
 
   /* Step 3: User form */
   .user-form {
@@ -956,6 +967,76 @@ const services = [
     background: #2a2a3e;
   }
 
+  :global([data-theme="dark"]) .time-slot.occupied {
+    background: #1a1a24;
+    border-color: rgba(111, 155, 110, 0.08);
+    opacity: 0.3;
+  }
+
+  :global([data-theme="dark"]) .time-slot.occupied:hover {
+    background: #1a1a24;
+    border-color: rgba(111, 155, 110, 0.08);
+  }
+
+  .draft-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: #f0f7f0;
+    border: 1px solid #c8e6c9;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .draft-banner span {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .draft-continue {
+    padding: 8px 20px;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .draft-continue:hover {
+    background: var(--color-primary-dark);
+  }
+
+  .draft-dismiss {
+    padding: 8px 16px;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .draft-dismiss:hover {
+    border-color: #999;
+  }
+
+  :global([data-theme="dark"]) .draft-banner {
+    background: #2a2a3e;
+    border-color: rgba(111, 155, 110, 0.2);
+  }
+
+  :global([data-theme="dark"]) .draft-dismiss {
+    border-color: rgba(255,255,255,0.2);
+    color: #aaa;
+  }
+
   :global([data-theme="dark"]) .form-group input,
   :global([data-theme="dark"]) .form-group textarea {
     background: #2a2a3e;
@@ -1003,6 +1084,35 @@ const services = [
 
 <script>
   // === Booking App ===
+  const DAY_NAMES = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+
+  // Default schedule (used until API responds)
+  const DEFAULT_HORARIO: Record<string, { activo: boolean; inicio: string; fin: string }> = {
+    lunes:    { activo: true, inicio: '09:00', fin: '20:00' },
+    martes:   { activo: true, inicio: '09:00', fin: '20:00' },
+    miercoles:{ activo: true, inicio: '09:00', fin: '20:00' },
+    jueves:   { activo: true, inicio: '09:00', fin: '20:00' },
+    viernes:  { activo: true, inicio: '09:00', fin: '20:00' },
+    sabado:   { activo: true, inicio: '10:00', fin: '14:00' },
+    domingo:  { activo: false, inicio: '00:00', fin: '00:00' },
+  };
+
+  let availabilityData: {
+    horario: Record<string, { activo: boolean; inicio: string; fin: string }>;
+    diasBloqueados: string[];
+  } = { horario: DEFAULT_HORARIO, diasBloqueados: [] };
+
+  // Fetch availability from API
+  async function loadAvailability() {
+    try {
+      const res = await fetch('/api/disponibilidad');
+      if (res.ok) {
+        const data = await res.json();
+        availabilityData = { horario: data.horario, diasBloqueados: data.diasBloqueados || [] };
+      }
+    } catch {}
+  }
+
   const state = {
     service: null as { name: string; duration: string; price: string } | null,
     date: null as Date | null,
@@ -1014,22 +1124,32 @@ const services = [
   const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const WEEKDAYS_SHORT = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
 
+  function isDayActive(date: Date): boolean {
+    const dayName = DAY_NAMES[date.getDay()];
+    const config = availabilityData.horario[dayName];
+    if (!config || !config.activo) return false;
+    // Check blocked dates
+    const dateStr = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
+    if (availabilityData.diasBloqueados.includes(dateStr)) return false;
+    return true;
+  }
+
   function getTimeSlots(date: Date): string[] {
-    const day = date.getDay();
+    const dayName = DAY_NAMES[date.getDay()];
+    const config = availabilityData.horario[dayName];
+    if (!config || !config.activo) return [];
+
+    const [startH, startM] = config.inicio.split(':').map(Number);
+    const [endH, endM] = config.fin.split(':').map(Number);
     const slots: string[] = [];
-    if (day === 0) return slots;
-    const start = day === 6 ? 10 : 9;
-    const end = day === 6 ? 14 : 20;
-    for (let h = start; h < end; h++) {
-      slots.push(`${h.toString().padStart(2, '0')}:00`);
-      if (end - h > 1 || (end - h === 1 && day !== 6)) {
-        slots.push(`${h.toString().padStart(2, '0')}:30`);
-      }
+    let h = startH;
+    let m = startM || 0;
+    while (h < endH || (h === endH && m < endM)) {
+      slots.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
+      m += 30;
+      if (m >= 60) { h++; m = 0; }
     }
-    return slots.filter(s => {
-      const [hh] = s.split(':').map(Number);
-      return hh < end;
-    });
+    return slots;
   }
 
   function showStep(n: number) {
@@ -1043,9 +1163,28 @@ const services = [
     document.querySelector('.booking-main')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  // Load availability on page load
+  loadAvailability();
+
+  // Auto-select service from URL param (?servicio=Osteopatía...)
+  (async () => {
+    const params = new URLSearchParams(window.location.search);
+    const preselect = params.get('servicio');
+    if (preselect) {
+      await loadAvailability();
+      const match = document.querySelector(`.service-option[data-name="${preselect}"]`) as HTMLElement |
+        null || Array.from(document.querySelectorAll('.service-option')).find(
+          el => el.getAttribute('data-name')?.toLowerCase().includes(preselect.toLowerCase())
+        ) as HTMLElement | null;
+      if (match) {
+        match.click();
+      }
+    }
+  })();
+
   // Step 1
   document.querySelectorAll('.service-option').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       document.querySelectorAll('.service-option').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       state.service = {
@@ -1053,6 +1192,7 @@ const services = [
         duration: btn.getAttribute('data-duration') || '',
         price: btn.getAttribute('data-price') || '',
       };
+      await loadAvailability();
       setTimeout(() => { showStep(2); renderCalendar(); }, 200);
     });
   });
@@ -1094,12 +1234,12 @@ const services = [
       btn.className = 'cal-day';
       btn.textContent = String(d);
 
-      const isSunday = date.getDay() === 0;
+      const isInactive = !isDayActive(date);
       const isPast = date < today;
       const isToday = date.getTime() === today.getTime();
 
       if (isToday) btn.classList.add('today');
-      if (isSunday || isPast) btn.disabled = true;
+      if (isInactive || isPast) btn.disabled = true;
       if (state.date && date.getTime() === state.date.getTime()) btn.classList.add('selected');
 
       btn.addEventListener('click', () => {
@@ -1113,7 +1253,24 @@ const services = [
     }
   }
 
-  function renderTimeSlots() {
+  // Cache for occupied slots per date
+  const occupiedCache: Record<string, string[]> = {};
+
+  async function fetchOccupiedSlots(date: Date): Promise<string[]> {
+    const dateStr = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
+    if (occupiedCache[dateStr]) return occupiedCache[dateStr];
+    try {
+      const res = await fetch(`/api/citas-disponibles?fecha=${dateStr}`);
+      if (res.ok) {
+        const data = await res.json();
+        occupiedCache[dateStr] = data.occupied || [];
+        return occupiedCache[dateStr];
+      }
+    } catch {}
+    return [];
+  }
+
+  async function renderTimeSlots() {
     const container = document.getElementById('time-slots')!;
     const title = document.getElementById('time-title')!;
 
@@ -1127,7 +1284,13 @@ const services = [
     const dateStr = `${state.date.getDate()} de ${MONTHS[state.date.getMonth()]}`;
     title.textContent = `${dayName} ${dateStr}`;
 
-    const slots = getTimeSlots(state.date);
+    container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--color-text-muted);font-size:0.9rem;">Cargando horarios...</p>';
+
+    const [slots, occupied] = await Promise.all([
+      Promise.resolve(getTimeSlots(state.date)),
+      fetchOccupiedSlots(state.date),
+    ]);
+
     const now = new Date();
     const filteredSlots = slots.filter(s => {
       if (state.date!.toDateString() !== now.toDateString()) return true;
@@ -1136,8 +1299,10 @@ const services = [
     });
 
     container.innerHTML = '';
-    if (filteredSlots.length === 0) {
-      container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--color-text-muted);font-size:0.9rem;">No hay horas disponibles</p>';
+    const availableSlots = filteredSlots.filter(s => !occupied.includes(s));
+
+    if (availableSlots.length === 0) {
+      container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--color-text-muted);font-size:0.9rem;">No hay horas disponibles este día</p>';
       return;
     }
 
@@ -1145,8 +1310,14 @@ const services = [
       const btn = document.createElement('button');
       btn.className = 'time-slot';
       btn.textContent = slot;
+      if (occupied.includes(slot)) {
+        btn.disabled = true;
+        btn.classList.add('occupied');
+        btn.title = 'Hora no disponible';
+      }
       if (state.time === slot) btn.classList.add('selected');
       btn.addEventListener('click', () => {
+        if (occupied.includes(slot)) return;
         state.time = slot;
         renderTimeSlots();
         setTimeout(() => { showStep(3); updateSummary(); }, 200);
@@ -1210,8 +1381,8 @@ const services = [
     return { name, phone, email, notes, dateDisplay, dateISO, time: state.time, service: state.service };
   }
 
-  async function saveBooking(data: ReturnType<typeof getBookingData>) {
-    if (!data) return false;
+  async function saveBooking(data: ReturnType<typeof getBookingData>): Promise<{ ok: boolean; conflict?: boolean }> {
+    if (!data) return { ok: false };
     try {
       const res = await fetch('/api/reservar', {
         method: 'POST',
@@ -1227,10 +1398,11 @@ const services = [
           notas: data.notes || null,
         }),
       });
-      return res.ok;
+      if (res.status === 409) return { ok: false, conflict: true };
+      return { ok: res.ok };
     } catch (e) {
       console.error('Error saving booking:', e);
-      return false;
+      return { ok: false };
     }
   }
 
@@ -1261,9 +1433,23 @@ const services = [
     const btn = document.getElementById('btn-reservar') as HTMLButtonElement;
     btn.disabled = true;
     btn.textContent = 'Reservando...';
-    const saved = await saveBooking(data);
-    if (saved) {
-      window.location.href = '/gracias';
+    const result = await saveBooking(data);
+    if (result.ok) {
+      const params = new URLSearchParams({
+        servicio: data.service!.name,
+        fecha: data.dateDisplay,
+        hora: data.time!,
+        precio: data.service!.price,
+      });
+      window.location.href = `/gracias?${params.toString()}`;
+    } else if (result.conflict) {
+      btn.textContent = 'Hora ya reservada';
+      btn.disabled = false;
+      // Invalidate cache and re-render slots
+      const dateStr = `${state.date!.getFullYear()}-${(state.date!.getMonth()+1).toString().padStart(2,'0')}-${state.date!.getDate().toString().padStart(2,'0')}`;
+      delete occupiedCache[dateStr];
+      renderTimeSlots();
+      setTimeout(() => { btn.textContent = 'Reservar cita'; showStep(2); }, 2000);
     } else {
       btn.textContent = 'Error, inténtalo de nuevo';
       btn.disabled = false;
@@ -1276,8 +1462,20 @@ const services = [
     const data = getBookingData();
     if (!data) return;
 
-    // Save to DB in background
-    saveBooking(data);
+    const btn = document.getElementById('btn-send') as HTMLButtonElement;
+    btn.disabled = true;
+
+    // Save to DB and check for conflict
+    const result = await saveBooking(data);
+    if (result.conflict) {
+      btn.textContent = 'Hora ya reservada';
+      btn.disabled = false;
+      const dateStr = `${state.date!.getFullYear()}-${(state.date!.getMonth()+1).toString().padStart(2,'0')}-${state.date!.getDate().toString().padStart(2,'0')}`;
+      delete occupiedCache[dateStr];
+      renderTimeSlots();
+      setTimeout(() => { btn.textContent = 'Confirmar por WhatsApp'; showStep(2); }, 2000);
+      return;
+    }
 
     let message = `Hola Katy, me gustaría reservar una cita:\n\n`;
     message += `*Servicio:* ${data.service!.name}\n`;
@@ -1288,5 +1486,130 @@ const services = [
     if (data.notes) message += `\n*Notas:* ${data.notes}`;
 
     window.open(`https://wa.me/34643961065?text=${encodeURIComponent(message)}`, '_blank');
+    btn.disabled = false;
   });
+
+  // === Booking Draft Persistence (localStorage) ===
+  const DRAFT_KEY = 'katy_booking_draft';
+
+  function saveDraft() {
+    const draft: Record<string, any> = {};
+    if (state.service) draft.service = state.service;
+    if (state.date) draft.dateISO = `${state.date.getFullYear()}-${(state.date.getMonth()+1).toString().padStart(2,'0')}-${state.date.getDate().toString().padStart(2,'0')}`;
+    if (state.time) draft.time = state.time;
+    const name = (document.getElementById('user-name') as HTMLInputElement)?.value;
+    const phone = (document.getElementById('user-phone') as HTMLInputElement)?.value;
+    const email = (document.getElementById('user-email') as HTMLInputElement)?.value;
+    if (name) draft.name = name;
+    if (phone) draft.phone = phone;
+    if (email) draft.email = email;
+    if (Object.keys(draft).length > 0) {
+      draft.savedAt = Date.now();
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    }
+  }
+
+  function clearDraft() {
+    localStorage.removeItem(DRAFT_KEY);
+  }
+
+  // Save draft on each step change
+  const origShowStep = showStep;
+  (window as any).__showStep = showStep;
+  function showStepWithDraft(n: number) {
+    origShowStep(n);
+    saveDraft();
+  }
+
+  // Auto-save on form input
+  ['user-name', 'user-phone', 'user-email'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', saveDraft);
+  });
+
+  // Restore draft on load (only if no URL pre-selection and draft is < 24h old)
+  (function restoreDraft() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('servicio')) return; // URL pre-selection takes priority
+
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+
+      // Expire after 24h
+      if (Date.now() - (draft.savedAt || 0) > 24 * 60 * 60 * 1000) {
+        clearDraft();
+        return;
+      }
+
+      // Show restore banner
+      if (draft.service) {
+        const banner = document.createElement('div');
+        banner.className = 'draft-banner';
+        banner.innerHTML = `
+          <span>Tienes una reserva sin terminar: <strong>${draft.service.name}</strong></span>
+          <button class="draft-continue">Continuar</button>
+          <button class="draft-dismiss">Descartar</button>
+        `;
+        document.querySelector('.booking-main .container')?.prepend(banner);
+
+        banner.querySelector('.draft-continue')?.addEventListener('click', async () => {
+          banner.remove();
+          await loadAvailability();
+
+          // Restore service
+          const match = Array.from(document.querySelectorAll('.service-option')).find(
+            el => el.getAttribute('data-name') === draft.service.name
+          ) as HTMLElement | null;
+          if (match) {
+            match.classList.add('selected');
+            state.service = draft.service;
+          }
+
+          // Restore date
+          if (draft.dateISO) {
+            const [y, m, d] = draft.dateISO.split('-').map(Number);
+            const date = new Date(y, m - 1, d);
+            if (date >= new Date(new Date().setHours(0,0,0,0)) && isDayActive(date)) {
+              state.date = date;
+              state.currentMonth = date.getMonth();
+              state.currentYear = date.getFullYear();
+            }
+          }
+
+          // Restore time
+          if (draft.time) state.time = draft.time;
+
+          // Restore contact
+          if (draft.name) (document.getElementById('user-name') as HTMLInputElement).value = draft.name;
+          if (draft.phone) (document.getElementById('user-phone') as HTMLInputElement).value = draft.phone;
+          if (draft.email) (document.getElementById('user-email') as HTMLInputElement).value = draft.email;
+
+          // Navigate to the furthest step
+          if (state.service && state.date && state.time) {
+            showStep(3);
+            updateSummary();
+            validateForm();
+          } else if (state.service) {
+            showStep(2);
+            renderCalendar();
+            renderTimeSlots();
+          }
+        });
+
+        banner.querySelector('.draft-dismiss')?.addEventListener('click', () => {
+          banner.remove();
+          clearDraft();
+        });
+      }
+    } catch {}
+  })();
+
+  // Clear draft after successful booking
+  const origSaveBooking = saveBooking;
+  saveBooking = async function(data: any) {
+    const result = await origSaveBooking(data);
+    if (result.ok) clearDraft();
+    return result;
+  };
 </script>

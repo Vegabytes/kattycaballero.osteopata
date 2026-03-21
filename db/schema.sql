@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS bonos (
 
 -- Índices
 CREATE INDEX IF NOT EXISTS idx_citas_fecha ON citas(fecha);
+CREATE INDEX IF NOT EXISTS idx_citas_fecha_hora ON citas(fecha, hora);
 CREATE INDEX IF NOT EXISTS idx_citas_paciente ON citas(paciente_id);
 CREATE INDEX IF NOT EXISTS idx_tratamientos_paciente ON tratamientos(paciente_id);
 CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);

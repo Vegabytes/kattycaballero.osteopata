@@ -8,7 +8,7 @@ const posts = await getCollection('blog');
 const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const pageTitle = "Blog de Osteopatía y Bienestar | Sierra Noroeste de Madrid";
-const pageDescription = "Artículos sobre osteopatía, masajes terapéuticos, ejercicios para el dolor de espalda, contracturas y consejos de salud. Blog de Katy Caballero, osteópata en Alpedrete, Sierra Noroeste de Madrid.";
+const pageDescription = "Artículos sobre osteopatía, masajes, ejercicios para dolor de espalda y consejos de salud. Blog de Katy Caballero, osteópata en Alpedrete, Sierra de Madrid.";
 
 // Unique categories
 const categories = [...new Set(sortedPosts.map(p => p.data.category))].sort();

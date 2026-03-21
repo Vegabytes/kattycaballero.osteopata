@@ -69,7 +69,7 @@ const breadcrumbSchema = [
 ];
 ---
 
-<Layout title={service.metaTitle} description={service.metaDescription} keywords={service.keywords} breadcrumbs={breadcrumbSchema}>
+<Layout title={service.metaTitle} description={service.metaDescription} keywords={service.keywords} image={service.image} breadcrumbs={breadcrumbSchema}>
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
@@ -82,7 +82,7 @@ const breadcrumbSchema = [
         <span class="meta-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> {service.duration}</span>
         <span class="meta-price">{service.price}</span>
       </div>
-      <a href="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20un%20masaje%20deportivo" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Reservar cita</a>
+      <a href="/reservar?servicio=Masaje%20deportivo" class="btn btn-primary">Reservar cita</a>
     </div>
   </section>
 
@@ -161,10 +161,10 @@ const breadcrumbSchema = [
   <CTASection
     title="¿Necesitas recuperarte después de entrenar?"
     description="Reserva tu masaje deportivo y mejora tu recuperación muscular."
-    buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20un%20masaje%20deportivo"
+    buttonLink="/reservar?servicio=Masaje%20deportivo"
   />
 
-  <StickyCtaBar serviceName={service.title} price={service.price} bookingUrl="https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20un%20masaje%20deportivo" />
+  <StickyCtaBar serviceName={service.title} price={service.price} bookingUrl="/reservar?servicio=Masaje%20deportivo" />
 </Layout>
 
 <style>

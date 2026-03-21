@@ -1,0 +1,365 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const DEFAULT_HORARIO: Record<string, { activo: boolean; inicio: string; fin: string }> = {
+  lunes:    { activo: true, inicio: '09:00', fin: '20:00' },
+  martes:   { activo: true, inicio: '09:00', fin: '20:00' },
+  miercoles:{ activo: true, inicio: '09:00', fin: '20:00' },
+  jueves:   { activo: true, inicio: '09:00', fin: '20:00' },
+  viernes:  { activo: true, inicio: '09:00', fin: '20:00' },
+  sabado:   { activo: true, inicio: '10:00', fin: '14:00' },
+  domingo:  { activo: false, inicio: '00:00', fin: '00:00' },
+};
+
+const DIAS_LABEL: Record<string, string> = {
+  lunes: 'Lunes',
+  martes: 'Martes',
+  miercoles: 'Miercoles',
+  jueves: 'Jueves',
+  viernes: 'Viernes',
+  sabado: 'Sabado',
+  domingo: 'Domingo',
+};
+
+let horario = { ...DEFAULT_HORARIO };
+let diasBloqueados: string[] = [];
+let mensaje = '';
+let error = '';
+
+const db = (Astro.locals as any).runtime.env.DB;
+
+// Load current settings
+try {
+  const rows = await db.prepare(
+    "SELECT clave, valor FROM configuracion WHERE clave IN ('horario_semanal', 'dias_bloqueados')"
+  ).all();
+  for (const row of (rows.results || []) as { clave: string; valor: string }[]) {
+    if (row.clave === 'horario_semanal') {
+      try { horario = JSON.parse(row.valor); } catch {}
+    } else if (row.clave === 'dias_bloqueados') {
+      try { diasBloqueados = JSON.parse(row.valor); } catch {}
+    }
+  }
+} catch (e: any) {
+  error = `Error cargando configuracion: ${e.message}`;
+}
+
+// Handle POST
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const action = form.get('_action') as string;
+
+  try {
+    if (action === 'horario') {
+      const nuevoHorario: Record<string, { activo: boolean; inicio: string; fin: string }> = {};
+      for (const dia of Object.keys(DEFAULT_HORARIO)) {
+        nuevoHorario[dia] = {
+          activo: form.get(`${dia}_activo`) === 'on',
+          inicio: (form.get(`${dia}_inicio`) as string) || '09:00',
+          fin: (form.get(`${dia}_fin`) as string) || '20:00',
+        };
+      }
+      await db.prepare(
+        "INSERT INTO configuracion (clave, valor, updated_at) VALUES ('horario_semanal', ?, datetime('now')) ON CONFLICT(clave) DO UPDATE SET valor = ?, updated_at = datetime('now')"
+      ).bind(JSON.stringify(nuevoHorario), JSON.stringify(nuevoHorario)).run();
+      horario = nuevoHorario;
+      mensaje = 'Horario actualizado correctamente';
+    } else if (action === 'bloquear') {
+      const fecha = form.get('fecha_bloqueo') as string;
+      const motivo = form.get('motivo_bloqueo') as string;
+      if (fecha && !diasBloqueados.includes(fecha)) {
+        diasBloqueados.push(fecha);
+        diasBloqueados.sort();
+        await db.prepare(
+          "INSERT INTO configuracion (clave, valor, updated_at) VALUES ('dias_bloqueados', ?, datetime('now')) ON CONFLICT(clave) DO UPDATE SET valor = ?, updated_at = datetime('now')"
+        ).bind(JSON.stringify(diasBloqueados), JSON.stringify(diasBloqueados)).run();
+        mensaje = `Dia ${fecha} bloqueado${motivo ? ` (${motivo})` : ''}`;
+      }
+    } else if (action === 'desbloquear') {
+      const fecha = form.get('fecha_desbloqueo') as string;
+      diasBloqueados = diasBloqueados.filter(d => d !== fecha);
+      await db.prepare(
+        "INSERT INTO configuracion (clave, valor, updated_at) VALUES ('dias_bloqueados', ?, datetime('now')) ON CONFLICT(clave) DO UPDATE SET valor = ?, updated_at = datetime('now')"
+      ).bind(JSON.stringify(diasBloqueados), JSON.stringify(diasBloqueados)).run();
+      mensaje = `Dia ${fecha} desbloqueado`;
+    }
+  } catch (e: any) {
+    error = `Error guardando: ${e.message}`;
+  }
+}
+
+// Filter past blocked dates
+const hoy = new Date().toISOString().split('T')[0];
+const diasBloqueadosFuturos = diasBloqueados.filter(d => d >= hoy);
+
+// Generate time options for selects
+const timeOptions: string[] = [];
+for (let h = 7; h <= 22; h++) {
+  timeOptions.push(`${h.toString().padStart(2, '0')}:00`);
+  if (h < 22) timeOptions.push(`${h.toString().padStart(2, '0')}:30`);
+}
+---
+
+<AdminLayout title="Horario y Disponibilidad" activeSection="horario">
+  {mensaje && <div class="alert alert-success">{mensaje}</div>}
+  {error && <div class="alert alert-error">{error}</div>}
+
+  <div class="page-header">
+    <h2>Horario y Disponibilidad</h2>
+    <p style="color:var(--admin-text-light);font-size:0.85rem;margin-top:4px;">
+      Configura tu horario semanal y bloquea dias concretos (vacaciones, festivos, etc.)
+    </p>
+  </div>
+
+  <!-- Horario Semanal -->
+  <div class="card" style="margin-bottom:20px;">
+    <h3 class="section-title">Horario semanal</h3>
+    <p style="color:var(--admin-text-light);font-size:0.8rem;margin-bottom:16px;">
+      Activa o desactiva cada dia y define el rango de horas disponibles para reservas.
+    </p>
+    <form method="POST">
+      <input type="hidden" name="_action" value="horario">
+      <div class="horario-grid">
+        {Object.entries(DIAS_LABEL).map(([dia, label]) => {
+          const h = (horario as any)[dia] || DEFAULT_HORARIO[dia];
+          return (
+            <div class={`horario-row ${h.activo ? '' : 'horario-inactive'}`}>
+              <label class="horario-toggle">
+                <input type="checkbox" name={`${dia}_activo`} checked={h.activo} />
+                <span class="dia-label">{label}</span>
+              </label>
+              <div class="horario-times">
+                <select name={`${dia}_inicio`} disabled={!h.activo}>
+                  {timeOptions.map(t => (
+                    <option value={t} selected={t === h.inicio}>{t}</option>
+                  ))}
+                </select>
+                <span class="horario-sep">a</span>
+                <select name={`${dia}_fin`} disabled={!h.activo}>
+                  {timeOptions.map(t => (
+                    <option value={t} selected={t === h.fin}>{t}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm" style="margin-top:16px;">Guardar horario</button>
+    </form>
+  </div>
+
+  <!-- Días Bloqueados -->
+  <div class="card">
+    <h3 class="section-title">Dias bloqueados</h3>
+    <p style="color:var(--admin-text-light);font-size:0.8rem;margin-bottom:16px;">
+      Bloquea dias concretos en los que no puedes atender. Estos dias no apareceran como disponibles en el formulario de reservas.
+    </p>
+
+    <form method="POST" class="bloquear-form">
+      <input type="hidden" name="_action" value="bloquear">
+      <div class="form-row" style="align-items:flex-end;">
+        <div class="form-group">
+          <label for="fecha_bloqueo">Fecha</label>
+          <input type="date" id="fecha_bloqueo" name="fecha_bloqueo" min={hoy} required>
+        </div>
+        <div class="form-group">
+          <label for="motivo_bloqueo">Motivo (opcional)</label>
+          <input type="text" id="motivo_bloqueo" name="motivo_bloqueo" placeholder="Ej: Vacaciones, festivo...">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Bloquear dia</button>
+      </div>
+    </form>
+
+    {diasBloqueadosFuturos.length > 0 ? (
+      <div class="blocked-list">
+        <h4 style="font-size:0.85rem;margin-bottom:8px;color:var(--admin-text);">Dias bloqueados proximos:</h4>
+        {diasBloqueadosFuturos.map(fecha => {
+          const d = new Date(fecha + 'T00:00:00');
+          const label = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+          return (
+            <div class="blocked-item">
+              <span class="blocked-date">{label}</span>
+              <form method="POST" style="display:inline;">
+                <input type="hidden" name="_action" value="desbloquear">
+                <input type="hidden" name="fecha_desbloqueo" value={fecha}>
+                <button type="submit" class="btn-remove" title="Desbloquear">✕</button>
+              </form>
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <p style="color:var(--admin-text-light);font-size:0.85rem;font-style:italic;">
+        No hay dias bloqueados. Todos los dias activos estan disponibles para reservas.
+      </p>
+    )}
+  </div>
+</AdminLayout>
+
+<script>
+  // Enable/disable time selects when toggling day checkbox
+  document.querySelectorAll('.horario-toggle input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const row = (cb as HTMLInputElement).closest('.horario-row')!;
+      const selects = row.querySelectorAll('select');
+      selects.forEach(s => (s as HTMLSelectElement).disabled = !(cb as HTMLInputElement).checked);
+      row.classList.toggle('horario-inactive', !(cb as HTMLInputElement).checked);
+    });
+  });
+</script>
+
+<style is:global>
+  .section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--admin-text);
+    margin-bottom: 4px;
+  }
+
+  .horario-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .horario-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #f0f9f0;
+    border-radius: 8px;
+    border: 1px solid #c8e6c9;
+    transition: all 0.2s;
+  }
+
+  .horario-row.horario-inactive {
+    background: #f5f5f5;
+    border-color: #e0e0e0;
+    opacity: 0.7;
+  }
+
+  .horario-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    min-width: 120px;
+  }
+
+  .horario-toggle input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--admin-primary);
+  }
+
+  .dia-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--admin-text);
+  }
+
+  .horario-inactive .dia-label {
+    color: var(--admin-text-light);
+    text-decoration: line-through;
+  }
+
+  .horario-times {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .horario-times select {
+    padding: 6px 8px;
+    border: 1px solid var(--admin-border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    background: var(--admin-card);
+    color: var(--admin-text);
+  }
+
+  .horario-times select:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .horario-sep {
+    font-size: 0.8rem;
+    color: var(--admin-text-light);
+  }
+
+  .bloquear-form {
+    margin-bottom: 16px;
+  }
+
+  .bloquear-form .form-row {
+    gap: 12px;
+  }
+
+  .blocked-list {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--admin-border);
+  }
+
+  .blocked-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: #fff3e0;
+    border: 1px solid #ffcc80;
+    border-radius: 6px;
+    margin-bottom: 6px;
+  }
+
+  .blocked-date {
+    font-size: 0.85rem;
+    color: var(--admin-text);
+    text-transform: capitalize;
+  }
+
+  .btn-remove {
+    background: none;
+    border: 1px solid #ef5350;
+    color: #ef5350;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .btn-remove:hover {
+    background: #ef5350;
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .horario-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .horario-times {
+      width: 100%;
+    }
+
+    .horario-times select {
+      flex: 1;
+    }
+
+    .bloquear-form .form-row {
+      flex-direction: column;
+    }
+  }
+</style>

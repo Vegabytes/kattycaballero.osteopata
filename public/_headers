@@ -18,6 +18,12 @@
 /*.js
   Cache-Control: public, max-age=31536000, immutable
 
+/blog/*
+  Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=43200
+
+/servicios/*
+  Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=43200
+
 /admin/*
   Cache-Control: no-store, no-cache, must-revalidate, private
   X-Robots-Tag: noindex, nofollow
