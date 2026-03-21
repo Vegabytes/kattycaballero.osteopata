@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pageTitle = "Reservar Cita | Osteópata y Masajista en Alpedrete - Sierra Noroeste de Madrid";
+const pageTitle = "Reservar Cita | Osteópata en Alpedrete - Katy Caballero";
 const pageDescription = "Reserva tu cita de osteopatía o masaje en Alpedrete, Sierra Noroeste de Madrid. Elige servicio, día y hora, y confirma por WhatsApp. Horario flexible.";
 
 const services = [
@@ -111,6 +111,11 @@ const services = [
               <div class="form-group">
                 <label for="user-notes">Notas (opcional)</label>
                 <textarea id="user-notes" placeholder="¿Algo que deba saber? Ej: primera visita, zona de dolor..." rows="3"></textarea>
+              </div>
+
+              <div class="form-group" style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+                <label for="booking-website">Website</label>
+                <input type="text" id="booking-website" name="website" tabindex="-1" autocomplete="off">
               </div>
 
               <div class="booking-summary" id="booking-summary" role="status" aria-live="polite"></div>
@@ -1384,6 +1389,9 @@ const services = [
   async function saveBooking(data: ReturnType<typeof getBookingData>): Promise<{ ok: boolean; conflict?: boolean }> {
     if (!data) return { ok: false };
     try {
+      const honeypot = (document.getElementById('booking-website') as HTMLInputElement)?.value;
+      if (honeypot) return { ok: false };
+
       const res = await fetch('/api/reservar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
