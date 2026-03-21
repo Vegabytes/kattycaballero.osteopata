@@ -28,7 +28,7 @@ const blogPostingSchema = {
   "@type": "BlogPosting",
   "headline": post.data.title,
   "description": post.data.excerpt,
-  "image": post.data.image,
+  "image": `https://katycaballeroosteopata.com${post.data.image}`,
   "datePublished": post.data.date.toISOString(),
   "dateModified": post.data.date.toISOString(),
   "author": {

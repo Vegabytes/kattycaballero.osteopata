@@ -31,7 +31,7 @@ const images = [
           tabindex="0"
           aria-label={`Ver imagen: ${image.alt}`}
         >
-          <img src={image.src} alt={image.alt} loading="lazy" />
+          <img src={image.src} alt={image.alt} width="400" height={image.orientation === 'horizontal' ? '267' : '533'} loading="lazy" />
           <div class="gallery-item-zoom">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <circle cx="11" cy="11" r="8"/>
