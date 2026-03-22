@@ -3,6 +3,9 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import { notifyNewBooking } from '../../lib/notifications';
 
+// Rate limiting: max 5 bookings per IP per hour
+const rateLimitMap = new Map<string, number[]>();
+
 export const POST: APIRoute = async ({ request, locals }) => {
   const headers = {
     'Content-Type': 'application/json',
@@ -10,8 +13,30 @@ export const POST: APIRoute = async ({ request, locals }) => {
   };
 
   try {
+    // Rate limiting
+    const ip = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
+    const now = Date.now();
+    const windowMs = 60 * 60 * 1000;
+    const attempts = (rateLimitMap.get(ip) || []).filter(t => now - t < windowMs);
+    if (attempts.length >= 5) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Demasiados intentos. Inténtalo de nuevo más tarde.' }),
+        { status: 429, headers: { ...headers, 'Retry-After': '3600' } }
+      );
+    }
+    attempts.push(now);
+    rateLimitMap.set(ip, attempts);
+
     const body = await request.json();
-    const { nombre, telefono, email, servicio, fecha, hora, duracion, notas } = body;
+    const { nombre, telefono, email, servicio, fecha, hora, duracion, notas, website } = body;
+
+    // Honeypot check
+    if (website) {
+      return new Response(
+        JSON.stringify({ success: true }),
+        { status: 200, headers }
+      );
+    }
 
     // Validate required fields
     if (!nombre || !telefono || !fecha || !hora) {

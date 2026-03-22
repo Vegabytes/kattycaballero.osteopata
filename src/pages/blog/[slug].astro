@@ -47,7 +47,10 @@ const blogPostingSchema = {
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": `https://katycaballeroosteopata.com/blog/${post.slug}`
-  }
+  },
+  "articleSection": post.data.category || "Salud y Bienestar",
+  "wordCount": post.body?.split(/\s+/).length || 0,
+  "inLanguage": "es"
 };
 
 function formatDate(date: Date): string {

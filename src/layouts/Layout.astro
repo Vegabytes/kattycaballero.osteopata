@@ -544,5 +544,13 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
       }
     });
   </script>
+
+  <!-- Register public service worker -->
+  <script is:inline>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        .catch(() => {});
+    }
+  </script>
 </body>
 </html>
