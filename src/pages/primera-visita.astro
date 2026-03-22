@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CTASection from '../components/CTASection.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const pageTitle = "Primera Visita | Osteópata en Alpedrete";
 const pageDescription = "Todo lo que necesitas saber antes de tu primera visita de osteopatía en Alpedrete. Qué esperar, cómo prepararte, cómo llegar y preguntas frecuentes.";
@@ -45,14 +44,48 @@ const faqSchema = {
     }
   ]
 };
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Cómo es tu primera visita de osteopatía en Alpedrete",
+  "description": "Los 4 pasos de tu primera sesión de osteopatía con Katy Caballero en Alpedrete.",
+  "totalTime": "PT55M",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Cuestionario breve sobre tu historial",
+      "text": "Hablamos sobre tus molestias, antecedentes y hábitos para entenderte como persona, no solo tu dolor."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Valoración postural y de movilidad",
+      "text": "Evalúo tu postura, movilidad articular y tensiones musculares para identificar el origen de tu problema."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Tratamiento personalizado",
+      "text": "Aplico las técnicas más adecuadas: osteopatía estructural, visceral o craneal según lo que necesites."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Explicación y recomendaciones",
+      "text": "Te explico qué he encontrado, qué hemos trabajado y te doy pautas o ejercicios para casa si es necesario."
+    }
+  ]
+};
 ---
 
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Primera visita" }]}>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
 
   <section class="page-hero">
     <div class="container">
-      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Primera Visita"}]} />
       <span class="section-tag">Primera visita</span>
       <h1>Tu primera visita</h1>
       <p>Todo lo que necesitas saber antes de venir</p>
