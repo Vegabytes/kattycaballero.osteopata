@@ -14,7 +14,7 @@ const { serviceName, price, bookingUrl } = Astro.props;
       <span class="sticky-cta-name">{serviceName}</span>
       <span class="sticky-cta-price">{price}</span>
     </div>
-    <a href={bookingUrl} class="btn btn-primary sticky-cta-btn" {...(bookingUrl.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>Reservar cita</a>
+    <a href={bookingUrl} class="btn btn-primary sticky-cta-btn" aria-label={`Reservar cita de ${serviceName}`} {...(bookingUrl.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>Reservar cita</a>
   </div>
 </div>
 

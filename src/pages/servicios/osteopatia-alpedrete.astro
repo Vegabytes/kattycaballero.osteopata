@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import CTASection from '../../components/CTASection.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
 import RelatedPosts from '../../components/RelatedPosts.astro';
 import StickyCtaBar from '../../components/StickyCtaBar.astro';
 import CrossSelling from '../../components/CrossSelling.astro';
@@ -75,7 +75,6 @@ const breadcrumbSchema = [
 
   <section class="service-header">
     <div class="container">
-      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "Servicios", href: "/servicios"}, {label: service.title}]} />
       <span class="section-tag">{service.title}</span>
       <h1>{service.h1}</h1>
       <div class="service-header-meta">

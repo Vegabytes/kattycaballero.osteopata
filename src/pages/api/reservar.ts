@@ -21,6 +21,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
+    // Validate input length
+    if (nombre.length > 100 || (servicio && servicio.length > 100) || (notas && notas.length > 2000) || telefono.length > 20 || (email && email.length > 100)) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Texto demasiado largo' }),
+        { status: 400, headers }
+      );
+    }
+
     const db = (locals as any).runtime.env.DB;
 
     // Look for existing patient by telefono
