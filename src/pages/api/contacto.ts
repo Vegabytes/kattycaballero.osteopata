@@ -2,6 +2,9 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 
+// Simple rate limiting: max 3 submissions per IP per 15 minutes
+const rateLimitMap = new Map<string, number[]>();
+
 export const POST: APIRoute = async ({ request, locals }) => {
   const headers = {
     'Content-Type': 'application/json',
@@ -9,12 +12,42 @@ export const POST: APIRoute = async ({ request, locals }) => {
   };
 
   try {
+    // Rate limiting
+    const ip = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
+    const now = Date.now();
+    const windowMs = 15 * 60 * 1000;
+    const attempts = (rateLimitMap.get(ip) || []).filter(t => now - t < windowMs);
+    if (attempts.length >= 3) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Demasiados envíos. Inténtalo de nuevo en unos minutos.' }),
+        { status: 429, headers: { ...headers, 'Retry-After': '900' } }
+      );
+    }
+    attempts.push(now);
+    rateLimitMap.set(ip, attempts);
+
     const body = await request.json();
-    const { nombre, email, telefono, servicio, origen, mensaje } = body;
+    const { nombre, email, telefono, servicio, origen, mensaje, website } = body;
+
+    // Honeypot check
+    if (website) {
+      return new Response(
+        JSON.stringify({ success: true }),
+        { status: 200, headers }
+      );
+    }
 
     if (!nombre || !mensaje || (!email && !telefono)) {
       return new Response(
         JSON.stringify({ success: false, error: 'Faltan campos obligatorios' }),
+        { status: 400, headers }
+      );
+    }
+
+    // Input length validation
+    if (nombre.length > 100 || mensaje.length > 2000 || (email && email.length > 100) || (telefono && telefono.length > 20) || (servicio && servicio.length > 100) || (origen && origen.length > 100)) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Texto demasiado largo' }),
         { status: 400, headers }
       );
     }

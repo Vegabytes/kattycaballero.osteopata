@@ -35,6 +35,8 @@ export default defineConfig({
           item.priority = 0.75;
         } else if (item.url.includes('/blog/') && item.url !== 'https://katycaballeroosteopata.com/blog/') {
           item.priority = 0.7;
+        } else if (item.url.includes('/servicios') || item.url.includes('/sobre-mi') || item.url.includes('/primera-visita') || item.url.includes('/bonos')) {
+          item.priority = 0.75;
         } else {
           item.priority = 0.6;
         }

@@ -2,6 +2,9 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 
+// Simple rate limiting: max 2 reviews per IP per hour
+const rateLimitMap = new Map<string, number[]>();
+
 export const POST: APIRoute = async ({ request, locals }) => {
   const headers = {
     'Content-Type': 'application/json',
@@ -9,6 +12,20 @@ export const POST: APIRoute = async ({ request, locals }) => {
   };
 
   try {
+    // Rate limiting
+    const ip = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
+    const now = Date.now();
+    const windowMs = 60 * 60 * 1000;
+    const attempts = (rateLimitMap.get(ip) || []).filter(t => now - t < windowMs);
+    if (attempts.length >= 2) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Demasiados envíos. Inténtalo de nuevo más tarde.' }),
+        { status: 429, headers: { ...headers, 'Retry-After': '3600' } }
+      );
+    }
+    attempts.push(now);
+    rateLimitMap.set(ip, attempts);
+
     const body = await request.json();
     const { nombre, puntuacion, mensaje, website } = body;
 
