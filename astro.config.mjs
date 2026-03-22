@@ -20,7 +20,7 @@ export default defineConfig({
       changefreq: 'weekly',
       lastmod: new Date(),
       filter(page) {
-        return !page.includes('/admin/') && !page.includes('/api/') && !page.includes('/politica-') && !page.includes('/gracias') && !page.includes('/404');
+        return !page.includes('/admin/') && !page.includes('/api/') && !page.includes('/politica-') && !page.includes('/gracias') && !page.includes('/404') && !page.includes('/offline');
       },
       serialize(item) {
         if (item.url === 'https://katycaballeroosteopata.com/') {
