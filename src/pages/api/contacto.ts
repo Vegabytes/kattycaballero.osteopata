@@ -4,6 +4,15 @@ import type { APIRoute } from 'astro';
 
 // Simple rate limiting: max 3 submissions per IP per 15 minutes
 const rateLimitMap = new Map<string, number[]>();
+// Cleanup stale entries every 30 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, times] of rateLimitMap) {
+    const valid = times.filter(t => now - t < 15 * 60 * 1000);
+    if (valid.length === 0) rateLimitMap.delete(ip);
+    else rateLimitMap.set(ip, valid);
+  }
+}, 30 * 60 * 1000);
 
 export const POST: APIRoute = async ({ request, locals }) => {
   const headers = {

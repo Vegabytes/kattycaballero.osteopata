@@ -5,6 +5,15 @@ import { notifyNewBooking } from '../../lib/notifications';
 
 // Rate limiting: max 5 bookings per IP per hour
 const rateLimitMap = new Map<string, number[]>();
+// Cleanup stale entries every hour
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, times] of rateLimitMap) {
+    const valid = times.filter(t => now - t < 60 * 60 * 1000);
+    if (valid.length === 0) rateLimitMap.delete(ip);
+    else rateLimitMap.set(ip, valid);
+  }
+}, 60 * 60 * 1000);
 
 export const POST: APIRoute = async ({ request, locals }) => {
   const headers = {

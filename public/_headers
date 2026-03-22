@@ -24,6 +24,18 @@
 /servicios/*
   Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=43200
 
+/osteopata-*
+  Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=43200
+
+/tarifas
+  Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=43200
+
+/sobre-mi
+  Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=43200
+
+/primera-visita
+  Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=43200
+
 /admin/*
   Cache-Control: no-store, no-cache, must-revalidate, private
   X-Robots-Tag: noindex, nofollow
