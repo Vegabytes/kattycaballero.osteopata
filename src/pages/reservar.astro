@@ -102,7 +102,7 @@ const services = [
               </div>
               <div class="form-group">
                 <label for="user-phone">Teléfono <span aria-hidden="true">*</span></label>
-                <input type="tel" id="user-phone" placeholder="Tu teléfono" autocomplete="tel" required aria-required="true">
+                <input type="tel" id="user-phone" placeholder="Ej: 612 345 678" autocomplete="tel" required aria-required="true" pattern="(\+34\s?)?[6789]\d{2}\s?\d{3}\s?\d{3}" title="Introduce un teléfono español válido (ej: 612 345 678)">
               </div>
               <div class="form-group">
                 <label for="user-email">Email (opcional, para confirmaci&oacute;n)</label>
@@ -1365,7 +1365,15 @@ const services = [
     const name = (document.getElementById('user-name') as HTMLInputElement).value.trim();
     const phone = (document.getElementById('user-phone') as HTMLInputElement).value.trim();
     const gdpr = (document.getElementById('gdpr-check') as HTMLInputElement).checked;
-    const valid = !!(name && phone && gdpr);
+    const phoneRegex = /^(\+34\s?)?[6789]\d{2}\s?\d{3}\s?\d{3}$/;
+    const phoneValid = phoneRegex.test(phone);
+    const phoneInput = document.getElementById('user-phone') as HTMLInputElement;
+    if (phone && !phoneValid) {
+      phoneInput.setCustomValidity('Introduce un teléfono español válido (ej: 612 345 678)');
+    } else {
+      phoneInput.setCustomValidity('');
+    }
+    const valid = !!(name && phone && phoneValid && gdpr);
     (document.getElementById('btn-reservar') as HTMLButtonElement).disabled = !valid;
     (document.getElementById('btn-send') as HTMLButtonElement).disabled = !valid;
   }

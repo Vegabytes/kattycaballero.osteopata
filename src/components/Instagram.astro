@@ -33,23 +33,36 @@ const instagramUrl = `https://www.instagram.com/${instagramUsername}/`;
 
 <script>
   (() => {
-    const d = document, s = d.createElement("script");
-    s.type = "module";
-    s.src = "https://w.behold.so/widget.js";
-    s.onerror = () => {
-      const fallback = d.getElementById('instagram-fallback');
-      if (fallback) fallback.style.display = 'flex';
-    };
-    d.head.append(s);
+    const feed = document.getElementById('instagram-feed');
+    if (!feed) return;
 
-    // If widget doesn't render after 5s, show fallback
-    setTimeout(() => {
-      const widget = d.querySelector('behold-widget');
-      if (widget && widget.shadowRoot === null) {
-        const fallback = d.getElementById('instagram-fallback');
-        if (fallback) fallback.style.display = 'flex';
-      }
-    }, 5000);
+    // Lazy load: only load widget when section is near viewport
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          observer.disconnect();
+          const d = document, s = d.createElement("script");
+          s.type = "module";
+          s.src = "https://w.behold.so/widget.js";
+          s.onerror = () => {
+            const fallback = d.getElementById('instagram-fallback');
+            if (fallback) fallback.style.display = 'flex';
+          };
+          d.head.append(s);
+
+          // If widget doesn't render after 5s, show fallback
+          setTimeout(() => {
+            const widget = d.querySelector('behold-widget');
+            if (widget && widget.shadowRoot === null) {
+              const fallback = d.getElementById('instagram-fallback');
+              if (fallback) fallback.style.display = 'flex';
+            }
+          }, 5000);
+        }
+      });
+    }, { rootMargin: '200px' });
+
+    observer.observe(feed);
   })();
 </script>
 

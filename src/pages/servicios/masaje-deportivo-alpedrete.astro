@@ -48,7 +48,14 @@ const serviceSchema = {
     "price": "20",
     "priceCurrency": "EUR",
     "availability": "https://schema.org/InStock",
-    "validFrom": "2024-01-01"
+    "validFrom": "2024-01-01",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "20",
+      "priceCurrency": "EUR",
+      "unitText": "sesión",
+      "referenceQuantity": { "@type": "QuantitativeValue", "value": "30", "unitCode": "MIN" }
+    }
   }
 };
 
