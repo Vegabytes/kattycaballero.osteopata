@@ -420,6 +420,149 @@ async function processInactivos(db: D1Database, settings: Settings, env: Env): P
   return logs;
 }
 
+// === RESUMEN SEMANAL (lunes) ===
+
+async function processResumenSemanal(db: D1Database, settings: Settings, env: Env): Promise<string[]> {
+  const logs: string[] = [];
+
+  // Solo los lunes
+  const now = new Date();
+  const madridOffset = isSummerTime(now) ? 2 : 1;
+  const madrid = new Date(now.getTime() + madridOffset * 3600000);
+  if (madrid.getDay() !== 1) {
+    logs.push('Resumen semanal: no es lunes, saltar');
+    return logs;
+  }
+
+  const botToken = settings.telegram_bot_token;
+  const chatId = settings.telegram_chat_id;
+  if (!botToken || !chatId) {
+    logs.push('Resumen semanal: falta config Telegram');
+    return logs;
+  }
+
+  // Semana pasada: lunes a domingo
+  const hoy = getDateInMadrid(0);
+  const lunesPasado = getDateInMadrid(-7);
+  const domingoPasado = getDateInMadrid(-1);
+
+  // Semana anterior (para comparativa): hace 14 a hace 8 días
+  const lunesAnterior = getDateInMadrid(-14);
+  const domingoAnterior = getDateInMadrid(-8);
+
+  // Datos semana pasada
+  const semana = (await db.prepare(
+    `SELECT c.estado, c.precio, c.servicio, c.duracion
+     FROM citas c
+     WHERE c.fecha >= ? AND c.fecha <= ?`
+  ).bind(lunesPasado, domingoPasado).all()).results as any[];
+
+  // Datos semana anterior (comparativa)
+  const semanaAnterior = (await db.prepare(
+    `SELECT c.estado, c.precio
+     FROM citas c
+     WHERE c.fecha >= ? AND c.fecha <= ?`
+  ).bind(lunesAnterior, domingoAnterior).all()).results as any[];
+
+  // Citas de esta semana
+  const viernesProximo = getDateInMadrid(5);
+  const sabadoProximo = getDateInMadrid(6);
+  const citasEstaSemana = (await db.prepare(
+    `SELECT c.fecha, c.hora, c.servicio, p.nombre, p.apellidos
+     FROM citas c JOIN pacientes p ON c.paciente_id = p.id
+     WHERE c.fecha >= ? AND c.fecha <= ? AND c.estado IN ('pendiente', 'confirmada')
+     ORDER BY c.fecha, c.hora`
+  ).bind(hoy, sabadoProximo).all()).results as any[];
+
+  // Calcular métricas semana pasada
+  const completadas = semana.filter(c => c.estado === 'completada');
+  const canceladas = semana.filter(c => c.estado === 'cancelada');
+  const noShows = semana.filter(c => c.estado === 'no_show');
+  const ingresos = completadas.reduce((sum: number, c: any) => sum + (c.precio || 0), 0);
+  const totalCitas = semana.length;
+
+  // Calcular métricas semana anterior
+  const completadasAnt = semanaAnterior.filter(c => c.estado === 'completada');
+  const canceladasAnt = semanaAnterior.filter(c => c.estado === 'cancelada');
+  const ingresosAnt = completadasAnt.reduce((sum: number, c: any) => sum + (c.precio || 0), 0);
+
+  // Comparativas
+  const diffIngresos = ingresos - ingresosAnt;
+  const diffPacientes = completadas.length - completadasAnt.length;
+  const flechaIngresos = diffIngresos > 0 ? '📈' : diffIngresos < 0 ? '📉' : '➡️';
+  const flechaPacientes = diffPacientes > 0 ? '📈' : diffPacientes < 0 ? '📉' : '➡️';
+
+  // Servicios más populares
+  const servicioCount: Record<string, number> = {};
+  for (const c of completadas) {
+    const s = c.servicio || 'Sin servicio';
+    servicioCount[s] = (servicioCount[s] || 0) + 1;
+  }
+  const topServicios = Object.entries(servicioCount)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([s, n]) => `  ${s}: ${n}`)
+    .join('\n');
+
+  // Construir mensaje
+  let msg = `📊 RESUMEN SEMANAL\n`;
+  msg += `${formatFechaES(lunesPasado)} - ${formatFechaES(domingoPasado)}\n\n`;
+
+  msg += `💰 Ingresos: ${ingresos.toFixed(0)}€ ${flechaIngresos}`;
+  if (diffIngresos !== 0) msg += ` (${diffIngresos > 0 ? '+' : ''}${diffIngresos.toFixed(0)}€)`;
+  msg += `\n`;
+
+  msg += `👥 Pacientes atendidos: ${completadas.length} ${flechaPacientes}`;
+  if (diffPacientes !== 0) msg += ` (${diffPacientes > 0 ? '+' : ''}${diffPacientes})`;
+  msg += `\n`;
+
+  msg += `📅 Total citas: ${totalCitas}\n`;
+  if (canceladas.length > 0) msg += `❌ Cancelaciones: ${canceladas.length}\n`;
+  if (noShows.length > 0) msg += `⚠️ No asistieron: ${noShows.length}\n`;
+
+  if (topServicios) {
+    msg += `\n🏆 Servicios más solicitados:\n${topServicios}\n`;
+  }
+
+  // Ocupación: horas completadas vs horas disponibles (aprox 50h/semana)
+  const horasCompletadas = completadas.reduce((sum: number, c: any) => sum + ((c.duracion || 60) / 60), 0);
+  const horasDisponibles = 52.5; // lun-vie 10.5h + sab 3h
+  const ocupacion = Math.round((horasCompletadas / horasDisponibles) * 100);
+  msg += `\n📊 Ocupación: ${ocupacion}% (${horasCompletadas.toFixed(1)}h de ${horasDisponibles}h)`;
+
+  // Vista previa de esta semana
+  if (citasEstaSemana.length > 0) {
+    msg += `\n\n📋 Esta semana tienes ${citasEstaSemana.length} cita${citasEstaSemana.length > 1 ? 's' : ''}:`;
+    let diaActual = '';
+    for (const c of citasEstaSemana) {
+      if (c.fecha !== diaActual) {
+        diaActual = c.fecha;
+        msg += `\n\n${formatFechaES(c.fecha)}:`;
+      }
+      msg += `\n  ${c.hora} - ${c.nombre} ${c.apellidos}${c.servicio ? ` (${c.servicio})` : ''}`;
+    }
+  } else {
+    msg += `\n\n📋 Esta semana no tienes citas programadas`;
+  }
+
+  await sendTelegram(botToken, chatId, msg);
+  logs.push('Resumen semanal: enviado por Telegram');
+
+  // Push notification
+  if (env.VAPID_PRIVATE_KEY && env.VAPID_PUBLIC_KEY) {
+    const pushBody = `${ingresos.toFixed(0)}€ ingresos | ${completadas.length} pacientes | ${citasEstaSemana.length} citas esta semana`;
+    const pushLogs = await sendPushToAll(db, {
+      title: '📊 Resumen semanal',
+      body: pushBody,
+      url: '/admin/estadisticas',
+      tag: 'resumen-semanal',
+    }, env);
+    logs.push(...pushLogs);
+  }
+
+  return logs;
+}
+
 // === BONOS CADUCADOS ===
 
 async function processBonosCaducados(db: D1Database, settings: Settings): Promise<string[]> {
@@ -543,6 +686,9 @@ export default {
     const reminderLogs = await processReminders(env.DB, settings, env);
     logs.push(...reminderLogs);
 
+    const resumenLogs = await processResumenSemanal(env.DB, settings, env);
+    logs.push(...resumenLogs);
+
     const inactivoLogs = await processInactivos(env.DB, settings, env);
     logs.push(...inactivoLogs);
 
@@ -565,6 +711,9 @@ export default {
 
     const reminderLogs = await processReminders(env.DB, settings, env);
     logs.push(...reminderLogs);
+
+    const resumenLogs = await processResumenSemanal(env.DB, settings, env);
+    logs.push(...resumenLogs);
 
     const inactivoLogs = await processInactivos(env.DB, settings, env);
     logs.push(...inactivoLogs);

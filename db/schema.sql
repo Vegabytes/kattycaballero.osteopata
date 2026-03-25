@@ -107,6 +107,17 @@ CREATE TABLE IF NOT EXISTS push_subscriptions (
   created_at TEXT DEFAULT (datetime('now'))
 );
 
+-- Notas y tareas (to-do personal)
+CREATE TABLE IF NOT EXISTS notas (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  texto TEXT NOT NULL,
+  tipo TEXT DEFAULT 'tarea',
+  completada INTEGER DEFAULT 0,
+  prioridad TEXT DEFAULT 'normal',
+  created_at TEXT DEFAULT (datetime('now')),
+  updated_at TEXT DEFAULT (datetime('now'))
+);
+
 -- Campos clínicos para pacientes (ejecutar manualmente en D1)
 -- ALTER TABLE pacientes ADD COLUMN motivo_consulta TEXT;
 -- ALTER TABLE pacientes ADD COLUMN antecedentes TEXT;
