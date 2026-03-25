@@ -15,6 +15,11 @@ setInterval(() => {
   }
 }, 60 * 60 * 1000);
 
+function toMinutes(hora: string): number {
+  const [h, m] = hora.split(':').map(Number);
+  return h * 60 + (m || 0);
+}
+
 export const POST: APIRoute = async ({ request, locals }) => {
   const headers = {
     'Content-Type': 'application/json',
@@ -93,17 +98,24 @@ export const POST: APIRoute = async ({ request, locals }) => {
       pacienteId = insertResult.meta.last_row_id;
     }
 
-    // Check for conflicts before creating
-    const conflict = await db
-      .prepare("SELECT id FROM citas WHERE fecha = ? AND hora = ? AND estado != 'cancelada' LIMIT 1")
-      .bind(fecha, hora)
-      .first();
+    // Check for conflicts before creating (considering duration + 30 min buffer)
+    const existingCitas = await db
+      .prepare("SELECT hora, duracion FROM citas WHERE fecha = ? AND estado != 'cancelada'")
+      .bind(fecha)
+      .all();
 
-    if (conflict) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Esa hora ya esta reservada. Por favor elige otra.' }),
-        { status: 409, headers }
-      );
+    const newStart = toMinutes(hora);
+    const newEnd = newStart + (duracion || 60) + 30; // +30 min buffer
+
+    for (const row of (existingCitas.results || []) as { hora: string; duracion: number }[]) {
+      const existStart = toMinutes(row.hora);
+      const existEnd = existStart + (row.duracion || 60) + 30;
+      if (newStart < existEnd && newEnd > existStart) {
+        return new Response(
+          JSON.stringify({ success: false, error: 'Esa hora ya esta reservada. Por favor elige otra.' }),
+          { status: 409, headers }
+        );
+      }
     }
 
     // Create cita with estado='pendiente'
@@ -112,9 +124,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
       .bind(pacienteId, fecha, hora, duracion || 60, servicio || null, notas || null)
       .run();
 
+    const citaId = result.meta.last_row_id;
+
     // Send notifications (await before responding — Workers closes after Response)
     try {
-      await notifyNewBooking(db, { nombre, telefono, email, servicio, fecha, hora, duracion: duracion || 60, notas });
+      await notifyNewBooking(db, { nombre, telefono, email, servicio, fecha, hora, duracion: duracion || 60, notas }, citaId);
     } catch (e) {
       console.error('Notification error:', e);
     }

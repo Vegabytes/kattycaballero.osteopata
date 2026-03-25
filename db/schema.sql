@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS citas (
   notas TEXT,
   precio REAL,
   recordatorio_enviado INTEGER DEFAULT 0,
+  recordatorio_notificado INTEGER DEFAULT 0,
   review_enviado INTEGER DEFAULT 0,
   created_at TEXT DEFAULT (datetime('now')),
   FOREIGN KEY (paciente_id) REFERENCES pacientes(id) ON DELETE CASCADE
@@ -97,6 +98,14 @@ CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);
 CREATE INDEX IF NOT EXISTS idx_notas_clinicas_paciente ON notas_clinicas(paciente_id);
 CREATE INDEX IF NOT EXISTS idx_bonos_paciente ON bonos(paciente_id);
 CREATE INDEX IF NOT EXISTS idx_bonos_estado ON bonos(estado);
+
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  endpoint TEXT NOT NULL UNIQUE,
+  p256dh TEXT NOT NULL,
+  auth TEXT NOT NULL,
+  created_at TEXT DEFAULT (datetime('now'))
+);
 
 -- Campos clínicos para pacientes (ejecutar manualmente en D1)
 -- ALTER TABLE pacientes ADD COLUMN motivo_consulta TEXT;

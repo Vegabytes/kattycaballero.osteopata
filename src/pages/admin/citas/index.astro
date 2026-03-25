@@ -110,6 +110,11 @@ function formatFechaCorta(fecha: string) {
                       {c.paciente_nombre} {c.paciente_apellidos}
                     </div>
                     {c.servicio && <div style="color:#999;font-size:0.65rem;">{c.servicio}</div>}
+                    {c.recordatorio_enviado ? (
+                      <div style="color:#4caf50;font-size:0.6rem;margin-top:2px;" title="Recordatorio enviado">✓ Recordatorio</div>
+                    ) : (c.estado === 'pendiente' || c.estado === 'confirmada') && c.fecha >= hoy ? (
+                      <div style="color:#e65100;font-size:0.6rem;margin-top:2px;font-weight:600;" title="Recordatorio pendiente de enviar">⚠ Sin recordatorio</div>
+                    ) : null}
                   </a>
                   {c.estado !== 'completada' && c.estado !== 'cancelada' && c.estado !== 'no_show' && (
                     <button
@@ -118,6 +123,15 @@ function formatFechaCorta(fecha: string) {
                       data-estado="completada"
                       title="Marcar completada"
                     >&#10003;</button>
+                  )}
+                  {c.paciente_telefono && (
+                    <a
+                      href={`https://wa.me/34${c.paciente_telefono.replace(/\D/g, '').replace(/^34/, '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn-cal-wa"
+                      title={`WhatsApp a ${c.paciente_nombre}`}
+                    >&#128242;</a>
                   )}
                 </div>
               ))}
@@ -149,6 +163,22 @@ function formatFechaCorta(fecha: string) {
       transition: opacity 0.2s;
     }
     .btn-cal-complete:hover { opacity: 1; }
+    .btn-cal-wa {
+      display: inline-block;
+      margin-top: 4px;
+      width: 22px;
+      height: 22px;
+      line-height: 22px;
+      text-align: center;
+      background: #25d366;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .btn-cal-wa:hover { opacity: 1; }
     @media (max-width: 900px) {
       .week-grid {
         grid-template-columns: repeat(3, 1fr);

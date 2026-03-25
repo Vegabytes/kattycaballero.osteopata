@@ -36,6 +36,10 @@
 /primera-visita
   Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=43200
 
+/api/disponibilidad*
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  CDN-Cache-Control: no-store
+
 /admin/*
   Cache-Control: no-store, no-cache, must-revalidate, private
   X-Robots-Tag: noindex, nofollow

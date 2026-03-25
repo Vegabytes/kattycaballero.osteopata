@@ -223,5 +223,27 @@ const zonasCorporales = [
       textarea.focus();
     });
   });
+
+  // Auto-fill observation template based on treatment type
+  const tipoTemplates: Record<string, string> = {
+    'Osteopatía estructural': 'Motivo de consulta: \nExploración: movilidad articular, test ortopédicos\nHallazgos: \nTécnicas: thrust, articulatoria, músculo-energía\nZonas tratadas: \nRespuesta: \nPauta domiciliaria: \nPróxima revisión: ',
+    'Osteopatía visceral': 'Motivo de consulta: \nExploración: test de movilidad visceral\nHallazgos: \nTécnicas: bombeo, fascial, recoil\nÓrganos/zonas tratados: \nRespuesta: \nRecomendaciones dietéticas: \nPróxima revisión: ',
+    'Osteopatía craneal': 'Motivo de consulta: \nExploración: ritmo cráneo-sacro, test suturas\nHallazgos: \nTécnicas: descompresión, CV4, modelado\nZonas tratadas: \nRespuesta: \nPauta domiciliaria: \nPróxima revisión: ',
+    'Masaje deportivo': 'Deporte/actividad: \nZona principal: \nTensión muscular: leve / moderada / severa\nTécnicas: fricción profunda, estiramientos, compresión isquémica\nPuntos gatillo: \nRespuesta: \nRecomendaciones: ',
+    'Masaje corporal descontracturante': 'Zona principal: \nTensión: leve / moderada / severa\nTécnicas: amasamiento, fricciones, presiones\nPuntos de tensión: \nRespuesta al tratamiento: \nRecomendaciones: ',
+    'Masaje tailandés': 'Estado general: \nFlexibilidad: buena / limitada\nTécnicas: presiones, estiramientos pasivos, líneas sen\nZonas trabajadas: \nRespuesta: \nRecomendaciones: ',
+    'Masaje embarazadas': 'Semanas de gestación: \nMolestias principales: \nPosición: decúbito lateral\nZonas tratadas: \nTécnicas: suaves, drenaje, estiramientos\nRespuesta: \nRecomendaciones: ',
+    'Masaje pindas herbales': 'Zona principal: \nTemperatura pindas: \nTécnicas: presión, rodamiento, deslizamiento\nHierbas utilizadas: \nRespuesta: \nRecomendaciones: ',
+    'Valoración inicial': 'Motivo de consulta: \nAnamnesis: \nAntecedentes: \nExploración física: \nTest realizados: \nDiagnóstico osteopático: \nPlan de tratamiento: \nSesiones estimadas: ',
+  };
+
+  document.getElementById('tipo')?.addEventListener('change', (e) => {
+    const tipo = (e.target as HTMLSelectElement).value;
+    const textarea = document.getElementById('observaciones') as HTMLTextAreaElement;
+    if (textarea && !textarea.value.trim() && tipoTemplates[tipo]) {
+      textarea.value = tipoTemplates[tipo];
+      textarea.focus();
+    }
+  });
 </script>
 </AdminLayout>

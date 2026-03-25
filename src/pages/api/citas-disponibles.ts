@@ -26,12 +26,12 @@ export const GET: APIRoute = async ({ request, locals }) => {
       .bind(fecha)
       .all();
 
-    // Build list of occupied 30-min slots (considering duration)
+    // Build list of occupied 30-min slots (considering duration + 30 min buffer for room prep)
     const occupied: string[] = [];
     for (const row of (rows.results || []) as { hora: string; duracion: number }[]) {
       const [h, m] = row.hora.split(':').map(Number);
       const dur = row.duracion || 60;
-      const slots = Math.ceil(dur / 30);
+      const slots = Math.ceil(dur / 30) + 1; // +1 slot (30 min) for room preparation
       for (let i = 0; i < slots; i++) {
         const totalMin = h * 60 + (m || 0) + i * 30;
         const slotH = Math.floor(totalMin / 60);

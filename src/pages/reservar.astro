@@ -1121,27 +1121,28 @@ const services = [
 
   // Default schedule (used until API responds)
   const DEFAULT_HORARIO: Record<string, { activo: boolean; inicio: string; fin: string }> = {
-    lunes:    { activo: true, inicio: '09:00', fin: '20:00' },
-    martes:   { activo: true, inicio: '09:00', fin: '20:00' },
-    miercoles:{ activo: true, inicio: '09:00', fin: '20:00' },
-    jueves:   { activo: true, inicio: '09:00', fin: '20:00' },
-    viernes:  { activo: true, inicio: '09:00', fin: '20:00' },
-    sabado:   { activo: true, inicio: '10:00', fin: '14:00' },
+    lunes:    { activo: true, inicio: '09:00', fin: '19:30' },
+    martes:   { activo: true, inicio: '09:00', fin: '19:30' },
+    miercoles:{ activo: true, inicio: '09:00', fin: '19:30' },
+    jueves:   { activo: true, inicio: '09:00', fin: '19:30' },
+    viernes:  { activo: true, inicio: '09:00', fin: '19:30' },
+    sabado:   { activo: true, inicio: '10:00', fin: '13:30' },
     domingo:  { activo: false, inicio: '00:00', fin: '00:00' },
   };
 
   let availabilityData: {
     horario: Record<string, { activo: boolean; inicio: string; fin: string }>;
     diasBloqueados: string[];
-  } = { horario: DEFAULT_HORARIO, diasBloqueados: [] };
+    horasBloqueadas: { fecha: string; inicio: string; fin: string }[];
+  } = { horario: DEFAULT_HORARIO, diasBloqueados: [], horasBloqueadas: [] };
 
   // Fetch availability from API
   async function loadAvailability() {
     try {
-      const res = await fetch('/api/disponibilidad');
+      const res = await fetch('/api/disponibilidad?_=' + Date.now(), { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
-        availabilityData = { horario: data.horario, diasBloqueados: data.diasBloqueados || [] };
+        availabilityData = { horario: data.horario, diasBloqueados: data.diasBloqueados || [], horasBloqueadas: data.horasBloqueadas || [] };
       }
     } catch {}
   }
@@ -1172,13 +1173,21 @@ const services = [
     const config = availabilityData.horario[dayName];
     if (!config || !config.activo) return [];
 
+    const dateStr = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
+    const blockedRanges = (availabilityData.horasBloqueadas || []).filter(b => b.fecha === dateStr);
+
     const [startH, startM] = config.inicio.split(':').map(Number);
     const [endH, endM] = config.fin.split(':').map(Number);
     const slots: string[] = [];
     let h = startH;
     let m = startM || 0;
     while (h < endH || (h === endH && m < endM)) {
-      slots.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
+      const slot = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+      // Check if slot falls within any blocked range
+      const isBlocked = blockedRanges.some(b => slot >= b.inicio && slot < b.fin);
+      if (!isBlocked) {
+        slots.push(slot);
+      }
       m += 30;
       if (m >= 60) { h++; m = 0; }
     }

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'katy-admin-v1';
+const CACHE_NAME = 'katy-admin-v2';
 const STATIC_ASSETS = [
   '/admin',
   '/admin-manifest.json',
@@ -22,6 +22,44 @@ self.addEventListener('activate', (event) => {
     )
   );
   self.clients.claim();
+});
+
+// Push notification handler
+self.addEventListener('push', (event) => {
+  let data = { title: 'Panel Katy', body: 'Tienes notificaciones pendientes', url: '/admin' };
+  if (event.data) {
+    try {
+      data = { ...data, ...event.data.json() };
+    } catch {
+      data.body = event.data.text();
+    }
+  }
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: '/images/icon-192.png',
+      badge: '/images/icon-192.png',
+      tag: data.tag || 'admin-notification',
+      renotify: true,
+      data: { url: data.url || '/admin' },
+    })
+  );
+});
+
+// Click on notification -> open admin panel
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = event.notification.data?.url || '/admin';
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
+      for (const client of clients) {
+        if (client.url.includes('/admin') && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      return self.clients.openWindow(url);
+    })
+  );
 });
 
 // Fetch: network-first for API/admin pages, cache-first for static assets

@@ -4,12 +4,12 @@ export const prerender = false;
 import AdminLayout from '../../layouts/AdminLayout.astro';
 
 const DEFAULT_HORARIO: Record<string, { activo: boolean; inicio: string; fin: string }> = {
-  lunes:    { activo: true, inicio: '09:00', fin: '20:00' },
-  martes:   { activo: true, inicio: '09:00', fin: '20:00' },
-  miercoles:{ activo: true, inicio: '09:00', fin: '20:00' },
-  jueves:   { activo: true, inicio: '09:00', fin: '20:00' },
-  viernes:  { activo: true, inicio: '09:00', fin: '20:00' },
-  sabado:   { activo: true, inicio: '10:00', fin: '14:00' },
+  lunes:    { activo: true, inicio: '09:00', fin: '19:30' },
+  martes:   { activo: true, inicio: '09:00', fin: '19:30' },
+  miercoles:{ activo: true, inicio: '09:00', fin: '19:30' },
+  jueves:   { activo: true, inicio: '09:00', fin: '19:30' },
+  viernes:  { activo: true, inicio: '09:00', fin: '19:30' },
+  sabado:   { activo: true, inicio: '10:00', fin: '13:30' },
   domingo:  { activo: false, inicio: '00:00', fin: '00:00' },
 };
 
@@ -25,6 +25,7 @@ const DIAS_LABEL: Record<string, string> = {
 
 let horario = { ...DEFAULT_HORARIO };
 let diasBloqueados: string[] = [];
+let horasBloqueadas: { fecha: string; inicio: string; fin: string; motivo?: string }[] = [];
 let mensaje = '';
 let error = '';
 
@@ -33,13 +34,15 @@ const db = (Astro.locals as any).runtime.env.DB;
 // Load current settings
 try {
   const rows = await db.prepare(
-    "SELECT clave, valor FROM configuracion WHERE clave IN ('horario_semanal', 'dias_bloqueados')"
+    "SELECT clave, valor FROM configuracion WHERE clave IN ('horario_semanal', 'dias_bloqueados', 'horas_bloqueadas')"
   ).all();
   for (const row of (rows.results || []) as { clave: string; valor: string }[]) {
     if (row.clave === 'horario_semanal') {
       try { horario = JSON.parse(row.valor); } catch {}
     } else if (row.clave === 'dias_bloqueados') {
       try { diasBloqueados = JSON.parse(row.valor); } catch {}
+    } else if (row.clave === 'horas_bloqueadas') {
+      try { horasBloqueadas = JSON.parse(row.valor); } catch {}
     }
   }
 } catch (e: any) {
@@ -84,15 +87,44 @@ if (Astro.request.method === 'POST') {
         "INSERT INTO configuracion (clave, valor, updated_at) VALUES ('dias_bloqueados', ?, datetime('now')) ON CONFLICT(clave) DO UPDATE SET valor = ?, updated_at = datetime('now')"
       ).bind(JSON.stringify(diasBloqueados), JSON.stringify(diasBloqueados)).run();
       mensaje = `Dia ${fecha} desbloqueado`;
+    } else if (action === 'bloquear_hora') {
+      const fecha = form.get('hora_fecha') as string;
+      const inicio = form.get('hora_inicio') as string;
+      const fin = form.get('hora_fin') as string;
+      const motivo = form.get('hora_motivo') as string;
+      if (fecha && inicio && fin && inicio < fin) {
+        horasBloqueadas.push({ fecha, inicio, fin, ...(motivo ? { motivo } : {}) });
+        horasBloqueadas.sort((a, b) => a.fecha.localeCompare(b.fecha) || a.inicio.localeCompare(b.inicio));
+        const json = JSON.stringify(horasBloqueadas);
+        await db.prepare(
+          "INSERT INTO configuracion (clave, valor, updated_at) VALUES ('horas_bloqueadas', ?, datetime('now')) ON CONFLICT(clave) DO UPDATE SET valor = ?, updated_at = datetime('now')"
+        ).bind(json, json).run();
+        mensaje = `Horas bloqueadas: ${fecha} de ${inicio} a ${fin}`;
+      } else if (inicio >= fin) {
+        error = 'La hora de inicio debe ser anterior a la hora de fin';
+      }
+    } else if (action === 'desbloquear_hora') {
+      const idx = Number(form.get('hora_idx'));
+      if (!isNaN(idx) && idx >= 0 && idx < horasBloqueadas.length) {
+        const removed = horasBloqueadas.splice(idx, 1)[0];
+        const json = JSON.stringify(horasBloqueadas);
+        await db.prepare(
+          "INSERT INTO configuracion (clave, valor, updated_at) VALUES ('horas_bloqueadas', ?, datetime('now')) ON CONFLICT(clave) DO UPDATE SET valor = ?, updated_at = datetime('now')"
+        ).bind(json, json).run();
+        mensaje = `Bloqueo de horas eliminado: ${removed.fecha} ${removed.inicio}-${removed.fin}`;
+      }
     }
   } catch (e: any) {
     error = `Error guardando: ${e.message}`;
   }
 }
 
-// Filter past blocked dates
+// Filter past blocked dates/hours
 const hoy = new Date().toISOString().split('T')[0];
 const diasBloqueadosFuturos = diasBloqueados.filter(d => d >= hoy);
+const horasBloqueadasFuturas = horasBloqueadas.filter(h => h.fecha >= hoy);
+// Keep original indices for deletion
+const horasBloqueadasConIdx = horasBloqueadas.map((h, i) => ({ ...h, idx: i })).filter(h => h.fecha >= hoy);
 
 // Generate time options for selects
 const timeOptions: string[] = [];
@@ -194,6 +226,69 @@ for (let h = 7; h <= 22; h++) {
     ) : (
       <p style="color:var(--admin-text-light);font-size:0.85rem;font-style:italic;">
         No hay dias bloqueados. Todos los dias activos estan disponibles para reservas.
+      </p>
+    )}
+  </div>
+
+  <!-- Horas Bloqueadas -->
+  <div class="card" style="margin-top:20px;">
+    <h3 class="section-title">Bloquear horas concretas</h3>
+    <p style="color:var(--admin-text-light);font-size:0.8rem;margin-bottom:16px;">
+      Bloquea franjas horarias en dias concretos. Util para citas personales, gestiones, etc.
+    </p>
+
+    <form method="POST" class="bloquear-form">
+      <input type="hidden" name="_action" value="bloquear_hora">
+      <div class="form-row" style="align-items:flex-end;flex-wrap:wrap;">
+        <div class="form-group">
+          <label for="hora_fecha">Fecha</label>
+          <input type="date" id="hora_fecha" name="hora_fecha" min={hoy} required>
+        </div>
+        <div class="form-group">
+          <label for="hora_inicio">Desde</label>
+          <select id="hora_inicio" name="hora_inicio" required>
+            {timeOptions.map(t => <option value={t}>{t}</option>)}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="hora_fin">Hasta</label>
+          <select id="hora_fin" name="hora_fin" required>
+            {timeOptions.map(t => <option value={t}>{t}</option>)}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="hora_motivo">Motivo (opcional)</label>
+          <input type="text" id="hora_motivo" name="hora_motivo" placeholder="Ej: Cita medica...">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Bloquear horas</button>
+      </div>
+    </form>
+
+    {horasBloqueadasConIdx.length > 0 ? (
+      <div class="blocked-list">
+        <h4 style="font-size:0.85rem;margin-bottom:8px;color:var(--admin-text);">Horas bloqueadas proximas:</h4>
+        {horasBloqueadasConIdx.map(h => {
+          const d = new Date(h.fecha + 'T00:00:00');
+          const label = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+          return (
+            <div class="blocked-item blocked-hora">
+              <div>
+                <span class="blocked-date">{label}</span>
+                <span class="blocked-time">{h.inicio} - {h.fin}</span>
+                {h.motivo && <span class="blocked-motivo">{h.motivo}</span>}
+              </div>
+              <form method="POST" style="display:inline;">
+                <input type="hidden" name="_action" value="desbloquear_hora">
+                <input type="hidden" name="hora_idx" value={h.idx}>
+                <button type="submit" class="btn-remove" title="Eliminar bloqueo">✕</button>
+              </form>
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <p style="color:var(--admin-text-light);font-size:0.85rem;font-style:italic;">
+        No hay horas bloqueadas. Todas las horas dentro del horario estan disponibles.
       </p>
     )}
   </div>
@@ -341,6 +436,33 @@ for (let h = 7; h <= 22; h++) {
   .btn-remove:hover {
     background: #ef5350;
     color: #fff;
+  }
+
+  .blocked-hora {
+    background: #fce4ec;
+    border-color: #f48fb1;
+  }
+
+  .blocked-hora > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .blocked-time {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #c62828;
+    background: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .blocked-motivo {
+    font-size: 0.75rem;
+    color: var(--admin-text-light);
+    font-style: italic;
   }
 
   @media (max-width: 768px) {

@@ -154,7 +154,7 @@ export async function getCitas(Astro: AstroGlobal, fecha?: string, pacienteId?: 
 export async function getCitasSemana(Astro: AstroGlobal, fechaInicio: string, fechaFin: string): Promise<Cita[]> {
   const db = getDB(Astro);
   return (await db
-    .prepare(`SELECT c.*, p.nombre as paciente_nombre, p.apellidos as paciente_apellidos
+    .prepare(`SELECT c.*, p.nombre as paciente_nombre, p.apellidos as paciente_apellidos, p.telefono as paciente_telefono
       FROM citas c JOIN pacientes p ON c.paciente_id = p.id
       WHERE c.fecha >= ? AND c.fecha <= ? ORDER BY c.fecha, c.hora`)
     .bind(fechaInicio, fechaFin)
@@ -335,7 +335,7 @@ export async function crearBono(Astro: AstroGlobal, data: Partial<Bono>): Promis
   const db = getDB(Astro);
   const result = await db
     .prepare('INSERT INTO bonos (paciente_id, nombre, sesiones_total, sesiones_usadas, precio, fecha_compra, fecha_caducidad, estado, notas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
-    .bind(data.paciente_id, data.nombre, data.sesiones_total, data.sesiones_usadas || 0, data.precio || null, data.fecha_compra, data.fecha_caducidad || null, data.estado || 'activo', data.notas || null)
+    .bind(data.paciente_id, data.nombre, data.sesiones_total, data.sesiones_usadas ?? 0, data.precio ?? null, data.fecha_compra, data.fecha_caducidad || null, data.estado || 'activo', data.notas || null)
     .run();
   return result.meta.last_row_id;
 }
@@ -344,7 +344,7 @@ export async function actualizarBono(Astro: AstroGlobal, id: number, data: Parti
   const db = getDB(Astro);
   await db
     .prepare('UPDATE bonos SET paciente_id = ?, nombre = ?, sesiones_total = ?, sesiones_usadas = ?, precio = ?, fecha_compra = ?, fecha_caducidad = ?, estado = ?, notas = ? WHERE id = ?')
-    .bind(data.paciente_id, data.nombre, data.sesiones_total, data.sesiones_usadas || 0, data.precio || null, data.fecha_compra, data.fecha_caducidad || null, data.estado || 'activo', data.notas || null, id)
+    .bind(data.paciente_id, data.nombre, data.sesiones_total, data.sesiones_usadas ?? 0, data.precio ?? null, data.fecha_compra, data.fecha_caducidad || null, data.estado || 'activo', data.notas || null, id)
     .run();
 }
 

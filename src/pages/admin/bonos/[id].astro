@@ -39,6 +39,7 @@ if (Astro.request.method === 'POST') {
           paciente_id,
           nombre,
           sesiones_total,
+          sesiones_usadas: Number(form.get('sesiones_usadas')) || 0,
           precio: form.get('precio') ? Number(form.get('precio')) : null,
           fecha_compra: form.get('fecha_compra') as string,
           fecha_caducidad: (form.get('fecha_caducidad') as string) || null,
@@ -115,6 +116,7 @@ const porcentaje = bono && bono.sesiones_total > 0 ? Math.round((bono.sesiones_u
       <!-- Edit form -->
       <div class="card" style="margin-bottom:24px;">
         <form method="POST">
+          <input type="hidden" name="sesiones_usadas" value={bono.sesiones_usadas}>
           <div class="form-row">
             <div class="form-group">
               <label for="paciente_id">Paciente *</label>

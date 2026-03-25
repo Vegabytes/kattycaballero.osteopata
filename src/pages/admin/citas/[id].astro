@@ -7,6 +7,7 @@ import { getCita, actualizarCita, eliminarCita, getPacientes } from '../../../li
 const id = Number(Astro.params.id);
 let mensaje = '';
 let error = '';
+let reprogramada = false;
 
 if (Astro.request.method === 'POST') {
   const form = await Astro.request.formData();
@@ -17,6 +18,13 @@ if (Astro.request.method === 'POST') {
     return Astro.redirect('/admin/citas');
   }
 
+  if (action === 'marcar_recordatorio') {
+    const { getDB } = await import('../../../lib/db');
+    const db = getDB(Astro);
+    await db.prepare('UPDATE citas SET recordatorio_enviado = 1 WHERE id = ?').bind(id).run();
+    mensaje = 'Recordatorio marcado como enviado';
+  }
+
   const paciente_id = Number(form.get('paciente_id'));
   const fecha = form.get('fecha') as string;
   const hora = form.get('hora') as string;
@@ -24,6 +32,10 @@ if (Astro.request.method === 'POST') {
   if (!paciente_id || !fecha || !hora) {
     error = 'Paciente, fecha y hora son obligatorios';
   } else {
+    // Before the update, get original cita to detect date/time changes
+    const citaOriginal = await getCita(Astro, id);
+    const fechaCambio = citaOriginal && (citaOriginal.fecha !== fecha || citaOriginal.hora !== hora);
+
     await actualizarCita(Astro, id, {
       paciente_id,
       fecha,
@@ -34,7 +46,13 @@ if (Astro.request.method === 'POST') {
       notas: form.get('notas') as string,
       precio: form.get('precio') ? Number(form.get('precio')) : null,
     });
-    mensaje = 'Cita actualizada correctamente';
+
+    if (fechaCambio) {
+      mensaje = 'Cita reprogramada correctamente';
+      reprogramada = true;
+    } else {
+      mensaje = 'Cita actualizada correctamente';
+    }
   }
 }
 
@@ -61,12 +79,24 @@ const telefonoLimpio = cita.paciente_telefono ? cita.paciente_telefono.replace(/
 const fechaFormateada = cita.fecha ? new Date(cita.fecha + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
 const mensajeWhatsApp = `Hola ${cita.paciente_nombre}, te recordamos tu cita de ${cita.servicio || 'osteopatía'} el ${fechaFormateada} a las ${cita.hora} en Katy Caballero Osteopatía. ¡Te esperamos! 😊`;
 const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${encodeURIComponent(mensajeWhatsApp)}` : '';
+
+// WhatsApp reprogramming message (uses new fecha/hora since cita is re-fetched after POST)
+const mensajeReprogramar = `Hola ${cita.paciente_nombre}, soy Katy. Tu cita ha sido reprogramada para el ${fechaFormateada} a las ${cita.hora}. Si tienes algún problema con el nuevo horario, avísame. ¡Gracias!`;
+const reprogramWhatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${encodeURIComponent(mensajeReprogramar)}` : '';
 ---
 
 <AdminLayout title={`Cita #${id}`} activeSection="citas">
   <a href="/admin/citas" class="back-link">← Volver a citas</a>
 
   {mensaje && <div class="alert alert-success">{mensaje}</div>}
+  {reprogramada && reprogramWhatsappUrl && (
+    <div class="alert" style="background:#e3f2fd;border-color:#2196f3;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <strong>Cita reprogramada</strong> — Avisa al paciente del cambio:
+      <a href={reprogramWhatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm" style="margin-left:8px;">
+        📱 Avisar por WhatsApp
+      </a>
+    </div>
+  )}
   {error && <div class="alert alert-error">{error}</div>}
 
   {(cita as any).paciente_alergias && (
@@ -85,9 +115,18 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
     <a href={`/admin/tratamientos/nuevo?paciente=${cita.paciente_id}&cita=${id}`} class="btn btn-primary btn-sm">+ Registrar tratamiento</a>
     <a href={`/admin/factura/${id}`} target="_blank" class="btn btn-secondary btn-sm">Factura</a>
     <a href={`/admin/citas/nueva?paciente=${cita.paciente_id}&servicio=${encodeURIComponent(cita.servicio || '')}&duracion=${cita.duracion || 60}&precio=${cita.precio || ''}`} class="btn btn-secondary btn-sm">Duplicar cita</a>
-    {whatsappUrl && (
-      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-whatsapp">📱 Recordatorio WhatsApp</a>
+    {whatsappUrl && !cita.recordatorio_enviado && (
+      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-whatsapp" id="btn-wa-recordatorio">📱 Enviar recordatorio WhatsApp</a>
     )}
+    {whatsappUrl && !cita.recordatorio_enviado && (
+      <form method="POST" style="display:inline;">
+        <input type="hidden" name="_action" value="marcar_recordatorio">
+        <button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('¿Marcar recordatorio como enviado?')">✓ Marcar enviado</button>
+      </form>
+    )}
+    {cita.recordatorio_enviado ? (
+      <span class="badge-recordatorio-enviado">✓ Recordatorio enviado</span>
+    ) : null}
     <a href={`/api/admin/cita-ics?id=${id}`} class="btn btn-secondary btn-sm btn-calendar" download>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="vertical-align:middle;margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
       Anadir a calendario
@@ -281,5 +320,16 @@ const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${e
   .btn-no-show:hover {
     background: #e68900 !important;
     color: #fff !important;
+  }
+  .badge-recordatorio-enviado {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
   }
 </style>

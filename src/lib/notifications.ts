@@ -263,18 +263,38 @@ function escapeMarkdown(text: string): string {
   return text.replace(/([_*\[\]()~`>#+\-=|{}.!])/g, '\\$1');
 }
 
+// === PUSH NOTIFICATION ===
+
+async function sendPushNotifications(db: any, title: string, body: string, url: string): Promise<{ sent: boolean; error?: string }> {
+  try {
+    const { sendPushToAll } = await import('./web-push');
+    const VAPID_PUBLIC_KEY = 'BN2_yYwSv4wQE3GsMkPFzPOq1t_6gXuH5RX25GwVzSn8Q3FHmk_meZ5eQyqV2tcmgCti__mxy13TUzBKJ7g7NQA';
+    const VAPID_PRIVATE_KEY = '3FH-I2W5iqBfIUB9JBKDgA-I_MaNaDy5HbMf1PhXTs0';
+
+    const result = await sendPushToAll(db, { title, body, url, tag: 'nueva-reserva' }, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
+    return { sent: result.sent > 0 };
+  } catch (e: any) {
+    console.error('Push notification error:', e);
+    return { sent: false, error: e.message };
+  }
+}
+
 // === MAIN FUNCTION ===
 
-export async function notifyNewBooking(db: any, booking: BookingData): Promise<NotifyResult> {
+export async function notifyNewBooking(db: any, booking: BookingData, citaId?: number): Promise<NotifyResult> {
   const settings = await getNotifySettings(db);
 
   const emailEnabled = settings.notificacion_email_activo === 'true';
   const telegramEnabled = settings.notificacion_telegram_activo === 'true';
 
+  const fechaDisplay = formatFechaES(booking.fecha);
+  const pushUrl = citaId ? `/admin/citas/${citaId}` : '/admin/citas';
+
   const [emailResult, telegramResult, patientResult] = await Promise.all([
     emailEnabled ? sendEmailNotification(settings, booking) : { sent: false, error: 'Desactivado' },
     telegramEnabled ? sendTelegramNotification(settings, booking) : { sent: false, error: 'Desactivado' },
     booking.email ? sendPatientConfirmation(settings, booking) : { sent: false, error: 'Sin email' },
+    sendPushNotifications(db, 'Nueva reserva', `${booking.nombre} - ${fechaDisplay} ${booking.hora}`, pushUrl),
   ]);
 
   return { email: emailResult, telegram: telegramResult, patientEmail: patientResult };

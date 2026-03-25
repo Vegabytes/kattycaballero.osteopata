@@ -1,13 +1,14 @@
 /**
- * Cloudflare Cron Worker: Daily reminders & review requests
+ * Cloudflare Cron Worker: Daily appointment reminders
  * Runs daily at 10:00 UTC (11:00/12:00 Madrid time)
  *
- * 1. Sends 24h reminders for tomorrow's appointments
- * 2. Sends review requests for completed appointments (2 days after)
+ * Sends 24h reminders for tomorrow's appointments
  */
 
 interface Env {
   DB: D1Database;
+  VAPID_PRIVATE_KEY: string;
+  VAPID_PUBLIC_KEY: string;
 }
 
 interface Settings {
@@ -76,32 +77,213 @@ async function sendTelegram(botToken: string, chatId: string, text: string): Pro
   }
 }
 
-// === EMAIL (Resend) ===
+// === WEB PUSH ===
 
-async function sendEmail(apiKey: string, from: string, to: string, subject: string, html: string): Promise<boolean> {
+interface PushSub {
+  endpoint: string;
+  p256dh: string;
+  auth: string;
+}
+
+function base64UrlEncode(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  let str = '';
+  for (const b of bytes) str += String.fromCharCode(b);
+  return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function base64UrlDecode(str: string): Uint8Array {
+  str = str.replace(/-/g, '+').replace(/_/g, '/');
+  const padding = '='.repeat((4 - str.length % 4) % 4);
+  const raw = atob(str + padding);
+  const arr = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+  return arr;
+}
+
+async function sendWebPush(sub: PushSub, payload: string, env: Env): Promise<boolean> {
   try {
-    const res = await fetch('https://api.resend.com/emails', {
+    // Import VAPID private key
+    const privateKeyBytes = base64UrlDecode(env.VAPID_PRIVATE_KEY);
+    const vapidPrivateKey = await crypto.subtle.importKey(
+      'pkcs8',
+      await buildPkcs8(privateKeyBytes),
+      { name: 'ECDSA', namedCurve: 'P-256' },
+      false,
+      ['sign']
+    );
+
+    // Build JWT for VAPID
+    const audience = new URL(sub.endpoint).origin;
+    const now = Math.floor(Date.now() / 1000);
+    const header = base64UrlEncode(new TextEncoder().encode(JSON.stringify({ typ: 'JWT', alg: 'ES256' })));
+    const body = base64UrlEncode(new TextEncoder().encode(JSON.stringify({
+      aud: audience,
+      exp: now + 86400,
+      sub: 'mailto:katy@katycaballeroosteopata.com',
+    })));
+    const unsignedToken = `${header}.${body}`;
+    const signature = await crypto.subtle.sign(
+      { name: 'ECDSA', hash: 'SHA-256' },
+      vapidPrivateKey,
+      new TextEncoder().encode(unsignedToken)
+    );
+    const jwt = `${unsignedToken}.${base64UrlEncode(derToRaw(new Uint8Array(signature)))}`;
+
+    // Encrypt payload using p256dh and auth
+    const p256dhBytes = base64UrlDecode(sub.p256dh);
+    const authBytes = base64UrlDecode(sub.auth);
+
+    // Generate local ECDH key pair
+    const localKey = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']);
+    const localPublicRaw = await crypto.subtle.exportKey('raw', localKey.publicKey);
+
+    // Import subscriber's public key
+    const subPublicKey = await crypto.subtle.importKey('raw', p256dhBytes, { name: 'ECDH', namedCurve: 'P-256' }, false, []);
+
+    // Derive shared secret
+    const sharedSecret = await crypto.subtle.deriveBits({ name: 'ECDH', public: subPublicKey }, localKey.privateKey, 256);
+
+    // HKDF for encryption keys (RFC 8291)
+    const authInfo = new TextEncoder().encode('Content-Encoding: auth\0');
+    const prkKey = await crypto.subtle.importKey('raw', sharedSecret, { name: 'HKDF' }, false, ['deriveBits']);
+    const ikm = await crypto.subtle.deriveBits({ name: 'HKDF', hash: 'SHA-256', salt: authBytes, info: authInfo }, prkKey, 256);
+
+    const ikmKey = await crypto.subtle.importKey('raw', ikm, { name: 'HKDF' }, false, ['deriveBits']);
+
+    // Build key info and nonce info
+    const keyInfo = buildInfo('Content-Encoding: aesgcm\0', p256dhBytes, new Uint8Array(localPublicRaw));
+    const nonceInfo = buildInfo('Content-Encoding: nonce\0', p256dhBytes, new Uint8Array(localPublicRaw));
+
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+
+    const contentKey = await crypto.subtle.deriveBits({ name: 'HKDF', hash: 'SHA-256', salt, info: keyInfo }, ikmKey, 128);
+    const nonce = await crypto.subtle.deriveBits({ name: 'HKDF', hash: 'SHA-256', salt, info: nonceInfo }, ikmKey, 96);
+
+    // Encrypt payload
+    const aesKey = await crypto.subtle.importKey('raw', contentKey, { name: 'AES-GCM' }, false, ['encrypt']);
+    // Add padding (2 bytes)
+    const padded = new Uint8Array(2 + new TextEncoder().encode(payload).length);
+    padded.set(new TextEncoder().encode(payload), 2);
+    const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: nonce }, aesKey, padded);
+
+    // Send to push service
+    const res = await fetch(sub.endpoint, {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from, to: [to], subject, html }),
+      headers: {
+        'Authorization': `vapid t=${jwt}, k=${env.VAPID_PUBLIC_KEY}`,
+        'Content-Encoding': 'aesgcm',
+        'Crypto-Key': `dh=${base64UrlEncode(localPublicRaw)};p256ecdsa=${env.VAPID_PUBLIC_KEY}`,
+        'Encryption': `salt=${base64UrlEncode(salt)}`,
+        'Content-Type': 'application/octet-stream',
+        'TTL': '86400',
+      },
+      body: encrypted,
     });
-    return res.ok;
-  } catch {
+
+    return res.ok || res.status === 201;
+  } catch (e) {
+    console.error('Web Push error:', e);
     return false;
   }
 }
 
+function buildInfo(type: string, clientPublic: Uint8Array, serverPublic: Uint8Array): Uint8Array {
+  const typeBytes = new TextEncoder().encode(type);
+  const info = new Uint8Array(typeBytes.length + 1 + 2 + clientPublic.length + 2 + serverPublic.length);
+  let offset = 0;
+  info.set(typeBytes, offset); offset += typeBytes.length;
+  info[offset++] = 0; // separator already in type string, extra null
+  // But RFC 8188 uses a different format. Simplified:
+  // Actually for aesgcm: "Content-Encoding: aesgcm\0P-256\0\0A" + client + "\0A" + server
+  return concatBuffers(
+    new TextEncoder().encode(type),
+    new Uint8Array([0, clientPublic.length]),
+    clientPublic,
+    new Uint8Array([0, serverPublic.length]),
+    serverPublic
+  );
+}
+
+function concatBuffers(...buffers: Uint8Array[]): Uint8Array {
+  const total = buffers.reduce((s, b) => s + b.length, 0);
+  const result = new Uint8Array(total);
+  let offset = 0;
+  for (const buf of buffers) {
+    result.set(buf, offset);
+    offset += buf.length;
+  }
+  return result;
+}
+
+// Convert DER ECDSA signature to raw r||s format
+function derToRaw(der: Uint8Array): ArrayBuffer {
+  // DER: 0x30 len 0x02 rLen r 0x02 sLen s
+  let offset = 2; // skip 0x30 and length
+  offset++; // skip 0x02
+  const rLen = der[offset++];
+  const r = der.slice(offset, offset + rLen);
+  offset += rLen;
+  offset++; // skip 0x02
+  const sLen = der[offset++];
+  const s = der.slice(offset, offset + sLen);
+
+  // Pad/trim to 32 bytes each
+  const raw = new Uint8Array(64);
+  raw.set(r.length > 32 ? r.slice(r.length - 32) : r, 32 - Math.min(r.length, 32));
+  raw.set(s.length > 32 ? s.slice(s.length - 32) : s, 64 - Math.min(s.length, 32));
+  return raw.buffer;
+}
+
+// Build PKCS8 from raw 32-byte private key
+async function buildPkcs8(rawKey: Uint8Array): Promise<ArrayBuffer> {
+  // PKCS8 header for P-256
+  const header = new Uint8Array([
+    0x30, 0x41, 0x02, 0x01, 0x00, 0x30, 0x13, 0x06,
+    0x07, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02, 0x01,
+    0x06, 0x08, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x03,
+    0x01, 0x07, 0x04, 0x27, 0x30, 0x25, 0x02, 0x01,
+    0x01, 0x04, 0x20,
+  ]);
+  const result = new Uint8Array(header.length + rawKey.length);
+  result.set(header);
+  result.set(rawKey, header.length);
+  return result.buffer;
+}
+
+async function sendPushToAll(db: D1Database, payload: object, env: Env): Promise<string[]> {
+  const logs: string[] = [];
+  const subs = (await db.prepare('SELECT endpoint, p256dh, auth FROM push_subscriptions').all()).results as PushSub[];
+
+  if (subs.length === 0) {
+    logs.push('Push: no hay suscripciones');
+    return logs;
+  }
+
+  for (const sub of subs) {
+    const ok = await sendWebPush(sub, JSON.stringify(payload), env);
+    if (ok) {
+      logs.push('Push: enviado');
+    } else {
+      logs.push('Push: error, eliminando suscripcion');
+      await db.prepare('DELETE FROM push_subscriptions WHERE endpoint = ?').bind(sub.endpoint).run();
+    }
+  }
+  return logs;
+}
+
 // === REMINDERS (24h before) ===
 
-async function processReminders(db: D1Database, settings: Settings): Promise<string[]> {
+async function processReminders(db: D1Database, settings: Settings, env: Env): Promise<string[]> {
   const tomorrow = getDateInMadrid(1);
   const logs: string[] = [];
 
+  // Busca citas de mañana que no hayan sido notificadas a Katy aún
   const citas = (await db.prepare(
     `SELECT c.id, c.fecha, c.hora, c.duracion, c.servicio, c.estado, c.notas,
             p.nombre, p.apellidos, p.telefono, p.email
      FROM citas c JOIN pacientes p ON c.paciente_id = p.id
-     WHERE c.fecha = ? AND c.estado IN ('pendiente', 'confirmada') AND c.recordatorio_enviado = 0`
+     WHERE c.fecha = ? AND c.estado IN ('pendiente', 'confirmada') AND c.recordatorio_notificado = 0`
   ).bind(tomorrow).all()).results as Cita[];
 
   if (citas.length === 0) {
@@ -113,119 +295,239 @@ async function processReminders(db: D1Database, settings: Settings): Promise<str
 
   const botToken = settings.telegram_bot_token;
   const chatId = settings.telegram_chat_id;
-  const apiKey = settings.email_api_key;
-  const emailFrom = settings.email_from || 'Katy Caballero <onboarding@resend.dev>';
 
-  // Send summary to Katy via Telegram
-  if (botToken && chatId) {
-    const lines = citas.map(c =>
-      `- ${c.hora} ${c.nombre} ${c.apellidos} (${c.servicio || 'sin servicio'}) Tel: ${c.telefono}`
-    );
-    const text = `Citas de manana ${formatFechaES(tomorrow)}:\n\n${lines.join('\n')}`;
-    await sendTelegram(botToken, chatId, text);
-    logs.push('Telegram a Katy: enviado');
+  if (!botToken || !chatId) {
+    logs.push('Error: faltan telegram_bot_token o telegram_chat_id en configuracion');
+    return logs;
   }
 
-  // Send individual reminders to patients with email
-  for (const cita of citas) {
-    if (cita.email && apiKey) {
-      const fechaDisplay = formatFechaES(cita.fecha);
-      const html = `<!DOCTYPE html>
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
-<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;padding:0;background:#f5f5f5;">
-<div style="max-width:500px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
-  <div style="background:#4a6548;padding:18px 24px;text-align:center;">
-    <h1 style="color:#fff;margin:0;font-size:18px;font-weight:500;">Recordatorio de tu cita</h1>
-  </div>
-  <div style="padding:24px;line-height:1.7;color:#333;font-size:14px;">
-    <p>Hola ${cita.nombre},</p>
-    <p>Te recuerdo que manana tienes cita:</p>
-    <div style="background:#f8f6f0;border-radius:10px;padding:16px;border-left:4px solid #4a6548;">
-      <strong>${cita.servicio || 'Cita'}</strong><br>
-      ${fechaDisplay} a las ${cita.hora}<br>
-      Duracion: ${cita.duracion} min
-    </div>
-    <p style="margin-top:16px;font-size:13px;color:#555;"><strong>Direccion:</strong> C/ Rio Guadarrama 2, 28430 Alpedrete</p>
-    <p style="font-size:13px;color:#888;">Si no puedes asistir, avisame con antelacion al <a href="https://wa.me/34643961065" style="color:#25D366;">643 961 065</a></p>
-  </div>
-</div>
-</body></html>`;
+  // Send summary to Katy via Telegram
+  const fechaDisplay = formatFechaES(tomorrow);
+  const lines = citas.map(c =>
+    `- ${c.hora} ${c.nombre} ${c.apellidos} (${c.servicio || 'sin servicio'}) Tel: ${c.telefono}`
+  );
+  const summaryText = `📋 Citas de manana ${fechaDisplay}:\n\n${lines.join('\n')}`;
+  await sendTelegram(botToken, chatId, summaryText);
+  logs.push('Telegram resumen a Katy: enviado');
 
-      const sent = await sendEmail(apiKey, emailFrom, cita.email,
-        `Recordatorio: tu cita manana ${cita.hora} - Katy Caballero`, html);
-      logs.push(`Email recordatorio a ${cita.nombre}: ${sent ? 'ok' : 'error'}`);
+  // Send individual WhatsApp reminder links via Telegram
+  for (const cita of citas) {
+    if (cita.telefono) {
+      const phone = cita.telefono.replace(/\D/g, '').replace(/^34/, '');
+      const waMessage = `Hola ${cita.nombre}, soy Katy de la consulta de osteopatia. Te recuerdo que manana ${fechaDisplay} tienes cita a las ${cita.hora}${cita.servicio ? ` (${cita.servicio})` : ''}. Direccion: C/ Rio Guadarrama 2, Alpedrete. Si no puedes asistir avisame con antelacion. Hasta manana! 😊`;
+      const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(waMessage)}`;
+
+      await sendTelegram(botToken, chatId,
+        `📲 Recordatorio para ${cita.nombre} ${cita.apellidos} (${cita.hora}):\n${waUrl}`);
+      logs.push(`WhatsApp link para ${cita.nombre}: enviado`);
     }
 
-    // Mark as sent
-    await db.prepare('UPDATE citas SET recordatorio_enviado = 1 WHERE id = ?').bind(cita.id).run();
+    // Marcar que ya se notificó a Katy (NO marca recordatorio_enviado, eso lo hace Katy desde el panel)
+    await db.prepare('UPDATE citas SET recordatorio_notificado = 1 WHERE id = ?').bind(cita.id).run();
+  }
+
+  // Send push notification to admin PWA
+  if (env.VAPID_PRIVATE_KEY && env.VAPID_PUBLIC_KEY) {
+    const pushLogs = await sendPushToAll(db, {
+      title: `${citas.length} recordatorio${citas.length > 1 ? 's' : ''} pendiente${citas.length > 1 ? 's' : ''}`,
+      body: `Citas de manana: ${citas.map(c => `${c.hora} ${c.nombre}`).join(', ')}`,
+      url: '/admin/citas',
+      tag: 'recordatorios-diarios',
+    }, env);
+    logs.push(...pushLogs);
   }
 
   return logs;
 }
 
-// === REVIEW REQUESTS (2 days after completed appointment) ===
+// === INACTIVE PATIENTS ===
 
-async function processReviewRequests(db: D1Database, settings: Settings): Promise<string[]> {
-  const twoDaysAgo = getDateInMadrid(-2);
+async function processInactivos(db: D1Database, settings: Settings, env: Env): Promise<string[]> {
   const logs: string[] = [];
 
-  const citas = (await db.prepare(
-    `SELECT c.id, c.fecha, c.hora, c.servicio, p.nombre, p.apellidos, p.telefono, p.email
-     FROM citas c JOIN pacientes p ON c.paciente_id = p.id
-     WHERE c.fecha = ? AND c.estado = 'completada' AND c.review_enviado = 0`
-  ).bind(twoDaysAgo).all()).results as Cita[];
+  const semanas = Number(settings.inactividad_semanas) || 8;
+  const dias = semanas * 7;
 
-  if (citas.length === 0) {
-    logs.push('Reviews: no hay citas completadas de hace 2 dias');
+  // Pacientes con última cita completada hace más de X días (o sin citas)
+  const result = await db.prepare(
+    `SELECT p.id, p.nombre, p.apellidos, p.telefono, MAX(c.fecha) as ultima_cita
+     FROM pacientes p
+     LEFT JOIN citas c ON p.id = c.paciente_id AND c.estado = 'completada'
+     GROUP BY p.id
+     HAVING ultima_cita < date('now', '-${dias} days')
+     ORDER BY ultima_cita ASC
+     LIMIT 10`
+  ).all();
+
+  const pacientes = (result.results || []) as { id: number; nombre: string; apellidos: string; telefono: string; ultima_cita: string }[];
+
+  if (pacientes.length === 0) {
+    logs.push('Inactivos: no hay pacientes inactivos');
     return logs;
   }
 
-  logs.push(`Reviews: ${citas.length} citas completadas el ${twoDaysAgo}`);
+  // Solo enviar aviso una vez por semana (lunes)
+  const now = new Date();
+  const madridOffset = isSummerTime(now) ? 2 : 1;
+  const madrid = new Date(now.getTime() + madridOffset * 3600000);
+  if (madrid.getDay() !== 1) {
+    logs.push('Inactivos: no es lunes, saltar aviso semanal');
+    return logs;
+  }
 
   const botToken = settings.telegram_bot_token;
   const chatId = settings.telegram_chat_id;
-  const apiKey = settings.email_api_key;
-  const emailFrom = settings.email_from || 'Katy Caballero <onboarding@resend.dev>';
-  const googleReviewUrl = settings.google_review_url || 'https://g.page/r/review';
 
-  for (const cita of citas) {
-    // Send review request email to patient
-    if (cita.email && apiKey) {
-      const html = `<!DOCTYPE html>
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
-<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;padding:0;background:#f5f5f5;">
-<div style="max-width:500px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
-  <div style="background:#4a6548;padding:18px 24px;text-align:center;">
-    <h1 style="color:#fff;margin:0;font-size:18px;font-weight:500;">Como te encuentras?</h1>
-  </div>
-  <div style="padding:24px;line-height:1.7;color:#333;font-size:14px;">
-    <p>Hola ${cita.nombre},</p>
-    <p>Espero que te encuentres bien despues de tu sesion de ${cita.servicio || 'tratamiento'}.</p>
-    <p>Si la experiencia fue positiva, me ayudaria mucho que dejaras una resena en Google. Solo te llevara un momento:</p>
-    <div style="text-align:center;margin:24px 0;">
-      <a href="${googleReviewUrl}" style="display:inline-block;padding:12px 28px;background:#4a6548;color:#fff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:500;">Dejar resena en Google</a>
-    </div>
-    <p style="font-size:13px;color:#888;text-align:center;">Gracias por confiar en mi. Nos vemos pronto!</p>
-  </div>
-</div>
-</body></html>`;
+  if (!botToken || !chatId) {
+    logs.push('Inactivos: falta config Telegram');
+    return logs;
+  }
 
-      const sent = await sendEmail(apiKey, emailFrom, cita.email,
-        `Como fue tu sesion? - Katy Caballero`, html);
-      logs.push(`Email review a ${cita.nombre}: ${sent ? 'ok' : 'error'}`);
-    }
+  // Resumen por Telegram
+  const lines = pacientes.map(p => {
+    const diasSin = p.ultima_cita
+      ? Math.floor((Date.now() - new Date(p.ultima_cita + 'T00:00:00').getTime()) / 86400000)
+      : '?';
+    return `- ${p.nombre} ${p.apellidos} (${diasSin} dias sin visita)`;
+  });
 
-    // Notify Katy via Telegram with WhatsApp link to send manually
-    if (botToken && chatId && !cita.email) {
-      const phone = cita.telefono.replace(/\D/g, '').replace(/^34/, '');
-      const waText = encodeURIComponent(`Hola ${cita.nombre}! Espero que te encuentres bien despues de tu sesion. Si tienes un momento, me ayudaria mucho una resena en Google: ${googleReviewUrl} Gracias!`);
-      const waUrl = `https://wa.me/34${phone}?text=${waText}`;
+  await sendTelegram(botToken, chatId,
+    `📊 Pacientes inactivos (${pacientes.length}):\n\n${lines.join('\n')}\n\nPuedes contactarles desde /admin/pacientes`);
+  logs.push(`Inactivos: ${pacientes.length} pacientes notificados`);
+
+  // WhatsApp links individuales
+  for (const p of pacientes) {
+    if (p.telefono) {
+      const phone = p.telefono.replace(/\D/g, '').replace(/^34/, '');
+      const waMessage = `Hola ${p.nombre}, soy Katy de la consulta de osteopatia en Alpedrete. Hace tiempo que no nos vemos, ¿que tal te encuentras? Si necesitas una sesion estare encantada de atenderte. Puedes reservar en https://katycaballeroosteopata.com/reservar 😊`;
+      const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(waMessage)}`;
       await sendTelegram(botToken, chatId,
-        `Pedir resena a ${cita.nombre} ${cita.apellidos} (sin email):\n${waUrl}`);
-      logs.push(`Telegram review link para ${cita.nombre}`);
+        `📲 Contactar a ${p.nombre} ${p.apellidos}:\n${waUrl}`);
     }
+  }
 
-    await db.prepare('UPDATE citas SET review_enviado = 1 WHERE id = ?').bind(cita.id).run();
+  // Push notification
+  if (env.VAPID_PRIVATE_KEY && env.VAPID_PUBLIC_KEY) {
+    const pushLogs = await sendPushToAll(db, {
+      title: `${pacientes.length} pacientes inactivos`,
+      body: `Pacientes sin visita en +${semanas} semanas`,
+      url: '/admin/pacientes?orden=visita',
+      tag: 'pacientes-inactivos',
+    }, env);
+    logs.push(...pushLogs);
+  }
+
+  return logs;
+}
+
+// === BONOS CADUCADOS ===
+
+async function processBonosCaducados(db: D1Database, settings: Settings): Promise<string[]> {
+  const logs: string[] = [];
+
+  // Marcar bonos activos cuya fecha de caducidad ya pasó
+  const hoy = getDateInMadrid(0);
+  const result = await db.prepare(
+    `UPDATE bonos SET estado = 'caducado' WHERE estado = 'activo' AND fecha_caducidad IS NOT NULL AND fecha_caducidad < ?`
+  ).bind(hoy).run();
+
+  const caducados = result.meta.changes || 0;
+  if (caducados > 0) {
+    logs.push(`Bonos: ${caducados} bono(s) marcados como caducados`);
+
+    // Notificar a Katy por Telegram
+    const botToken = settings.telegram_bot_token;
+    const chatId = settings.telegram_chat_id;
+    if (botToken && chatId) {
+      // Obtener detalles de los bonos recién caducados
+      const bonosCaducados = (await db.prepare(
+        `SELECT b.nombre, b.sesiones_usadas, b.sesiones_total, p.nombre as paciente_nombre, p.apellidos, p.telefono
+         FROM bonos b JOIN pacientes p ON b.paciente_id = p.id
+         WHERE b.estado = 'caducado' AND b.fecha_caducidad >= date(?, '-7 days') AND b.fecha_caducidad < ?`
+      ).bind(hoy, hoy).all()).results as any[];
+
+      if (bonosCaducados.length > 0) {
+        const lines = bonosCaducados.map((b: any) =>
+          `- ${b.paciente_nombre} ${b.apellidos}: ${b.nombre} (${b.sesiones_usadas}/${b.sesiones_total} sesiones usadas)`
+        );
+        await sendTelegram(botToken, chatId,
+          `⚠️ Bonos caducados:\n\n${lines.join('\n')}\n\nRevisa en /admin/bonos`);
+
+        // WhatsApp links para renovar
+        for (const b of bonosCaducados) {
+          if (b.telefono) {
+            const phone = b.telefono.replace(/\D/g, '').replace(/^34/, '');
+            const waMsg = `Hola ${b.paciente_nombre}, soy Katy. Tu bono "${b.nombre}" ha caducado. Si quieres renovarlo o necesitas una sesion, puedes reservar en https://katycaballeroosteopata.com/reservar 😊`;
+            const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(waMsg)}`;
+            await sendTelegram(botToken, chatId,
+              `📲 Renovar bono de ${b.paciente_nombre} ${b.apellidos}:\n${waUrl}`);
+          }
+        }
+      }
+    }
+  } else {
+    logs.push('Bonos: no hay bonos caducados');
+  }
+
+  // También avisar de bonos que están a punto de caducar (próximos 7 días)
+  const en7dias = getDateInMadrid(7);
+  const proximosCaducar = (await db.prepare(
+    `SELECT b.nombre, b.sesiones_usadas, b.sesiones_total, b.fecha_caducidad, p.nombre as paciente_nombre, p.apellidos, p.telefono
+     FROM bonos b JOIN pacientes p ON b.paciente_id = p.id
+     WHERE b.estado = 'activo' AND b.fecha_caducidad IS NOT NULL AND b.fecha_caducidad >= ? AND b.fecha_caducidad <= ?`
+  ).bind(hoy, en7dias).all()).results as any[];
+
+  if (proximosCaducar.length > 0) {
+    const botToken = settings.telegram_bot_token;
+    const chatId = settings.telegram_chat_id;
+    if (botToken && chatId) {
+      const lines = proximosCaducar.map((b: any) =>
+        `- ${b.paciente_nombre} ${b.apellidos}: "${b.nombre}" caduca ${b.fecha_caducidad} (${b.sesiones_usadas}/${b.sesiones_total} usadas)`
+      );
+      await sendTelegram(botToken, chatId,
+        `⏰ Bonos que caducan pronto:\n\n${lines.join('\n')}`);
+
+      for (const b of proximosCaducar) {
+        if (b.telefono) {
+          const phone = b.telefono.replace(/\D/g, '').replace(/^34/, '');
+          const waMsg = `Hola ${b.paciente_nombre}, soy Katy. Te aviso de que tu bono "${b.nombre}" caduca el ${b.fecha_caducidad}. Te quedan ${b.sesiones_total - b.sesiones_usadas} sesiones por usar. ¿Quieres que te reserve una cita? 😊`;
+          const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(waMsg)}`;
+          await sendTelegram(botToken, chatId,
+            `📲 Avisar a ${b.paciente_nombre} ${b.apellidos} (bono caduca pronto):\n${waUrl}`);
+        }
+      }
+      logs.push(`Bonos: ${proximosCaducar.length} bono(s) a punto de caducar`);
+    }
+  }
+
+  // Bonos con 1 sesión restante
+  const bonosPocasSesiones = (await db.prepare(
+    `SELECT b.nombre, b.sesiones_usadas, b.sesiones_total, p.nombre as paciente_nombre, p.apellidos, p.telefono
+     FROM bonos b JOIN pacientes p ON b.paciente_id = p.id
+     WHERE b.estado = 'activo' AND b.sesiones_total - b.sesiones_usadas = 1`
+  ).all()).results as any[];
+
+  if (bonosPocasSesiones.length > 0) {
+    const botToken = settings.telegram_bot_token;
+    const chatId = settings.telegram_chat_id;
+    if (botToken && chatId) {
+      const lines = bonosPocasSesiones.map((b: any) =>
+        `- ${b.paciente_nombre} ${b.apellidos}: "${b.nombre}" (${b.sesiones_usadas}/${b.sesiones_total} sesiones usadas)`
+      );
+      await sendTelegram(botToken, chatId,
+        `⚠️ Bonos con 1 sesion restante:\n\n${lines.join('\n')}\n\nConsidera ofrecer renovacion.`);
+
+      for (const b of bonosPocasSesiones) {
+        if (b.telefono) {
+          const phone = b.telefono.replace(/\D/g, '').replace(/^34/, '');
+          const waMsg = `Hola ${b.paciente_nombre}, soy Katy. Te queda 1 sesion en tu bono "${b.nombre}". ¿Te gustaria renovarlo? Puedes reservar tu proxima sesion en https://katycaballeroosteopata.com/reservar 😊`;
+          const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(waMsg)}`;
+          await sendTelegram(botToken, chatId,
+            `📲 Renovar bono de ${b.paciente_nombre} ${b.apellidos} (1 sesion restante):\n${waUrl}`);
+        }
+      }
+      logs.push(`Bonos: ${bonosPocasSesiones.length} bono(s) con 1 sesion restante`);
+    }
   }
 
   return logs;
@@ -238,11 +540,14 @@ export default {
     const settings = await getSettings(env.DB);
     const logs: string[] = [];
 
-    const reminderLogs = await processReminders(env.DB, settings);
+    const reminderLogs = await processReminders(env.DB, settings, env);
     logs.push(...reminderLogs);
 
-    const reviewLogs = await processReviewRequests(env.DB, settings);
-    logs.push(...reviewLogs);
+    const inactivoLogs = await processInactivos(env.DB, settings, env);
+    logs.push(...inactivoLogs);
+
+    const bonosLogs = await processBonosCaducados(env.DB, settings);
+    logs.push(...bonosLogs);
 
     console.log('Cron completed:', logs.join(' | '));
   },
@@ -258,11 +563,14 @@ export default {
     const settings = await getSettings(env.DB);
     const logs: string[] = [];
 
-    const reminderLogs = await processReminders(env.DB, settings);
+    const reminderLogs = await processReminders(env.DB, settings, env);
     logs.push(...reminderLogs);
 
-    const reviewLogs = await processReviewRequests(env.DB, settings);
-    logs.push(...reviewLogs);
+    const inactivoLogs = await processInactivos(env.DB, settings, env);
+    logs.push(...inactivoLogs);
+
+    const bonosLogs = await processBonosCaducados(env.DB, settings);
+    logs.push(...bonosLogs);
 
     return new Response(JSON.stringify({ logs }, null, 2), {
       headers: { 'Content-Type': 'application/json' },
