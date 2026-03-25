@@ -287,17 +287,17 @@ async function processReminders(db: D1Database, settings: Settings, env: Env): P
   ).bind(tomorrow).all()).results as Cita[];
 
   if (citas.length === 0) {
-    logs.push('Recordatorios: no hay citas para manana');
+    logs.push('Recordatorios: no hay citas para mañana');
     return logs;
   }
 
-  logs.push(`Recordatorios: ${citas.length} citas para manana (${tomorrow})`);
+  logs.push(`Recordatorios: ${citas.length} citas para mañana (${tomorrow})`);
 
   const botToken = settings.telegram_bot_token;
   const chatId = settings.telegram_chat_id;
 
   if (!botToken || !chatId) {
-    logs.push('Error: faltan telegram_bot_token o telegram_chat_id en configuracion');
+    logs.push('Error: faltan telegram_bot_token o telegram_chat_id en configuración');
     return logs;
   }
 
@@ -306,7 +306,7 @@ async function processReminders(db: D1Database, settings: Settings, env: Env): P
   const lines = citas.map(c =>
     `- ${c.hora} ${c.nombre} ${c.apellidos} (${c.servicio || 'sin servicio'}) Tel: ${c.telefono}`
   );
-  const summaryText = `📋 Citas de manana ${fechaDisplay}:\n\n${lines.join('\n')}`;
+  const summaryText = `📋 Citas de mañana ${fechaDisplay}:\n\n${lines.join('\n')}`;
   await sendTelegram(botToken, chatId, summaryText);
   logs.push('Telegram resumen a Katy: enviado');
 
@@ -314,7 +314,7 @@ async function processReminders(db: D1Database, settings: Settings, env: Env): P
   for (const cita of citas) {
     if (cita.telefono) {
       const phone = cita.telefono.replace(/\D/g, '').replace(/^34/, '');
-      const waMessage = `Hola ${cita.nombre}, soy Katy de la consulta de osteopatia. Te recuerdo que manana ${fechaDisplay} tienes cita a las ${cita.hora}${cita.servicio ? ` (${cita.servicio})` : ''}. Direccion: C/ Rio Guadarrama 2, Alpedrete. Si no puedes asistir avisame con antelacion. Hasta manana! 😊`;
+      const waMessage = `Hola ${cita.nombre}, soy Katy de la consulta de osteopatía. Te recuerdo que mañana ${fechaDisplay} tienes cita a las ${cita.hora}${cita.servicio ? ` (${cita.servicio})` : ''}. Dirección: C/ Río Guadarrama 2, Alpedrete. Si no puedes asistir avísame con antelación. ¡Hasta mañana! 😊`;
       const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(waMessage)}`;
 
       await sendTelegram(botToken, chatId,
@@ -330,7 +330,7 @@ async function processReminders(db: D1Database, settings: Settings, env: Env): P
   if (env.VAPID_PRIVATE_KEY && env.VAPID_PUBLIC_KEY) {
     const pushLogs = await sendPushToAll(db, {
       title: `${citas.length} recordatorio${citas.length > 1 ? 's' : ''} pendiente${citas.length > 1 ? 's' : ''}`,
-      body: `Citas de manana: ${citas.map(c => `${c.hora} ${c.nombre}`).join(', ')}`,
+      body: `Citas de mañana: ${citas.map(c => `${c.hora} ${c.nombre}`).join(', ')}`,
       url: '/admin/citas',
       tag: 'recordatorios-diarios',
     }, env);
@@ -388,7 +388,7 @@ async function processInactivos(db: D1Database, settings: Settings, env: Env): P
     const diasSin = p.ultima_cita
       ? Math.floor((Date.now() - new Date(p.ultima_cita + 'T00:00:00').getTime()) / 86400000)
       : '?';
-    return `- ${p.nombre} ${p.apellidos} (${diasSin} dias sin visita)`;
+    return `- ${p.nombre} ${p.apellidos} (${diasSin} días sin visita)`;
   });
 
   await sendTelegram(botToken, chatId,
@@ -399,7 +399,7 @@ async function processInactivos(db: D1Database, settings: Settings, env: Env): P
   for (const p of pacientes) {
     if (p.telefono) {
       const phone = p.telefono.replace(/\D/g, '').replace(/^34/, '');
-      const waMessage = `Hola ${p.nombre}, soy Katy de la consulta de osteopatia en Alpedrete. Hace tiempo que no nos vemos, ¿que tal te encuentras? Si necesitas una sesion estare encantada de atenderte. Puedes reservar en https://katycaballeroosteopata.com/reservar 😊`;
+      const waMessage = `Hola ${p.nombre}, soy Katy de la consulta de osteopatía en Alpedrete. Hace tiempo que no nos vemos, ¿qué tal te encuentras? Si necesitas una sesión estaré encantada de atenderte. Puedes reservar en https://katycaballeroosteopata.com/reservar 😊`;
       const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(waMessage)}`;
       await sendTelegram(botToken, chatId,
         `📲 Contactar a ${p.nombre} ${p.apellidos}:\n${waUrl}`);

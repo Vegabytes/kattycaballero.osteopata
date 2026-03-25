@@ -6,24 +6,24 @@ interface Props {
 const currentPath = Astro.url.pathname;
 
 const contextMessages: Record<string, string> = {
-  '/servicios/osteopatia-alpedrete': 'Hola Katy, me interesa una sesion de osteopatia',
+  '/servicios/osteopatia-alpedrete': 'Hola Katy, me interesa una sesión de osteopatía',
   '/servicios/masaje-deportivo-alpedrete': 'Hola Katy, me interesa un masaje deportivo',
-  '/servicios/masaje-tailandes-alpedrete': 'Hola Katy, me interesa el masaje tailandes',
+  '/servicios/masaje-tailandes-alpedrete': 'Hola Katy, me interesa el masaje tailandés',
   '/servicios/masaje-corporal-alpedrete': 'Hola Katy, me interesa un masaje corporal',
   '/servicios/masaje-pindas-herbales-alpedrete': 'Hola Katy, me interesa el masaje con pindas herbales',
   '/servicios/masaje-embarazadas-alpedrete': 'Hola Katy, me interesa el masaje para embarazadas',
-  '/tarifas': 'Hola Katy, me gustaria conocer las tarifas y disponibilidad',
+  '/tarifas': 'Hola Katy, me gustaría conocer las tarifas y disponibilidad',
   '/bonos': 'Hola Katy, me interesa comprar un bono de sesiones',
-  '/regalar': 'Hola Katy, me gustaria regalar una sesion',
+  '/regalar': 'Hola Katy, me gustaría regalar una sesión',
   '/contacto': 'Hola Katy, tengo una consulta',
-  '/primera-visita': 'Hola Katy, me gustaria reservar mi primera visita',
-  '/reservar': 'Hola Katy, me gustaria reservar una cita',
+  '/primera-visita': 'Hola Katy, me gustaría reservar mi primera visita',
+  '/reservar': 'Hola Katy, me gustaría reservar una cita',
 };
 
 const { message } = Astro.props;
 
 // Priority: prop > context by path > default
-let whatsappMessage = message || 'Hola Katy, me gustaria reservar una cita';
+let whatsappMessage = message || 'Hola Katy, me gustaría reservar una cita';
 
 // Check path-based context
 if (!message) {
@@ -36,7 +36,7 @@ if (!message) {
   // Town pages
   if (currentPath.includes('osteopata-') || currentPath.includes('masaje-')) {
     const town = currentPath.replace(/^\//, '').replace(/\/$/, '').replace(/(osteopata|masaje)-/, '').replace(/-/g, ' ');
-    whatsappMessage = `Hola Katy, soy de ${town} y me gustaria pedir cita`;
+    whatsappMessage = `Hola Katy, soy de ${town} y me gustaría pedir cita`;
   }
 }
 

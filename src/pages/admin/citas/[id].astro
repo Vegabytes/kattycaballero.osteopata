@@ -77,7 +77,7 @@ const servicios = [
 // WhatsApp reminder
 const telefonoLimpio = cita.paciente_telefono ? cita.paciente_telefono.replace(/\D/g, '') : '';
 const fechaFormateada = cita.fecha ? new Date(cita.fecha + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
-const mensajeWhatsApp = `Hola ${cita.paciente_nombre}, te recordamos tu cita de ${cita.servicio || 'osteopatía'} el ${fechaFormateada} a las ${cita.hora} en Katy Caballero Osteopatía. ¡Te esperamos! 😊`;
+const mensajeWhatsApp = `Hola ${cita.paciente_nombre}, soy Katy de la consulta de osteopatía. Te recuerdo que el ${fechaFormateada} tienes cita a las ${cita.hora}${cita.servicio ? ` (${cita.servicio})` : ''}. Dirección: C/ Río Guadarrama 2, Alpedrete. Si no puedes asistir avísame con antelación. ¡Te espero! 😊`;
 const whatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}?text=${encodeURIComponent(mensajeWhatsApp)}` : '';
 
 // WhatsApp reprogramming message (uses new fecha/hora since cita is re-fetched after POST)

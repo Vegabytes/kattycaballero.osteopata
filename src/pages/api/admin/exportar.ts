@@ -26,7 +26,7 @@ export const GET: APIRoute = async (context) => {
       ).all();
       const rows = result.results as any[];
 
-      csv = 'ID,Nombre,Apellidos,Telefono,Email,Fecha Nacimiento,Direccion,Notas,Fecha Alta\n';
+      csv = 'ID,Nombre,Apellidos,Teléfono,Email,Fecha Nacimiento,Dirección,Notas,Fecha Alta\n';
       for (const r of rows) {
         csv += `${r.id},${esc(r.nombre)},${esc(r.apellidos)},${esc(r.telefono)},${esc(r.email)},${esc(r.fecha_nacimiento)},${esc(r.direccion)},${esc(r.notas)},${esc(r.created_at)}\n`;
       }

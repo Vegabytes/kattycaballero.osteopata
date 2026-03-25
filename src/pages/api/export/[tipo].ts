@@ -37,7 +37,7 @@ export const GET: APIRoute = async (context) => {
     let filename = '';
 
     if (tipo === 'pacientes') {
-      const headers = ['Nombre', 'Apellidos', 'Telefono', 'Email', 'Fecha Nacimiento', 'Direccion', 'Fecha Registro'];
+      const headers = ['Nombre', 'Apellidos', 'Teléfono', 'Email', 'Fecha Nacimiento', 'Dirección', 'Fecha Registro'];
       csvContent += toCsvRow(headers) + '\r\n';
 
       const { results } = await db

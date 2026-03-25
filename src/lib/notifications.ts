@@ -111,7 +111,7 @@ async function sendEmailNotification(settings: Record<string, string>, booking: 
     </div>
   </div>
   <div style="padding:12px 24px;background:#f9f9f9;text-align:center;font-size:11px;color:#999;">
-    Katy Caballero - Osteopata y Masajista - Alpedrete
+    Katy Caballero - Osteópata y Masajista - Alpedrete
   </div>
 </div>
 </body></html>`;
@@ -219,17 +219,17 @@ async function sendPatientConfirmation(settings: Record<string, string>, booking
         <tr><td style="padding:4px 0;color:#888;width:90px;">Servicio</td><td style="padding:4px 0;font-weight:600;">${booking.servicio || 'No especificado'}</td></tr>
         <tr><td style="padding:4px 0;color:#888;">Fecha</td><td style="padding:4px 0;font-weight:600;">${fechaDisplay}</td></tr>
         <tr><td style="padding:4px 0;color:#888;">Hora</td><td style="padding:4px 0;font-weight:600;">${booking.hora}</td></tr>
-        <tr><td style="padding:4px 0;color:#888;">Duracion</td><td style="padding:4px 0;">${booking.duracion} min</td></tr>
+        <tr><td style="padding:4px 0;color:#888;">Duración</td><td style="padding:4px 0;">${booking.duracion} min</td></tr>
       </table>
     </div>
     <div style="margin-top:20px;padding:14px;background:#f0f5f0;border-radius:10px;">
-      <p style="margin:0;font-size:13px;color:#555;"><strong>Direccion:</strong> C/ Rio Guadarrama 2, 28430 Alpedrete (Madrid)</p>
+      <p style="margin:0;font-size:13px;color:#555;"><strong>Dirección:</strong> C/ Río Guadarrama 2, 28430 Alpedrete (Madrid)</p>
       <p style="margin:6px 0 0;font-size:13px;color:#555;"><strong>Contacto:</strong> <a href="https://wa.me/34643961065" style="color:#25D366;">643 961 065 (WhatsApp)</a></p>
     </div>
-    <p style="margin:20px 0 0;font-size:13px;color:#888;text-align:center;">Si necesitas cancelar o cambiar la cita, avisame con al menos 24h de antelacion.</p>
+    <p style="margin:20px 0 0;font-size:13px;color:#888;text-align:center;">Si necesitas cancelar o cambiar la cita, avísame con al menos 24h de antelación.</p>
   </div>
   <div style="padding:12px 24px;background:#f9f9f9;text-align:center;font-size:11px;color:#999;">
-    Katy Caballero - Osteopata y Masajista - Alpedrete
+    Katy Caballero - Osteópata y Masajista - Alpedrete
   </div>
 </div>
 </body></html>`;
