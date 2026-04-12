@@ -169,6 +169,151 @@ try {
 const origenColors = ['#5a7c59', '#c4a35a', '#2196f3', '#ff9800', '#7a9c79', '#f44336', '#9c27b0', '#00bcd4', '#795548', '#607d8b'];
 const totalOrigenes = origenes.reduce((sum, o) => sum + o.total, 0);
 
+// --- Heatmap: horas punta por día y hora ---
+interface HeatmapData { dia: number; hora: number; total: number; }
+let heatmapData: HeatmapData[] = [];
+
+try {
+  const rows = await db.prepare(`
+    SELECT CAST(strftime('%w', fecha) AS INTEGER) as dia,
+           CAST(substr(hora, 1, 2) AS INTEGER) as hora,
+           COUNT(*) as total
+    FROM citas
+    WHERE estado IN ('completada', 'confirmada', 'pendiente') AND hora IS NOT NULL
+    GROUP BY dia, hora
+    ORDER BY dia, hora
+  `).all();
+  heatmapData = (rows.results || []) as HeatmapData[];
+} catch (e: any) {
+  console.error('Stats: error heatmap', e);
+}
+
+// Build heatmap grid: rows = hours (8-21), cols = days (1-6, Mon-Sat)
+const heatmapHoras = Array.from({ length: 14 }, (_, i) => i + 8); // 8:00 - 21:00
+const heatmapDias = [1, 2, 3, 4, 5, 6]; // Mon-Sat (strftime %w: 0=Sun, 1=Mon...)
+const heatmapDiasLabels = ['L', 'M', 'X', 'J', 'V', 'S'];
+const heatmapMap: Record<string, number> = {};
+let heatmapMax = 1;
+for (const row of heatmapData) {
+  const key = `${row.dia}-${row.hora}`;
+  heatmapMap[key] = row.total;
+  if (row.total > heatmapMax) heatmapMax = row.total;
+}
+
+// --- Retención de pacientes ---
+let pacientesUnaVisita = 0;
+let pacientesRepiten = 0;
+
+try {
+  const r = await db.prepare(`
+    SELECT
+      SUM(CASE WHEN cnt = 1 THEN 1 ELSE 0 END) as una_visita,
+      SUM(CASE WHEN cnt > 1 THEN 1 ELSE 0 END) as repiten
+    FROM (
+      SELECT paciente_id, COUNT(*) as cnt
+      FROM citas WHERE estado = 'completada'
+      GROUP BY paciente_id
+    )
+  `).first();
+  pacientesUnaVisita = (r as any)?.una_visita || 0;
+  pacientesRepiten = (r as any)?.repiten || 0;
+} catch (e: any) {
+  console.error('Stats: error retención', e);
+}
+
+const totalConVisita = pacientesUnaVisita + pacientesRepiten;
+const tasaRetencion = totalConVisita > 0 ? Math.round((pacientesRepiten / totalConVisita) * 100) : 0;
+
+// Distribución por número de visitas
+interface VisitasDist { visitas: string; total: number; }
+let distribucionVisitas: VisitasDist[] = [];
+
+try {
+  const rows = await db.prepare(`
+    SELECT
+      CASE
+        WHEN cnt = 1 THEN '1 visita'
+        WHEN cnt BETWEEN 2 AND 3 THEN '2-3 visitas'
+        WHEN cnt BETWEEN 4 AND 6 THEN '4-6 visitas'
+        WHEN cnt BETWEEN 7 AND 12 THEN '7-12 visitas'
+        ELSE '13+ visitas'
+      END as visitas,
+      COUNT(*) as total
+    FROM (
+      SELECT paciente_id, COUNT(*) as cnt
+      FROM citas WHERE estado = 'completada'
+      GROUP BY paciente_id
+    )
+    GROUP BY visitas
+    ORDER BY MIN(cnt)
+  `).all();
+  distribucionVisitas = (rows.results || []) as VisitasDist[];
+} catch (e: any) {
+  console.error('Stats: error distribución visitas', e);
+}
+
+const maxDistVisitas = distribucionVisitas.length > 0 ? Math.max(...distribucionVisitas.map(d => d.total)) : 1;
+
+// --- Top pacientes por valor (ingresos citas + bonos) ---
+interface TopPaciente { nombre: string; apellidos: string; id: number; ingresos_citas: number; ingresos_bonos: number; total: number; visitas: number; }
+let topPacientes: TopPaciente[] = [];
+
+try {
+  const rows = await db.prepare(`
+    SELECT
+      p.nombre, p.apellidos, p.id,
+      COALESCE(c.ingresos, 0) as ingresos_citas,
+      COALESCE(b.ingresos, 0) as ingresos_bonos,
+      COALESCE(c.ingresos, 0) + COALESCE(b.ingresos, 0) as total,
+      COALESCE(c.visitas, 0) as visitas
+    FROM pacientes p
+    LEFT JOIN (
+      SELECT paciente_id, SUM(precio) as ingresos, COUNT(*) as visitas
+      FROM citas WHERE estado = 'completada' AND precio > 0
+      GROUP BY paciente_id
+    ) c ON c.paciente_id = p.id
+    LEFT JOIN (
+      SELECT paciente_id, SUM(precio) as ingresos
+      FROM bonos WHERE precio > 0
+      GROUP BY paciente_id
+    ) b ON b.paciente_id = p.id
+    WHERE COALESCE(c.ingresos, 0) + COALESCE(b.ingresos, 0) > 0
+    ORDER BY total DESC
+    LIMIT 10
+  `).all();
+  topPacientes = (rows.results || []) as TopPaciente[];
+} catch (e: any) {
+  console.error('Stats: error topPacientes', e);
+}
+
+// --- Motivos de cancelación ---
+interface MotivoCancelacion { motivo_cancelacion: string; total: number; }
+let motivosCancelacion: MotivoCancelacion[] = [];
+
+try {
+  const rows = await db.prepare(`
+    SELECT COALESCE(motivo_cancelacion, 'Sin motivo') as motivo_cancelacion, COUNT(*) as total
+    FROM citas
+    WHERE estado IN ('cancelada', 'no_show') AND motivo_cancelacion IS NOT NULL AND motivo_cancelacion != ''
+    GROUP BY motivo_cancelacion
+    ORDER BY total DESC
+  `).all();
+  motivosCancelacion = (rows.results || []) as MotivoCancelacion[];
+} catch { /* column may not exist yet */ }
+
+let totalCancelaciones = 0;
+let totalNoShow = 0;
+try {
+  const r = await db.prepare(`
+    SELECT
+      SUM(CASE WHEN estado = 'cancelada' THEN 1 ELSE 0 END) as canceladas,
+      SUM(CASE WHEN estado = 'no_show' THEN 1 ELSE 0 END) as no_show
+    FROM citas
+  `).first();
+  totalCancelaciones = (r as any)?.canceladas || 0;
+  totalNoShow = (r as any)?.no_show || 0;
+} catch {}
+
 // Compute donut arcs
 function describeArc(cx: number, cy: number, r: number, startAngle: number, endAngle: number): string {
   const startRad = (startAngle - 90) * Math.PI / 180;
@@ -349,6 +494,167 @@ if (totalOrigenes > 0) {
             </div>
           ))}
         </div>
+      )}
+    </div>
+
+    <!-- Heatmap: horas punta -->
+    <div class="card chart-card chart-card-wide">
+      <h3 class="chart-title">Horas punta por día</h3>
+      {heatmapData.length === 0 ? (
+        <p class="chart-empty">Sin datos suficientes</p>
+      ) : (
+        <div class="heatmap-container">
+          <div class="heatmap-grid">
+            <div class="heatmap-corner"></div>
+            {heatmapDiasLabels.map((d) => (
+              <div class="heatmap-day-label">{d}</div>
+            ))}
+            {heatmapHoras.map((hora) => (
+              <>
+                <div class="heatmap-hour-label">{hora}:00</div>
+                {heatmapDias.map((dia) => {
+                  const val = heatmapMap[`${dia}-${hora}`] || 0;
+                  const intensity = val > 0 ? Math.max(0.15, val / heatmapMax) : 0;
+                  return (
+                    <div
+                      class={`heatmap-cell ${val === 0 ? 'heatmap-empty' : ''}`}
+                      style={val > 0 ? `background: rgba(90, 124, 89, ${intensity});` : ''}
+                      title={`${heatmapDiasLabels[heatmapDias.indexOf(dia)]} ${hora}:00 — ${val} cita${val !== 1 ? 's' : ''}`}
+                    >
+                      {val > 0 ? val : ''}
+                    </div>
+                  );
+                })}
+              </>
+            ))}
+          </div>
+          <div class="heatmap-legend">
+            <span>Menos</span>
+            <div class="heatmap-legend-bar"></div>
+            <span>Más</span>
+          </div>
+        </div>
+      )}
+    </div>
+
+    <!-- Retención de pacientes -->
+    <div class="card chart-card">
+      <h3 class="chart-title">Retención de pacientes</h3>
+      {totalConVisita === 0 ? (
+        <p class="chart-empty">Sin datos de visitas completadas</p>
+      ) : (
+        <div class="retencion-container">
+          <div class="retencion-donut">
+            <svg viewBox="0 0 200 200" width="180" height="180" xmlns="http://www.w3.org/2000/svg">
+              {tasaRetencion > 0 && (
+                <path
+                  d={describeArc(100, 100, 70, 0, Math.min(tasaRetencion * 3.6, 359.99))}
+                  fill="none"
+                  stroke="#4caf50"
+                  stroke-width="28"
+                  stroke-linecap="butt"
+                >
+                  <title>Repiten: {pacientesRepiten} ({tasaRetencion}%)</title>
+                </path>
+              )}
+              {tasaRetencion < 100 && (
+                <path
+                  d={describeArc(100, 100, 70, Math.min(tasaRetencion * 3.6, 359.99), 359.99)}
+                  fill="none"
+                  stroke="#ff9800"
+                  stroke-width="28"
+                  stroke-linecap="butt"
+                >
+                  <title>Una sola visita: {pacientesUnaVisita} ({100 - tasaRetencion}%)</title>
+                </path>
+              )}
+              <text x="100" y="92" text-anchor="middle" fill="#333" font-size="28" font-weight="700">{tasaRetencion}%</text>
+              <text x="100" y="114" text-anchor="middle" fill="#888" font-size="11">retención</text>
+            </svg>
+          </div>
+          <div class="retencion-stats">
+            <div class="retencion-row">
+              <span class="origen-legend-dot" style="background:#4caf50;"></span>
+              <span>Repiten</span>
+              <strong>{pacientesRepiten}</strong>
+            </div>
+            <div class="retencion-row">
+              <span class="origen-legend-dot" style="background:#ff9800;"></span>
+              <span>Una visita</span>
+              <strong>{pacientesUnaVisita}</strong>
+            </div>
+          </div>
+          {distribucionVisitas.length > 0 && (
+            <div class="dist-visitas" style="width:100%;margin-top:16px;">
+              <h4 style="font-size:0.8rem;color:var(--admin-text-light);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Distribución por frecuencia</h4>
+              {distribucionVisitas.map((d, i) => (
+                <div class="h-bar-row" style="gap:8px;">
+                  <span class="h-bar-label" style="width:90px;font-size:0.8rem;">{d.visitas}</span>
+                  <div class="h-bar-track" style="height:22px;">
+                    <div class="h-bar-fill" style={`width: ${Math.max((d.total / maxDistVisitas) * 100, 4)}%; background: ${barColors[i % barColors.length]};`}></div>
+                  </div>
+                  <span class="h-bar-value" style="width:30px;font-size:0.8rem;">{d.total}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+
+    <!-- Top pacientes por valor -->
+    <div class="card chart-card">
+      <h3 class="chart-title">Top pacientes por ingresos</h3>
+      {topPacientes.length === 0 ? (
+        <p class="chart-empty">Sin datos de ingresos</p>
+      ) : (
+        <div class="top-pacientes">
+          {topPacientes.map((p, i) => (
+            <a href={`/admin/pacientes/${p.id}`} class="top-paciente-row" title={`Citas: ${p.ingresos_citas.toFixed(0)}€ | Bonos: ${p.ingresos_bonos.toFixed(0)}€`}>
+              <span class="top-paciente-rank">#{i + 1}</span>
+              <span class="top-paciente-name">{p.nombre} {p.apellidos}</span>
+              <span class="top-paciente-visits">{p.visitas} vis.</span>
+              <div class="top-paciente-bar-track">
+                <div class="top-paciente-bar-fill" style={`width: ${Math.max((p.total / (topPacientes[0]?.total || 1)) * 100, 4)}%;`}></div>
+              </div>
+              <span class="top-paciente-value">{p.total.toFixed(0)}&euro;</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <!-- Motivos de cancelación -->
+    <div class="card chart-card">
+      <h3 class="chart-title">Cancelaciones y no-shows</h3>
+      <div class="cancel-summary">
+        <div class="cancel-stat">
+          <span class="cancel-num" style="color:#f44336;">{totalCancelaciones}</span>
+          <span class="cancel-label">Canceladas</span>
+        </div>
+        <div class="cancel-stat">
+          <span class="cancel-num" style="color:#ff9800;">{totalNoShow}</span>
+          <span class="cancel-label">No acudió</span>
+        </div>
+        <div class="cancel-stat">
+          <span class="cancel-num" style="color:var(--admin-text);">{totalCitas > 0 ? Math.round(((totalCancelaciones + totalNoShow) / totalCitas) * 100) : 0}%</span>
+          <span class="cancel-label">Tasa total</span>
+        </div>
+      </div>
+      {motivosCancelacion.length > 0 ? (
+        <div class="h-bar-chart" style="margin-top:16px;">
+          {motivosCancelacion.map((m, i) => (
+            <div class="h-bar-row">
+              <span class="h-bar-label" style="width:140px;font-size:0.8rem;">{m.motivo_cancelacion}</span>
+              <div class="h-bar-track" style="height:22px;">
+                <div class="h-bar-fill" style={`width: ${Math.max((m.total / (motivosCancelacion[0]?.total || 1)) * 100, 4)}%; background: ${i === 0 ? '#f44336' : '#ff9800'};`}></div>
+              </div>
+              <span class="h-bar-value" style="font-size:0.8rem;">{m.total}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p class="chart-empty" style="padding:16px 0;">Aún no hay motivos registrados. Aparecerán aquí cuando se registren cancelaciones con motivo.</p>
       )}
     </div>
 
@@ -637,6 +943,206 @@ if (totalOrigenes > 0) {
     min-width: 40px;
   }
 
+  /* Heatmap */
+  .heatmap-container {
+    overflow-x: auto;
+  }
+
+  .heatmap-grid {
+    display: grid;
+    grid-template-columns: 50px repeat(6, 1fr);
+    gap: 3px;
+    min-width: 350px;
+  }
+
+  .heatmap-corner {
+    /* empty top-left */
+  }
+
+  .heatmap-day-label {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    padding: 4px 0;
+  }
+
+  .heatmap-hour-label {
+    text-align: right;
+    font-size: 0.7rem;
+    color: var(--admin-text-light);
+    padding: 4px 6px 4px 0;
+    line-height: 28px;
+  }
+
+  .heatmap-cell {
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: default;
+    transition: transform 0.1s;
+  }
+
+  .heatmap-cell:hover {
+    transform: scale(1.1);
+    z-index: 1;
+  }
+
+  .heatmap-empty {
+    background: #f0f0f0;
+  }
+
+  .heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    justify-content: flex-end;
+    font-size: 0.7rem;
+    color: var(--admin-text-light);
+  }
+
+  .heatmap-legend-bar {
+    width: 100px;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right, rgba(90,124,89,0.15), rgba(90,124,89,1));
+  }
+
+  /* Retención */
+  .retencion-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .retencion-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .retencion-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--admin-text);
+  }
+
+  .retencion-row strong {
+    margin-left: auto;
+    min-width: 30px;
+    text-align: right;
+  }
+
+  /* Top pacientes */
+  .top-pacientes {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .top-paciente-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--admin-text);
+    transition: background 0.15s;
+  }
+
+  .top-paciente-row:hover {
+    background: #f5f5f5;
+  }
+
+  .top-paciente-rank {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--admin-text-light);
+    width: 24px;
+    flex-shrink: 0;
+  }
+
+  .top-paciente-name {
+    font-size: 0.82rem;
+    font-weight: 500;
+    width: 120px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .top-paciente-visits {
+    font-size: 0.7rem;
+    color: var(--admin-text-light);
+    width: 40px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .top-paciente-bar-track {
+    flex: 1;
+    height: 18px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .top-paciente-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #5a7c59, #c4a35a);
+    border-radius: 4px;
+    min-width: 4px;
+  }
+
+  .top-paciente-value {
+    font-size: 0.82rem;
+    font-weight: 700;
+    width: 50px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Cancelaciones */
+  .cancel-summary {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .cancel-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .cancel-num {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .cancel-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--admin-text-light);
+    font-weight: 600;
+  }
+
   @media (max-width: 768px) {
     .charts-grid {
       grid-template-columns: 1fr;
@@ -652,6 +1158,14 @@ if (totalOrigenes > 0) {
     }
 
     .origen-chart-container {
+      flex-direction: column;
+    }
+
+    .top-paciente-name {
+      width: 80px;
+    }
+
+    .retencion-container {
       flex-direction: column;
     }
   }

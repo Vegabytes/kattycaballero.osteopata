@@ -124,3 +124,6 @@ CREATE TABLE IF NOT EXISTS notas (
 -- ALTER TABLE pacientes ADD COLUMN alergias TEXT;
 -- ALTER TABLE pacientes ADD COLUMN profesion TEXT;
 -- ALTER TABLE pacientes ADD COLUMN origen TEXT;
+
+-- Motivo de cancelación/no-show (ejecutar manualmente en D1)
+-- ALTER TABLE citas ADD COLUMN motivo_cancelacion TEXT;

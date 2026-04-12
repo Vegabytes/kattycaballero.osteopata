@@ -36,16 +36,27 @@ if (Astro.request.method === 'POST') {
     const citaOriginal = await getCita(Astro, id);
     const fechaCambio = citaOriginal && (citaOriginal.fecha !== fecha || citaOriginal.hora !== hora);
 
+    const estado = form.get('estado') as string || 'pendiente';
     await actualizarCita(Astro, id, {
       paciente_id,
       fecha,
       hora,
       duracion: Number(form.get('duracion')) || 60,
       servicio: form.get('servicio') as string,
-      estado: form.get('estado') as string || 'pendiente',
+      estado,
       notas: form.get('notas') as string,
       precio: form.get('precio') ? Number(form.get('precio')) : null,
     });
+
+    // Save motivo_cancelacion if cancelled/no-show
+    if (estado === 'cancelada' || estado === 'no_show') {
+      const motivo = form.get('motivo_cancelacion') as string || '';
+      try {
+        const { getDB } = await import('../../../lib/db');
+        const dbLocal = getDB(Astro);
+        await dbLocal.prepare('UPDATE citas SET motivo_cancelacion = ? WHERE id = ?').bind(motivo || null, id).run();
+      } catch { /* column may not exist */ }
+    }
 
     if (fechaCambio) {
       mensaje = 'Cita reprogramada correctamente';
@@ -198,7 +209,21 @@ const reprogramWhatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}
           <option value="confirmada" selected={cita.estado === 'confirmada'}>Confirmada</option>
           <option value="completada" selected={cita.estado === 'completada'}>Completada</option>
           <option value="cancelada" selected={cita.estado === 'cancelada'}>Cancelada</option>
-          <option value="no_show" selected={cita.estado === 'no_show'}>No acudio</option>
+          <option value="no_show" selected={cita.estado === 'no_show'}>No acudió</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="motivo-cancel-group" style={cita.estado === 'cancelada' || cita.estado === 'no_show' ? '' : 'display:none;'}>
+        <label for="motivo_cancelacion">Motivo de cancelación</label>
+        <select id="motivo_cancelacion" name="motivo_cancelacion">
+          <option value="">Sin motivo</option>
+          <option value="Enfermedad" selected={(cita as any).motivo_cancelacion === 'Enfermedad'}>Enfermedad</option>
+          <option value="Trabajo" selected={(cita as any).motivo_cancelacion === 'Trabajo'}>Trabajo</option>
+          <option value="Olvido" selected={(cita as any).motivo_cancelacion === 'Olvido'}>Olvido</option>
+          <option value="Problema personal" selected={(cita as any).motivo_cancelacion === 'Problema personal'}>Problema personal</option>
+          <option value="Reprogramada" selected={(cita as any).motivo_cancelacion === 'Reprogramada'}>Reprogramada</option>
+          <option value="Sin avisar" selected={(cita as any).motivo_cancelacion === 'Sin avisar'}>Sin avisar</option>
+          <option value="Otro" selected={(cita as any).motivo_cancelacion === 'Otro'}>Otro</option>
         </select>
       </div>
 
@@ -245,12 +270,47 @@ const reprogramWhatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}
           const nextStr = nextDate.toISOString().split('T')[0];
           const label = dias < 7 ? `${dias} días` : dias === 7 ? '1 semana' : dias === 14 ? '2 semanas' : dias === 21 ? '3 semanas' : '1 mes';
           return (
-            <a href={`/admin/citas/nueva?paciente=${cita.paciente_id}&fecha=${nextStr}`} class="btn btn-primary btn-sm">
+            <a href={`/admin/citas/nueva?paciente=${cita.paciente_id}&fecha=${nextStr}&hora=${cita.hora || ''}&servicio=${encodeURIComponent(cita.servicio || '')}&duracion=${cita.duracion || 60}&precio=${cita.precio || ''}`} class="btn btn-primary btn-sm">
               + En {label} ({nextDate.getDate()}/{nextDate.getMonth() + 1})
             </a>
           );
         })}
       </div>
+
+      <!-- Citas recurrentes -->
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid #c8e6c9;">
+        <h4 style="font-size:0.85rem;font-weight:600;color:#2e7d32;margin-bottom:10px;">Programar citas recurrentes</h4>
+        <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;" id="recurrente-form"
+          data-paciente={cita.paciente_id}
+          data-servicio={cita.servicio || ''}
+          data-duracion={cita.duracion || 60}
+          data-precio={cita.precio || ''}
+          data-hora={cita.hora || ''}
+          data-fecha={cita.fecha}>
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <label style="font-size:0.7rem;color:#555;font-weight:600;">Frecuencia</label>
+            <select id="rec-frecuencia" style="padding:6px 10px;border:1px solid #ccc;border-radius:6px;font-size:0.85rem;">
+              <option value="7">Cada semana</option>
+              <option value="14">Cada 2 semanas</option>
+              <option value="21">Cada 3 semanas</option>
+              <option value="30">Cada mes</option>
+            </select>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <label style="font-size:0.7rem;color:#555;font-weight:600;">Cantidad</label>
+            <select id="rec-cantidad" style="padding:6px 10px;border:1px solid #ccc;border-radius:6px;font-size:0.85rem;">
+              <option value="2">2 citas</option>
+              <option value="4" selected>4 citas</option>
+              <option value="6">6 citas</option>
+              <option value="8">8 citas</option>
+              <option value="12">12 citas</option>
+            </select>
+          </div>
+          <button type="button" id="btn-recurrente" class="btn btn-primary btn-sm">Crear citas</button>
+        </div>
+        <div id="rec-resultado" style="margin-top:8px;font-size:0.85rem;display:none;"></div>
+      </div>
+
       <div style="margin-top:12px;">
         <a href={`/admin/tratamientos/nuevo?paciente=${cita.paciente_id}&cita=${id}`} class="btn btn-secondary btn-sm">Registrar tratamiento de esta cita</a>
       </div>
@@ -276,6 +336,15 @@ const reprogramWhatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}
     btn.textContent = 'No acudio';
   });
 
+  // Show/hide motivo cancelación based on estado
+  document.getElementById('estado')?.addEventListener('change', (e) => {
+    const val = (e.target as HTMLSelectElement).value;
+    const grupo = document.getElementById('motivo-cancel-group');
+    if (grupo) {
+      grupo.style.display = (val === 'cancelada' || val === 'no_show') ? '' : 'none';
+    }
+  });
+
   document.getElementById('servicio')?.addEventListener('change', (e) => {
     const select = e.target as HTMLSelectElement;
     const option = select.selectedOptions[0];
@@ -288,6 +357,52 @@ const reprogramWhatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}
       }
       precioInput.value = option.dataset.precio || '';
     }
+  });
+
+  // Citas recurrentes
+  document.getElementById('btn-recurrente')?.addEventListener('click', async () => {
+    const frecuencia = Number((document.getElementById('rec-frecuencia') as HTMLSelectElement).value);
+    const cantidad = Number((document.getElementById('rec-cantidad') as HTMLSelectElement).value);
+    const btn = document.getElementById('btn-recurrente') as HTMLButtonElement;
+    const resultado = document.getElementById('rec-resultado')!;
+
+    const freqLabel = frecuencia === 7 ? 'semana' : frecuencia === 14 ? '2 semanas' : frecuencia === 21 ? '3 semanas' : 'mes';
+    if (!confirm(`¿Crear ${cantidad} citas cada ${freqLabel}?`)) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Creando...';
+    resultado.style.display = 'none';
+
+    try {
+      const form = document.getElementById('recurrente-form')!;
+      const res = await fetch('/api/citas-recurrentes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paciente_id: Number(form.dataset.paciente),
+          servicio: form.dataset.servicio || '',
+          duracion: Number(form.dataset.duracion) || 60,
+          precio: form.dataset.precio ? Number(form.dataset.precio) : null,
+          hora: form.dataset.hora || '',
+          fecha_inicio: form.dataset.fecha,
+          frecuencia_dias: frecuencia,
+          cantidad: cantidad,
+        }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        resultado.innerHTML = `<span style="color:#2e7d32;">Creadas ${data.creadas.length} citas: ${data.creadas.join(', ')}</span>`;
+        resultado.style.display = 'block';
+      } else {
+        resultado.innerHTML = `<span style="color:#c62828;">Error: ${data.error}</span>`;
+        resultado.style.display = 'block';
+      }
+    } catch (e) {
+      resultado.innerHTML = '<span style="color:#c62828;">Error de conexión</span>';
+      resultado.style.display = 'block';
+    }
+    btn.disabled = false;
+    btn.textContent = 'Crear citas';
   });
 </script>
 
