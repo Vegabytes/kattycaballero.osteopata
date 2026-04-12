@@ -140,8 +140,8 @@ const tools = [
           Déjanos tu reseña en Google
         </a>
         <a href="https://pueblus.com/empresas/katy-caballero-osteopatia-y-masajes-alpedrete" target="_blank" rel="noopener noreferrer" class="pueblus-badge">
-          <img src="/images/pueblus-icon.png" alt="Pueblus" width="24" height="24" loading="lazy" />
-          Verificado por Pueblus
+          <svg viewBox="0 0 24 24" fill="none" width="16" height="16" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="10" stroke="white" stroke-width="1.5"/></svg>
+          Verificado por <strong>Pueblus</strong>
         </a>
       </div>
     </div>
@@ -324,10 +324,14 @@ const tools = [
     transform: translateY(-2px);
   }
 
-  .pueblus-badge img {
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
+  .pueblus-badge svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .pueblus-badge strong {
+    font-weight: 700;
+    letter-spacing: 0.5px;
   }
 
   .footer-bottom {
