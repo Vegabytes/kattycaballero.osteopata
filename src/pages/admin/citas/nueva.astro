@@ -87,6 +87,12 @@ const servicios = [
         </div>
       </div>
 
+      <!-- Bonos activos del paciente -->
+      <div id="paciente-bonos" style="display:none;margin-bottom:16px;padding:12px 16px;background:#f0f7f0;border-radius:8px;border:1px solid #c8e6c9;">
+        <strong style="font-size:0.85rem;color:#2e7d32;">Bonos activos:</strong>
+        <div id="bonos-list" style="margin-top:6px;"></div>
+      </div>
+
       <div class="form-row">
         <div class="form-group">
           <label for="fecha">Fecha *</label>
@@ -184,6 +190,38 @@ const servicios = [
       precioInput.value = option.dataset.precio || '';
     }
   });
+
+  // Show patient active bonos
+  document.getElementById('paciente_id')?.addEventListener('change', async (e) => {
+    const pacienteId = (e.target as HTMLSelectElement).value;
+    const bonosDiv = document.getElementById('paciente-bonos')!;
+    const bonosList = document.getElementById('bonos-list')!;
+    if (!pacienteId) { bonosDiv.style.display = 'none'; return; }
+    try {
+      const res = await fetch(`/api/paciente-bonos?id=${pacienteId}`);
+      const bonos = await res.json();
+      if (Array.isArray(bonos) && bonos.length > 0) {
+        bonosList.innerHTML = bonos.map((b: any) => {
+          const restantes = b.sesiones_total - b.sesiones_usadas;
+          const pct = Math.round((b.sesiones_usadas / b.sesiones_total) * 100);
+          const color = pct >= 80 ? '#ff9800' : '#4caf50';
+          return `<div style="display:flex;align-items:center;gap:10px;padding:4px 0;font-size:0.85rem;">
+            <span style="font-weight:600;">${b.nombre}</span>
+            <span style="color:#666;">${b.sesiones_usadas}/${b.sesiones_total} usadas</span>
+            <span style="background:${color};color:#fff;padding:1px 8px;border-radius:10px;font-size:0.75rem;font-weight:600;">${restantes} restante${restantes !== 1 ? 's' : ''}</span>
+            <a href="/admin/bonos/${b.id}" style="font-size:0.75rem;color:var(--admin-primary);">Ver bono</a>
+          </div>`;
+        }).join('');
+        bonosDiv.style.display = 'block';
+      } else {
+        bonosDiv.style.display = 'none';
+      }
+    } catch { bonosDiv.style.display = 'none'; }
+  });
+  // Trigger on load if patient pre-selected
+  if ((document.getElementById('paciente_id') as HTMLSelectElement)?.value) {
+    document.getElementById('paciente_id')!.dispatchEvent(new Event('change'));
+  }
 
   // Double-booking check
   let citasDia: any[] = [];

@@ -1,0 +1,651 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Masaje y Osteopatía cerca de Collado Villalba | Katy Caballero - Alpedrete (7 min)";
+const pageDescription = "Masajista y osteópata a 7 minutos de Collado Villalba. Masaje deportivo, corporal, tailandés y osteopatía en Alpedrete. Desde 20€. Cita: 643 961 065.";
+const pageKeywords = "masaje collado villalba, masajista collado villalba, masaje deportivo collado villalba, masaje relajante collado villalba, osteopatia collado villalba";
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "description": "Centro de osteopatía y masajes en Alpedrete, a 7 minutos de Collado Villalba. Sierra Noroeste de Madrid.",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "telephone": "+34643961065",
+  "email": "katycaballero.osteopata@gmail.com",
+  "url": "https://katycaballeroosteopata.com/masaje-collado-villalba",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Río Guadarrama 2",
+    "addressLocality": "Alpedrete",
+    "addressRegion": "Madrid",
+    "postalCode": "28430",
+    "addressCountry": "ES"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "40.6631",
+    "longitude": "-4.0270"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Collado Villalba"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "14:00"
+    }
+  ],
+  "priceRange": "€€"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuánto se tarda en llegar desde Collado Villalba a la consulta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La consulta está en Alpedrete, a solo 7 minutos en coche desde Collado Villalba por la M-601. Hay parking gratuito en la puerta."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué tipos de masaje ofreces cerca de Collado Villalba?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ofrezco masaje deportivo (20€/30min), masaje corporal con aceite (40€/60min), masaje tailandés (45€/60min), pindas herbales (70€/90min) y masaje para embarazadas (40€/60min). También osteopatía (40€/55min)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuál es el masaje más barato cerca de Collado Villalba?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El masaje deportivo es la opción más económica: 20€ por 30 minutos de trabajo focalizado en las zonas de mayor tensión. Perfecto para deportistas y mantenimiento semanal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo reservo cita desde Collado Villalba?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Puedes reservar por WhatsApp al 643 961 065, llamando por teléfono, o a través de la reserva online en la web. Te confirmo disponibilidad en minutos."
+      }
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Masaje y Osteopatía cerca de Collado Villalba" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="town-hero">
+    <div class="container">
+      <span class="section-tag">Collado Villalba</span>
+      <h1>Masaje y Osteopatía cerca de Collado Villalba</h1>
+      <p class="town-hero-subtitle">Consulta de masajes y osteopatía en Alpedrete, a solo <strong>7 minutos en coche</strong> de Collado Villalba</p>
+      <div class="town-hero-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Collado%20Villalba%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Reservar por WhatsApp</a>
+        <a href="/reservar" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-intro">
+    <div class="container">
+      <div class="town-intro-content">
+        <h2>Tu masajista y osteópata de confianza cerca de Collado Villalba</h2>
+        <p>Collado Villalba es el municipio más grande de la Sierra Noroeste de Madrid, con más de 60.000 habitantes. Una ciudad con una intensa vida deportiva y familiar, donde muchos vecinos practican running, pádel, ciclismo y senderismo por las rutas cercanas. Sin embargo, encontrar un buen servicio de masajes y osteopatía con trato personalizado puede ser complicado en una localidad tan grande, donde abundan las franquicias y centros con alta rotación de profesionales.</p>
+        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia, y mi consulta en <strong>Alpedrete</strong> está a tan solo 7 minutos de Collado Villalba por la M-601. Muchos de mis pacientes habituales vienen desde Villalba porque valoran la atención individualizada, el seguimiento de su evolución y unos precios justos sin las comisiones de grandes centros. Aquí cada sesión se adapta a tus necesidades reales, ya sea una contractura por el deporte, estrés acumulado o un problema postural crónico.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-services">
+    <div class="container">
+      <h2>Servicios disponibles para pacientes de Collado Villalba</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Osteopatía</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Tratamiento integral: estructural, visceral y sacrocraneal. Para dolor de espalda, cervicales, migrañas, ciática y más.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Deportivo</h3>
+          <p class="service-meta">20€ · 30 min</p>
+          <p>Recuperación muscular, prevención de lesiones y mejora del rendimiento. Ideal para runners y ciclistas de la Sierra.</p>
+          <a href="/servicios/masaje-deportivo-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Corporal con Aceite</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Relajación profunda con aceites esenciales. Alivia tensiones, nutre la piel y mejora tu descanso.</p>
+          <a href="/servicios/masaje-corporal-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Tailandés</h3>
+          <p class="service-meta">45€ · 60 min</p>
+          <p>Técnica milenaria con estiramientos asistidos y presiones rítmicas. Mejora la flexibilidad y la energía vital.</p>
+          <a href="/servicios/masaje-tailandes-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Pindas Herbales</h3>
+          <p class="service-meta">70€ · 90 min</p>
+          <p>Saquitos de hierbas medicinales calientes con propiedades antiinflamatorias y relajantes. Experiencia premium.</p>
+          <a href="/servicios/masaje-pindas-herbales-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje para Embarazadas</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Técnicas suaves adaptadas a cada trimestre desde el 4º mes. Alivio lumbar, piernas ligeras y bienestar.</p>
+          <a href="/servicios/masaje-embarazadas-alpedrete" class="service-link">Más información</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-reasons">
+    <div class="container">
+      <h2>¿Por qué elegir mi consulta desde Collado Villalba?</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>A solo 7 minutos de Villalba</h3>
+          <p>Alpedrete está al lado de Collado Villalba, conectado por la M-601. Un desplazamiento cortísimo con aparcamiento gratuito en la puerta de la consulta.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Más de 12 años de experiencia</h3>
+          <p>Formación en osteopatía, masaje tailandés y múltiples técnicas manuales. Experiencia demostrada con cientos de pacientes satisfechos de toda la Sierra.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Trato individual, no franquicia</h3>
+          <p>Cada sesión es contigo y conmigo. Conozco tu historial, tu evolución y tus objetivos. Sin rotación de terapeutas ni protocolos genéricos.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Precios desde 20€</h3>
+          <p>Masaje deportivo desde 20€, osteopatía a 40€. Precios transparentes y justos sin comisiones de intermediarios ni extras ocultos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-directions">
+    <div class="container">
+      <div class="directions-grid">
+        <div class="directions-text">
+          <h2>Cómo llegar desde Collado Villalba</h2>
+          <div class="directions-info">
+            <div class="direction-detail">
+              <strong>En coche (7 min)</strong>
+              <p>Desde Collado Villalba, toma la M-601 dirección Alpedrete. En apenas 5 kilómetros llegas a la consulta en Calle Río Guadarrama 2. Parking gratuito en la zona.</p>
+            </div>
+            <div class="direction-detail">
+              <strong>Dirección</strong>
+              <p>Calle Río Guadarrama 2, 28430 Alpedrete, Madrid</p>
+            </div>
+            <div class="direction-detail">
+              <strong>Horario</strong>
+              <p>Lunes a Viernes: 9:00 - 20:00<br>Sábados: 10:00 - 14:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="directions-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.5!2d-4.027!3d40.663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189d3f2e8e9e1%3A0x1!2sCalle%20R%C3%ADo%20Guadarrama%2C%202%2C%2028430%20Alpedrete%2C%20Madrid!5e0!3m2!1ses!2ses!4v1"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Cómo llegar desde Collado Villalba a la consulta en Alpedrete">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-cta">
+    <div class="container">
+      <h2>Reserva tu masaje desde Collado Villalba</h2>
+      <p>Estoy a solo 7 minutos de ti. Contacta conmigo y te atenderé lo antes posible.</p>
+      <div class="town-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Collado%20Villalba%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp: 643 961 065</a>
+        <a href="/reservar" class="btn btn-outline">Reservar online</a>
+        <a href="tel:+34643961065" class="btn btn-outline">Llamar</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes desde Collado Villalba</h2>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>¿Cuánto se tarda en llegar desde Collado Villalba?</summary>
+          <p>La consulta está en Alpedrete, a solo 7 minutos en coche desde Collado Villalba por la M-601. Hay parking gratuito en la puerta.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué tipos de masaje ofreces cerca de Collado Villalba?</summary>
+          <p>Ofrezco masaje deportivo (20€/30min), masaje corporal con aceite (40€/60min), masaje tailandés (45€/60min), pindas herbales (70€/90min) y masaje para embarazadas (40€/60min). También osteopatía (40€/55min).</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuál es el masaje más barato cerca de Collado Villalba?</summary>
+          <p>El masaje deportivo cuesta solo 20€ por 30 minutos de trabajo focalizado. Perfecto para deportistas que necesitan mantenimiento regular sin gastar mucho.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cómo puedo reservar cita desde Collado Villalba?</summary>
+          <p>Puedes reservar por <a href="https://wa.me/34643961065" target="_blank" rel="noopener noreferrer">WhatsApp</a>, llamando al <a href="tel:+34643961065">643 961 065</a>, o a través de la <a href="/reservar">reserva online</a>.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .town-hero {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .town-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 16px;
+    color: var(--color-text);
+  }
+
+  .town-hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  .town-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .town-intro {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .town-intro h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .town-intro p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    margin-bottom: 16px;
+  }
+
+  .town-services {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .town-services h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--color-warm-white);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .service-card h3 {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    margin-bottom: 8px;
+  }
+
+  .service-meta {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .service-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .service-link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  .town-reasons {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-reasons h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .reason-card {
+    background: var(--color-cream);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+  }
+
+  .reason-card h3 {
+    font-size: 1.05rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 10px;
+  }
+
+  .reason-card p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+  }
+
+  .town-directions {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .directions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .directions-text h2 {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    margin-bottom: 28px;
+  }
+
+  .directions-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .direction-detail strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin-bottom: 4px;
+  }
+
+  .direction-detail p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+
+  .directions-map {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    min-height: 350px;
+  }
+
+  .directions-map iframe {
+    display: block;
+    width: 100%;
+    min-height: 350px;
+    height: 100%;
+  }
+
+  .town-cta {
+    padding: var(--section-padding) 0;
+    background: var(--color-primary);
+    text-align: center;
+    color: white;
+  }
+
+  .town-cta h2 {
+    color: white;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 16px;
+  }
+
+  .town-cta p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+    margin-bottom: 32px;
+  }
+
+  .town-cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .town-cta .btn-primary {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .town-cta .btn-primary:hover {
+    background: var(--color-cream);
+  }
+
+  .town-cta .btn-outline {
+    border-color: white;
+    color: white;
+  }
+
+  .town-cta .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .town-faq {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-faq h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: var(--color-cream);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: var(--transition);
+  }
+
+  .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .faq-item summary {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .faq-item summary:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-item p {
+    padding: 0 25px 20px;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  .faq-item a {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .reasons-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .directions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .directions-map {
+      min-height: 280px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .service-card {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .reason-card {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .town-cta {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
+    border-top: 1px solid rgba(111, 155, 110, 0.15);
+    border-bottom: 1px solid rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-primary {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-primary:hover {
+    background: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-outline {
+    border-color: rgba(111, 155, 110, 0.4);
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-outline:hover {
+    background: rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .faq-item {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+</style>

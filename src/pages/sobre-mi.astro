@@ -192,6 +192,56 @@ const personSchema = {
     </div>
   </section>
   
+  <section class="about-credentials">
+    <div class="container">
+      <h2 class="text-center mb-4">Credenciales y garantías</h2>
+      <div class="credentials-grid">
+        <div class="credential-card">
+          <div class="credential-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          </div>
+          <h3>Seguro de responsabilidad civil</h3>
+          <p>Todos los tratamientos están cubiertos por un seguro de responsabilidad civil profesional, para tu total tranquilidad.</p>
+        </div>
+        <div class="credential-card">
+          <div class="credential-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+          </div>
+          <h3>Formación continua</h3>
+          <p>Más de 12 años de formación acumulada en osteopatía, masaje tailandés, deportivo, quiromasaje y técnicas craneales. Cada año amplío mis conocimientos.</p>
+        </div>
+        <div class="credential-card">
+          <div class="credential-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <h3>Consentimiento informado</h3>
+          <p>Antes de cada tratamiento te explico qué voy a hacer y por qué. Firmamos un consentimiento informado para garantizar transparencia y confianza.</p>
+        </div>
+        <div class="credential-card">
+          <div class="credential-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          </div>
+          <h3>Más de 500 pacientes atendidos</h3>
+          <p>Desde deportistas y embarazadas hasta personas mayores con dolencias crónicas. Cada paciente me ha enseñado algo y me ha hecho mejor profesional.</p>
+        </div>
+        <div class="credential-card">
+          <div class="credential-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+          <h3>5 estrellas en Google</h3>
+          <p>Valoración de 5/5 basada en reseñas reales de pacientes. La confianza de mis pacientes es mi mayor orgullo.</p>
+        </div>
+        <div class="credential-card">
+          <div class="credential-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </div>
+          <h3>Protección de datos</h3>
+          <p>Tus datos personales y clínicos están protegidos según la normativa RGPD. La confidencialidad es un pilar fundamental de mi práctica.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="about-services-cta">
     <div class="container">
       <h2>Mis servicios</h2>
@@ -375,6 +425,56 @@ const personSchema = {
     color: var(--color-text-light);
   }
 
+  /* Credentials */
+  .about-credentials {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .credentials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .credential-card {
+    background: var(--color-warm-white);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+    transition: var(--transition);
+  }
+
+  .credential-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .credential-icon {
+    color: var(--color-primary);
+    margin-bottom: 12px;
+  }
+
+  .credential-icon svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .credential-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: var(--color-text);
+  }
+
+  .credential-card p {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+
   .about-services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -417,6 +517,10 @@ const personSchema = {
       grid-template-columns: 1fr;
     }
 
+    .credentials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
     .about-services-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -424,6 +528,10 @@ const personSchema = {
 
   @media (max-width: 600px) {
     .about-services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .credentials-grid {
       grid-template-columns: 1fr;
     }
   }

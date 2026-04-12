@@ -325,7 +325,7 @@ export async function getBonos(Astro: AstroGlobal, buscarOrPacienteId?: string |
 export async function getBono(Astro: AstroGlobal, id: number): Promise<Bono | null> {
   const db = getDB(Astro);
   return await db
-    .prepare(`SELECT b.*, p.nombre as paciente_nombre, p.apellidos as paciente_apellidos
+    .prepare(`SELECT b.*, p.nombre as paciente_nombre, p.apellidos as paciente_apellidos, p.telefono as paciente_telefono
       FROM bonos b JOIN pacientes p ON b.paciente_id = p.id WHERE b.id = ?`)
     .bind(id)
     .first() as Bono | null;
@@ -357,6 +357,21 @@ export async function usarSesionBono(Astro: AstroGlobal, id: number): Promise<vo
 
   const nuevasUsadas = (bono.sesiones_usadas || 0) + 1;
   const nuevoEstado = nuevasUsadas >= bono.sesiones_total ? 'completado' : 'activo';
+
+  await db
+    .prepare('UPDATE bonos SET sesiones_usadas = ?, estado = ? WHERE id = ?')
+    .bind(nuevasUsadas, nuevoEstado, id)
+    .run();
+}
+
+export async function quitarSesionBono(Astro: AstroGlobal, id: number): Promise<void> {
+  const db = getDB(Astro);
+  const bono = await db.prepare('SELECT sesiones_total, sesiones_usadas, estado FROM bonos WHERE id = ?').bind(id).first() as any;
+  if (!bono) throw new Error('Bono no encontrado');
+  if ((bono.sesiones_usadas || 0) <= 0) throw new Error('No hay sesiones usadas para quitar');
+
+  const nuevasUsadas = (bono.sesiones_usadas || 0) - 1;
+  const nuevoEstado = nuevasUsadas < bono.sesiones_total ? 'activo' : 'completado';
 
   await db
     .prepare('UPDATE bonos SET sesiones_usadas = ?, estado = ? WHERE id = ?')

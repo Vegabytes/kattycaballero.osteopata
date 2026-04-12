@@ -78,8 +78,10 @@ function formatDate(d: string) {
   <div class="card" style="margin-bottom:1.5rem;">
     <form method="POST" class="nota-form">
       <input type="hidden" name="_action" value="crear" />
-      <div class="nota-form-row">
-        <input type="text" name="texto" placeholder="Escribe una tarea o nota..." required class="nota-input" />
+      <div class="nota-form-top">
+        <textarea name="texto" placeholder="Escribe una tarea o nota..." required class="nota-input" rows="2"></textarea>
+      </div>
+      <div class="nota-form-bottom">
         <select name="tipo" class="nota-select">
           <option value="tarea">Tarea</option>
           <option value="nota">Nota</option>
@@ -223,7 +225,7 @@ function formatDate(d: string) {
         <input type="hidden" name="_action" value="editar" />
         <input type="hidden" name="id" id="edit-id" />
         <div class="form-group">
-          <textarea name="texto" id="edit-texto" rows="3" required style="width:100%;"></textarea>
+          <textarea name="texto" id="edit-texto" rows="5" required style="width:100%;min-height:120px;"></textarea>
         </div>
         <div class="form-group">
           <select name="prioridad" id="edit-prioridad" class="nota-select" style="width:100%;">
@@ -242,19 +244,26 @@ function formatDate(d: string) {
 </AdminLayout>
 
 <style>
-  .nota-form-row {
+  .nota-form-top {
+    margin-bottom: 10px;
+  }
+  .nota-form-bottom {
     display: flex;
     gap: 8px;
     align-items: center;
+    flex-wrap: wrap;
   }
   .nota-input {
-    flex: 1;
+    width: 100%;
     padding: 10px 14px;
     border: 1px solid var(--admin-border, #e0e0e0);
     border-radius: 8px;
     font-size: 0.95rem;
+    font-family: inherit;
     background: var(--admin-bg, #fff);
     color: var(--admin-text, #3d3d3d);
+    resize: vertical;
+    min-height: 60px;
   }
   .nota-input:focus {
     outline: none;
@@ -381,10 +390,14 @@ function formatDate(d: string) {
   }
 
   @media (max-width: 600px) {
-    .nota-form-row {
+    .nota-form-bottom {
       flex-wrap: wrap;
     }
-    .nota-input {
+    .nota-form-bottom .nota-select {
+      flex: 1;
+      min-width: 100px;
+    }
+    .nota-form-bottom .btn {
       width: 100%;
     }
     .nota-actions {

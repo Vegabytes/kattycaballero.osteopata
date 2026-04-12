@@ -1,0 +1,657 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Masaje y Osteopatía cerca de El Escorial | Katy Caballero - Alpedrete (18 min)";
+const pageDescription = "Masajista y osteópata a 18 minutos de El Escorial. Masaje deportivo, tailandés y osteopatía en Alpedrete. Cita: 643 961 065.";
+const pageKeywords = "masaje el escorial, masajista el escorial, masaje deportivo el escorial, osteopatia el escorial, masaje san lorenzo el escorial";
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "description": "Centro de osteopatía y masajes en Alpedrete, a 18 minutos de El Escorial. Sierra de Madrid.",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "telephone": "+34643961065",
+  "email": "katycaballero.osteopata@gmail.com",
+  "url": "https://katycaballeroosteopata.com/masaje-el-escorial",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Río Guadarrama 2",
+    "addressLocality": "Alpedrete",
+    "addressRegion": "Madrid",
+    "postalCode": "28430",
+    "addressCountry": "ES"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "40.6631",
+    "longitude": "-4.0270"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "El Escorial"
+    },
+    {
+      "@type": "City",
+      "name": "San Lorenzo de El Escorial"
+    }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "14:00"
+    }
+  ],
+  "priceRange": "€€"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuánto se tarda en llegar desde El Escorial a la consulta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La consulta está en Alpedrete, a unos 18 minutos en coche desde El Escorial o San Lorenzo de El Escorial por la M-600 y M-601. Son unos 15 kilómetros con parking gratuito."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué tipos de masaje ofreces para pacientes de El Escorial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ofrezco masaje deportivo (20€/30min), masaje corporal con aceite (40€/60min), masaje tailandés (45€/60min), pindas herbales (70€/90min) y masaje para embarazadas (40€/60min). También osteopatía (40€/55min)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Merece la pena desplazarse desde El Escorial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutamente. Son solo 18 minutos y encontrarás una atención personalizada que no ofrecen los grandes centros. Parking gratuito, precios desde 20€ y un trato profesional e individualizado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo puedo reservar cita desde El Escorial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Puedes reservar por WhatsApp al 643 961 065, llamando por teléfono, o a través de la reserva online en la web. Te confirmo la cita rápidamente."
+      }
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Masaje y Osteopatía cerca de El Escorial" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="town-hero">
+    <div class="container">
+      <span class="section-tag">El Escorial</span>
+      <h1>Masaje y Osteopatía cerca de El Escorial</h1>
+      <p class="town-hero-subtitle">Consulta de masajes y osteopatía en Alpedrete, a solo <strong>18 minutos en coche</strong> de El Escorial y San Lorenzo</p>
+      <div class="town-hero-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20El%20Escorial%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Reservar por WhatsApp</a>
+        <a href="/reservar" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-intro">
+    <div class="container">
+      <div class="town-intro-content">
+        <h2>Tu masajista y osteópata de confianza cerca de El Escorial</h2>
+        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia. Mi consulta está en <strong>Alpedrete</strong>, a tan solo 18 minutos en coche desde El Escorial y San Lorenzo de El Escorial. Esta zona histórica de la Sierra de Madrid, conocida mundialmente por su monasterio y su patrimonio cultural, cuenta con una población activa y numerosos visitantes que buscan servicios de calidad. Aunque El Escorial tiene más oferta que otros pueblos de la sierra, encontrar una terapeuta con trato verdaderamente personalizado y precios accesibles no siempre es fácil.</p>
+        <p>Mi consulta en Alpedrete ofrece precisamente eso: un espacio profesional donde cada paciente recibe un tratamiento diseñado a medida. Tanto si vienes desde El Escorial como desde San Lorenzo, el desplazamiento de 15 kilómetros merece la pena. Atiendo desde dolencias crónicas como cervicalgias, lumbalgias o migrañas con osteopatía, hasta necesidades de recuperación muscular con masaje deportivo, o simplemente el deseo de regalarte un momento de relajación profunda con masaje tailandés o pindas herbales. El trayecto por la M-600 y M-601 es cómodo, rápido y con aparcamiento gratuito a la llegada.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-services">
+    <div class="container">
+      <h2>Servicios disponibles para pacientes de El Escorial</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Osteopatía</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Tratamiento integral: estructural, visceral y sacrocraneal. Para dolor de espalda, cervicales, migrañas, ciática y problemas posturales.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Deportivo</h3>
+          <p class="service-meta">20€ · 30 min</p>
+          <p>Recuperación muscular y prevención de lesiones. Ideal para deportistas, corredores y personas con vida activa en la Sierra.</p>
+          <a href="/servicios/masaje-deportivo-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Corporal con Aceite</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Relajación completa con aceites esenciales. Libera tensiones, nutre tu piel en profundidad y mejora la calidad del sueño.</p>
+          <a href="/servicios/masaje-corporal-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje Tailandés</h3>
+          <p class="service-meta">45€ · 60 min</p>
+          <p>Técnica ancestral con estiramientos asistidos y presiones rítmicas. Restaura la flexibilidad y renueva la energía corporal.</p>
+          <a href="/servicios/masaje-tailandes-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Pindas Herbales</h3>
+          <p class="service-meta">70€ · 90 min</p>
+          <p>Saquitos de hierbas medicinales calientes con propiedades antiinflamatorias y descontracturantes. La experiencia más completa.</p>
+          <a href="/servicios/masaje-pindas-herbales-alpedrete" class="service-link">Más información</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje para Embarazadas</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Técnicas suaves adaptadas a cada trimestre desde el 4º mes. Alivia molestias lumbares, reduce hinchazón y mejora el bienestar.</p>
+          <a href="/servicios/masaje-embarazadas-alpedrete" class="service-link">Más información</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-reasons">
+    <div class="container">
+      <h2>¿Por qué elegir mi consulta desde El Escorial?</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>A 18 minutos de El Escorial</h3>
+          <p>Solo 15 km por la M-600 y M-601. Un trayecto cómodo entre pueblos serranos con parking gratuito en la puerta. Merece la pena el breve desplazamiento.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Más de 12 años de experiencia</h3>
+          <p>Formación extensa en osteopatía, masaje tailandés y múltiples técnicas manuales. Cientos de pacientes satisfechos de toda la Sierra de Madrid.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Trato personal, no masificado</h3>
+          <p>A diferencia de grandes centros, aquí cada sesión es única. Evalúo tu caso en profundidad, busco la causa real de tu dolencia y diseño el tratamiento óptimo.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Precios competitivos desde 20€</h3>
+          <p>Masaje deportivo desde 20€, osteopatía 40€. Calidad profesional a precios justos que no encontrarás en centros de mayor tamaño.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-directions">
+    <div class="container">
+      <div class="directions-grid">
+        <div class="directions-text">
+          <h2>Cómo llegar desde El Escorial</h2>
+          <div class="directions-info">
+            <div class="direction-detail">
+              <strong>En coche (18 min)</strong>
+              <p>Desde El Escorial o San Lorenzo, toma la M-600 y después la M-601 hacia Alpedrete. Son unos 15 km de trayecto por carretera de sierra. La consulta está en Calle Río Guadarrama 2. Parking gratuito.</p>
+            </div>
+            <div class="direction-detail">
+              <strong>Dirección</strong>
+              <p>Calle Río Guadarrama 2, 28430 Alpedrete, Madrid</p>
+            </div>
+            <div class="direction-detail">
+              <strong>Horario</strong>
+              <p>Lunes a Viernes: 9:00 - 20:00<br>Sábados: 10:00 - 14:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="directions-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.5!2d-4.027!3d40.663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189d3f2e8e9e1%3A0x1!2sCalle%20R%C3%ADo%20Guadarrama%2C%202%2C%2028430%20Alpedrete%2C%20Madrid!5e0!3m2!1ses!2ses!4v1"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Cómo llegar desde El Escorial a la consulta en Alpedrete">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-cta">
+    <div class="container">
+      <h2>Reserva tu masaje desde El Escorial</h2>
+      <p>Estoy a solo 18 minutos de ti. Un pequeño viaje que tu cuerpo agradecerá con creces.</p>
+      <div class="town-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20El%20Escorial%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp: 643 961 065</a>
+        <a href="/reservar" class="btn btn-outline">Reservar online</a>
+        <a href="tel:+34643961065" class="btn btn-outline">Llamar</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="town-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes desde El Escorial</h2>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>¿Cuánto se tarda en llegar desde El Escorial a la consulta?</summary>
+          <p>La consulta está en Alpedrete, a unos 18 minutos en coche desde El Escorial por la M-600 y M-601. Son 15 km con parking gratuito.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué tipos de masaje ofreces para pacientes de El Escorial?</summary>
+          <p>Ofrezco masaje deportivo (20€/30min), masaje corporal con aceite (40€/60min), masaje tailandés (45€/60min), pindas herbales (70€/90min) y masaje para embarazadas (40€/60min). También osteopatía (40€/55min).</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Merece la pena desplazarse desde El Escorial?</summary>
+          <p>Son solo 18 minutos y encontrarás atención personalizada, precios desde 20€ y un trato profesional individualizado. Muchos pacientes de El Escorial ya son habituales.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cómo puedo reservar cita desde El Escorial?</summary>
+          <p>Puedes reservar por <a href="https://wa.me/34643961065" target="_blank" rel="noopener noreferrer">WhatsApp</a>, llamando al <a href="tel:+34643961065">643 961 065</a>, o a través de la <a href="/reservar">reserva online</a>.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .town-hero {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+
+  .town-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 16px;
+    color: var(--color-text);
+  }
+
+  .town-hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  .town-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .town-intro {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .town-intro h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .town-intro p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    margin-bottom: 16px;
+  }
+
+  .town-services {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .town-services h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--color-warm-white);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .service-card h3 {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    margin-bottom: 8px;
+  }
+
+  .service-meta {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .service-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .service-link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  .town-reasons {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-reasons h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .reason-card {
+    background: var(--color-cream);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid rgba(90, 124, 89, 0.08);
+  }
+
+  .reason-card h3 {
+    font-size: 1.05rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 10px;
+  }
+
+  .reason-card p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+  }
+
+  .town-directions {
+    padding: var(--section-padding) 0;
+    background: var(--color-cream);
+  }
+
+  .directions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .directions-text h2 {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    margin-bottom: 28px;
+  }
+
+  .directions-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .direction-detail strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin-bottom: 4px;
+  }
+
+  .direction-detail p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+
+  .directions-map {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    min-height: 350px;
+  }
+
+  .directions-map iframe {
+    display: block;
+    width: 100%;
+    min-height: 350px;
+    height: 100%;
+  }
+
+  .town-cta {
+    padding: var(--section-padding) 0;
+    background: var(--color-primary);
+    text-align: center;
+    color: white;
+  }
+
+  .town-cta h2 {
+    color: white;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 16px;
+  }
+
+  .town-cta p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+    margin-bottom: 32px;
+  }
+
+  .town-cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .town-cta .btn-primary {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .town-cta .btn-primary:hover {
+    background: var(--color-cream);
+  }
+
+  .town-cta .btn-outline {
+    border-color: white;
+    color: white;
+  }
+
+  .town-cta .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .town-faq {
+    padding: var(--section-padding) 0;
+    background: var(--color-warm-white);
+  }
+
+  .town-faq h2 {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: var(--color-cream);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: var(--transition);
+  }
+
+  .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1);
+  }
+
+  .faq-item summary {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .faq-item summary:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-item p {
+    padding: 0 25px 20px;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  .faq-item a {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .reasons-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .directions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .directions-map {
+      min-height: 280px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Dark mode overrides */
+  :global([data-theme="dark"]) .service-card {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .reason-card {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .town-cta {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
+    border-top: 1px solid rgba(111, 155, 110, 0.15);
+    border-bottom: 1px solid rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-primary {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-primary:hover {
+    background: var(--color-primary-light);
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-outline {
+    border-color: rgba(111, 155, 110, 0.4);
+    color: #e0e0e0;
+  }
+
+  :global([data-theme="dark"]) .town-cta .btn-outline:hover {
+    background: rgba(111, 155, 110, 0.15);
+  }
+
+  :global([data-theme="dark"]) .faq-item {
+    border-color: rgba(111, 155, 110, 0.12);
+  }
+
+  :global([data-theme="dark"]) .faq-item[open] {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+</style>

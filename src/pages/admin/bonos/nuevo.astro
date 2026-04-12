@@ -16,7 +16,14 @@ try {
 }
 
 const preselectedPaciente = Astro.url.searchParams.get('paciente') || '';
+const preNombre = Astro.url.searchParams.get('nombre') || '';
+const preSesiones = Astro.url.searchParams.get('sesiones') || '';
+const prePrecio = Astro.url.searchParams.get('precio') || '';
 const hoy = new Date().toISOString().split('T')[0];
+// Caducidad por defecto: 6 meses desde hoy
+const fechaCaducidadDefault = new Date();
+fechaCaducidadDefault.setMonth(fechaCaducidadDefault.getMonth() + 6);
+const caducidadDefault = fechaCaducidadDefault.toISOString().split('T')[0];
 
 if (Astro.request.method === 'POST') {
   const form = await Astro.request.formData();
@@ -71,18 +78,18 @@ if (Astro.request.method === 'POST') {
         </div>
         <div class="form-group">
           <label for="nombre">Nombre del bono *</label>
-          <input type="text" id="nombre" name="nombre" required placeholder="Ej: Bono 5 sesiones osteopatía">
+          <input type="text" id="nombre" name="nombre" required placeholder="Ej: Bono 5 sesiones osteopatía" value={preNombre}>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="sesiones_total">Sesiones totales *</label>
-          <input type="number" id="sesiones_total" name="sesiones_total" min="1" required value="5">
+          <input type="number" id="sesiones_total" name="sesiones_total" min="1" required value={preSesiones || '5'}>
         </div>
         <div class="form-group">
           <label for="precio">Precio (&euro;)</label>
-          <input type="number" id="precio" name="precio" step="0.01" min="0" placeholder="0.00">
+          <input type="number" id="precio" name="precio" step="0.01" min="0" placeholder="0.00" value={prePrecio}>
         </div>
       </div>
 
@@ -93,7 +100,7 @@ if (Astro.request.method === 'POST') {
         </div>
         <div class="form-group">
           <label for="fecha_caducidad">Fecha de caducidad</label>
-          <input type="date" id="fecha_caducidad" name="fecha_caducidad">
+          <input type="date" id="fecha_caducidad" name="fecha_caducidad" value={preselectedPaciente ? caducidadDefault : ''}>
         </div>
       </div>
 

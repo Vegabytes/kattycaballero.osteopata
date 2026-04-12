@@ -18,12 +18,17 @@ if (Astro.request.method === 'POST') {
   if (!paciente_id || !fecha) {
     error = 'Paciente y fecha son obligatorios';
   } else {
+    let exploracion = (form.get('exploracion') as string) || '';
+    const dolorEscala = form.get('dolor_escala') as string;
+    if (dolorEscala && dolorEscala !== '0') {
+      exploracion = `[Dolor EVA: ${dolorEscala}/10]\n${exploracion}`;
+    }
     await crearNotaClinica(Astro, {
       paciente_id,
       cita_id: form.get('cita_id') ? Number(form.get('cita_id')) : null,
       fecha,
       motivo: form.get('motivo') as string,
-      exploracion: form.get('exploracion') as string,
+      exploracion,
       diagnostico: form.get('diagnostico') as string,
       tratamiento_realizado: form.get('tratamiento_realizado') as string,
       recomendaciones: form.get('recomendaciones') as string,
@@ -76,6 +81,23 @@ if (Astro.request.method === 'POST') {
       <div class="form-group">
         <label for="motivo">Motivo de consulta</label>
         <input type="text" id="motivo" name="motivo" placeholder="Motivo principal de la consulta...">
+      </div>
+
+      <!-- Escala de dolor -->
+      <div class="form-group">
+        <label>Escala de dolor (EVA)</label>
+        <div class="pain-scale">
+          <input type="range" id="dolor_escala" min="0" max="10" value="0" step="1" class="pain-slider">
+          <div class="pain-labels">
+            <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+          </div>
+          <div class="pain-display">
+            <span id="dolor-emoji" class="pain-emoji">😊</span>
+            <span id="dolor-valor" class="pain-value">0/10</span>
+            <span id="dolor-texto" class="pain-text">Sin dolor</span>
+          </div>
+        </div>
+        <input type="hidden" id="dolor_hidden" name="dolor_escala" value="0">
       </div>
 
       <div class="form-group">
@@ -182,4 +204,79 @@ if (Astro.request.method === 'POST') {
       });
     });
   </script>
+
+  <script is:inline>
+    // Pain scale
+    var slider = document.getElementById('dolor_escala');
+    var emoji = document.getElementById('dolor-emoji');
+    var valor = document.getElementById('dolor-valor');
+    var texto = document.getElementById('dolor-texto');
+    var hidden = document.getElementById('dolor_hidden');
+    var emojis = ['😊','🙂','😐','😕','😣','😖','😫','😰','🤯','😱','💀'];
+    var textos = ['Sin dolor','Muy leve','Leve','Molesto','Moderado','Moderado-intenso','Intenso','Muy intenso','Severo','Insoportable','Máximo dolor'];
+    var colores = ['#4caf50','#66bb6a','#8bc34a','#cddc39','#ffeb3b','#ffc107','#ff9800','#ff5722','#f44336','#d32f2f','#b71c1c'];
+    if (slider) {
+      slider.addEventListener('input', function() {
+        var v = Number(slider.value);
+        emoji.textContent = emojis[v];
+        valor.textContent = v + '/10';
+        texto.textContent = textos[v];
+        slider.style.setProperty('--pain-color', colores[v]);
+        hidden.value = v;
+      });
+    }
+  </script>
+
+  <style is:global>
+    .pain-scale {
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #e9ecef;
+    }
+    .pain-slider {
+      width: 100%;
+      height: 8px;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 4px;
+      background: linear-gradient(to right, #4caf50, #ffeb3b, #ff9800, #f44336, #b71c1c);
+      outline: none;
+      margin: 8px 0;
+    }
+    .pain-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--pain-color, #4caf50);
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .pain-slider::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--pain-color, #4caf50);
+      cursor: pointer;
+    }
+    .pain-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: #999;
+      padding: 0 4px;
+    }
+    .pain-display {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .pain-emoji { font-size: 1.5rem; }
+    .pain-value { font-weight: 700; font-size: 1.1rem; color: var(--admin-text); }
+    .pain-text { font-size: 0.85rem; color: var(--admin-text-light); }
+  </style>
 </AdminLayout>

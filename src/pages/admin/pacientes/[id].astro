@@ -106,13 +106,63 @@ try {
 try {
   bonos = (await db.prepare("SELECT * FROM bonos WHERE paciente_id = ? ORDER BY created_at DESC").bind(id).all()).results;
 } catch { /* table may not exist yet */ }
+// Patient stats
+const citasCompletadas = citas.filter((c: any) => c.estado === 'completada');
+const totalVisitas = citasCompletadas.length;
+const ingresosPaciente = citasCompletadas.reduce((s: number, c: any) => s + (c.precio || 0), 0);
+const ingresosBonos = bonos.reduce((s: number, b: any) => s + (b.precio || 0), 0);
+const totalIngresos = ingresosPaciente + ingresosBonos;
+
+// Average frequency (days between visits)
+let frecuenciaMedia = 0;
+if (citasCompletadas.length >= 2) {
+  const fechas = citasCompletadas.map((c: any) => new Date(c.fecha).getTime()).sort();
+  const diffs = [];
+  for (let i = 1; i < fechas.length; i++) diffs.push((fechas[i] - fechas[i-1]) / (1000*60*60*24));
+  frecuenciaMedia = Math.round(diffs.reduce((a, b) => a + b, 0) / diffs.length);
+}
+
+// Last treatment for quick repeat
+const ultimoTratamiento = tratamientos.length > 0 ? tratamientos[0] : null;
 ---
 
 <AdminLayout title={`${paciente.nombre} ${paciente.apellidos}`} activeSection="pacientes">
-  <a href="/admin/pacientes" class="back-link">← Volver a pacientes</a>
+  <a href="/admin/pacientes" class="back-link">&larr; Volver a pacientes</a>
 
   {mensaje && <div class="alert alert-success">{mensaje}</div>}
   {error && <div class="alert alert-error">{error}</div>}
+
+  <!-- Patient stats -->
+  {totalVisitas > 0 && (
+    <div class="patient-stats">
+      <div class="pstat">
+        <span class="pstat-num">{totalVisitas}</span>
+        <span class="pstat-label">Visitas</span>
+      </div>
+      <div class="pstat">
+        <span class="pstat-num">{tratamientos.length}</span>
+        <span class="pstat-label">Tratamientos</span>
+      </div>
+      {totalIngresos > 0 && (
+        <div class="pstat">
+          <span class="pstat-num">{totalIngresos.toFixed(0)}&euro;</span>
+          <span class="pstat-label">Ingresos</span>
+        </div>
+      )}
+      {frecuenciaMedia > 0 && (
+        <div class="pstat">
+          <span class="pstat-num">~{frecuenciaMedia}d</span>
+          <span class="pstat-label">Frecuencia</span>
+        </div>
+      )}
+      {bonos.filter((b: any) => b.estado === 'activo').length > 0 && (
+        <div class="pstat pstat-bono">
+          <span class="pstat-num">{bonos.filter((b: any) => b.estado === 'activo').length}</span>
+          <span class="pstat-label">Bonos activos</span>
+        </div>
+      )}
+    </div>
+  )}
 
   <!-- Last visit indicator -->
   {ultimaVisita && (
@@ -173,6 +223,11 @@ try {
     )}
     <a href={`/admin/citas/nueva?paciente=${id}`} class="btn btn-primary btn-sm">+ Cita</a>
     <a href={`/admin/tratamientos/nuevo?paciente=${id}`} class="btn btn-primary btn-sm">+ Tratamiento</a>
+    {ultimoTratamiento && (
+      <a href={`/admin/tratamientos/nuevo?paciente=${id}&tipo=${encodeURIComponent(ultimoTratamiento.tipo || '')}&zona=${encodeURIComponent(ultimoTratamiento.zona || '')}`} class="btn btn-secondary btn-sm" title={`Repetir: ${ultimoTratamiento.tipo} (${ultimoTratamiento.zona})`}>
+        Repetir ultimo
+      </a>
+    )}
     <a href={`/admin/historial/nuevo?paciente=${id}`} class="btn btn-primary btn-sm">+ Nota clínica</a>
     <a href={`/admin/bonos/nuevo?paciente=${id}`} class="btn btn-secondary btn-sm">+ Bono</a>
     <a href={`/admin/pacientes/ficha/${id}`} target="_blank" class="btn btn-secondary btn-sm">
@@ -186,6 +241,41 @@ try {
   </div>
 
   <style is:inline>
+    .patient-stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .pstat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 16px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #e9ecef;
+      min-width: 70px;
+    }
+    .pstat-num {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #333;
+      line-height: 1;
+    }
+    .pstat-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: #888;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+    .pstat-bono {
+      background: #f0f7f0;
+      border-color: #c8e6c9;
+    }
+    .pstat-bono .pstat-num { color: #2e7d32; }
     .wa-menu {
       display: none;
       position: absolute;

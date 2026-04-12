@@ -74,6 +74,27 @@ function formatFechaCorta(fecha: string) {
     </div>
   </div>
 
+  <!-- Week summary -->
+  {(() => {
+    const totalSemana = citasSemana.length;
+    const completadas = citasSemana.filter(c => c.estado === 'completada').length;
+    const pendientes = citasSemana.filter(c => c.estado === 'pendiente').length;
+    const canceladas = citasSemana.filter(c => c.estado === 'cancelada').length;
+    const noShows = citasSemana.filter(c => c.estado === 'no_show').length;
+    const ingresos = citasSemana.filter(c => c.estado === 'completada' && c.precio).reduce((s, c) => s + (c.precio || 0), 0);
+    return totalSemana > 0 ? (
+      <div class="week-summary">
+        <span class="ws-item"><strong>{totalSemana}</strong> citas</span>
+        <span class="ws-sep">|</span>
+        <span class="ws-item ws-ok">{completadas} completadas</span>
+        {pendientes > 0 && <><span class="ws-sep">|</span><span class="ws-item ws-pending">{pendientes} pendientes</span></>}
+        {canceladas > 0 && <><span class="ws-sep">|</span><span class="ws-item ws-cancel">{canceladas} canceladas</span></>}
+        {noShows > 0 && <><span class="ws-sep">|</span><span class="ws-item ws-noshow">{noShows} no-show</span></>}
+        {ingresos > 0 && <><span class="ws-sep">|</span><span class="ws-item ws-money">{ingresos.toFixed(0)}&euro;</span></>}
+      </div>
+    ) : null;
+  })()}
+
   <!-- Weekly calendar -->
   <div class="week-grid">
     {Object.entries(citasPorDia).map(([fechaDia, citas], i) => {
@@ -117,12 +138,11 @@ function formatFechaCorta(fecha: string) {
                     ) : null}
                   </a>
                   {c.estado !== 'completada' && c.estado !== 'cancelada' && c.estado !== 'no_show' && (
-                    <button
-                      class="btn-cal-complete"
-                      data-id={c.id}
-                      data-estado="completada"
-                      title="Marcar completada"
-                    >&#10003;</button>
+                    <div class="btn-cal-row">
+                      <button class="btn-cal-complete" data-id={c.id} data-estado="completada" title="Completada">&#10003;</button>
+                      <button class="btn-cal-cancel" data-id={c.id} data-estado="cancelada" title="Cancelar">&#10007;</button>
+                      <button class="btn-cal-noshow" data-id={c.id} data-estado="no_show" title="No-show">?</button>
+                    </div>
                   )}
                   {c.paciente_telefono && (
                     <a
@@ -148,12 +168,32 @@ function formatFechaCorta(fecha: string) {
       grid-template-columns: repeat(7, 1fr);
       gap: 12px;
     }
-    .btn-cal-complete {
-      display: block;
-      width: 100%;
+    .week-summary {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 10px 16px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+      margin-bottom: 12px;
+      font-size: 0.82rem;
+    }
+    .ws-sep { color: #ddd; }
+    .ws-ok { color: #2e7d32; }
+    .ws-pending { color: #e65100; }
+    .ws-cancel { color: #c62828; }
+    .ws-noshow { color: #ff9800; }
+    .ws-money { color: #7b1fa2; font-weight: 700; }
+    .btn-cal-row {
+      display: flex;
+      gap: 2px;
       margin-top: 4px;
+    }
+    .btn-cal-complete, .btn-cal-cancel, .btn-cal-noshow {
+      flex: 1;
       padding: 2px;
-      background: #4caf50;
       color: #fff;
       border: none;
       border-radius: 4px;
@@ -162,7 +202,10 @@ function formatFechaCorta(fecha: string) {
       opacity: 0.7;
       transition: opacity 0.2s;
     }
-    .btn-cal-complete:hover { opacity: 1; }
+    .btn-cal-complete { background: #4caf50; }
+    .btn-cal-cancel { background: #ef5350; }
+    .btn-cal-noshow { background: #ff9800; }
+    .btn-cal-complete:hover, .btn-cal-cancel:hover, .btn-cal-noshow:hover { opacity: 1; }
     .btn-cal-wa {
       display: inline-block;
       margin-top: 4px;
@@ -192,12 +235,14 @@ function formatFechaCorta(fecha: string) {
   </style>
 
   <script>
-    document.querySelectorAll('.btn-cal-complete').forEach(btn => {
+    document.querySelectorAll('.btn-cal-complete, .btn-cal-cancel, .btn-cal-noshow').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         e.preventDefault();
         const button = e.currentTarget as HTMLButtonElement;
         const id = button.dataset.id;
         const estado = button.dataset.estado;
+        if (estado === 'cancelada' && !confirm('¿Cancelar esta cita?')) return;
+        if (estado === 'no_show' && !confirm('¿Marcar como no-show?')) return;
         button.disabled = true;
         try {
           const res = await fetch('/api/cita-estado', {

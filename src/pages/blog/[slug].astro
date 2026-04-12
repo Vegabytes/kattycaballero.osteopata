@@ -30,7 +30,7 @@ const blogPostingSchema = {
   "description": post.data.excerpt,
   "image": `https://katycaballeroosteopata.com${post.data.image}`,
   "datePublished": post.data.date.toISOString(),
-  "dateModified": post.data.date.toISOString(),
+  "dateModified": (post.data as any).updated ? new Date((post.data as any).updated).toISOString() : post.data.date.toISOString(),
   "author": {
     "@type": "Person",
     "name": post.data.author,
