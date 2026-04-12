@@ -47,13 +47,17 @@ try {
   }
 } catch {}
 
-// Generate all unique hour slots from the schedule
+// Generate all unique half-hour slots from the schedule
 function generateSlots(config: { inicio: string; fin: string }): string[] {
-  const [startH] = config.inicio.split(':').map(Number);
-  const [endH] = config.fin.split(':').map(Number);
+  const [startH, startM] = config.inicio.split(':').map(Number);
+  const [endH, endM] = config.fin.split(':').map(Number);
+  const startMin = startH * 60 + (startM || 0);
+  const endMin = endH * 60 + (endM || 0);
   const slots: string[] = [];
-  for (let h = startH; h < endH; h++) {
-    slots.push(`${h.toString().padStart(2, '0')}:00`);
+  for (let m = startMin; m <= endMin; m += 30) {
+    const hh = Math.floor(m / 60).toString().padStart(2, '0');
+    const mm = (m % 60).toString().padStart(2, '0');
+    slots.push(`${hh}:${mm}`);
   }
   return slots;
 }
@@ -73,10 +77,13 @@ function isValidSlot(dayIndex: number, hora: string): boolean {
   const diaKey = DIA_KEYS[dayIndex];
   const h = horario[diaKey];
   if (!h || !h.activo) return false;
-  const [slotH] = hora.split(':').map(Number);
-  const [startH] = h.inicio.split(':').map(Number);
-  const [endH] = h.fin.split(':').map(Number);
-  return slotH >= startH && slotH < endH;
+  const [slotH, slotM] = hora.split(':').map(Number);
+  const [startH, startM] = h.inicio.split(':').map(Number);
+  const [endH, endM] = h.fin.split(':').map(Number);
+  const slotMin = slotH * 60 + (slotM || 0);
+  const startMin = startH * 60 + (startM || 0);
+  const endMin = endH * 60 + (endM || 0);
+  return slotMin >= startMin && slotMin <= endMin;
 }
 
 // Query citas for the week
@@ -108,13 +115,16 @@ for (const cita of citasSemana) {
     servicio: cita.servicio,
     paciente_id: cita.paciente_id,
   };
-  // If duration > 60, mark subsequent slots too
-  if (cita.duracion && cita.duracion > 60) {
+  // If duration > 30, mark subsequent 30-min slots too
+  if (cita.duracion && cita.duracion > 30) {
     const [h, m] = horaKey.split(':').map(Number);
-    const extraSlots = Math.ceil(cita.duracion / 60) - 1;
+    const baseMin = h * 60 + m;
+    const extraSlots = Math.ceil(cita.duracion / 30) - 1;
     for (let s = 1; s <= extraSlots; s++) {
-      const nextH = h + s;
-      const nextKey = `${cita.fecha}|${String(nextH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+      const nextMin = baseMin + s * 30;
+      const nextH = Math.floor(nextMin / 60);
+      const nextM = nextMin % 60;
+      const nextKey = `${cita.fecha}|${String(nextH).padStart(2, '0')}:${String(nextM).padStart(2, '0')}`;
       ocupados[nextKey] = {
         nombre: cita.nombre,
         apellidos: cita.apellidos,
@@ -319,9 +329,9 @@ const isCurrentWeek = fechasDias.includes(todayStr);
   }
 
   .slot-cell {
-    padding: 4px;
+    padding: 2px 4px;
     border: 1px solid var(--admin-border);
-    height: 44px;
+    height: 34px;
     vertical-align: middle;
     text-align: center;
   }

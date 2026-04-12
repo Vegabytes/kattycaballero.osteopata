@@ -314,7 +314,7 @@ async function processReminders(db: D1Database, settings: Settings, env: Env): P
   for (const cita of citas) {
     if (cita.telefono) {
       const phone = cita.telefono.replace(/\D/g, '').replace(/^34/, '');
-      const waMessage = `Hola ${cita.nombre}, soy Katy de la consulta de osteopatía. Te recuerdo que mañana ${fechaDisplay} tienes cita a las ${cita.hora}${cita.servicio ? ` (${cita.servicio})` : ''}. Dirección: C/ Río Guadarrama 2, Alpedrete. Si no puedes asistir avísame con antelación. ¡Hasta mañana! 😊`;
+      const waMessage = `Hola ${cita.nombre}, soy Katy de la consulta de osteopatía. Te recuerdo que mañana ${fechaDisplay} tienes cita a las ${cita.hora}. Dirección: C/ Río Guadarrama 2, Alpedrete. Si no puedes asistir avísame con antelación. ¡Hasta mañana! 😊`;
       const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(waMessage)}`;
 
       await sendTelegram(botToken, chatId,
