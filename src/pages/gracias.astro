@@ -15,8 +15,15 @@ const pageDescription = "Tu reserva ha sido recibida. Toda la información que n
           <polyline points="22 4 12 14.01 9 11.01"/>
         </svg>
       </div>
-      <h1>Reserva recibida</h1>
-      <p>Gracias por confiar en mí. He recibido tu solicitud de cita y te confirmaré por WhatsApp o teléfono lo antes posible.</p>
+      <h1>Solicitud recibida</h1>
+      <p>Gracias por confiar en mí. He recibido tu solicitud de cita correctamente.</p>
+      <div class="pending-notice" role="note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div>
+          <strong>Pendiente de confirmación</strong>
+          <span>Me pondré en contacto contigo por <strong>WhatsApp o teléfono</strong> lo antes posible para confirmar la cita.</span>
+        </div>
+      </div>
       <div id="booking-details" class="booking-details" style="display:none;"></div>
     </div>
   </section>
@@ -132,6 +139,40 @@ const pageDescription = "Tu reserva ha sido recibida. Toda la información que n
     max-width: 600px;
     font-size: 1.15rem;
   }
+
+  .pending-notice {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    text-align: left;
+    max-width: 520px;
+    margin: 28px auto 0;
+    background: #fff8e6;
+    border: 1px solid #e8c97a;
+    border-left: 4px solid var(--color-secondary, #c4a35a);
+    border-radius: 14px;
+    padding: 18px 20px;
+    color: #5a4a1f;
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+  .pending-notice svg {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    color: #8b6f30;
+    margin-top: 2px;
+  }
+  .pending-notice strong { display: block; color: #5a4a1f; font-size: 1.05rem; margin-bottom: 4px; }
+  .pending-notice span { display: block; color: #6b5a2c; }
+  :global([data-theme="dark"]) .pending-notice {
+    background: rgba(196, 163, 90, 0.12);
+    border-color: rgba(196, 163, 90, 0.35);
+    color: #e8dcc4;
+  }
+  :global([data-theme="dark"]) .pending-notice strong { color: #f0e4cc; }
+  :global([data-theme="dark"]) .pending-notice span { color: #d4c8ac; }
+  :global([data-theme="dark"]) .pending-notice svg { color: #e8c97a; }
 
   .booking-details {
     max-width: 400px;

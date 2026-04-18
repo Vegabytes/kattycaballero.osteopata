@@ -148,6 +148,14 @@ const services = [
 
               <div class="booking-summary" id="booking-summary" role="status" aria-live="polite"></div>
 
+              <div class="confirmation-notice" role="note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <div>
+                  <strong>Tu solicitud queda pendiente de confirmación.</strong>
+                  <span>Me pondré en contacto contigo por <strong>WhatsApp o teléfono</strong> lo antes posible para confirmar la cita.</span>
+                </div>
+              </div>
+
               <label class="gdpr-consent">
                 <input type="checkbox" id="gdpr-check">
                 <span>Acepto la <a href="/politica-privacidad" target="_blank">política de privacidad</a>. Mis datos se usarán solo para gestionar esta cita.</span>
@@ -174,10 +182,16 @@ const services = [
               <div class="confirmation-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
               </div>
-              <h2>Cita reservada</h2>
+              <h2>Solicitud recibida</h2>
               <p class="confirmation-subtitle">Tu solicitud se ha registrado correctamente</p>
               <div class="confirmation-details" id="confirmation-details"></div>
-              <p class="confirmation-note">Te confirmaré la cita por teléfono o WhatsApp en las próximas horas.</p>
+              <div class="confirmation-pending">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div>
+                  <strong>Pendiente de confirmación</strong>
+                  <span>Me pondré en contacto contigo por <strong>WhatsApp o teléfono</strong> lo antes posible para confirmar la cita.</span>
+                </div>
+              </div>
               <div class="confirmation-actions">
                 <a href="/" class="btn-back-home">Volver al inicio</a>
                 <a href="/reservar" class="btn-otra-cita">Reservar otra cita</a>
@@ -705,6 +719,66 @@ const services = [
     margin-bottom: 28px;
     max-width: none;
   }
+  .confirmation-notice {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #fff8e6;
+    border: 1px solid #e8c97a;
+    border-left: 4px solid var(--color-secondary, #c4a35a);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin: 8px 0 18px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #5a4a1f;
+  }
+  .confirmation-notice svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: #8b6f30;
+    margin-top: 1px;
+  }
+  .confirmation-notice strong { display: block; color: #5a4a1f; margin-bottom: 2px; }
+  .confirmation-notice span { display: block; color: #6b5a2c; }
+  .confirmation-pending {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #fff8e6;
+    border: 1px solid #e8c97a;
+    border-left: 4px solid var(--color-secondary, #c4a35a);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 0 auto 28px;
+    max-width: 520px;
+    text-align: left;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5a4a1f;
+  }
+  .confirmation-pending svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: #8b6f30;
+    margin-top: 2px;
+  }
+  .confirmation-pending strong { display: block; color: #5a4a1f; font-size: 1rem; margin-bottom: 4px; }
+  .confirmation-pending span { display: block; color: #6b5a2c; }
+  :global([data-theme="dark"]) .confirmation-notice,
+  :global([data-theme="dark"]) .confirmation-pending {
+    background: rgba(196, 163, 90, 0.12);
+    border-color: rgba(196, 163, 90, 0.35);
+    color: #e8dcc4;
+  }
+  :global([data-theme="dark"]) .confirmation-notice strong,
+  :global([data-theme="dark"]) .confirmation-pending strong { color: #f0e4cc; }
+  :global([data-theme="dark"]) .confirmation-notice span,
+  :global([data-theme="dark"]) .confirmation-pending span { color: #d4c8ac; }
+  :global([data-theme="dark"]) .confirmation-notice svg,
+  :global([data-theme="dark"]) .confirmation-pending svg { color: #e8c97a; }
   .confirmation-actions {
     display: flex;
     gap: 12px;
