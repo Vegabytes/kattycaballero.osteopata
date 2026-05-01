@@ -68,7 +68,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    const db = (locals as any).runtime.env.DB;
+    const env = (locals as any).runtime.env;
+    const db = env.DB;
 
     // Look for existing patient by telefono
     const existing = await db
@@ -128,7 +129,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     // Send notifications (await before responding — Workers closes after Response)
     try {
-      await notifyNewBooking(db, { nombre, telefono, email, servicio, fecha, hora, duracion: duracion || 60, notas }, citaId);
+      await notifyNewBooking(env, { nombre, telefono, email, servicio, fecha, hora, duracion: duracion || 60, notas }, citaId);
     } catch (e) {
       console.error('Notification error:', e);
     }

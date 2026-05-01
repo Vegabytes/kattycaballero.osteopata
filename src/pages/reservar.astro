@@ -176,28 +176,6 @@ const services = [
             </div>
           </div>
 
-          <!-- Step 4: Confirmation -->
-          <div class="booking-step hidden" id="step-4">
-            <div class="confirmation-screen">
-              <div class="confirmation-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-              </div>
-              <h2>Solicitud recibida</h2>
-              <p class="confirmation-subtitle">Tu solicitud se ha registrado correctamente</p>
-              <div class="confirmation-details" id="confirmation-details"></div>
-              <div class="confirmation-pending">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <div>
-                  <strong>Pendiente de confirmación</strong>
-                  <span>Me pondré en contacto contigo por <strong>WhatsApp o teléfono</strong> lo antes posible para confirmar la cita.</span>
-                </div>
-              </div>
-              <div class="confirmation-actions">
-                <a href="/" class="btn-back-home">Volver al inicio</a>
-                <a href="/reservar" class="btn-otra-cita">Reservar otra cita</a>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- RIGHT: Sidebar -->
@@ -237,8 +215,8 @@ const services = [
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
               <div>
                 <strong>Horario</strong>
-                <span>L-V: 9:00-20:00</span>
-                <span>Sáb: 10:00-14:00</span>
+                <span>L-V: 9:00-19:30</span>
+                <span>Sáb: 10:00-13:30</span>
               </div>
             </div>
             <div class="sidebar-info-item">
@@ -676,49 +654,7 @@ const services = [
   }
   .btn-reservar-web:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* Confirmation screen */
-  .confirmation-screen {
-    text-align: center;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px 0;
-  }
-  .confirmation-icon {
-    margin-bottom: 20px;
-  }
-  .confirmation-icon svg {
-    width: 72px;
-    height: 72px;
-    fill: var(--color-primary);
-  }
-  .confirmation-screen h2 {
-    color: var(--color-primary-dark);
-    margin-bottom: 8px;
-  }
-  .confirmation-subtitle {
-    color: var(--color-text-light);
-    margin-bottom: 24px;
-  }
-  .confirmation-details {
-    background: var(--color-cream);
-    border-radius: 14px;
-    padding: 20px;
-    text-align: left;
-    font-size: 0.9rem;
-    line-height: 1.9;
-    color: var(--color-text);
-    border-left: 4px solid var(--color-primary);
-    margin-bottom: 20px;
-  }
-  .confirmation-details strong {
-    color: var(--color-primary-dark);
-  }
-  .confirmation-note {
-    font-size: 0.88rem;
-    color: var(--color-text-muted);
-    margin-bottom: 28px;
-    max-width: none;
-  }
+  /* Pending-confirmation notice (step 3) */
   .confirmation-notice {
     display: flex;
     gap: 12px;
@@ -742,83 +678,14 @@ const services = [
   }
   .confirmation-notice strong { display: block; color: #5a4a1f; margin-bottom: 2px; }
   .confirmation-notice span { display: block; color: #6b5a2c; }
-  .confirmation-pending {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    background: #fff8e6;
-    border: 1px solid #e8c97a;
-    border-left: 4px solid var(--color-secondary, #c4a35a);
-    border-radius: 12px;
-    padding: 16px 18px;
-    margin: 0 auto 28px;
-    max-width: 520px;
-    text-align: left;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #5a4a1f;
-  }
-  .confirmation-pending svg {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    color: #8b6f30;
-    margin-top: 2px;
-  }
-  .confirmation-pending strong { display: block; color: #5a4a1f; font-size: 1rem; margin-bottom: 4px; }
-  .confirmation-pending span { display: block; color: #6b5a2c; }
-  :global([data-theme="dark"]) .confirmation-notice,
-  :global([data-theme="dark"]) .confirmation-pending {
+  :global([data-theme="dark"]) .confirmation-notice {
     background: rgba(196, 163, 90, 0.12);
     border-color: rgba(196, 163, 90, 0.35);
     color: #e8dcc4;
   }
-  :global([data-theme="dark"]) .confirmation-notice strong,
-  :global([data-theme="dark"]) .confirmation-pending strong { color: #f0e4cc; }
-  :global([data-theme="dark"]) .confirmation-notice span,
-  :global([data-theme="dark"]) .confirmation-pending span { color: #d4c8ac; }
-  :global([data-theme="dark"]) .confirmation-notice svg,
-  :global([data-theme="dark"]) .confirmation-pending svg { color: #e8c97a; }
-  .confirmation-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .btn-back-home {
-    display: inline-flex;
-    align-items: center;
-    padding: 12px 24px;
-    background: var(--color-primary);
-    color: white;
-    border-radius: 50px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: var(--transition);
-  }
-  .btn-back-home:hover {
-    background: var(--color-primary-dark);
-    color: white;
-  }
-  .btn-otra-cita {
-    display: inline-flex;
-    align-items: center;
-    padding: 12px 24px;
-    background: transparent;
-    color: var(--color-primary-dark);
-    border: 2px solid var(--color-primary-dark);
-    border-radius: 50px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: var(--transition);
-  }
-  .btn-otra-cita:hover {
-    background: var(--color-primary);
-    color: white;
-    border-color: var(--color-primary);
-  }
+  :global([data-theme="dark"]) .confirmation-notice strong { color: #f0e4cc; }
+  :global([data-theme="dark"]) .confirmation-notice span { color: #d4c8ac; }
+  :global([data-theme="dark"]) .confirmation-notice svg { color: #e8c97a; }
 
   .step-nav { text-align: center; margin-top: 20px; }
   .btn-back {
@@ -1178,15 +1045,6 @@ const services = [
   :global([data-theme="dark"]) .sidebar-info {
     background: #2a2a3e;
   }
-
-  :global([data-theme="dark"]) .confirmation-details {
-    background: #2a2a3e;
-    border-left-color: var(--color-primary);
-  }
-
-  :global([data-theme="dark"]) .confirmation-details strong {
-    color: var(--color-primary-light);
-  }
 </style>
 
 <script>
@@ -1533,26 +1391,6 @@ const services = [
     }
   }
 
-  function showConfirmation(data: ReturnType<typeof getBookingData>) {
-    if (!data) return;
-    const details = document.getElementById('confirmation-details')!;
-    details.innerHTML = `
-      <strong>Servicio:</strong> ${data.service!.name}<br>
-      <strong>Fecha:</strong> ${data.dateDisplay}<br>
-      <strong>Hora:</strong> ${data.time}<br>
-      <strong>Duración:</strong> ${data.service!.duration} · <strong>Precio:</strong> ${data.service!.price}<br>
-      <strong>Nombre:</strong> ${data.name}<br>
-      <strong>Teléfono:</strong> ${data.phone}
-      ${data.notes ? `<br><strong>Notas:</strong> ${data.notes}` : ''}
-    `;
-    // Show step 4
-    document.querySelectorAll('.booking-step').forEach(el => el.classList.add('hidden'));
-    document.getElementById('step-4')?.classList.remove('hidden');
-    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-    document.querySelector('.booking-stepper')?.setAttribute('style', 'display:none;');
-    document.querySelector('.booking-main')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
   // Primary button: Reservar cita (web only)
   document.getElementById('btn-reservar')?.addEventListener('click', async () => {
     const data = getBookingData();
@@ -1591,16 +1429,26 @@ const services = [
 
     const btn = document.getElementById('btn-send') as HTMLButtonElement;
     btn.disabled = true;
+    const originalText = btn.innerHTML;
+    btn.textContent = 'Enviando...';
 
     // Save to DB and check for conflict
     const result = await saveBooking(data);
     if (result.conflict) {
+      btn.innerHTML = originalText;
       btn.textContent = 'Hora ya reservada';
       btn.disabled = false;
       const dateStr = `${state.date!.getFullYear()}-${(state.date!.getMonth()+1).toString().padStart(2,'0')}-${state.date!.getDate().toString().padStart(2,'0')}`;
       delete occupiedCache[dateStr];
       renderTimeSlots();
-      setTimeout(() => { btn.textContent = 'Confirmar por WhatsApp'; showStep(2); }, 2000);
+      setTimeout(() => { btn.innerHTML = originalText; showStep(2); }, 2000);
+      return;
+    }
+    if (!result.ok) {
+      btn.innerHTML = originalText;
+      btn.textContent = 'Error, inténtalo de nuevo';
+      btn.disabled = false;
+      setTimeout(() => { btn.innerHTML = originalText; validateForm(); }, 3000);
       return;
     }
 
@@ -1612,8 +1460,16 @@ const services = [
     message += `*Teléfono:* ${data.phone}`;
     if (data.notes) message += `\n*Notas:* ${data.notes}`;
 
+    // Open WhatsApp in new tab, then redirect to /gracias so the user
+    // sees the confirmation when they come back to the original tab.
     window.open(`https://wa.me/34643961065?text=${encodeURIComponent(message)}`, '_blank');
-    btn.disabled = false;
+    const params = new URLSearchParams({
+      servicio: data.service!.name,
+      fecha: data.dateDisplay,
+      hora: data.time!,
+      precio: data.service!.price,
+    });
+    window.location.href = `/gracias?${params.toString()}`;
   });
 
   // === Booking Draft Persistence (localStorage) ===

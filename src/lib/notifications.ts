@@ -37,7 +37,7 @@ async function getNotifySettings(db: any): Promise<Record<string, string>> {
 }
 
 function formatFechaES(fecha: string): string {
-  const days = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+  const days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
   const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const d = new Date(fecha + 'T00:00:00');
   return `${days[d.getDay()]} ${d.getDate()} de ${months[d.getMonth()]}`;
@@ -65,8 +65,8 @@ function generateGoogleCalendarUrl(booking: BookingData): string {
     action: 'TEMPLATE',
     text: `${booking.servicio || 'Cita'} - ${booking.nombre}`,
     dates: `${fmt(startDate)}/${fmt(endDate)}`,
-    details: `Paciente: ${booking.nombre}\nTelefono: ${booking.telefono}${booking.email ? '\nEmail: ' + booking.email : ''}${booking.notas ? '\nNotas: ' + booking.notas : ''}`,
-    location: 'C/ Rio Guadarrama 2, 28430 Alpedrete, Madrid',
+    details: `Paciente: ${booking.nombre}\nTeléfono: ${booking.telefono}${booking.email ? '\nEmail: ' + booking.email : ''}${booking.notas ? '\nNotas: ' + booking.notas : ''}`,
+    location: 'C/ Río Guadarrama 2, 28430 Alpedrete, Madrid',
     ctz: 'Europe/Madrid',
   });
 
@@ -97,12 +97,12 @@ async function sendEmailNotification(settings: Record<string, string>, booking: 
   <div style="padding:24px;line-height:1.7;color:#333;font-size:14px;">
     <table style="width:100%;border-collapse:collapse;">
       <tr><td style="padding:6px 0;color:#888;width:100px;">Paciente</td><td style="padding:6px 0;font-weight:600;">${booking.nombre}</td></tr>
-      <tr><td style="padding:6px 0;color:#888;">Telefono</td><td style="padding:6px 0;"><a href="tel:${booking.telefono}" style="color:#4a6548;">${booking.telefono}</a></td></tr>
+      <tr><td style="padding:6px 0;color:#888;">Teléfono</td><td style="padding:6px 0;"><a href="tel:${booking.telefono}" style="color:#4a6548;">${booking.telefono}</a></td></tr>
       ${booking.email ? `<tr><td style="padding:6px 0;color:#888;">Email</td><td style="padding:6px 0;">${booking.email}</td></tr>` : ''}
       <tr><td style="padding:6px 0;color:#888;">Servicio</td><td style="padding:6px 0;">${booking.servicio || 'No especificado'}</td></tr>
       <tr><td style="padding:6px 0;color:#888;">Fecha</td><td style="padding:6px 0;font-weight:600;">${fechaDisplay}</td></tr>
       <tr><td style="padding:6px 0;color:#888;">Hora</td><td style="padding:6px 0;font-weight:600;">${booking.hora}</td></tr>
-      <tr><td style="padding:6px 0;color:#888;">Duracion</td><td style="padding:6px 0;">${booking.duracion} min</td></tr>
+      <tr><td style="padding:6px 0;color:#888;">Duración</td><td style="padding:6px 0;">${booking.duracion} min</td></tr>
       ${booking.notas ? `<tr><td style="padding:6px 0;color:#888;">Notas</td><td style="padding:6px 0;">${booking.notas}</td></tr>` : ''}
     </table>
     <div style="margin-top:20px;text-align:center;">
@@ -111,7 +111,7 @@ async function sendEmailNotification(settings: Record<string, string>, booking: 
     </div>
   </div>
   <div style="padding:12px 24px;background:#f9f9f9;text-align:center;font-size:11px;color:#999;">
-    Katy Caballero - Osteópata y Masajista - Alpedrete
+    Katy Caballero · Osteópata y Masajista · Alpedrete
   </div>
 </div>
 </body></html>`;
@@ -126,7 +126,7 @@ async function sendEmailNotification(settings: Record<string, string>, booking: 
       body: JSON.stringify({
         from: emailFrom,
         to: [adminEmail],
-        subject: `Nueva reserva: ${booking.nombre} - ${fechaDisplay} ${booking.hora}`,
+        subject: `Nueva solicitud: ${booking.nombre} · ${fechaDisplay} ${booking.hora}`,
         html,
       }),
     });
@@ -159,12 +159,12 @@ async function sendTelegramNotification(settings: Record<string, string>, bookin
     `Nueva reserva web`,
     ``,
     `Paciente: ${booking.nombre}`,
-    `Telefono: ${booking.telefono}`,
+    `Teléfono: ${booking.telefono}`,
     booking.email ? `Email: ${booking.email}` : '',
     `Servicio: ${booking.servicio || 'No especificado'}`,
     `Fecha: ${fechaDisplay}`,
     `Hora: ${booking.hora}`,
-    `Duracion: ${booking.duracion} min`,
+    `Duración: ${booking.duracion} min`,
     booking.notas ? `Notas: ${booking.notas}` : '',
     ``,
     `WhatsApp paciente: ${waUrl}`,
@@ -209,11 +209,11 @@ async function sendPatientConfirmation(settings: Record<string, string>, booking
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;padding:0;background:#f5f5f5;">
 <div style="max-width:500px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
   <div style="background:#4a6548;padding:18px 24px;text-align:center;">
-    <h1 style="color:#fff;margin:0;font-size:18px;font-weight:500;">Confirmacion de tu cita</h1>
+    <h1 style="color:#fff;margin:0;font-size:18px;font-weight:500;">Hemos recibido tu solicitud</h1>
   </div>
   <div style="padding:24px;line-height:1.7;color:#333;font-size:14px;">
     <p style="margin:0 0 16px;">Hola ${booking.nombre.split(' ')[0]},</p>
-    <p style="margin:0 0 16px;">He recibido tu solicitud de cita. Te confirmare la disponibilidad por telefono o WhatsApp en las proximas horas.</p>
+    <p style="margin:0 0 16px;">He recibido tu solicitud de cita. Te confirmaré la disponibilidad por teléfono o WhatsApp lo antes posible.</p>
     <div style="background:#f8f6f0;border-radius:10px;padding:16px;border-left:4px solid #4a6548;">
       <table style="width:100%;border-collapse:collapse;">
         <tr><td style="padding:4px 0;color:#888;width:90px;">Servicio</td><td style="padding:4px 0;font-weight:600;">${booking.servicio || 'No especificado'}</td></tr>
@@ -229,7 +229,7 @@ async function sendPatientConfirmation(settings: Record<string, string>, booking
     <p style="margin:20px 0 0;font-size:13px;color:#888;text-align:center;">Si necesitas cancelar o cambiar la cita, avísame con al menos 24h de antelación.</p>
   </div>
   <div style="padding:12px 24px;background:#f9f9f9;text-align:center;font-size:11px;color:#999;">
-    Katy Caballero - Osteópata y Masajista - Alpedrete
+    Katy Caballero · Osteópata y Masajista · Alpedrete
   </div>
 </div>
 </body></html>`;
@@ -244,7 +244,7 @@ async function sendPatientConfirmation(settings: Record<string, string>, booking
       body: JSON.stringify({
         from: emailFrom,
         to: [booking.email],
-        subject: `Tu cita: ${fechaDisplay} a las ${booking.hora} - Katy Caballero`,
+        subject: `Solicitud recibida: ${fechaDisplay} a las ${booking.hora} · Katy Caballero`,
         html,
       }),
     });
@@ -259,19 +259,22 @@ async function sendPatientConfirmation(settings: Record<string, string>, booking
   }
 }
 
-function escapeMarkdown(text: string): string {
-  return text.replace(/([_*\[\]()~`>#+\-=|{}.!])/g, '\\$1');
-}
-
 // === PUSH NOTIFICATION ===
 
-async function sendPushNotifications(db: any, title: string, body: string, url: string): Promise<{ sent: boolean; error?: string }> {
+async function sendPushNotifications(
+  db: any,
+  vapidPublicKey: string | undefined,
+  vapidPrivateKey: string | undefined,
+  title: string,
+  body: string,
+  url: string,
+): Promise<{ sent: boolean; error?: string }> {
+  if (!vapidPublicKey || !vapidPrivateKey) {
+    return { sent: false, error: 'VAPID no configurado' };
+  }
   try {
     const { sendPushToAll } = await import('./web-push');
-    const VAPID_PUBLIC_KEY = 'BN2_yYwSv4wQE3GsMkPFzPOq1t_6gXuH5RX25GwVzSn8Q3FHmk_meZ5eQyqV2tcmgCti__mxy13TUzBKJ7g7NQA';
-    const VAPID_PRIVATE_KEY = '3FH-I2W5iqBfIUB9JBKDgA-I_MaNaDy5HbMf1PhXTs0';
-
-    const result = await sendPushToAll(db, { title, body, url, tag: 'nueva-reserva' }, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
+    const result = await sendPushToAll(db, { title, body, url, tag: 'nueva-reserva' }, vapidPublicKey, vapidPrivateKey);
     return { sent: result.sent > 0 };
   } catch (e: any) {
     console.error('Push notification error:', e);
@@ -281,7 +284,8 @@ async function sendPushNotifications(db: any, title: string, body: string, url: 
 
 // === MAIN FUNCTION ===
 
-export async function notifyNewBooking(db: any, booking: BookingData, citaId?: number): Promise<NotifyResult> {
+export async function notifyNewBooking(env: any, booking: BookingData, citaId?: number): Promise<NotifyResult> {
+  const db = env.DB;
   const settings = await getNotifySettings(db);
 
   const emailEnabled = settings.notificacion_email_activo === 'true';
@@ -294,7 +298,7 @@ export async function notifyNewBooking(db: any, booking: BookingData, citaId?: n
     emailEnabled ? sendEmailNotification(settings, booking) : { sent: false, error: 'Desactivado' },
     telegramEnabled ? sendTelegramNotification(settings, booking) : { sent: false, error: 'Desactivado' },
     booking.email ? sendPatientConfirmation(settings, booking) : { sent: false, error: 'Sin email' },
-    sendPushNotifications(db, 'Nueva reserva', `${booking.nombre} - ${fechaDisplay} ${booking.hora}`, pushUrl),
+    sendPushNotifications(db, env.VAPID_PUBLIC_KEY, env.VAPID_PRIVATE_KEY, 'Nueva reserva', `${booking.nombre} - ${fechaDisplay} ${booking.hora}`, pushUrl),
   ]);
 
   return { email: emailResult, telegram: telegramResult, patientEmail: patientResult };
