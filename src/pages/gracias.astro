@@ -37,12 +37,21 @@ const pageDescription = "Tu reserva ha sido recibida. Toda la información que n
     if (servicio && fecha && hora) {
       const el = document.getElementById('booking-details')!;
       el.style.display = 'block';
-      el.innerHTML = `
-        <div class="detail-row"><span>Servicio</span><strong>${servicio}</strong></div>
-        <div class="detail-row"><span>Fecha</span><strong>${fecha}</strong></div>
-        <div class="detail-row"><span>Hora</span><strong>${hora}</strong></div>
-        ${precio ? `<div class="detail-row"><span>Precio</span><strong>${precio}</strong></div>` : ''}
-      `;
+      function row(label: string, value: string) {
+        const div = document.createElement('div');
+        div.className = 'detail-row';
+        const span = document.createElement('span');
+        span.textContent = label;
+        const strong = document.createElement('strong');
+        strong.textContent = value;
+        div.appendChild(span);
+        div.appendChild(strong);
+        return div;
+      }
+      el.appendChild(row('Servicio', servicio));
+      el.appendChild(row('Fecha', fecha));
+      el.appendChild(row('Hora', hora));
+      if (precio) el.appendChild(row('Precio', precio));
     }
   </script>
 

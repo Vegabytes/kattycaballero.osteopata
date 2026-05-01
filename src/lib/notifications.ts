@@ -43,6 +43,16 @@ function formatFechaES(fecha: string): string {
   return `${days[d.getDay()]} ${d.getDate()} de ${months[d.getMonth()]}`;
 }
 
+function escapeHtml(s: string | undefined | null): string {
+  if (!s) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // === GOOGLE CALENDAR URL ===
 
 function generateGoogleCalendarUrl(booking: BookingData): string {
@@ -96,14 +106,14 @@ async function sendEmailNotification(settings: Record<string, string>, booking: 
   </div>
   <div style="padding:24px;line-height:1.7;color:#333;font-size:14px;">
     <table style="width:100%;border-collapse:collapse;">
-      <tr><td style="padding:6px 0;color:#888;width:100px;">Paciente</td><td style="padding:6px 0;font-weight:600;">${booking.nombre}</td></tr>
-      <tr><td style="padding:6px 0;color:#888;">Teléfono</td><td style="padding:6px 0;"><a href="tel:${booking.telefono}" style="color:#4a6548;">${booking.telefono}</a></td></tr>
-      ${booking.email ? `<tr><td style="padding:6px 0;color:#888;">Email</td><td style="padding:6px 0;">${booking.email}</td></tr>` : ''}
-      <tr><td style="padding:6px 0;color:#888;">Servicio</td><td style="padding:6px 0;">${booking.servicio || 'No especificado'}</td></tr>
-      <tr><td style="padding:6px 0;color:#888;">Fecha</td><td style="padding:6px 0;font-weight:600;">${fechaDisplay}</td></tr>
-      <tr><td style="padding:6px 0;color:#888;">Hora</td><td style="padding:6px 0;font-weight:600;">${booking.hora}</td></tr>
+      <tr><td style="padding:6px 0;color:#888;width:100px;">Paciente</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(booking.nombre)}</td></tr>
+      <tr><td style="padding:6px 0;color:#888;">Teléfono</td><td style="padding:6px 0;"><a href="tel:${encodeURIComponent(booking.telefono)}" style="color:#4a6548;">${escapeHtml(booking.telefono)}</a></td></tr>
+      ${booking.email ? `<tr><td style="padding:6px 0;color:#888;">Email</td><td style="padding:6px 0;">${escapeHtml(booking.email)}</td></tr>` : ''}
+      <tr><td style="padding:6px 0;color:#888;">Servicio</td><td style="padding:6px 0;">${escapeHtml(booking.servicio) || 'No especificado'}</td></tr>
+      <tr><td style="padding:6px 0;color:#888;">Fecha</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(fechaDisplay)}</td></tr>
+      <tr><td style="padding:6px 0;color:#888;">Hora</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(booking.hora)}</td></tr>
       <tr><td style="padding:6px 0;color:#888;">Duración</td><td style="padding:6px 0;">${booking.duracion} min</td></tr>
-      ${booking.notas ? `<tr><td style="padding:6px 0;color:#888;">Notas</td><td style="padding:6px 0;">${booking.notas}</td></tr>` : ''}
+      ${booking.notas ? `<tr><td style="padding:6px 0;color:#888;">Notas</td><td style="padding:6px 0;">${escapeHtml(booking.notas)}</td></tr>` : ''}
     </table>
     <div style="margin-top:20px;text-align:center;">
       <a href="https://katycaballeroosteopata.com/admin/citas" style="display:inline-block;padding:10px 24px;background:#4a6548;color:#fff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:500;">Ver en el panel</a>
@@ -212,13 +222,13 @@ async function sendPatientConfirmation(settings: Record<string, string>, booking
     <h1 style="color:#fff;margin:0;font-size:18px;font-weight:500;">Hemos recibido tu solicitud</h1>
   </div>
   <div style="padding:24px;line-height:1.7;color:#333;font-size:14px;">
-    <p style="margin:0 0 16px;">Hola ${booking.nombre.split(' ')[0]},</p>
+    <p style="margin:0 0 16px;">Hola ${escapeHtml(booking.nombre.split(' ')[0])},</p>
     <p style="margin:0 0 16px;">He recibido tu solicitud de cita. Te confirmaré la disponibilidad por teléfono o WhatsApp lo antes posible.</p>
     <div style="background:#f8f6f0;border-radius:10px;padding:16px;border-left:4px solid #4a6548;">
       <table style="width:100%;border-collapse:collapse;">
-        <tr><td style="padding:4px 0;color:#888;width:90px;">Servicio</td><td style="padding:4px 0;font-weight:600;">${booking.servicio || 'No especificado'}</td></tr>
-        <tr><td style="padding:4px 0;color:#888;">Fecha</td><td style="padding:4px 0;font-weight:600;">${fechaDisplay}</td></tr>
-        <tr><td style="padding:4px 0;color:#888;">Hora</td><td style="padding:4px 0;font-weight:600;">${booking.hora}</td></tr>
+        <tr><td style="padding:4px 0;color:#888;width:90px;">Servicio</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(booking.servicio) || 'No especificado'}</td></tr>
+        <tr><td style="padding:4px 0;color:#888;">Fecha</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(fechaDisplay)}</td></tr>
+        <tr><td style="padding:4px 0;color:#888;">Hora</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(booking.hora)}</td></tr>
         <tr><td style="padding:4px 0;color:#888;">Duración</td><td style="padding:4px 0;">${booking.duracion} min</td></tr>
       </table>
     </div>
