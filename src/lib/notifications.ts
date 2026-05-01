@@ -204,7 +204,7 @@ async function sendTelegramNotification(settings: Record<string, string>, bookin
 
 // === PATIENT CONFIRMATION EMAIL ===
 
-async function sendPatientConfirmation(settings: Record<string, string>, booking: BookingData): Promise<{ sent: boolean; error?: string }> {
+async function sendPatientConfirmation(settings: Record<string, string>, booking: BookingData, manageUrl?: string): Promise<{ sent: boolean; error?: string }> {
   const apiKey = settings.email_api_key;
   const emailFrom = settings.email_from || 'Katy Caballero <onboarding@resend.dev>';
 
@@ -213,6 +213,11 @@ async function sendPatientConfirmation(settings: Record<string, string>, booking
   }
 
   const fechaDisplay = formatFechaES(booking.fecha);
+
+  const manageBlock = manageUrl ? `
+    <div style="margin-top:18px;text-align:center;">
+      <a href="${manageUrl}" style="display:inline-block;padding:10px 22px;background:#4a6548;color:#fff;text-decoration:none;border-radius:8px;font-size:13px;font-weight:500;">Cambiar o cancelar cita</a>
+    </div>` : '';
 
   const html = `<!DOCTYPE html>
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width"></head>
@@ -231,7 +236,7 @@ async function sendPatientConfirmation(settings: Record<string, string>, booking
         <tr><td style="padding:4px 0;color:#888;">Hora</td><td style="padding:4px 0;font-weight:600;">${escapeHtml(booking.hora)}</td></tr>
         <tr><td style="padding:4px 0;color:#888;">Duración</td><td style="padding:4px 0;">${booking.duracion} min</td></tr>
       </table>
-    </div>
+    </div>${manageBlock}
     <div style="margin-top:20px;padding:14px;background:#f0f5f0;border-radius:10px;">
       <p style="margin:0;font-size:13px;color:#555;"><strong>Dirección:</strong> C/ Río Guadarrama 2, 28430 Alpedrete (Madrid)</p>
       <p style="margin:6px 0 0;font-size:13px;color:#555;"><strong>Contacto:</strong> <a href="https://wa.me/34643961065" style="color:#25D366;">643 961 065 (WhatsApp)</a></p>
@@ -304,10 +309,23 @@ export async function notifyNewBooking(env: any, booking: BookingData, citaId?: 
   const fechaDisplay = formatFechaES(booking.fecha);
   const pushUrl = citaId ? `/admin/citas/${citaId}` : '/admin/citas';
 
+  // Build the public manage URL if reschedule secret is configured
+  let manageUrl: string | undefined;
+  if (citaId && env.BOOKING_TOKEN_SECRET) {
+    try {
+      const { generateCitaToken } = await import('./cita-token');
+      const token = await generateCitaToken(citaId, env.BOOKING_TOKEN_SECRET);
+      const base = settings.public_base_url || 'https://katycaballeroosteopata.com';
+      manageUrl = `${base.replace(/\/$/, '')}/cita/${token}`;
+    } catch (e) {
+      console.error('Failed to build manage URL:', e);
+    }
+  }
+
   const [emailResult, telegramResult, patientResult] = await Promise.all([
     emailEnabled ? sendEmailNotification(settings, booking) : { sent: false, error: 'Desactivado' },
     telegramEnabled ? sendTelegramNotification(settings, booking) : { sent: false, error: 'Desactivado' },
-    booking.email ? sendPatientConfirmation(settings, booking) : { sent: false, error: 'Sin email' },
+    booking.email ? sendPatientConfirmation(settings, booking, manageUrl) : { sent: false, error: 'Sin email' },
     sendPushNotifications(db, env.VAPID_PUBLIC_KEY, env.VAPID_PRIVATE_KEY, 'Nueva reserva', `${booking.nombre} - ${fechaDisplay} ${booking.hora}`, pushUrl),
   ]);
 
