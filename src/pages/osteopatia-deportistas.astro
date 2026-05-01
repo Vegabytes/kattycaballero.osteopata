@@ -1,0 +1,332 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Osteopatía y masaje deportivo en la Sierra de Madrid | Katy Caballero";
+const pageDescription = "Tratamiento para corredores, ciclistas, esquiadores y deportistas de la Sierra de Madrid. Recuperación de lesiones, prevención y mejora del rendimiento en Alpedrete.";
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalTherapy",
+  "name": "Osteopatía y masaje deportivo",
+  "description": "Tratamiento osteopático y masaje deportivo para deportistas de la Sierra de Madrid: trail running, ciclismo, esquí, senderismo. Recuperación de lesiones y mejora del rendimiento.",
+  "url": "https://katycaballeroosteopata.com/osteopatia-deportistas",
+  "indication": [
+    {"@type": "MedicalCondition", "name": "Cintilla iliotibial"},
+    {"@type": "MedicalCondition", "name": "Fascitis plantar"},
+    {"@type": "MedicalCondition", "name": "Contracturas musculares"},
+    {"@type": "MedicalCondition", "name": "Pubalgia"},
+    {"@type": "MedicalCondition", "name": "Esguince de tobillo"},
+    {"@type": "MedicalCondition", "name": "Tendinopatía de Aquiles"},
+    {"@type": "MedicalCondition", "name": "Sobrecarga muscular"}
+  ],
+  "relevantSpecialty": "Osteopathic"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué diferencia hay entre osteopatía y masaje deportivo para un deportista?",
+      "acceptedAnswer": {"@type": "Answer", "text": "El masaje deportivo trabaja la musculatura para descarga, recuperación tras esfuerzo y prevención de lesiones. La osteopatía aborda el cuerpo de forma global: articulaciones, fascia, vísceras, postura. En lesiones recurrentes (cintilla, pubalgia, fascitis) la osteopatía suele encontrar la causa biomecánica que el masaje por sí solo no resuelve."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuándo es mejor reservar el masaje deportivo: antes o después de la carrera?",
+      "acceptedAnswer": {"@type": "Answer", "text": "El masaje pre-competición se hace 24-48h antes y es más activador, pensado para preparar la musculatura. El post-competición se hace 24-72h después de la prueba, busca descargar y acelerar la recuperación. Para entrenamiento regular, una sesión cada 3-4 semanas mantiene la musculatura en buen estado."}
+    },
+    {
+      "@type": "Question",
+      "name": "Tengo una lesión que me impide entrenar, ¿puedo venir?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí. En la primera sesión valoro tu caso y decido si la osteopatía puede ayudarte. Si la lesión necesita prueba de imagen o derivación a otro profesional, te lo digo claramente. Trabajo con runners y ciclistas de la sierra desde hace años con lesiones de sobrecarga, cintilla, fascitis, lumbalgia y problemas posturales por bici."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta una sesión enfocada a deporte?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Masaje deportivo: 20€ (30 min). Osteopatía completa: 40€ (55 min). Para deportistas que entrenan regularmente, el bono de 5 sesiones de osteopatía sale a 36€/sesión. Puedes consultar todos los precios en /tarifas."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Atendéis a corredores de carreras populares y trail de la sierra?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí, muchos pacientes son corredores que preparan carreras como Cercedilla-Navacerrada, Carrera del Pollo de Galapagar, las trails del Guadarrama o el Marathon de Madrid. La consulta está en Alpedrete, a pie de sierra."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué tipo de deportes tratáis?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Trail running y running, ciclismo de carretera y mountain bike, esquí alpino y de fondo, senderismo, escalada, pádel, fútbol y crossfit. Cualquier práctica deportiva con sobrecargas musculares o lesiones recurrentes."}
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Osteopatía para deportistas" }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="land-hero">
+    <div class="container">
+      <span class="section-tag">Para deportistas</span>
+      <h1>Osteopatía y masaje deportivo en la Sierra de Madrid</h1>
+      <p class="land-hero-subtitle">Recuperación, prevención y mejora del rendimiento para <strong>corredores, ciclistas, esquiadores y senderistas</strong> de Alpedrete y la Sierra de Guadarrama.</p>
+      <div class="land-hero-actions">
+        <a href="/reservar?servicio=Masaje%20deportivo" class="btn btn-primary">Reservar masaje deportivo · 20€</a>
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-outline">Reservar osteopatía · 40€</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-intro">
+    <div class="container">
+      <div class="land-intro-content">
+        <h2>Tu cuerpo entrena duro. Cuídalo.</h2>
+        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista en Alpedrete. Llevo más de <strong>12 años trabajando con deportistas</strong> de toda la Sierra Noroeste: gente que sale a correr por el monte, que sube puertos en bici, que esquía los fines de semana o que entrena para una trail. Cada deporte deja huellas distintas en el cuerpo, y cada cuerpo necesita un enfoque propio.</p>
+        <p>El deporte que tanto te gusta es también el que te genera <strong>sobrecargas, contracturas y desequilibrios</strong>. Si entrenas sin cuidarte, tarde o temprano aparece la lesión. Si te cuidas, no solo evitas problemas: mejoras tu rendimiento, recuperas más rápido y disfrutas más cada salida.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-conditions">
+    <div class="container">
+      <h2>Lo que trato más en deportistas</h2>
+      <div class="conditions-grid">
+        <div class="condition-card">
+          <h3>Cintilla iliotibial</h3>
+          <p>Dolor en la cara externa de la rodilla, típico de runners y ciclistas. Suele ser un problema biomecánico, no sólo muscular.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Fascitis plantar</h3>
+          <p>Dolor en la planta del pie al levantarse o tras correr. Frecuente en corredores que entrenan sobre asfalto o en pendientes.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Contracturas y sobrecargas</h3>
+          <p>Gemelos, isquios, lumbares, trapecios. Lo más común tras una tirada larga, una etapa exigente o un esfuerzo puntual.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Pubalgia</h3>
+          <p>Dolor en la zona inguinal y pubis. Aparece en futbolistas, runners y ciclistas con desequilibrios pélvicos. Requiere abordaje global.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Tendinopatía de Aquiles</h3>
+          <p>Dolor en la parte posterior del talón. Típico de aumentos bruscos de carga o cambio de superficie de entrenamiento.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Lesiones de tobillo y rodilla</h3>
+          <p>Esguinces antiguos mal recuperados, inestabilidad articular y dolor crónico que arrastra el deportista durante meses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-reasons">
+    <div class="container">
+      <h2>Cómo trabajo contigo</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Valoración global</h3>
+          <p>No me quedo en la zona del dolor. Evalúo postura, biomecánica, hábitos de entrenamiento, calzado y vida diaria. La causa de una lesión rara vez está donde duele.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Plan adaptado a tu temporada</h3>
+          <p>No es lo mismo tratarte en pretemporada que dos semanas antes de una trail. El plan se ajusta a tu calendario de entrenamientos y competiciones.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Sin parón innecesario</h3>
+          <p>Solo te paro cuando es necesario. En la mayoría de casos podemos ajustar carga y volumen para que sigas entrenando mientras se resuelve el problema.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Recomendaciones para casa</h3>
+          <p>Te llevas ejercicios concretos de movilidad y fortalecimiento para que el resultado dure entre sesiones. Sin tablas genéricas: tres o cuatro cosas que debes hacer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-testimonios">
+    <div class="container">
+      <h2>Lo que dicen otros deportistas</h2>
+      <div class="testimonios-grid">
+        <blockquote class="testimonio-card">
+          <p>"Katy me ha ayudado con los problemas de espalda ya que trabajo muchas horas con el ordenador. También de una <strong>lesión en el gemelo que me impedía hacer deporte</strong>. Es una persona muy agradable y comunicativa, transmite tranquilidad y confianza."</p>
+          <cite>— Alejandro Castillo, 5★ Google</cite>
+        </blockquote>
+        <blockquote class="testimonio-card">
+          <p>"Katy me ha ayudado en la <strong>recuperación de una lesión de rodilla</strong> y a desinflamar y tratar el dolor. Tiene un trato muy agradable y respetuoso, es una gran profesional. Sin duda la recomiendo."</p>
+          <cite>— Elias Garcia Martinez, 5★ Google</cite>
+        </blockquote>
+        <blockquote class="testimonio-card">
+          <p>"Hace tiempo que me duele el hombro derecho y probé con 2 fisioterapeutas distintos pero salía con el mismo dolor. <strong>Probé con Katy y noté mejoría</strong>. Cada sesión ha sido diferente según la necesidad y dolencia. ¡Katy sabe escucharte a ti y también a tu cuerpo!"</p>
+          <cite>— Iulia Sasu, 5★ Google</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-services">
+    <div class="container">
+      <h2>Tratamientos para deportistas</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Masaje deportivo</h3>
+          <p class="service-meta">20€ · 30 min</p>
+          <p>Descarga muscular tras un entrenamiento exigente. Trabajo profundo en isquios, gemelos, glúteos, espalda. Pre o post competición.</p>
+          <a href="/servicios/masaje-deportivo-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Osteopatía completa</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Cuando hay lesión recurrente, dolor crónico o desequilibrio postural. Estructural, visceral y craneal según lo que necesites.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Bono 5 sesiones</h3>
+          <p class="service-meta">180€ · 36€/sesión</p>
+          <p>Para deportistas que entrenan regularmente. Mantenimiento mensual a precio reducido. Caduca a los 6 meses.</p>
+          <a href="/bonos" class="service-link">Ver bonos →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-cta">
+    <div class="container">
+      <h2>Reserva tu sesión</h2>
+      <p>Cuéntame qué deporte haces y qué te pasa. Te valoro en la primera sesión y diseñamos un plan.</p>
+      <div class="land-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20practico%20deporte%20y%20me%20gustar%C3%ADa%20reservar%20una%20sesi%C3%B3n" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp · 643 961 065</a>
+        <a href="/reservar?servicio=Masaje%20deportivo" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {faqSchema.mainEntity.map((q: any) => (
+          <details class="faq-item">
+            <summary>{q.name}</summary>
+            <p set:html={q.acceptedAnswer.text} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="land-related">
+    <div class="container">
+      <h2>Lecturas recomendadas</h2>
+      <div class="related-grid">
+        <a href="/blog/estiramientos-corredores-montana" class="related-card">
+          <strong>Estiramientos para corredores de montaña</strong>
+          <span>5 ejercicios clave para evitar lesiones de bajada</span>
+        </a>
+        <a href="/blog/recuperacion-deportiva-sierra-madrid" class="related-card">
+          <strong>Recuperación deportiva en la sierra</strong>
+          <span>Qué hacer las 48h después de una trail o etapa</span>
+        </a>
+        <a href="/blog/osteopatia-para-deportistas" class="related-card">
+          <strong>Osteopatía para deportistas</strong>
+          <span>Por qué cada vez más runners y ciclistas la incorporan</span>
+        </a>
+        <a href="/blog/dolor-rodilla-causas-tratamiento-osteopatia" class="related-card">
+          <strong>Dolor de rodilla: causas y tratamiento</strong>
+          <span>Las 4 causas más comunes en personas activas</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .land-hero {
+    padding-top: 140px;
+    padding-bottom: 70px;
+    background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+  .land-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .land-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 700px; margin: 0 auto 32px; line-height: 1.7; }
+  .land-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .land-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-intro-content { max-width: 800px; margin: 0 auto; }
+  .land-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .land-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+
+  .land-conditions { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-conditions h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .condition-card { background: var(--color-warm-white); border-radius: 14px; padding: 26px 22px; border-left: 3px solid var(--color-primary); box-shadow: var(--shadow-soft); }
+  .condition-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .condition-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.65; }
+
+  .land-reasons { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-reasons h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .reason-card { background: var(--color-cream); border-radius: 16px; padding: 30px 26px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .reason-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 10px; }
+  .reason-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.7; }
+
+  .land-testimonios { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-testimonios h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .testimonios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .testimonio-card { background: var(--color-warm-white); padding: 26px 24px; border-radius: 14px; border-left: 3px solid var(--color-secondary); margin: 0; }
+  .testimonio-card p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; line-height: 1.65; color: var(--color-text); margin: 0 0 14px; }
+  .testimonio-card cite { font-style: normal; font-size: 0.85rem; color: var(--color-text-muted); }
+
+  .land-services { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-services h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service-card { background: var(--color-cream); border-radius: 14px; padding: 28px 24px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .service-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .service-meta { font-size: 0.92rem; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+  .service-card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; margin-bottom: 14px; }
+  .service-link { font-size: 0.88rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .service-link:hover { text-decoration: underline; }
+
+  .land-cta { padding: var(--section-padding) 0; background: var(--color-primary); text-align: center; color: white; }
+  .land-cta h2 { color: white; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 14px; }
+  .land-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin-bottom: 28px; }
+  .land-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .land-cta .btn-primary { background: white; color: var(--color-primary); }
+  .land-cta .btn-primary:hover { background: var(--color-cream); }
+  .land-cta .btn-outline { border-color: white; color: white; }
+  .land-cta .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+
+  .land-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .faq-item { background: var(--color-cream); border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); overflow: hidden; }
+  .faq-item summary { padding: 18px 24px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; color: var(--color-primary); font-size: 1.4rem; font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 24px 18px; color: var(--color-text-light); line-height: 1.7; font-size: 0.92rem; }
+
+  .land-related { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-related h2 { text-align: center; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 36px; }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 800px; margin: 0 auto; }
+  .related-card { display: block; background: var(--color-warm-white); padding: 22px 24px; border-radius: 14px; text-decoration: none; border: 1px solid rgba(90, 124, 89, 0.08); transition: all 0.3s ease; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--color-primary); }
+  .related-card strong { display: block; color: var(--color-text); margin-bottom: 4px; font-size: 1rem; }
+  .related-card span { color: var(--color-text-light); font-size: 0.88rem; line-height: 1.6; }
+
+  @media (max-width: 1024px) {
+    .conditions-grid, .testimonios-grid, .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .conditions-grid, .testimonios-grid, .services-grid, .reasons-grid, .faq-grid, .related-grid { grid-template-columns: 1fr; }
+  }
+
+  :global([data-theme="dark"]) .condition-card,
+  :global([data-theme="dark"]) .reason-card,
+  :global([data-theme="dark"]) .testimonio-card,
+  :global([data-theme="dark"]) .service-card,
+  :global([data-theme="dark"]) .related-card,
+  :global([data-theme="dark"]) .faq-item { border-color: rgba(111, 155, 110, 0.12); }
+</style>

@@ -1,0 +1,289 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Masaje y osteopatía para embarazadas en Madrid | Katy Caballero";
+const pageDescription = "Masaje prenatal y osteopatía para embarazadas en Alpedrete (Madrid). Alivio del dolor lumbar, mejor descanso y bienestar desde el 4º mes. Técnica suave y segura.";
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalTherapy",
+  "name": "Masaje y osteopatía para embarazadas",
+  "description": "Tratamiento adaptado al embarazo desde el 4º mes. Alivio de molestias lumbares, piernas pesadas, contracturas cervicales y mejora del descanso.",
+  "url": "https://katycaballeroosteopata.com/osteopatia-embarazadas",
+  "indication": [
+    {"@type": "MedicalCondition", "name": "Lumbalgia del embarazo"},
+    {"@type": "MedicalCondition", "name": "Ciática gestacional"},
+    {"@type": "MedicalCondition", "name": "Edema y retención de líquidos"},
+    {"@type": "MedicalCondition", "name": "Insomnio del embarazo"},
+    {"@type": "MedicalCondition", "name": "Contracturas cervicales"}
+  ],
+  "relevantSpecialty": "Osteopathic"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Desde qué mes del embarazo puedo recibir masaje?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Trabajo con embarazadas a partir del 4º mes (segundo trimestre), una vez pasado el periodo de mayor riesgo del primer trimestre. Si tu embarazo presenta alguna complicación, te pediré el visto bueno de tu ginecólogo o matrona antes de la sesión."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es seguro el masaje durante el embarazo?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí, siempre que se realice con técnica adecuada y con la formación específica para embarazo. Uso una camilla con hueco para la barriga (cuando es posible) o postura lateral con almohadas. Evito puntos de presión que podrían inducir contracciones (zona del tobillo interno y entre pulgar e índice) y trabajo a una intensidad suave-media."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué molestias del embarazo trato?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Lo más frecuente: dolor lumbar y de la pelvis, ciática gestacional, contracturas cervicales y de hombros (por el cambio postural y el peso de los pechos), piernas pesadas y edema, dolor entre los omoplatos, dificultad para descansar e insomnio. La osteopatía también ayuda a equilibrar la pelvis de cara al parto."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto dura la sesión?",
+      "acceptedAnswer": {"@type": "Answer", "text": "60 minutos de masaje específico de embarazadas (40€). Si lo prefieres, puedo combinarlo con técnicas osteopáticas suaves dentro de la misma sesión sin coste extra. Te recomiendo una sesión cada 3-4 semanas durante el embarazo, y más cerca del parto si tienes molestias intensas."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo venir tras el parto?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí, el postparto es un momento clave. La osteopatía postparto ayuda a recuperar la pelvis, mejorar el suelo pélvico, aliviar las tensiones de cargar al bebé y, si has tenido cesárea, trabajar la cicatriz para que no genere adherencias. Recomiendo esperar 4-6 semanas tras parto vaginal y 6-8 tras cesárea, y siempre con el visto bueno médico."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo reservo la cita?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Por WhatsApp al 643 961 065, llamando o desde la web. La consulta está en Alpedrete (Madrid), C/ Río Guadarrama 2, con parking gratuito en la puerta para que llegar y aparcar sea cómodo."}
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Embarazo y postparto" }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="land-hero">
+    <div class="container">
+      <span class="section-tag">Embarazo y postparto</span>
+      <h1>Masaje y osteopatía para embarazadas</h1>
+      <p class="land-hero-subtitle">Cuidado suave y específico desde el <strong>4º mes</strong>. Alivio del dolor lumbar, piernas más ligeras y mejor descanso. En Alpedrete, a tu ritmo.</p>
+      <div class="land-hero-actions">
+        <a href="/reservar?servicio=Masaje%20para%20embarazadas%20(desde%204%C2%BA%20mes)" class="btn btn-primary">Reservar masaje · 40€ / 60 min</a>
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20estoy%20embarazada%20y%20me%20gustar%C3%ADa%20reservar%20una%20sesi%C3%B3n" class="btn btn-outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-intro">
+    <div class="container">
+      <div class="land-intro-content">
+        <h2>Tu cuerpo está cambiando. Te ayudo a vivirlo mejor.</h2>
+        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista en Alpedrete con más de 12 años de experiencia. Tengo formación específica para acompañar a mujeres durante el <strong>embarazo y el postparto</strong>, dos etapas en las que el cuerpo cambia rápido y muchas veces aparecen molestias que pueden aliviarse mucho con un trabajo manual cuidadoso.</p>
+        <p>Cada embarazo es distinto. La sesión se adapta a <strong>tu trimestre, a cómo estás durmiendo, a si te molesta más la espalda o las piernas, a si tu pelvis está pidiendo equilibrio</strong>. Sin prisas, en una sala tranquila y con técnicas seguras pensadas para esta etapa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-conditions">
+    <div class="container">
+      <h2>Lo que más alivio en el embarazo</h2>
+      <div class="conditions-grid">
+        <div class="condition-card">
+          <h3>Dolor lumbar y de pelvis</h3>
+          <p>El cambio del centro de gravedad sobrecarga la zona lumbar y la pelvis. Es la queja más común desde el 5º mes en adelante.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Ciática gestacional</h3>
+          <p>Dolor que baja por una pierna, hormigueos. Suele responder muy bien a la osteopatía suave y al masaje específico.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Piernas pesadas y edema</h3>
+          <p>Drenaje suave para mejorar el retorno venoso. Notarás las piernas más ligeras al salir de la sesión.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Cervicales y hombros</h3>
+          <p>El cambio postural y el peso de los pechos cargan toda la cintura escapular. Trabajo cuello, trapecios y dorsales.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Mejor descanso</h3>
+          <p>Cuesta dormir cuando duele todo. Bajar el tono general del cuerpo ayuda a conciliar el sueño y a despertarse menos.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Postura y respiración</h3>
+          <p>A medida que crece la barriga, la respiración se hace más superficial. Trabajo el diafragma y la caja torácica para que respires más amplio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-reasons">
+    <div class="container">
+      <h2>Cómo es la sesión</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Postura cómoda</h3>
+          <p>Te coloco de lado con cojines de apoyo, en una postura segura y cómoda incluso en el tercer trimestre. No tendrás que estar boca abajo en ningún momento.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Técnica suave</h3>
+          <p>Sin movilizaciones bruscas ni puntos de presión que estén contraindicados en el embarazo. Maniobras que respetan tu cuerpo y al bebé.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Aceite hipoalergénico</h3>
+          <p>Uso aceite vegetal puro, sin perfume ni componentes que puedan irritar la piel sensible del embarazo. Si lo prefieres, podemos no usar aceite.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Tu ritmo, tus pausas</h3>
+          <p>Si necesitas ir al baño, cambiar de postura o simplemente parar, lo hacemos. La sesión va a tu ritmo, no al revés.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-services">
+    <div class="container">
+      <h2>Sesiones disponibles</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Masaje para embarazadas</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Sesión completa con técnica adaptada al trimestre. Trabajo lumbar, piernas, cervicales y zonas de mayor tensión según necesites.</p>
+          <a href="/servicios/masaje-embarazadas-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Osteopatía suave</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Si hay dolor estructural, ciática o desequilibrio pélvico. Técnicas suaves (sacro-craneal, fascial) seguras durante el embarazo.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Recuperación postparto</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Tras 4-6 semanas del parto. Recuperación de pelvis, alivio de tensiones por cargar al bebé y trabajo de cicatriz si has tenido cesárea.</p>
+          <a href="/blog/recuperacion-postparto-osteopatia" class="service-link">Saber más →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-cta">
+    <div class="container">
+      <h2>Reserva tu sesión</h2>
+      <p>Cuéntame en qué semana estás y qué te molesta. Te respondo lo antes posible.</p>
+      <div class="land-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20estoy%20embarazada%20y%20me%20gustar%C3%ADa%20reservar%20una%20sesi%C3%B3n" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp · 643 961 065</a>
+        <a href="/reservar?servicio=Masaje%20para%20embarazadas%20(desde%204%C2%BA%20mes)" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {faqSchema.mainEntity.map((q: any) => (
+          <details class="faq-item">
+            <summary>{q.name}</summary>
+            <p set:html={q.acceptedAnswer.text} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="land-related">
+    <div class="container">
+      <h2>Lecturas recomendadas</h2>
+      <div class="related-grid">
+        <a href="/blog/masaje-embarazadas-beneficios-seguridad" class="related-card">
+          <strong>Masaje en el embarazo: beneficios y seguridad</strong>
+          <span>Lo que sí y lo que no se puede hacer</span>
+        </a>
+        <a href="/blog/recuperacion-postparto-osteopatia" class="related-card">
+          <strong>Osteopatía postparto</strong>
+          <span>Cómo te ayuda a recuperar tu cuerpo</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .land-hero { padding-top: 140px; padding-bottom: 70px; background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
+  .land-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .land-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 700px; margin: 0 auto 32px; line-height: 1.7; }
+  .land-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .land-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-intro-content { max-width: 800px; margin: 0 auto; }
+  .land-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .land-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+
+  .land-conditions { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-conditions h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .condition-card { background: var(--color-warm-white); border-radius: 14px; padding: 26px 22px; border-left: 3px solid var(--color-primary); box-shadow: var(--shadow-soft); }
+  .condition-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .condition-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.65; }
+
+  .land-reasons { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-reasons h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .reason-card { background: var(--color-cream); border-radius: 16px; padding: 30px 26px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .reason-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 10px; }
+  .reason-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.7; }
+
+  .land-services { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-services h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service-card { background: var(--color-warm-white); border-radius: 14px; padding: 28px 24px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .service-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .service-meta { font-size: 0.92rem; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+  .service-card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; margin-bottom: 14px; }
+  .service-link { font-size: 0.88rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .service-link:hover { text-decoration: underline; }
+
+  .land-cta { padding: var(--section-padding) 0; background: var(--color-primary); text-align: center; color: white; }
+  .land-cta h2 { color: white; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 14px; }
+  .land-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin-bottom: 28px; }
+  .land-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .land-cta .btn-primary { background: white; color: var(--color-primary); }
+  .land-cta .btn-primary:hover { background: var(--color-cream); }
+  .land-cta .btn-outline { border-color: white; color: white; }
+  .land-cta .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+
+  .land-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .faq-item { background: var(--color-cream); border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); overflow: hidden; }
+  .faq-item summary { padding: 18px 24px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; color: var(--color-primary); font-size: 1.4rem; font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 24px 18px; color: var(--color-text-light); line-height: 1.7; font-size: 0.92rem; }
+
+  .land-related { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-related h2 { text-align: center; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 36px; }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 800px; margin: 0 auto; }
+  .related-card { display: block; background: var(--color-warm-white); padding: 22px 24px; border-radius: 14px; text-decoration: none; border: 1px solid rgba(90, 124, 89, 0.08); transition: all 0.3s ease; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--color-primary); }
+  .related-card strong { display: block; color: var(--color-text); margin-bottom: 4px; font-size: 1rem; }
+  .related-card span { color: var(--color-text-light); font-size: 0.88rem; line-height: 1.6; }
+
+  @media (max-width: 1024px) {
+    .conditions-grid, .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .conditions-grid, .services-grid, .reasons-grid, .faq-grid, .related-grid { grid-template-columns: 1fr; }
+  }
+
+  :global([data-theme="dark"]) .condition-card,
+  :global([data-theme="dark"]) .reason-card,
+  :global([data-theme="dark"]) .service-card,
+  :global([data-theme="dark"]) .related-card,
+  :global([data-theme="dark"]) .faq-item { border-color: rgba(111, 155, 110, 0.12); }
+</style>

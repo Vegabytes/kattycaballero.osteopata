@@ -33,7 +33,7 @@ export default defineConfig({
         } else if (item.url.includes('/servicios/') && item.url !== 'https://katycaballeroosteopata.com/servicios/') {
           item.priority = 0.9;
           item.changefreq = 'monthly';
-        } else if (item.url.includes('/osteopata-') || item.url.includes('/masaje-')) {
+        } else if (item.url.includes('/osteopata-') || item.url.includes('/masaje-') || item.url.includes('/osteopatia-deportistas') || item.url.includes('/osteopatia-embarazadas')) {
           item.priority = 0.85;
           item.changefreq = 'monthly';
         } else if (item.url.includes('/reservar') || item.url.includes('/tarifas') || item.url.includes('/contacto') || item.url.includes('/opiniones')) {

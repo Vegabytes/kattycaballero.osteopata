@@ -1,0 +1,331 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Masaje tradicional tailandés en Madrid (Sierra) | Katy Caballero";
+const pageDescription = "Auténtico masaje tradicional tailandés en Alpedrete, Sierra de Madrid. Técnica milenaria con estiramientos asistidos. 60 o 90 min, ropa cómoda y sin aceite.";
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Masaje tradicional tailandés",
+  "serviceType": "Masaje tailandés",
+  "description": "Masaje tradicional tailandés en Alpedrete (Madrid). Técnica milenaria con presiones rítmicas y estiramientos asistidos. Sesión de 60 o 90 minutos.",
+  "url": "https://katycaballeroosteopata.com/masaje-tailandes-madrid",
+  "areaServed": [
+    {"@type": "AdministrativeArea", "name": "Sierra de Madrid"},
+    {"@type": "AdministrativeArea", "name": "Comunidad de Madrid"}
+  ],
+  "offers": [
+    {"@type": "Offer", "price": "45", "priceCurrency": "EUR", "name": "Masaje tailandés 60 min"},
+    {"@type": "Offer", "price": "60", "priceCurrency": "EUR", "name": "Masaje tailandés 90 min"}
+  ]
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es exactamente un masaje tradicional tailandés?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Es una técnica con más de 2.500 años de historia originaria de Tailandia. Combina presiones con manos, codos, rodillas y pies a lo largo de las líneas energéticas (sen), estiramientos asistidos similares a posturas de yoga y movilizaciones articulares. Se realiza en colchoneta en el suelo, con ropa cómoda y sin aceite."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿En qué se diferencia de un masaje occidental?",
+      "acceptedAnswer": {"@type": "Answer", "text": "El masaje occidental (sueco, deportivo, californiano) trabaja sobre la musculatura con aceite, en camilla y mientras tú te dejas hacer. El tailandés es activo: yo te muevo, te estiro, te coloco en posturas. Trabaja la flexibilidad, la energía y la movilidad articular además de la musculatura. Se hace vestido y sin aceite."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto dura una sesión y cuánto cuesta?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sesión corta de 60 minutos (45€) o sesión completa de 90 minutos (60€). La de 90 minutos es la auténtica experiencia tailandesa: tiempo suficiente para trabajar todo el cuerpo sin prisas. Para una primera vez recomiendo la de 90 min."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué ropa llevo?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Ropa cómoda que permita movimiento: leggings, pantalón de chándal, camiseta amplia. No vale ropa muy ajustada ni con cremalleras grandes. Si vienes desde el trabajo, hay zona donde cambiarte."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué beneficios voy a notar?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Más flexibilidad y movilidad articular, descarga de tensión muscular profunda, sensación de energía renovada, mejor descanso, y muchas veces alivio de dolores crónicos de espalda, cervicales y caderas. La sensación más común al terminar es 'salgo nueva'."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es doloroso?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Hay momentos de presión profunda que pueden sentirse intensos, pero siempre dentro de un nivel agradable. El masaje tailandés no es duro porque sí: las presiones son rítmicas y respetan tu respiración. Si en algún momento te resulta excesivo, lo bajo. Tu sensación durante la sesión es la única referencia."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Se puede recibir si tengo alguna lesión o estoy embarazada?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Si estás embarazada, recomiendo el masaje específico de embarazo (no el tailandés) por seguridad. Si tienes una lesión reciente, hernia discal aguda u operación reciente, consultámelo antes: en algunos casos hay que adaptar o esperar. Para personas con dolor crónico en buen estado general, el tailandés suele venir muy bien."}
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Masaje tailandés en Madrid" }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="land-hero">
+    <div class="container">
+      <span class="section-tag">Masaje tradicional tailandés</span>
+      <h1>Auténtico masaje tailandés en la Sierra de Madrid</h1>
+      <p class="land-hero-subtitle">Técnica milenaria con presiones rítmicas y estiramientos asistidos. <strong>Sin aceite, con ropa cómoda</strong>, en colchoneta. Sesión de 60 o 90 minutos en Alpedrete.</p>
+      <div class="land-hero-actions">
+        <a href="/reservar?servicio=Masaje%20tradicional%20tailand%C3%A9s%20(90%20min)" class="btn btn-primary">Reservar 90 min · 60€</a>
+        <a href="/reservar?servicio=Masaje%20tradicional%20tailand%C3%A9s%20(60%20min)" class="btn btn-outline">Reservar 60 min · 45€</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-intro">
+    <div class="container">
+      <div class="land-intro-content">
+        <h2>Más de 2.500 años de tradición, en Alpedrete</h2>
+        <p>El <strong>nuad bo-rarn</strong>, conocido en Occidente como masaje tradicional tailandés, es una de las técnicas manuales más antiguas del mundo. Se trabaja sobre las <strong>líneas energéticas (sen)</strong> con presiones rítmicas usando manos, codos, rodillas y pies, y se combina con estiramientos asistidos similares a las posturas del yoga.</p>
+        <p>No es solo un masaje: es una experiencia corporal completa. Trabajamos en colchoneta a ras de suelo, tú con ropa cómoda y sin aceite. Yo te llevo a través de movimientos y estiramientos, tú te dejas mover. Sales con la sensación de haber recibido <strong>masaje, sesión de yoga y momento meditativo</strong> a la vez.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-conditions">
+    <div class="container">
+      <h2>Lo que vas a notar</h2>
+      <div class="conditions-grid">
+        <div class="condition-card">
+          <h3>Más flexibilidad</h3>
+          <p>Los estiramientos asistidos llegan a rangos de movimiento que tú solo no alcanzarías. Notarás la diferencia desde el primer día.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Tensión profunda fuera</h3>
+          <p>Caderas, glúteos, isquios, espalda alta y cuello. Las zonas que más arrastramos del día a día se descargan de manera profunda.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Energía renovada</h3>
+          <p>El trabajo sobre las líneas sen reactiva la circulación y deja una sensación general de ligereza y energía clara durante días.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Mejor descanso</h3>
+          <p>Una de las sensaciones más comentadas: dormir profundo y reparador la noche siguiente al masaje.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Dolor crónico bajo control</h3>
+          <p>Muy útil para dolores recurrentes de espalda, cuello, caderas y piernas que ya no responden bien a tratamientos clásicos.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Mente más quieta</h3>
+          <p>Por su ritmo y profundidad, es de los pocos masajes con efecto meditativo real. Sales del modo "hacer" y entras en modo "estar".</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-reasons">
+    <div class="container">
+      <h2>Por qué elegir esta consulta</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Formación específica en tailandés</h3>
+          <p>No es un servicio improvisado. Tengo formación específica en masaje tradicional tailandés, no es una versión "occidentalizada" del masaje.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Espacio cuidado</h3>
+          <p>Sala tranquila, climatizada, con colchoneta tradicional. Sin ruidos ni interrupciones. La experiencia importa tanto como la técnica.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Sin prisa</h3>
+          <p>La sesión de 90 min es lo que el masaje pide. No te corto la sesión a los 80 minutos para preparar al siguiente. Te llevas tu hora y media completa.</p>
+        </div>
+        <div class="reason-card">
+          <h3>A 30 minutos de Madrid</h3>
+          <p>Alpedrete está a 30 min en coche desde Madrid centro por la A-6. Parking gratuito en la puerta. Plan perfecto para sábado por la mañana o tarde de viernes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-testimonios">
+    <div class="container">
+      <h2>Lo que dicen quienes lo han probado</h2>
+      <div class="testimonios-grid">
+        <blockquote class="testimonio-card">
+          <p>"Mi primera vez y ha sido una experiencia de 10. Un espacio muy acogedor, que invita a la relajación y el bienestar desde el primer momento. Gran profesional detallista, cuidadosa que <strong>maneja diferentes técnicas y te deja nueva, descargada y casi flotando</strong>."</p>
+          <cite>— Natalia Fernández, 5★ Google</cite>
+        </blockquote>
+        <blockquote class="testimonio-card">
+          <p>"Si estás buscando unas <strong>manos firmes y profesionales</strong> por la zona, no dejes de ir a conocer a Katy. En un espacio bonito y tranquilo, ella repara el cuerpo y calma la mente. Yo salgo como nueva y mi cuello también."</p>
+          <cite>— Ana Pouso, 5★ Google</cite>
+        </blockquote>
+        <blockquote class="testimonio-card">
+          <p>"<strong>Salí nueva, en paz con mi cuerpo y conmigo misma</strong>."</p>
+          <cite>— Laura G.U., 5★ Google</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-services">
+    <div class="container">
+      <h2>Reserva tu sesión</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Sesión completa</h3>
+          <p class="service-meta">60€ · 90 min</p>
+          <p>La auténtica experiencia tailandesa. Tiempo suficiente para trabajar todo el cuerpo sin prisas. Lo más recomendado para una primera vez.</p>
+          <a href="/reservar?servicio=Masaje%20tradicional%20tailand%C3%A9s%20(90%20min)" class="service-link">Reservar →</a>
+        </div>
+        <div class="service-card">
+          <h3>Sesión corta</h3>
+          <p class="service-meta">45€ · 60 min</p>
+          <p>Ideal si ya conoces el masaje tailandés y quieres una sesión más corta de mantenimiento. Trabajamos zona específica con profundidad.</p>
+          <a href="/reservar?servicio=Masaje%20tradicional%20tailand%C3%A9s%20(60%20min)" class="service-link">Reservar →</a>
+        </div>
+        <div class="service-card">
+          <h3>Para regalar</h3>
+          <p class="service-meta">Tarjeta regalo</p>
+          <p>El masaje tailandés es uno de los regalos que más se agradecen. Tarjeta personalizable con la sesión que elijas.</p>
+          <a href="/regalar" class="service-link">Ver opciones →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-cta">
+    <div class="container">
+      <h2>¿Tu primera vez con masaje tailandés?</h2>
+      <p>Te resuelvo cualquier duda por WhatsApp antes de reservar.</p>
+      <div class="land-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20me%20interesa%20el%20masaje%20tailand%C3%A9s%20y%20quer%C3%ADa%20preguntarte" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp · 643 961 065</a>
+        <a href="/reservar?servicio=Masaje%20tradicional%20tailand%C3%A9s%20(90%20min)" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {faqSchema.mainEntity.map((q: any) => (
+          <details class="faq-item">
+            <summary>{q.name}</summary>
+            <p set:html={q.acceptedAnswer.text} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="land-related">
+    <div class="container">
+      <h2>Lecturas recomendadas</h2>
+      <div class="related-grid">
+        <a href="/blog/masaje-tailandes-beneficios" class="related-card">
+          <strong>Beneficios del masaje tailandés</strong>
+          <span>Lo que aporta a cuerpo y mente</span>
+        </a>
+        <a href="/blog/beneficios-masaje-tailandes-cuerpo" class="related-card">
+          <strong>El masaje tailandés y tu cuerpo</strong>
+          <span>Por qué es distinto a un masaje convencional</span>
+        </a>
+        <a href="/blog/masaje-o-osteopatia-que-elegir" class="related-card">
+          <strong>¿Masaje u osteopatía?</strong>
+          <span>Cuál pedir según tu caso</span>
+        </a>
+        <a href="/servicios/masaje-tailandes-alpedrete" class="related-card">
+          <strong>Página oficial del servicio</strong>
+          <span>Detalles técnicos y reserva</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .land-hero { padding-top: 140px; padding-bottom: 70px; background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
+  .land-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .land-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 720px; margin: 0 auto 32px; line-height: 1.7; }
+  .land-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .land-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-intro-content { max-width: 800px; margin: 0 auto; }
+  .land-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .land-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+
+  .land-conditions { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-conditions h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .condition-card { background: var(--color-warm-white); border-radius: 14px; padding: 26px 22px; border-left: 3px solid var(--color-primary); box-shadow: var(--shadow-soft); }
+  .condition-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .condition-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.65; }
+
+  .land-reasons { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-reasons h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .reason-card { background: var(--color-cream); border-radius: 16px; padding: 30px 26px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .reason-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 10px; }
+  .reason-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.7; }
+
+  .land-testimonios { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-testimonios h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .testimonios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .testimonio-card { background: var(--color-warm-white); padding: 26px 24px; border-radius: 14px; border-left: 3px solid var(--color-secondary); margin: 0; }
+  .testimonio-card p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; line-height: 1.65; color: var(--color-text); margin: 0 0 14px; }
+  .testimonio-card cite { font-style: normal; font-size: 0.85rem; color: var(--color-text-muted); }
+
+  .land-services { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-services h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service-card { background: var(--color-cream); border-radius: 14px; padding: 28px 24px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .service-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .service-meta { font-size: 0.92rem; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+  .service-card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; margin-bottom: 14px; }
+  .service-link { font-size: 0.88rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .service-link:hover { text-decoration: underline; }
+
+  .land-cta { padding: var(--section-padding) 0; background: var(--color-primary); text-align: center; color: white; }
+  .land-cta h2 { color: white; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 14px; }
+  .land-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin-bottom: 28px; }
+  .land-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .land-cta .btn-primary { background: white; color: var(--color-primary); }
+  .land-cta .btn-primary:hover { background: var(--color-cream); }
+  .land-cta .btn-outline { border-color: white; color: white; }
+  .land-cta .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+
+  .land-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .faq-item { background: var(--color-cream); border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); overflow: hidden; }
+  .faq-item summary { padding: 18px 24px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; color: var(--color-primary); font-size: 1.4rem; font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 24px 18px; color: var(--color-text-light); line-height: 1.7; font-size: 0.92rem; }
+
+  .land-related { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-related h2 { text-align: center; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 36px; }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 800px; margin: 0 auto; }
+  .related-card { display: block; background: var(--color-warm-white); padding: 22px 24px; border-radius: 14px; text-decoration: none; border: 1px solid rgba(90, 124, 89, 0.08); transition: all 0.3s ease; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--color-primary); }
+  .related-card strong { display: block; color: var(--color-text); margin-bottom: 4px; font-size: 1rem; }
+  .related-card span { color: var(--color-text-light); font-size: 0.88rem; line-height: 1.6; }
+
+  @media (max-width: 1024px) {
+    .conditions-grid, .testimonios-grid, .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .conditions-grid, .testimonios-grid, .services-grid, .reasons-grid, .faq-grid, .related-grid { grid-template-columns: 1fr; }
+  }
+
+  :global([data-theme="dark"]) .condition-card,
+  :global([data-theme="dark"]) .reason-card,
+  :global([data-theme="dark"]) .testimonio-card,
+  :global([data-theme="dark"]) .service-card,
+  :global([data-theme="dark"]) .related-card,
+  :global([data-theme="dark"]) .faq-item { border-color: rgba(111, 155, 110, 0.12); }
+</style>
