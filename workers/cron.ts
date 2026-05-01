@@ -676,6 +676,71 @@ async function processBonosCaducados(db: D1Database, settings: Settings): Promis
   return logs;
 }
 
+// === CUMPLEAÑOS ===
+
+async function processCumpleanos(db: D1Database, settings: Settings, env: Env): Promise<string[]> {
+  const logs: string[] = [];
+
+  if (settings.cumpleanos_activo !== 'true') {
+    logs.push('Cumpleaños: desactivado en ajustes');
+    return logs;
+  }
+
+  const hoy = getDateInMadrid(0); // YYYY-MM-DD en hora Madrid
+  const mmdd = hoy.slice(5); // MM-DD
+
+  // Pacientes que cumplen años hoy (comparando solo mes y día)
+  const pacientes = (await db.prepare(
+    `SELECT id, nombre, apellidos, telefono, fecha_nacimiento
+     FROM pacientes
+     WHERE fecha_nacimiento IS NOT NULL
+       AND substr(fecha_nacimiento, 6, 5) = ?`
+  ).bind(mmdd).all()).results as { id: number; nombre: string; apellidos: string; telefono: string | null; fecha_nacimiento: string }[];
+
+  if (pacientes.length === 0) {
+    logs.push('Cumpleaños: nadie cumple años hoy');
+    return logs;
+  }
+
+  logs.push(`Cumpleaños: ${pacientes.length} paciente(s) cumplen hoy`);
+
+  const botToken = settings.telegram_bot_token;
+  const chatId = settings.telegram_chat_id;
+  const plantilla = settings.cumpleanos_mensaje
+    || 'Hola {nombre}, desde Katy Caballero Osteópata te deseamos un feliz cumpleaños. ¡Que tengas un gran día!';
+
+  if (botToken && chatId) {
+    const lines = pacientes.map(p => `- ${p.nombre} ${p.apellidos}`);
+    await sendTelegram(botToken, chatId, `🎂 Cumpleaños hoy:\n\n${lines.join('\n')}`);
+    logs.push('Telegram resumen cumpleaños: enviado');
+
+    for (const p of pacientes) {
+      if (!p.telefono) continue;
+      const phone = p.telefono.replace(/\D/g, '').replace(/^34/, '');
+      const mensaje = plantilla.replace(/\{nombre\}/g, p.nombre);
+      const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(mensaje)}`;
+      await sendTelegram(botToken, chatId,
+        `🎉 Felicitar a ${p.nombre} ${p.apellidos}:\n${waUrl}`);
+    }
+  } else {
+    logs.push('Cumpleaños: falta config Telegram');
+  }
+
+  // Push notification al PWA admin
+  if (env.VAPID_PRIVATE_KEY && env.VAPID_PUBLIC_KEY) {
+    const nombres = pacientes.map(p => p.nombre).join(', ');
+    const pushLogs = await sendPushToAll(db, {
+      title: `🎂 ${pacientes.length} cumpleaños hoy`,
+      body: nombres,
+      url: '/admin/pacientes',
+      tag: 'cumpleanos-hoy',
+    }, env);
+    logs.push(...pushLogs);
+  }
+
+  return logs;
+}
+
 // === WORKER ENTRY ===
 
 export default {
@@ -694,6 +759,9 @@ export default {
 
     const bonosLogs = await processBonosCaducados(env.DB, settings);
     logs.push(...bonosLogs);
+
+    const cumpleLogs = await processCumpleanos(env.DB, settings, env);
+    logs.push(...cumpleLogs);
 
     console.log('Cron completed:', logs.join(' | '));
   },
@@ -720,6 +788,9 @@ export default {
 
     const bonosLogs = await processBonosCaducados(env.DB, settings);
     logs.push(...bonosLogs);
+
+    const cumpleLogs = await processCumpleanos(env.DB, settings, env);
+    logs.push(...cumpleLogs);
 
     return new Response(JSON.stringify({ logs }, null, 2), {
       headers: { 'Content-Type': 'application/json' },
