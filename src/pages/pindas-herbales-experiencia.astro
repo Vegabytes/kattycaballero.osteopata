@@ -1,0 +1,253 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Masaje con pindas herbales: experiencia premium en Madrid | Katy Caballero";
+const pageDescription = "Masaje con pindas herbales calientes en Alpedrete: una experiencia única en la Sierra de Madrid. 90 min de relax profundo, hierbas medicinales tibetanas. Ideal para regalar.";
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Masaje con pindas herbales calientes",
+  "serviceType": "Masaje terapéutico premium",
+  "description": "Masaje con saquitos de hierbas medicinales calientes (pindas) en Alpedrete (Madrid). 90 minutos de tratamiento premium con propiedades antiinflamatorias y relajantes.",
+  "url": "https://katycaballeroosteopata.com/pindas-herbales-experiencia",
+  "areaServed": [
+    {"@type": "AdministrativeArea", "name": "Sierra de Madrid"},
+    {"@type": "AdministrativeArea", "name": "Comunidad de Madrid"}
+  ],
+  "offers": [
+    {"@type": "Offer", "price": "70", "priceCurrency": "EUR", "name": "Pindas herbales 90 min"}
+  ]
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué son las pindas herbales?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Son saquitos de tela rellenos con una mezcla de hierbas medicinales (jengibre, cúrcuma, hierba limón, romero, eucalipto y otras según la receta) que se calientan al vapor y se usan como herramienta de masaje. Combinan el efecto del calor, las propiedades de las plantas que penetran en la piel y el masaje rítmico. Es una técnica con siglos de tradición en India, Tailandia y Sri Lanka."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto dura la sesión y cuánto cuesta?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sesión de 90 minutos por 70€. Es la sesión más larga y completa que ofrezco. Incluye masaje con aceite caliente para preparar la zona y masaje con las pindas calientes después. Se trabaja todo el cuerpo."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Para quién es esta sesión?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Para quien busca una experiencia profunda de relax, no solo un masaje terapéutico. Va muy bien también para personas con dolor muscular crónico, contracturas profundas, articulaciones rígidas o sensación de frío permanente en el cuerpo. Es uno de los regalos que más se agradecen para cumpleaños, aniversarios o como detalle especial."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo regalarlo?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí, es uno de los regalos más solicitados. Tarjeta personalizada con el nombre del receptor, válida durante 6 meses. Puedes encargarla por WhatsApp o desde la página de regalos. Te la envío por email lista para imprimir o reenviar."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es seguro durante el embarazo o si tengo alguna condición?",
+      "acceptedAnswer": {"@type": "Answer", "text": "No recomiendo pindas durante el embarazo (calor + presión profunda no son ideales). Si tienes problemas circulatorios, hipertensión no controlada, fiebre, o estás en tratamiento oncológico, consúltame antes. Para la mayoría de personas sin contraindicaciones, es una sesión muy bien tolerada."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué notaré después?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sensación de calor agradable que dura horas, piel hidratada y suave, descarga muscular profunda y descanso especialmente reparador la noche siguiente. Es de las sesiones que más comentarios positivos generan: la mayoría de quien la prueba la repite."}
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Pindas herbales experiencia" }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="land-hero">
+    <div class="container">
+      <span class="section-tag">Experiencia premium · 90 min</span>
+      <h1>Masaje con pindas herbales calientes</h1>
+      <p class="land-hero-subtitle">Una sesión de <strong>90 minutos</strong> con saquitos de hierbas medicinales calientes. Relax profundo, propiedades antiinflamatorias, calor que llega al hueso. La sesión más completa de la consulta.</p>
+      <div class="land-hero-actions">
+        <a href="/reservar?servicio=Masaje%20con%20pindas%20herbales%20calientes" class="btn btn-primary">Reservar · 70€ / 90 min</a>
+        <a href="/regalar" class="btn btn-outline">Regalar esta sesión</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-intro">
+    <div class="container">
+      <div class="land-intro-content">
+        <h2>Una técnica con siglos de tradición</h2>
+        <p>Las <strong>pindas</strong> son saquitos de tela rellenos con una mezcla de hierbas medicinales (jengibre, cúrcuma, hierba limón, romero, eucalipto, entre otras). Se calientan al vapor y se aplican sobre el cuerpo combinando <strong>presión, calor, aroma y los principios activos de las plantas</strong>.</p>
+        <p>Es una técnica con <strong>siglos de tradición</strong> en India, Tailandia y Sri Lanka, donde forma parte del ayurveda y la medicina tradicional. En Occidente la usamos sobre todo como experiencia premium y como tratamiento terapéutico para dolor muscular crónico, articulaciones rígidas o estrés acumulado.</p>
+        <p>No es un masaje cualquiera. Es <strong>una experiencia</strong>: el calor de las pindas, el aroma de las hierbas, la presión rítmica, el aceite tibio. La mayoría de la gente sale diciendo que es lo más relajante que ha probado.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-conditions">
+    <div class="container">
+      <h2>Qué notarás durante y después</h2>
+      <div class="conditions-grid">
+        <div class="condition-card">
+          <h3>Calor profundo y duradero</h3>
+          <p>El calor de las pindas penetra en los tejidos y permanece horas. Sensación especialmente agradable en otoño e invierno.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Descarga muscular profunda</h3>
+          <p>La combinación de calor + presión rítmica disuelve contracturas que el masaje convencional a veces no termina de soltar.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Piel hidratada y suave</h3>
+          <p>Las hierbas se aplican con aceite tibio. La piel sale muy nutrida, casi con efecto spa.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Aroma terapéutico</h3>
+          <p>Eucalipto, jengibre, hierba limón. El aroma forma parte del tratamiento: relaja el sistema nervioso desde el primer minuto.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Sueño reparador</h3>
+          <p>Una de las sensaciones más comentadas: la noche siguiente al masaje muchas personas duermen del tirón.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Sensación general de bienestar</h3>
+          <p>Esa sensación de "estar en paz" que dura todo el día siguiente. Combina efecto físico y emocional.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-reasons">
+    <div class="container">
+      <h2>Por qué probarlo aquí</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Pindas preparadas con cuidado</h3>
+          <p>Mezcla propia de hierbas medicinales, no producto industrial. Cada sesión usa pindas frescas y limpias.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Sin prisa</h3>
+          <p>La sesión es de 90 min y dura 90 min. No te corto a los 80 para el siguiente. Es la única sesión de la franja horaria.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Espacio cuidado</h3>
+          <p>Sala tranquila, climatizada, con luz cálida. Música baja. Sin ruidos ni interrupciones.</p>
+        </div>
+        <div class="reason-card">
+          <h3>A 30 minutos de Madrid</h3>
+          <p>Alpedrete está a 30 min de Madrid centro. Parking gratuito en la puerta. Plan perfecto para sábado o tarde de viernes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-services">
+    <div class="container">
+      <h2>Reserva o regala</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Sesión 90 min</h3>
+          <p class="service-meta">70€</p>
+          <p>La experiencia completa: aceite caliente para preparar + pindas para tratar. Todo el cuerpo. Reserva tu hueco.</p>
+          <a href="/reservar?servicio=Masaje%20con%20pindas%20herbales%20calientes" class="service-link">Reservar →</a>
+        </div>
+        <div class="service-card">
+          <h3>Tarjeta regalo</h3>
+          <p class="service-meta">70€ · personalizable</p>
+          <p>Para sorprender. Tarjeta con el nombre del receptor, válida 6 meses. Te la envío por email lista para imprimir.</p>
+          <a href="/regalar" class="service-link">Encargar regalo →</a>
+        </div>
+        <div class="service-card">
+          <h3>Combinada con masaje</h3>
+          <p class="service-meta">A consultar</p>
+          <p>Si quieres combinarlo con osteopatía o masaje específico de zona, hablamos por WhatsApp y diseñamos la sesión.</p>
+          <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20quiero%20una%20sesi%C3%B3n%20combinada%20con%20pindas" target="_blank" rel="noopener noreferrer" class="service-link">WhatsApp →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-cta">
+    <div class="container">
+      <h2>¿Tu primera vez con pindas?</h2>
+      <p>Te resuelvo cualquier duda por WhatsApp antes de reservar.</p>
+      <div class="land-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20me%20interesan%20las%20pindas%20herbales%20y%20quer%C3%ADa%20preguntarte" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp · 643 961 065</a>
+        <a href="/reservar?servicio=Masaje%20con%20pindas%20herbales%20calientes" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {faqSchema.mainEntity.map((q: any) => (
+          <details class="faq-item">
+            <summary>{q.name}</summary>
+            <p set:html={q.acceptedAnswer.text} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .land-hero { padding-top: 140px; padding-bottom: 70px; background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
+  .land-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .land-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 720px; margin: 0 auto 32px; line-height: 1.7; }
+  .land-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .land-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-intro-content { max-width: 800px; margin: 0 auto; }
+  .land-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .land-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+  .land-conditions { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-conditions h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .condition-card { background: var(--color-warm-white); border-radius: 14px; padding: 26px 22px; border-left: 3px solid var(--color-primary); box-shadow: var(--shadow-soft); }
+  .condition-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .condition-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.65; }
+  .land-reasons { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-reasons h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .reason-card { background: var(--color-cream); border-radius: 16px; padding: 30px 26px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .reason-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 10px; }
+  .reason-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.7; }
+  .land-services { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-services h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service-card { background: var(--color-warm-white); border-radius: 14px; padding: 28px 24px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .service-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .service-meta { font-size: 0.92rem; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+  .service-card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; margin-bottom: 14px; }
+  .service-link { font-size: 0.88rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .service-link:hover { text-decoration: underline; }
+  .land-cta { padding: var(--section-padding) 0; background: var(--color-primary); text-align: center; color: white; }
+  .land-cta h2 { color: white; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 14px; }
+  .land-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin-bottom: 28px; }
+  .land-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .land-cta .btn-primary { background: white; color: var(--color-primary); }
+  .land-cta .btn-primary:hover { background: var(--color-cream); }
+  .land-cta .btn-outline { border-color: white; color: white; }
+  .land-cta .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+  .land-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .faq-item { background: var(--color-cream); border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); overflow: hidden; }
+  .faq-item summary { padding: 18px 24px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; color: var(--color-primary); font-size: 1.4rem; font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 24px 18px; color: var(--color-text-light); line-height: 1.7; font-size: 0.92rem; }
+  @media (max-width: 1024px) { .conditions-grid, .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .conditions-grid, .services-grid, .reasons-grid, .faq-grid { grid-template-columns: 1fr; } }
+  :global([data-theme="dark"]) .condition-card,
+  :global([data-theme="dark"]) .reason-card,
+  :global([data-theme="dark"]) .service-card,
+  :global([data-theme="dark"]) .faq-item { border-color: rgba(111, 155, 110, 0.12); }
+</style>

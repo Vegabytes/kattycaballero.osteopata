@@ -1,0 +1,327 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Tratamiento del dolor de espalda en Madrid (Sierra) | Katy Caballero";
+const pageDescription = "Osteopatía y masaje para dolor de espalda en Alpedrete. Lumbalgia, ciática, hernia discal, contracturas. Más de 12 años aliviando dolores crónicos y agudos.";
+
+const therapySchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalTherapy",
+  "name": "Tratamiento osteopático del dolor de espalda",
+  "description": "Tratamiento del dolor de espalda en Alpedrete (Madrid): lumbalgia, ciática, hernia discal, contracturas musculares, dolor crónico. Abordaje osteopático global.",
+  "url": "https://katycaballeroosteopata.com/dolor-de-espalda",
+  "indication": [
+    {"@type": "MedicalCondition", "name": "Lumbalgia"},
+    {"@type": "MedicalCondition", "name": "Ciática"},
+    {"@type": "MedicalCondition", "name": "Hernia discal"},
+    {"@type": "MedicalCondition", "name": "Protrusión discal"},
+    {"@type": "MedicalCondition", "name": "Síndrome piramidal"},
+    {"@type": "MedicalCondition", "name": "Contracturas dorsales"},
+    {"@type": "MedicalCondition", "name": "Espondiloartrosis"}
+  ],
+  "relevantSpecialty": "Osteopathic"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué tipos de dolor de espalda tratáis con osteopatía?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Lumbalgia (dolor en la zona baja), ciática (dolor que baja por la pierna), dolor dorsal (entre los omoplatos), hernias y protrusiones discales, contracturas, dolor crónico de espalda, espondiloartrosis, síndrome piramidal y dolores tras esfuerzos puntuales o por mala postura. Cada caso requiere un abordaje distinto."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuántas sesiones necesitaré?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Depende. Un dolor agudo por contractura puede resolverse en 1-2 sesiones. Un dolor crónico de años suele necesitar 4-6 sesiones espaciadas (1 cada 2-3 semanas) y luego mantenimiento mensual. En la primera visita te doy una estimación realista tras valorar tu caso."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Tengo hernia discal, puedo recibir osteopatía?",
+      "acceptedAnswer": {"@type": "Answer", "text": "En la mayoría de casos sí, con técnicas suaves y adaptadas. La osteopatía no \"cura\" la hernia, pero puede aliviar mucho el dolor mejorando la movilidad de las vértebras adyacentes, la postura y la tensión muscular asociada. Si hay déficit neurológico (pérdida de fuerza, sensibilidad), te derivo al especialista médico antes de tratar."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es mejor osteopatía o fisioterapia para el dolor de espalda?",
+      "acceptedAnswer": {"@type": "Answer", "text": "No es uno u otro: son complementarios. La fisioterapia trabaja sobre todo musculatura, ejercicio terapéutico y rehabilitación. La osteopatía aborda el cuerpo de forma global (articulaciones, fascia, vísceras, postura) buscando la causa estructural del dolor. Para dolores recurrentes o crónicos, la osteopatía suele encontrar lo que el tratamiento sintomático no resuelve."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta una sesión?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Osteopatía completa: 40€ (55 minutos). Si lo que necesitas es solo descarga muscular, masaje deportivo: 20€ (30 min). Para casos crónicos que requieren varias sesiones, el bono de 5 sale a 36€/sesión. Todos los precios en /tarifas."}
+    },
+    {
+      "@type": "Question",
+      "name": "Tengo dolor desde hace años, ¿la osteopatía puede ayudar?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí. El dolor crónico es uno de los motivos de consulta más frecuentes. No esperes mejorar en una sesión, pero sí progresar de forma sostenida en 4-6 visitas. Lo que sí te garantizo: si tras 2-3 sesiones no notas cambio, te lo digo claramente y exploramos otras vías. No alargo tratamientos sin sentido."}
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Dolor de espalda" }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(therapySchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="land-hero">
+    <div class="container">
+      <span class="section-tag">Dolor de espalda</span>
+      <h1>Tratamiento del dolor de espalda en la Sierra de Madrid</h1>
+      <p class="land-hero-subtitle">Osteopatía y masaje para <strong>lumbalgia, ciática, hernia discal y contracturas</strong>. Más de 12 años aliviando dolores agudos y crónicos en Alpedrete.</p>
+      <div class="land-hero-actions">
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-primary">Reservar osteopatía · 40€</a>
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20me%20duele%20la%20espalda%20y%20me%20gustar%C3%ADa%20pedirte%20cita" class="btn btn-outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-intro">
+    <div class="container">
+      <div class="land-intro-content">
+        <h2>El dolor de espalda no es normal aunque sea común</h2>
+        <p>El <strong>dolor de espalda es la primera causa de consulta</strong> en mi clínica. Llega gente con un esguince lumbar agudo, con una ciática que no le deja dormir, con dolor entre los omoplatos por horas de ordenador, con cervicalgia crónica de años. Cada cuerpo cuenta una historia distinta.</p>
+        <p>Lo que tienen en común casi todos: <strong>han probado de todo</strong> antes de venir. Antiinflamatorios, fajas, parches, vídeos de YouTube, fisioterapeutas, "ya se me pasará". Y el dolor sigue apareciendo. La razón suele ser que se trata el síntoma, no la causa. La osteopatía busca <strong>de dónde viene el problema</strong>: muchas veces no está donde duele.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-conditions">
+    <div class="container">
+      <h2>Tipos de dolor de espalda que trato</h2>
+      <div class="conditions-grid">
+        <div class="condition-card">
+          <h3>Lumbalgia</h3>
+          <p>Dolor en la zona baja, agudo o crónico. Por sobrecarga, mala postura, desequilibrio pélvico o esfuerzos puntuales. La consulta más común.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Ciática</h3>
+          <p>Dolor que baja por una pierna desde la zona lumbar o glúteo. Hormigueos, sensación de pinchazo. Suele responder muy bien a tratamiento osteopático.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Hernia y protrusión discal</h3>
+          <p>Cuando un disco intervertebral se desplaza o sale. La osteopatía no la cura pero alivia mucho el dolor y mejora la movilidad alrededor.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Dolor dorsal</h3>
+          <p>Entre los omoplatos. Típico de horas de ordenador, mochilas pesadas, tensión emocional. Va de la mano con dolor cervical.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Síndrome piramidal</h3>
+          <p>Dolor en el glúteo que se confunde con ciática. Está causado por el músculo piramidal comprimiendo el nervio. Tratamiento específico.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Dolor crónico</h3>
+          <p>Dolor de meses o años. Aborda postura, hábitos, fascia, vísceras. Requiere paciencia y un plan de varias sesiones para resultados duraderos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-reasons">
+    <div class="container">
+      <h2>Cómo abordo tu dolor de espalda</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Primera valoración global</h3>
+          <p>Veo cómo te mueves, cómo te pones de pie, cómo respiras. Pregunto por tu trabajo, tu deporte, tu sueño. La causa del dolor casi nunca está donde duele.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Tratamiento manual</h3>
+          <p>Técnicas estructurales, viscerales, fasciales y craneales según lo que tu caso necesita. No aplico el mismo protocolo a todo el mundo.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Plan realista</h3>
+          <p>Te digo cuántas sesiones estimo y cómo deberías mejorar. Si tras 2-3 visitas no hay cambio, lo hablamos y cambiamos de enfoque.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Tareas para casa</h3>
+          <p>Te llevas 3-4 ejercicios concretos de movilidad, fortalecimiento o respiración. Sin tablas largas: cosas que de verdad vas a hacer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-testimonios">
+    <div class="container">
+      <h2>Pacientes que han recuperado su espalda</h2>
+      <div class="testimonios-grid">
+        <blockquote class="testimonio-card">
+          <p>"He acudido en varias ocasiones por <strong>problemas de espalda</strong>. El masaje en sí está genial, pero lo que más me gusta es que tiene una <strong>visión global de la persona</strong>: no sólo ve el problema muscular concreto sino los hábitos de vida y características personales."</p>
+          <cite>— Amanda, 5★ Google</cite>
+        </blockquote>
+        <blockquote class="testimonio-card">
+          <p>"Katy me ha ayudado con los <strong>problemas de espalda</strong> ya que trabajo muchas horas con el ordenador. También de una lesión en el gemelo que me impedía hacer deporte. Transmite tranquilidad y confianza."</p>
+          <cite>— Alejandro Castillo, 5★ Google</cite>
+        </blockquote>
+        <blockquote class="testimonio-card">
+          <p>"Hace tiempo que me duele el hombro derecho y probé con 2 fisioterapeutas distintos pero salía con el mismo dolor. <strong>Probé con Katy y noté mejoría</strong>. Cada sesión ha sido diferente según la necesidad y dolencia."</p>
+          <cite>— Iulia Sasu, 5★ Google</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-services">
+    <div class="container">
+      <h2>Sesiones para dolor de espalda</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Osteopatía completa</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Recomendada para dolor recurrente, crónico, ciática o cualquier caso con desequilibrio postural. Aborda la causa, no solo el síntoma.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje deportivo</h3>
+          <p class="service-meta">20€ · 30 min</p>
+          <p>Para descarga muscular pura: contractura aguda, sobrecarga puntual. Si el dolor es solo muscular y reciente, suele bastar.</p>
+          <a href="/servicios/masaje-deportivo-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Bono 5 sesiones</h3>
+          <p class="service-meta">180€ · 36€/sesión</p>
+          <p>Para dolor crónico que requiere plan de varias visitas. Ahorras 20€ y mantienes la continuidad del tratamiento.</p>
+          <a href="/bonos" class="service-link">Ver bonos →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-cta">
+    <div class="container">
+      <h2>Empieza por la primera valoración</h2>
+      <p>Cuéntame qué te pasa y desde cuándo. En la primera sesión decidimos juntos el plan.</p>
+      <div class="land-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20tengo%20dolor%20de%20espalda%20y%20me%20gustar%C3%ADa%20pedir%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp · 643 961 065</a>
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {faqSchema.mainEntity.map((q: any) => (
+          <details class="faq-item">
+            <summary>{q.name}</summary>
+            <p set:html={q.acceptedAnswer.text} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="land-related">
+    <div class="container">
+      <h2>Lecturas recomendadas</h2>
+      <div class="related-grid">
+        <a href="/blog/dolor-espalda-ejercicios-casa" class="related-card">
+          <strong>Ejercicios para dolor de espalda en casa</strong>
+          <span>Lo que sí funciona y lo que no</span>
+        </a>
+        <a href="/blog/dolor-espalda-teletrabajo" class="related-card">
+          <strong>Dolor de espalda por teletrabajo</strong>
+          <span>Cómo prevenirlo y aliviarlo</span>
+        </a>
+        <a href="/blog/ciatica-causas-tratamiento-osteopatia" class="related-card">
+          <strong>Ciática: causas y tratamiento</strong>
+          <span>Por qué duele y qué hacer</span>
+        </a>
+        <a href="/blog/hernia-discal-osteopatia-tratamiento" class="related-card">
+          <strong>Hernia discal y osteopatía</strong>
+          <span>Cuándo puede ayudarte</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .land-hero { padding-top: 140px; padding-bottom: 70px; background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
+  .land-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .land-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 720px; margin: 0 auto 32px; line-height: 1.7; }
+  .land-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .land-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-intro-content { max-width: 800px; margin: 0 auto; }
+  .land-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .land-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+
+  .land-conditions { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-conditions h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .condition-card { background: var(--color-warm-white); border-radius: 14px; padding: 26px 22px; border-left: 3px solid var(--color-primary); box-shadow: var(--shadow-soft); }
+  .condition-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .condition-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.65; }
+
+  .land-reasons { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-reasons h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .reason-card { background: var(--color-cream); border-radius: 16px; padding: 30px 26px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .reason-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 10px; }
+  .reason-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.7; }
+
+  .land-testimonios { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-testimonios h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .testimonios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .testimonio-card { background: var(--color-warm-white); padding: 26px 24px; border-radius: 14px; border-left: 3px solid var(--color-secondary); margin: 0; }
+  .testimonio-card p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; line-height: 1.65; color: var(--color-text); margin: 0 0 14px; }
+  .testimonio-card cite { font-style: normal; font-size: 0.85rem; color: var(--color-text-muted); }
+
+  .land-services { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-services h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service-card { background: var(--color-cream); border-radius: 14px; padding: 28px 24px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .service-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .service-meta { font-size: 0.92rem; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+  .service-card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; margin-bottom: 14px; }
+  .service-link { font-size: 0.88rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .service-link:hover { text-decoration: underline; }
+
+  .land-cta { padding: var(--section-padding) 0; background: var(--color-primary); text-align: center; color: white; }
+  .land-cta h2 { color: white; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 14px; }
+  .land-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin-bottom: 28px; }
+  .land-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .land-cta .btn-primary { background: white; color: var(--color-primary); }
+  .land-cta .btn-primary:hover { background: var(--color-cream); }
+  .land-cta .btn-outline { border-color: white; color: white; }
+  .land-cta .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+
+  .land-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .faq-item { background: var(--color-cream); border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); overflow: hidden; }
+  .faq-item summary { padding: 18px 24px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; color: var(--color-primary); font-size: 1.4rem; font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 24px 18px; color: var(--color-text-light); line-height: 1.7; font-size: 0.92rem; }
+
+  .land-related { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-related h2 { text-align: center; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 36px; }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 800px; margin: 0 auto; }
+  .related-card { display: block; background: var(--color-warm-white); padding: 22px 24px; border-radius: 14px; text-decoration: none; border: 1px solid rgba(90, 124, 89, 0.08); transition: all 0.3s ease; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--color-primary); }
+  .related-card strong { display: block; color: var(--color-text); margin-bottom: 4px; font-size: 1rem; }
+  .related-card span { color: var(--color-text-light); font-size: 0.88rem; line-height: 1.6; }
+
+  @media (max-width: 1024px) {
+    .conditions-grid, .testimonios-grid, .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .conditions-grid, .testimonios-grid, .services-grid, .reasons-grid, .faq-grid, .related-grid { grid-template-columns: 1fr; }
+  }
+
+  :global([data-theme="dark"]) .condition-card,
+  :global([data-theme="dark"]) .reason-card,
+  :global([data-theme="dark"]) .testimonio-card,
+  :global([data-theme="dark"]) .service-card,
+  :global([data-theme="dark"]) .related-card,
+  :global([data-theme="dark"]) .faq-item { border-color: rgba(111, 155, 110, 0.12); }
+</style>

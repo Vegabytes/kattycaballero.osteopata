@@ -1,0 +1,252 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Osteopatía y masaje para mayores en Madrid (Sierra) | Katy Caballero";
+const pageDescription = "Tratamiento osteopático y masaje suave para personas mayores en Alpedrete: artrosis, dolor crónico, movilidad, sueño. Técnica adaptada y respetuosa.";
+
+const therapySchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalTherapy",
+  "name": "Osteopatía geriátrica y masaje para mayores",
+  "description": "Osteopatía adaptada para personas mayores: tratamiento de artrosis, dolor crónico, mejora de movilidad, equilibrio y descanso. Sesiones suaves y respetuosas.",
+  "url": "https://katycaballeroosteopata.com/osteopatia-mayores",
+  "indication": [
+    {"@type": "MedicalCondition", "name": "Artrosis"},
+    {"@type": "MedicalCondition", "name": "Dolor crónico"},
+    {"@type": "MedicalCondition", "name": "Rigidez articular"},
+    {"@type": "MedicalCondition", "name": "Insomnio del adulto mayor"},
+    {"@type": "MedicalCondition", "name": "Mareos cervicales"}
+  ],
+  "relevantSpecialty": "Osteopathic"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Es seguro el tratamiento para personas mayores?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí, siempre que se adapte a la persona. En mayores no uso técnicas con manipulación articular fuerte (\"crujidos\"). Trabajo con técnicas suaves: miofasciales, articulares de baja velocidad, sacrocraneales y viscerales. Pregunto siempre por enfermedades, medicaciones (anticoagulantes especialmente), prótesis y operaciones antes de tratar."}
+    },
+    {
+      "@type": "Question",
+      "name": "Mi padre tiene artrosis avanzada, ¿la osteopatía puede ayudarle?",
+      "acceptedAnswer": {"@type": "Answer", "text": "La osteopatía no revierte la artrosis (es degenerativa), pero sí ayuda mucho con el dolor, la rigidez y la movilidad. Trabajando los tejidos blandos alrededor, mejorando la movilidad de las articulaciones cercanas y reduciendo la inflamación, la persona suele moverse más, dormir mejor y depender menos de antiinflamatorios."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuántas sesiones necesita?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Para empezar, 3-4 sesiones espaciadas cada 2-3 semanas. Para mantener: 1 sesión cada 4-6 semanas. En mayores la regularidad es muy importante: una sesión mensual mantiene la calidad de vida mejor que muchas sesiones seguidas."}
+    },
+    {
+      "@type": "Question",
+      "name": "Toma anticoagulantes, ¿se puede tratar?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí, con técnica muy suave y evitando masaje profundo (que podría generar hematomas). Es importante que me lo digas desde la primera sesión para adaptar la técnica."}
+    },
+    {
+      "@type": "Question",
+      "name": "Tiene prótesis de cadera/rodilla, ¿puede recibir osteopatía?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí, sin problema. Solo evito movilizaciones forzadas de la articulación operada. El resto del cuerpo se beneficia mucho del trabajo manual: muchas veces el dolor que aparece años después de una prótesis viene de compensaciones de otras zonas."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hay accesibilidad para personas con movilidad reducida?",
+      "acceptedAnswer": {"@type": "Answer", "text": "La consulta está en planta baja, sin escalones para entrar. La camilla es eléctrica y baja a una altura cómoda. Para casos de movilidad muy limitada, llámame antes de reservar y vemos si la sesión presencial es viable o conviene otro enfoque. Hay parking en la puerta."}
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Para personas mayores" }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(therapySchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="land-hero">
+    <div class="container">
+      <span class="section-tag">Para personas mayores</span>
+      <h1>Osteopatía y masaje suave para personas mayores</h1>
+      <p class="land-hero-subtitle">Trato adaptado, técnica respetuosa, escucha real. Para <strong>artrosis, dolor crónico, rigidez y mejor calidad de vida</strong> en Alpedrete (Madrid).</p>
+      <div class="land-hero-actions">
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-primary">Reservar osteopatía · 40€</a>
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20quiero%20pedir%20cita%20para%20mi%20familiar%20mayor" class="btn btn-outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-intro">
+    <div class="container">
+      <div class="land-intro-content">
+        <h2>El cuerpo cambia, el cuidado también</h2>
+        <p>A partir de cierta edad, el cuerpo necesita un trato distinto. Las articulaciones tienen menos cartílago, los tejidos son más frágiles, hay medicaciones que condicionan, hay prótesis y cirugías previas, hay un ritmo que respetar.</p>
+        <p>La osteopatía adaptada a personas mayores no es la misma que a una persona de 30 años. <strong>Se trabaja más despacio, con técnicas suaves, escuchando mucho lo que el cuerpo permite</strong>. El objetivo no es "arreglar" — muchas veces no se trata de eso — sino mejorar la calidad de vida: dormir mejor, moverse con menos dolor, mantener autonomía, sentirse mejor.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-conditions">
+    <div class="container">
+      <h2>En qué ayuda</h2>
+      <div class="conditions-grid">
+        <div class="condition-card">
+          <h3>Dolor por artrosis</h3>
+          <p>Rodilla, cadera, columna, manos. No revierte la artrosis pero sí baja el dolor y mejora la movilidad funcional.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Rigidez matinal</h3>
+          <p>Esa hora de "tardar en arrancar" por las mañanas. Tratamiento de tejidos blandos para que cueste menos empezar el día.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Dolor crónico</h3>
+          <p>Lumbar, dorsal, cervical. Que ya forma parte de la vida pero condiciona el ánimo y el descanso. Aliviar mucho es posible.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Mareos cervicales</h3>
+          <p>Sensación de inestabilidad al girar la cabeza. Tratamiento suave de cervicales altas con muy buenos resultados.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Insomnio</h3>
+          <p>Dormir peor con la edad es común pero no inevitable. Sesión relajante baja el tono general y suele mejorar el descanso.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Bienestar general</h3>
+          <p>A veces lo que más se necesita es 1 hora donde alguien se ocupe de ti, te toque con cuidado y te escuche. También es terapéutico.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-reasons">
+    <div class="container">
+      <h2>Cómo trabajo con personas mayores</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Sin manipulaciones bruscas</h3>
+          <p>Nunca uso técnica con impulso fuerte (\"crujido\") en personas mayores. Solo técnicas articulares de baja velocidad, miofasciales y craneales.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Reviso medicación y antecedentes</h3>
+          <p>Anticoagulantes, prótesis, cirugías, osteoporosis. Todo lo tengo en cuenta antes de empezar. Pregunto sin prisa.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Camilla eléctrica</h3>
+          <p>Sube y baja para que subir y bajar sea fácil. Con apoyo si lo necesitas. Sin posturas forzadas.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Acompañante bienvenido</h3>
+          <p>Si quieres venir con un familiar, sin problema. Hay sitio para esperar o estar dentro durante la sesión.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-services">
+    <div class="container">
+      <h2>Sesiones recomendadas</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Osteopatía suave</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Técnica adaptada, sin movilizaciones bruscas. Trabajamos donde más duele y la zona relacionada.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje corporal con aceite</h3>
+          <p class="service-meta">40€ · 60 min</p>
+          <p>Para descarga, relajación profunda y mejor descanso. Aceite hipoalergénico. Una opción muy querida.</p>
+          <a href="/servicios/masaje-corporal-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Bono 5 sesiones</h3>
+          <p class="service-meta">180€ · 36€/sesión</p>
+          <p>Mantenimiento mensual a precio reducido. La regularidad mensual marca mucha diferencia en mayores.</p>
+          <a href="/bonos" class="service-link">Ver bonos →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-cta">
+    <div class="container">
+      <h2>Reserva la primera sesión</h2>
+      <p>Cuéntame qué tal está, qué le duele y si toma medicación. En la primera valoración decidimos qué hacer y cómo.</p>
+      <div class="land-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20quiero%20pedir%20cita%20para%20una%20persona%20mayor" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp · 643 961 065</a>
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {faqSchema.mainEntity.map((q: any) => (
+          <details class="faq-item">
+            <summary>{q.name}</summary>
+            <p set:html={q.acceptedAnswer.text} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .land-hero { padding-top: 140px; padding-bottom: 70px; background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
+  .land-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .land-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 720px; margin: 0 auto 32px; line-height: 1.7; }
+  .land-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .land-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-intro-content { max-width: 800px; margin: 0 auto; }
+  .land-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .land-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+  .land-conditions { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-conditions h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .condition-card { background: var(--color-warm-white); border-radius: 14px; padding: 26px 22px; border-left: 3px solid var(--color-primary); box-shadow: var(--shadow-soft); }
+  .condition-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .condition-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.65; }
+  .land-reasons { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-reasons h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .reason-card { background: var(--color-cream); border-radius: 16px; padding: 30px 26px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .reason-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 10px; }
+  .reason-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.7; }
+  .land-services { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-services h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service-card { background: var(--color-warm-white); border-radius: 14px; padding: 28px 24px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .service-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .service-meta { font-size: 0.92rem; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+  .service-card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; margin-bottom: 14px; }
+  .service-link { font-size: 0.88rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .service-link:hover { text-decoration: underline; }
+  .land-cta { padding: var(--section-padding) 0; background: var(--color-primary); text-align: center; color: white; }
+  .land-cta h2 { color: white; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 14px; }
+  .land-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin-bottom: 28px; }
+  .land-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .land-cta .btn-primary { background: white; color: var(--color-primary); }
+  .land-cta .btn-primary:hover { background: var(--color-cream); }
+  .land-cta .btn-outline { border-color: white; color: white; }
+  .land-cta .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+  .land-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .faq-item { background: var(--color-cream); border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); overflow: hidden; }
+  .faq-item summary { padding: 18px 24px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; color: var(--color-primary); font-size: 1.4rem; font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 24px 18px; color: var(--color-text-light); line-height: 1.7; font-size: 0.92rem; }
+  @media (max-width: 1024px) { .conditions-grid, .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .conditions-grid, .services-grid, .reasons-grid, .faq-grid { grid-template-columns: 1fr; } }
+  :global([data-theme="dark"]) .condition-card,
+  :global([data-theme="dark"]) .reason-card,
+  :global([data-theme="dark"]) .service-card,
+  :global([data-theme="dark"]) .faq-item { border-color: rgba(111, 155, 110, 0.12); }
+</style>

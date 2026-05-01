@@ -1,0 +1,280 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Bruxismo y dolor de mandíbula (ATM): osteopatía en Madrid | Katy Caballero";
+const pageDescription = "Tratamiento osteopático del bruxismo y dolor de la articulación temporomandibular (ATM) en Alpedrete. Alivio de dolor, chasquidos y tensión mandibular.";
+
+const therapySchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalTherapy",
+  "name": "Tratamiento osteopático del bruxismo y ATM",
+  "description": "Tratamiento del bruxismo nocturno, dolor de la articulación temporomandibular (ATM), chasquidos al abrir la boca y tensión mandibular en Alpedrete (Madrid).",
+  "url": "https://katycaballeroosteopata.com/bruxismo-atm",
+  "indication": [
+    {"@type": "MedicalCondition", "name": "Bruxismo"},
+    {"@type": "MedicalCondition", "name": "Disfunción temporomandibular"},
+    {"@type": "MedicalCondition", "name": "Dolor mandibular"},
+    {"@type": "MedicalCondition", "name": "Chasquidos articulación temporomandibular"},
+    {"@type": "MedicalCondition", "name": "Cefalea matutina por bruxismo"}
+  ],
+  "relevantSpecialty": "Osteopathic"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es el bruxismo y por qué duele?",
+      "acceptedAnswer": {"@type": "Answer", "text": "El bruxismo es el hábito de apretar o rechinar los dientes, normalmente sin darse cuenta y sobre todo durante la noche. Genera tensión en los músculos masticatorios (masetero, temporal, pterigoideos), sobrecarga la articulación temporomandibular (ATM) y suele provocar dolor de cabeza al despertar, dolor de oído, chasquidos al abrir la boca y desgaste dental. Tiene un fuerte componente de estrés y tensión cervical."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿La osteopatía cura el bruxismo?",
+      "acceptedAnswer": {"@type": "Answer", "text": "El bruxismo no se \"cura\" en una sesión, pero la osteopatía sí puede aliviar mucho los síntomas y reducir su intensidad. Trabajamos la musculatura mandibular, la articulación temporomandibular, las cervicales (muy relacionadas) y el sistema craneal. Combinado con férula de descarga (la pone tu dentista) y manejo del estrés, los resultados son muy buenos."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Tratáis chasquidos al abrir la boca?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí, los chasquidos suelen indicar disfunción del disco articular de la ATM. La osteopatía no \"recoloca\" el disco si está muy desplazado, pero sí puede normalizar la tensión muscular y mejorar mucho la función. Si hay desplazamiento severo o limitación de apertura, te derivo a un especialista en ATM (cirujano maxilofacial o fisioterapeuta de ATM)."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿La sesión es intraoral?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Trabajo principalmente con técnica externa: maseteros, temporales, articulación, cervicales. En algunos casos puede ser útil técnica intraoral suave (con guantes y siempre con tu consentimiento explícito), pero solo si el caso lo requiere y tú estás cómoda con ello. La mayoría de pacientes mejoran perfectamente con técnica externa."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuántas sesiones necesito?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Para ver mejora notable: 3-4 sesiones espaciadas cada 2 semanas. Para mantenimiento (especialmente si el estrés es crónico): una sesión cada 1-2 meses. La mejoría suele notarse desde la primera o segunda sesión: menos dolor de cabeza al despertar, menos tensión mandibular."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Tengo que llevar férula?",
+      "acceptedAnswer": {"@type": "Answer", "text": "La férula la prescribe tu dentista y protege los dientes del desgaste, pero no soluciona la causa muscular. Lo ideal es combinar férula + tratamiento osteopático + manejo del estrés. La osteopatía no sustituye a la férula si tu dentista la considera necesaria."}
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Bruxismo y ATM" }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(therapySchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="land-hero">
+    <div class="container">
+      <span class="section-tag">Bruxismo y ATM</span>
+      <h1>Bruxismo y dolor de mandíbula: alivio osteopático</h1>
+      <p class="land-hero-subtitle">Para <strong>dolor mandibular, chasquidos al abrir la boca, dolor de cabeza al despertar y tensión por bruxismo</strong>. Tratamiento osteopático específico en Alpedrete.</p>
+      <div class="land-hero-actions">
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-primary">Reservar osteopatía · 40€</a>
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20tengo%20bruxismo%2Fdolor%20de%20mand%C3%ADbula%20y%20quiero%20pedir%20cita" class="btn btn-outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-intro">
+    <div class="container">
+      <div class="land-intro-content">
+        <h2>La mandíbula carga lo que la mente no suelta</h2>
+        <p>El <strong>bruxismo</strong> y la <strong>disfunción de la articulación temporomandibular (ATM)</strong> son problemas muy comunes y muy infradiagnosticados. La gente convive con dolor de cabeza al despertar, dolor de oído, chasquidos al abrir la boca, mandíbula tensa al final del día… y muchas veces no relaciona los síntomas entre sí.</p>
+        <p>La articulación temporomandibular es una de las articulaciones que más usamos del cuerpo (al hablar, comer, tragar, gesticular). Cuando se tensa o se desequilibra, los efectos son amplios: <strong>cefaleas, vértigos, mareos, contractura cervical, problemas de oído, dolor facial</strong>. Tratarla bien tiene un impacto desproporcionado en la calidad de vida.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-conditions">
+    <div class="container">
+      <h2>Síntomas que trato</h2>
+      <div class="conditions-grid">
+        <div class="condition-card">
+          <h3>Dolor mandibular</h3>
+          <p>Al masticar, hablar o al despertar. Suele ser bilateral. Por sobrecarga de masetero y pterigoideo.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Chasquidos al abrir</h3>
+          <p>"Click" al abrir o cerrar la boca. Indica disfunción del disco articular. Trabajo musculatura y articulación.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Cefalea matutina</h3>
+          <p>Despertar con dolor de cabeza, especialmente en sienes. Síntoma muy típico de bruxismo nocturno.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Dolor de oído</h3>
+          <p>Sin causa otológica clara. Muchas veces es dolor reflejo de la ATM. Mejora con tratamiento mandibular.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Tensión cervical</h3>
+          <p>El cuello y la mandíbula están íntimamente conectados. Tratar uno sin el otro es media solución.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Sensación de oído tapado</h3>
+          <p>Como si tuvieras los oídos llenos. Puede mejorar mucho con técnica miofascial específica de ATM.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-reasons">
+    <div class="container">
+      <h2>Cómo trato el bruxismo y la ATM</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Valoración global</h3>
+          <p>El bruxismo casi nunca está solo. Reviso cervicales, postura, respiración, estrés, calidad de sueño. Sin entender el contexto no se trata bien.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Trabajo musculatura mandibular</h3>
+          <p>Masetero, temporal, pterigoideos. Técnica miofascial externa. Puntos gatillo. Devolver al músculo su longitud y elasticidad.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Articulación temporomandibular</h3>
+          <p>Movilización suave para mejorar la función del disco articular y reducir los chasquidos.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Cervicales y craneal</h3>
+          <p>Las cervicales altas y el sistema craneal influyen mucho en la ATM. Trabajarlas es parte esencial del tratamiento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-services">
+    <div class="container">
+      <h2>Sesiones recomendadas</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Osteopatía completa</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>La opción adecuada. Trabajo mandíbula + cervicales + craneal en una sesión. Recomendado para empezar.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Bono 5 sesiones</h3>
+          <p class="service-meta">180€ · 36€/sesión</p>
+          <p>Si el bruxismo es crónico. Permite plan completo + mantenimiento mensual. Mejor relación coste-beneficio.</p>
+          <a href="/bonos" class="service-link">Ver bonos →</a>
+        </div>
+        <div class="service-card">
+          <h3>Coordinado con tu dentista</h3>
+          <p class="service-meta">Recomendado</p>
+          <p>Si llevas férula, sigue llevándola. La osteopatía complementa el tratamiento dental, no lo sustituye.</p>
+          <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20llevo%20f%C3%A9rula%20y%20quiero%20pedir%20cita%20por%20bruxismo" target="_blank" rel="noopener noreferrer" class="service-link">WhatsApp →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-cta">
+    <div class="container">
+      <h2>Reserva tu cita</h2>
+      <p>Cuéntame qué síntomas tienes y desde cuándo. En la primera sesión valoramos y empezamos.</p>
+      <div class="land-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20tengo%20bruxismo%20y%20me%20gustar%C3%ADa%20pedir%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp · 643 961 065</a>
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {faqSchema.mainEntity.map((q: any) => (
+          <details class="faq-item">
+            <summary>{q.name}</summary>
+            <p set:html={q.acceptedAnswer.text} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="land-related">
+    <div class="container">
+      <h2>Lecturas recomendadas</h2>
+      <div class="related-grid">
+        <a href="/blog/bruxismo-dolor-mandibula-osteopatia" class="related-card">
+          <strong>Bruxismo y osteopatía</strong>
+          <span>Por qué te duele la mandíbula al despertar</span>
+        </a>
+        <a href="/blog/cefaleas-tensionales-ejercicios-tratamiento" class="related-card">
+          <strong>Cefaleas tensionales</strong>
+          <span>Muy relacionadas con la ATM</span>
+        </a>
+        <a href="/dolor-cervical" class="related-card">
+          <strong>Dolor cervical</strong>
+          <span>Cuello y mandíbula van juntos</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .land-hero { padding-top: 140px; padding-bottom: 70px; background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
+  .land-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .land-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 720px; margin: 0 auto 32px; line-height: 1.7; }
+  .land-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .land-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-intro-content { max-width: 800px; margin: 0 auto; }
+  .land-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .land-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+  .land-conditions { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-conditions h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .condition-card { background: var(--color-warm-white); border-radius: 14px; padding: 26px 22px; border-left: 3px solid var(--color-primary); box-shadow: var(--shadow-soft); }
+  .condition-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .condition-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.65; }
+  .land-reasons { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-reasons h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .reason-card { background: var(--color-cream); border-radius: 16px; padding: 30px 26px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .reason-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 10px; }
+  .reason-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.7; }
+  .land-services { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-services h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service-card { background: var(--color-warm-white); border-radius: 14px; padding: 28px 24px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .service-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .service-meta { font-size: 0.92rem; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+  .service-card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; margin-bottom: 14px; }
+  .service-link { font-size: 0.88rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .service-link:hover { text-decoration: underline; }
+  .land-cta { padding: var(--section-padding) 0; background: var(--color-primary); text-align: center; color: white; }
+  .land-cta h2 { color: white; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 14px; }
+  .land-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin-bottom: 28px; }
+  .land-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .land-cta .btn-primary { background: white; color: var(--color-primary); }
+  .land-cta .btn-primary:hover { background: var(--color-cream); }
+  .land-cta .btn-outline { border-color: white; color: white; }
+  .land-cta .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+  .land-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .faq-item { background: var(--color-cream); border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); overflow: hidden; }
+  .faq-item summary { padding: 18px 24px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; color: var(--color-primary); font-size: 1.4rem; font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 24px 18px; color: var(--color-text-light); line-height: 1.7; font-size: 0.92rem; }
+  .land-related { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-related h2 { text-align: center; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 36px; }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 800px; margin: 0 auto; }
+  .related-card { display: block; background: var(--color-warm-white); padding: 22px 24px; border-radius: 14px; text-decoration: none; border: 1px solid rgba(90, 124, 89, 0.08); transition: all 0.3s ease; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--color-primary); }
+  .related-card strong { display: block; color: var(--color-text); margin-bottom: 4px; font-size: 1rem; }
+  .related-card span { color: var(--color-text-light); font-size: 0.88rem; line-height: 1.6; }
+  @media (max-width: 1024px) { .conditions-grid, .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .conditions-grid, .services-grid, .reasons-grid, .faq-grid, .related-grid { grid-template-columns: 1fr; } }
+  :global([data-theme="dark"]) .condition-card,
+  :global([data-theme="dark"]) .reason-card,
+  :global([data-theme="dark"]) .service-card,
+  :global([data-theme="dark"]) .related-card,
+  :global([data-theme="dark"]) .faq-item { border-color: rgba(111, 155, 110, 0.12); }
+</style>

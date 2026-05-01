@@ -1,0 +1,285 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Dolor cervical y contracturas de cuello en Madrid | Katy Caballero";
+const pageDescription = "Tratamiento del dolor cervical, contracturas y rigidez de cuello en Alpedrete. Osteopatía y masaje para tortícolis, mareos cervicales y cefaleas tensionales.";
+
+const therapySchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalTherapy",
+  "name": "Tratamiento osteopático del dolor cervical",
+  "description": "Tratamiento del dolor cervical y contracturas en Alpedrete (Madrid): tortícolis, rigidez, mareos cervicales, cefaleas tensionales, latigazo cervical.",
+  "url": "https://katycaballeroosteopata.com/dolor-cervical",
+  "indication": [
+    {"@type": "MedicalCondition", "name": "Cervicalgia"},
+    {"@type": "MedicalCondition", "name": "Tortícolis"},
+    {"@type": "MedicalCondition", "name": "Cefalea tensional"},
+    {"@type": "MedicalCondition", "name": "Mareos cervicales"},
+    {"@type": "MedicalCondition", "name": "Latigazo cervical"},
+    {"@type": "MedicalCondition", "name": "Contracturas trapecio"}
+  ],
+  "relevantSpecialty": "Osteopathic"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Por qué me duele tanto el cuello?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Las causas más comunes son la postura mantenida (ordenador, móvil, sofá), el estrés (que tensa trapecios y cervicales), un colchón o almohada inadecuados, contracturas musculares y problemas estructurales (artrosis cervical, hernias). En la mayoría de casos hay varios factores combinados. Lo primero es identificar cuáles son los tuyos."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Tengo mareos al girar la cabeza, puede ser cervical?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí. Los mareos cervicales (vértigo cervicogénico) son un síntoma frecuente cuando hay tensión y disfunción en las vértebras altas (C0-C2). Suelen mejorar mucho con osteopatía craneal y técnicas suaves cervicales. Si tienes mareos intensos o asociados a pérdida de audición, es importante descartar otras causas con tu médico antes."}
+    },
+    {
+      "@type": "Question",
+      "name": "Trabajo con ordenador y siempre tengo el cuello cargado, ¿qué hago?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Una sesión cada 4-6 semanas mantiene la zona en buen estado. Pero el problema de fondo es la postura y los hábitos: revisaremos tu puesto, te enseño 3 ejercicios cortos para hacer en pausas y trabajamos el patrón postural en consulta. Las soluciones que duran combinan tratamiento manual y cambios en tu día a día."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Tratáis tortícolis y latigazo cervical?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sí. La tortícolis aguda suele responder rápido (1-2 sesiones). El latigazo cervical (tras accidente de tráfico) requiere un abordaje más cuidadoso y, dependiendo de la fase, varias sesiones espaciadas. Si el accidente es muy reciente, conviene esperar el visto bueno médico antes."}
+    },
+    {
+      "@type": "Question",
+      "name": "Tengo cefaleas tensionales casi a diario, ¿la osteopatía ayuda?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Mucho. Una buena parte de las cefaleas tensionales se generan o se agravan por tensión cervical y suboccipital. Trabajar esa zona con técnica osteopática suave suele bajar la frecuencia y la intensidad de los episodios. Para resultados sostenidos, recomiendo 4-6 sesiones espaciadas y revisión de hábitos (sueño, pantallas, hidratación)."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es seguro que me 'crujan' el cuello?",
+      "acceptedAnswer": {"@type": "Answer", "text": "No siempre uso técnicas de manipulación con \"crujido\" (impulso). Solo cuando la valoración indica que es seguro y aporta. La mayoría de pacientes mejoran perfectamente con técnicas miofasciales, articulares suaves y craneales. Si te incomoda, no las uso. Tu seguridad y comodidad están por delante de la técnica."}
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Dolor cervical" }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(therapySchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="land-hero">
+    <div class="container">
+      <span class="section-tag">Dolor cervical</span>
+      <h1>Tratamiento del dolor de cuello y contracturas cervicales</h1>
+      <p class="land-hero-subtitle">Osteopatía y masaje para <strong>cervicalgia, tortícolis, cefaleas tensionales y mareos cervicales</strong> en Alpedrete (Madrid).</p>
+      <div class="land-hero-actions">
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-primary">Reservar osteopatía · 40€</a>
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20me%20duele%20el%20cuello%20y%20me%20gustar%C3%ADa%20pedir%20cita" class="btn btn-outline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-intro">
+    <div class="container">
+      <div class="land-intro-content">
+        <h2>El cuello acumula todo lo que el cuerpo no puede soltar</h2>
+        <p>El <strong>dolor cervical</strong> es uno de los motivos de consulta más frecuentes después del dolor lumbar. Y no es casualidad: el cuello carga con la postura del trabajo, el peso del estrés, la tensión emocional que no expresamos, las horas frente a la pantalla y un colchón que muchas veces no es el adecuado.</p>
+        <p>Mucha gente vive con el cuello cargado como si fuera <strong>parte de su personalidad</strong>. No tiene por qué ser así. La osteopatía y el masaje específico cervical pueden bajar el dolor de forma muy clara, mejorar la movilidad y prevenir que se cronifique.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-conditions">
+    <div class="container">
+      <h2>Lo que más trato en cuello</h2>
+      <div class="conditions-grid">
+        <div class="condition-card">
+          <h3>Cervicalgia crónica</h3>
+          <p>Dolor sordo, presente casi a diario. Suele responder a un plan de 4-6 sesiones más cambios de hábitos.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Tortícolis aguda</h3>
+          <p>Dolor brusco y bloqueo del giro de cuello. En 1-2 sesiones la persona suele recuperar movilidad casi por completo.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Contracturas trapecio</h3>
+          <p>La zona del hombro y trapecio tensa, dura, dolorosa al tocar. Lo más típico de quien trabaja con ordenador.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Cefalea tensional</h3>
+          <p>Dolor de cabeza en casco u opresivo, peor al final del día. Origen cervical en muchos casos. Trabajo zona suboccipital.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Mareos cervicales</h3>
+          <p>Sensación de inestabilidad o vértigo al girar el cuello. Trato C0-C2 con técnica suave; mejora muy notable.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Latigazo cervical</h3>
+          <p>Secuelas tras accidente de tráfico. Requiere abordaje cuidadoso y plan de varias sesiones graduales.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-reasons">
+    <div class="container">
+      <h2>Cómo enfoco el dolor cervical</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Sin manipulaciones bruscas si no las quieres</h3>
+          <p>No siempre uso técnicas con "crujido". La mayoría de los casos mejoran con técnica miofascial y suave. Tú decides el nivel de intervención.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Trabajo todo el conjunto</h3>
+          <p>El dolor cervical raramente está solo en el cuello. Reviso dorsales, hombros, mandíbula y diafragma. Todo está conectado.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Revisión de hábitos</h3>
+          <p>Pantalla, almohada, móvil, postura al dormir. Los cambios pequeños suelen valer más que cualquier técnica manual.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Ejercicios para el día a día</h3>
+          <p>3-4 movimientos sencillos para hacer en el trabajo o antes de dormir. Suficiente para mantener el resultado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-services">
+    <div class="container">
+      <h2>Sesiones para dolor cervical</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Osteopatía completa</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Recomendada para cervicalgia crónica, mareos, cefaleas o latigazo. Aborda el origen, no solo la contractura.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje deportivo</h3>
+          <p class="service-meta">20€ · 30 min</p>
+          <p>Si lo que necesitas es solo descarga aguda de trapecios y cuello. Sesión corta y enfocada.</p>
+          <a href="/servicios/masaje-deportivo-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Bono 5 sesiones</h3>
+          <p class="service-meta">180€ · 36€/sesión</p>
+          <p>Para cervicalgia crónica que necesita un plan. Mantenimiento mensual a precio reducido.</p>
+          <a href="/bonos" class="service-link">Ver bonos →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-cta">
+    <div class="container">
+      <h2>Reserva tu cita</h2>
+      <p>Cuéntame qué tipo de dolor tienes y desde cuándo. Te respondo lo antes posible.</p>
+      <div class="land-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20me%20duele%20el%20cuello%20y%20me%20gustar%C3%ADa%20pedir%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp · 643 961 065</a>
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {faqSchema.mainEntity.map((q: any) => (
+          <details class="faq-item">
+            <summary>{q.name}</summary>
+            <p set:html={q.acceptedAnswer.text} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="land-related">
+    <div class="container">
+      <h2>Lecturas recomendadas</h2>
+      <div class="related-grid">
+        <a href="/blog/contracturas-cervicales-causas-tratamiento" class="related-card">
+          <strong>Contracturas cervicales: causas y tratamiento</strong>
+          <span>Por qué se forman y cómo deshacerlas</span>
+        </a>
+        <a href="/blog/dolor-cuello-hombros-causas-soluciones" class="related-card">
+          <strong>Dolor de cuello y hombros</strong>
+          <span>Las 4 causas más comunes</span>
+        </a>
+        <a href="/blog/cefaleas-tensionales-ejercicios-tratamiento" class="related-card">
+          <strong>Cefaleas tensionales</strong>
+          <span>Ejercicios y tratamiento osteopático</span>
+        </a>
+        <a href="/blog/dolor-cabeza-migranas-osteopatia" class="related-card">
+          <strong>Migrañas y dolor de cabeza</strong>
+          <span>Cuándo la osteopatía puede ayudarte</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .land-hero { padding-top: 140px; padding-bottom: 70px; background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
+  .land-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .land-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 720px; margin: 0 auto 32px; line-height: 1.7; }
+  .land-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .land-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-intro-content { max-width: 800px; margin: 0 auto; }
+  .land-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .land-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+  .land-conditions { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-conditions h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .condition-card { background: var(--color-warm-white); border-radius: 14px; padding: 26px 22px; border-left: 3px solid var(--color-primary); box-shadow: var(--shadow-soft); }
+  .condition-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .condition-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.65; }
+  .land-reasons { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-reasons h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .reason-card { background: var(--color-cream); border-radius: 16px; padding: 30px 26px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .reason-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 10px; }
+  .reason-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.7; }
+  .land-services { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-services h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service-card { background: var(--color-warm-white); border-radius: 14px; padding: 28px 24px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .service-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .service-meta { font-size: 0.92rem; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+  .service-card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; margin-bottom: 14px; }
+  .service-link { font-size: 0.88rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .service-link:hover { text-decoration: underline; }
+  .land-cta { padding: var(--section-padding) 0; background: var(--color-primary); text-align: center; color: white; }
+  .land-cta h2 { color: white; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 14px; }
+  .land-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin-bottom: 28px; }
+  .land-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .land-cta .btn-primary { background: white; color: var(--color-primary); }
+  .land-cta .btn-primary:hover { background: var(--color-cream); }
+  .land-cta .btn-outline { border-color: white; color: white; }
+  .land-cta .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+  .land-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .faq-item { background: var(--color-cream); border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); overflow: hidden; }
+  .faq-item summary { padding: 18px 24px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; color: var(--color-primary); font-size: 1.4rem; font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 24px 18px; color: var(--color-text-light); line-height: 1.7; font-size: 0.92rem; }
+  .land-related { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-related h2 { text-align: center; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 36px; }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 800px; margin: 0 auto; }
+  .related-card { display: block; background: var(--color-warm-white); padding: 22px 24px; border-radius: 14px; text-decoration: none; border: 1px solid rgba(90, 124, 89, 0.08); transition: all 0.3s ease; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--color-primary); }
+  .related-card strong { display: block; color: var(--color-text); margin-bottom: 4px; font-size: 1rem; }
+  .related-card span { color: var(--color-text-light); font-size: 0.88rem; line-height: 1.6; }
+  @media (max-width: 1024px) { .conditions-grid, .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .conditions-grid, .services-grid, .reasons-grid, .faq-grid, .related-grid { grid-template-columns: 1fr; } }
+  :global([data-theme="dark"]) .condition-card,
+  :global([data-theme="dark"]) .reason-card,
+  :global([data-theme="dark"]) .service-card,
+  :global([data-theme="dark"]) .related-card,
+  :global([data-theme="dark"]) .faq-item { border-color: rgba(111, 155, 110, 0.12); }
+</style>

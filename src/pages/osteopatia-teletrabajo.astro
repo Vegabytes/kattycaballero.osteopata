@@ -1,0 +1,285 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Osteopatía para teletrabajadores en la Sierra de Madrid | Katy Caballero";
+const pageDescription = "Tratamiento del dolor por teletrabajo en Alpedrete: lumbar, cervical, ojos cansados, túnel carpiano. Para gente que pasa horas frente al ordenador en casa.";
+
+const therapySchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalTherapy",
+  "name": "Osteopatía para teletrabajadores",
+  "description": "Tratamiento de las molestias del teletrabajo: lumbalgia, cervicalgia, cefaleas, túnel carpiano, fatiga visual y postural. En Alpedrete, Sierra Noroeste de Madrid.",
+  "url": "https://katycaballeroosteopata.com/osteopatia-teletrabajo",
+  "indication": [
+    {"@type": "MedicalCondition", "name": "Dolor lumbar postural"},
+    {"@type": "MedicalCondition", "name": "Cervicalgia"},
+    {"@type": "MedicalCondition", "name": "Síndrome del túnel carpiano"},
+    {"@type": "MedicalCondition", "name": "Cefaleas tensionales"},
+    {"@type": "MedicalCondition", "name": "Fatiga visual"},
+    {"@type": "MedicalCondition", "name": "Síndrome de la silla"}
+  ],
+  "relevantSpecialty": "Osteopathic"
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Trabajo desde casa y me duele todo, ¿qué hago primero?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Lo primero, una valoración. En la primera sesión miramos qué te duele más (lumbar, cervical, hombros, muñecas), revisamos cómo estás sentado y diseñamos un plan corto: tratamiento manual + 3 ajustes en tu puesto + 4 ejercicios concretos. La mayoría notan mejoría clara en la primera semana."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuántas sesiones necesito si paso 8h al ordenador?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Para empezar a estar bien: 2-3 sesiones espaciadas cada 2 semanas. Para mantenerlo: una sesión cada 4-6 semanas como mantenimiento. El bono de 5 sesiones encaja perfecto con esto y sale a 36€/sesión."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué cosas debería cambiar en mi puesto de teletrabajo?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Lo más importante: pantalla a la altura de los ojos (usa libros bajo el portátil o monitor externo), silla con apoyo lumbar, pies en el suelo, codos a 90°, y descansos cada 50 min. Sé que no siempre tienes el espacio ideal: en consulta vemos cómo adaptar lo que tienes y qué pequeñas inversiones (10-50€) marcan la diferencia."}
+    },
+    {
+      "@type": "Question",
+      "name": "Tengo hormigueo en las manos, ¿es del teclado?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Puede ser síndrome del túnel carpiano por el uso continuado del ratón y teclado. La osteopatía trabaja muñeca, codo, cuello y hombros (todo el recorrido nervioso) y suele aliviar mucho. Si es muy intenso o hay pérdida de fuerza, conviene una valoración médica para descartar otras causas."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hace falta sesión presencial o también haces online?",
+      "acceptedAnswer": {"@type": "Answer", "text": "El tratamiento manual es presencial: la osteopatía no se puede hacer por videollamada. Pero la consulta está en Alpedrete (a 30 min de Madrid centro y a 5-15 min de Collado Villalba, Galapagar, Moralzarzal y Guadarrama), con parking en la puerta y horario flexible para encajar con tu jornada."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Osteopatía: 40€ (55 min). Masaje deportivo (descarga de trapecios y zona lumbar): 20€ (30 min). Bono 5 sesiones de osteopatía: 180€ (sale a 36€/sesión). Cita por WhatsApp al 643 961 065 o desde la web."}
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Para teletrabajadores" }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(therapySchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="land-hero">
+    <div class="container">
+      <span class="section-tag">Para teletrabajadores</span>
+      <h1>Osteopatía para gente que trabaja desde casa</h1>
+      <p class="land-hero-subtitle">Si pasas <strong>horas frente al ordenador</strong> y te duele la espalda, el cuello o las muñecas, esta página es para ti. Consulta en la Sierra Noroeste, a 30 min de Madrid.</p>
+      <div class="land-hero-actions">
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-primary">Reservar osteopatía · 40€</a>
+        <a href="/reservar?servicio=Masaje%20deportivo" class="btn btn-outline">Descarga rápida · 20€</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-intro">
+    <div class="container">
+      <div class="land-intro-content">
+        <h2>El precio invisible del teletrabajo</h2>
+        <p>El teletrabajo te ahorra atascos, te da flexibilidad y te permite organizarte. Pero también te ata a una <strong>silla que muchas veces no es la adecuada, una pantalla a la altura equivocada y horas seguidas sin moverte</strong>. El cuerpo lo paga.</p>
+        <p>Lo veo cada semana en consulta: gente joven con dolor de espalda crónico, hormigueos en las manos, dolores de cabeza al final del día y la sensación de estar siempre cansado. La buena noticia es que casi todo es <strong>reversible y prevenible</strong> con tratamiento manual y unos pocos cambios en tu día a día.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-conditions">
+    <div class="container">
+      <h2>Lo que más veo en quien teletrabaja</h2>
+      <div class="conditions-grid">
+        <div class="condition-card">
+          <h3>Dolor lumbar postural</h3>
+          <p>Por estar sentado horas en una silla mal ajustada. Lo notas al levantarte y al final del día. Mejora rápido con tratamiento + cambios.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Cervicalgia y trapecios</h3>
+          <p>El cuello adelantado por la pantalla genera contracturas crónicas en trapecios y suboccipitales. Causa habitual de cefaleas.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Túnel carpiano</h3>
+          <p>Hormigueo y entumecimiento en mano y dedos. Por uso continuado del ratón y teclado. Trabajo muñeca, codo, cuello y hombros.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Cefaleas tensionales</h3>
+          <p>Dolor de cabeza al final del día por tensión cervical y vista cansada. Suelen ceder mucho con osteopatía craneal y cervical.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Síndrome de la silla</h3>
+          <p>Glúteos dormidos, isquios acortados, caderas tensas. Generan dolor lumbar y rodilla con el tiempo si no se corrige.</p>
+        </div>
+        <div class="condition-card">
+          <h3>Fatiga general</h3>
+          <p>La postura mantenida limita la respiración. Trabajo diafragma y caja torácica para que respires más amplio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-reasons">
+    <div class="container">
+      <h2>Mi enfoque para teletrabajadores</h2>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <h3>Diagnóstico de tu puesto</h3>
+          <p>Pregunto por tu silla, tu pantalla, tus horas, si haces pausas. La causa de tu dolor no se entiende sin entender cómo trabajas.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Tratamiento manual completo</h3>
+          <p>Sesión que aborda cuello, dorsales, lumbar, caderas y diafragma. No te trato solo donde te duele: trabajo el patrón completo.</p>
+        </div>
+        <div class="reason-card">
+          <h3>3 ajustes baratos para tu puesto</h3>
+          <p>Sin pedirte comprar una silla de 800€. Con un par de libros, un cojín y un cambio de altura del monitor solucionas el 70% del problema.</p>
+        </div>
+        <div class="reason-card">
+          <h3>Pausas y micro-ejercicios</h3>
+          <p>Te llevas 4 movimientos cortos para hacer cada hora en tu silla. Sin necesidad de cambiarte ni pisar el suelo. Funcionan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-services">
+    <div class="container">
+      <h2>Sesiones recomendadas</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Osteopatía completa</h3>
+          <p class="service-meta">40€ · 55 min</p>
+          <p>Lo recomendado para empezar. Valoración global + tratamiento manual + ajustes de hábitos. Una primera visita y plan.</p>
+          <a href="/servicios/osteopatia-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Masaje deportivo (descarga)</h3>
+          <p class="service-meta">20€ · 30 min</p>
+          <p>Para sesión de mantenimiento si solo quieres descargar trapecios y lumbar. Ideal cada 3-4 semanas como complemento.</p>
+          <a href="/servicios/masaje-deportivo-alpedrete" class="service-link">Más información →</a>
+        </div>
+        <div class="service-card">
+          <h3>Bono 5 sesiones</h3>
+          <p class="service-meta">180€ · 36€/sesión</p>
+          <p>Para teletrabajadores que necesitan plan continuado. Ahorras 20€ y mantienes la regularidad de tratamiento.</p>
+          <a href="/bonos" class="service-link">Ver bonos →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-cta">
+    <div class="container">
+      <h2>Reserva tu sesión</h2>
+      <p>Cuéntame en qué trabajas y qué te duele. Quedamos cuando te encaje con la jornada.</p>
+      <div class="land-cta-actions">
+        <a href="https://wa.me/34643961065?text=Hola%20Katy%2C%20teletrabajo%20y%20me%20duele%20la%20espalda%2Fcuello.%20Quiero%20pedir%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp · 643 961 065</a>
+        <a href="/reservar?servicio=Osteopat%C3%ADa%20estructural%2C%20visceral%20y%20sacrocraneal" class="btn btn-outline">Reservar online</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="land-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        {faqSchema.mainEntity.map((q: any) => (
+          <details class="faq-item">
+            <summary>{q.name}</summary>
+            <p set:html={q.acceptedAnswer.text} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="land-related">
+    <div class="container">
+      <h2>Lecturas recomendadas</h2>
+      <div class="related-grid">
+        <a href="/blog/dolor-espalda-teletrabajo" class="related-card">
+          <strong>Dolor de espalda por teletrabajo</strong>
+          <span>Causas y soluciones desde la osteopatía</span>
+        </a>
+        <a href="/blog/ejercicios-dolor-lumbar-oficina" class="related-card">
+          <strong>Ejercicios para dolor lumbar en la oficina</strong>
+          <span>Para hacer en tu silla en 5 minutos</span>
+        </a>
+        <a href="/blog/sindrome-tunel-carpiano-tratamiento" class="related-card">
+          <strong>Síndrome del túnel carpiano</strong>
+          <span>Cuándo la osteopatía puede ayudarte</span>
+        </a>
+        <a href="/blog/contracturas-cervicales-causas-tratamiento" class="related-card">
+          <strong>Contracturas cervicales</strong>
+          <span>El dolor más común del trabajador de pantalla</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .land-hero { padding-top: 140px; padding-bottom: 70px; background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%); text-align: center; }
+  .land-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .land-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 720px; margin: 0 auto 32px; line-height: 1.7; }
+  .land-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .land-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-intro-content { max-width: 800px; margin: 0 auto; }
+  .land-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .land-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+  .land-conditions { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-conditions h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .condition-card { background: var(--color-warm-white); border-radius: 14px; padding: 26px 22px; border-left: 3px solid var(--color-primary); box-shadow: var(--shadow-soft); }
+  .condition-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 8px; }
+  .condition-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.65; }
+  .land-reasons { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-reasons h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 48px; }
+  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .reason-card { background: var(--color-cream); border-radius: 16px; padding: 30px 26px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .reason-card h3 { font-size: 1.05rem; color: var(--color-primary-dark); margin-bottom: 10px; }
+  .reason-card p { font-size: 0.92rem; color: var(--color-text-light); line-height: 1.7; }
+  .land-services { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-services h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service-card { background: var(--color-warm-white); border-radius: 14px; padding: 28px 24px; border: 1px solid rgba(90, 124, 89, 0.08); }
+  .service-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+  .service-meta { font-size: 0.92rem; font-weight: 600; color: var(--color-primary); margin-bottom: 12px; }
+  .service-card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; margin-bottom: 14px; }
+  .service-link { font-size: 0.88rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .service-link:hover { text-decoration: underline; }
+  .land-cta { padding: var(--section-padding) 0; background: var(--color-primary); text-align: center; color: white; }
+  .land-cta h2 { color: white; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 14px; }
+  .land-cta p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin-bottom: 28px; }
+  .land-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .land-cta .btn-primary { background: white; color: var(--color-primary); }
+  .land-cta .btn-primary:hover { background: var(--color-cream); }
+  .land-cta .btn-outline { border-color: white; color: white; }
+  .land-cta .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
+  .land-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .land-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 900px; margin: 0 auto; }
+  .faq-item { background: var(--color-cream); border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); overflow: hidden; }
+  .faq-item summary { padding: 18px 24px; cursor: pointer; font-weight: 600; color: var(--color-text); font-size: 0.98rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; color: var(--color-primary); font-size: 1.4rem; font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 24px 18px; color: var(--color-text-light); line-height: 1.7; font-size: 0.92rem; }
+  .land-related { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .land-related h2 { text-align: center; font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 36px; }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 800px; margin: 0 auto; }
+  .related-card { display: block; background: var(--color-warm-white); padding: 22px 24px; border-radius: 14px; text-decoration: none; border: 1px solid rgba(90, 124, 89, 0.08); transition: all 0.3s ease; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--color-primary); }
+  .related-card strong { display: block; color: var(--color-text); margin-bottom: 4px; font-size: 1rem; }
+  .related-card span { color: var(--color-text-light); font-size: 0.88rem; line-height: 1.6; }
+  @media (max-width: 1024px) { .conditions-grid, .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .conditions-grid, .services-grid, .reasons-grid, .faq-grid, .related-grid { grid-template-columns: 1fr; } }
+  :global([data-theme="dark"]) .condition-card,
+  :global([data-theme="dark"]) .reason-card,
+  :global([data-theme="dark"]) .service-card,
+  :global([data-theme="dark"]) .related-card,
+  :global([data-theme="dark"]) .faq-item { border-color: rgba(111, 155, 110, 0.12); }
+</style>
