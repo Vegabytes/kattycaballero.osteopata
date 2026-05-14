@@ -2,5 +2,37 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
+Disallow: /gracias
+Disallow: /gracias/
+Disallow: /offline
+Disallow: /offline.html
+
+# Limitar bots de SEO agresivos que no aportan tráfico real
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+User-agent: DotBot
+Crawl-delay: 10
+
+# Bots de IA: permitidos en general (interesa aparecer en respuestas de
+# Perplexity / ChatGPT cuando alguien pregunta "osteopata Alpedrete"),
+# pero sin poder leer admin/api.
+User-agent: GPTBot
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ClaudeBot
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Disallow: /admin/
+Disallow: /api/
 
 Sitemap: https://katycaballeroosteopata.com/sitemap-index.xml

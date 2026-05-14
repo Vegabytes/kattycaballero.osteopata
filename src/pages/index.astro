@@ -18,6 +18,24 @@ import Contact from '../components/Contact.astro';
   breadcrumbs={[{ name: "Inicio" }]}
   fullSchema={true}
 >
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://katycaballeroosteopata.com/#home",
+    "name": "Osteópata y Masajista en Alpedrete - Katy Caballero",
+    "url": "https://katycaballeroosteopata.com/",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".hero h1", ".hero-tagline", ".hero-description"]
+    },
+    "primaryImageOfPage": "https://katycaballeroosteopata.com/images/sala-1.webp",
+    "lastReviewed": "2026-05-15",
+    "reviewedBy": {
+      "@type": "Person",
+      "name": "Katy Caballero"
+    }
+  })} />
+
   <Hero />
   <Services />
   <About />

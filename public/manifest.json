@@ -3,11 +3,48 @@
   "short_name": "Katy Osteo",
   "description": "Centro de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#f8f6f0",
   "theme_color": "#4a6548",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["health", "medical", "lifestyle"],
   "icons": [
-    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Reservar cita",
+      "short_name": "Reservar",
+      "description": "Pedir cita de osteopatía o masaje",
+      "url": "/reservar",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "WhatsApp directo",
+      "short_name": "WhatsApp",
+      "description": "Escribir por WhatsApp a Katy",
+      "url": "https://wa.me/34643961065?text=Hola%20Katy%2C%20me%20gustar%C3%ADa%20pedir%20cita",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Llamar al 643 961 065",
+      "short_name": "Llamar",
+      "description": "Llamar a la consulta",
+      "url": "/contacto?accion=llamar",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Servicios y tarifas",
+      "short_name": "Tarifas",
+      "description": "Ver servicios y precios",
+      "url": "/tarifas",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    }
   ]
 }
