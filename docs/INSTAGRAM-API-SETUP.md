@@ -122,26 +122,35 @@ Si el JSON sale bien, abre la home → sección Instagram, deberías ver tus úl
 
 ## 7. Renovar el token cada 60 días
 
-El long-lived token expira a los 60 días. Hay dos opciones:
+El long-lived token expira a los 60 días. Tienes dos opciones:
 
-### Opción A (manual, simple): rotar a mano cada 50-55 días
+### Opción A — Auto-refresh AUTOMÁTICO (recomendado, "set & forget")
 
-Pon una alarma en el calendario:
-1. Vuelve al paso 3 y genera un token nuevo.
-2. Actualiza la variable `INSTAGRAM_ACCESS_TOKEN` en Cloudflare Pages.
-3. Redeploy.
+**Ya está implementado en `workers/cron.ts`**. Solo necesitas añadir DOS variables de entorno más en Cloudflare Pages:
 
-### Opción B (automática): refresh endpoint
+- **`INSTAGRAM_APP_ID`** → el ID de tu app de Meta Developer (lo ves en la página de la app).
+- **`INSTAGRAM_APP_SECRET`** → en la app → Settings → Basic → App Secret (pulsa "Show").
 
-Instagram permite refrescar un token long-lived (debe tener al menos 24h de vida):
+Con esas dos vars + el `INSTAGRAM_ACCESS_TOKEN` inicial, el cron worker se encarga del resto:
 
-```
-https://graph.instagram.com/refresh_access_token?
-  grant_type=ig_refresh_token&
-  access_token={TOKEN_ACTUAL}
-```
+- **Cada miércoles a las 10:00 UTC** llama al endpoint `fb_exchange_token` de Meta.
+- Extiende el token long-lived a otros 60 días.
+- Guarda el nuevo token en la tabla `configuracion` de D1 (`clave = 'instagram_access_token'`).
+- El endpoint `/api/instagram-feed` lee de D1 primero, así que automáticamente usa el token fresco.
+- Si algo falla, te avisa por Telegram con el error concreto para que actúes.
 
-Se puede automatizar con un Cloudflare Cron Worker que llame a este endpoint cada 50 días y actualice la variable de entorno via API de Cloudflare. Es más complejo pero zero-touch. Si quieres montarlo, dímelo y lo añadimos.
+**Resultado**: solo tienes que configurar el setup inicial. El token se renueva solo para siempre.
+
+### Opción B — Rotación MANUAL (sin App Secret)
+
+Si no quieres dejar `INSTAGRAM_APP_SECRET` en Cloudflare:
+
+1. Pon alarma en el calendario cada 50 días.
+2. Vuelve al paso 3 y genera un token nuevo.
+3. Actualiza `INSTAGRAM_ACCESS_TOKEN` en Cloudflare Pages.
+4. Redeploy.
+
+Si no configuras `INSTAGRAM_APP_ID` ni `INSTAGRAM_APP_SECRET`, el cron simplemente salta el refresh y registra `"saltar (modo manual)"` en los logs. No falla.
 
 ---
 

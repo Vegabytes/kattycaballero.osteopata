@@ -63,8 +63,24 @@ export const GET: APIRoute = async ({ locals, request }) => {
 
   // 2) Sin caché: pide a Instagram Graph API
   // @ts-expect-error runtime de Cloudflare Pages adapter
-  const env = locals.runtime?.env as Record<string, string | undefined> | undefined;
-  const token = env?.INSTAGRAM_ACCESS_TOKEN;
+  const env = locals.runtime?.env as Record<string, any> | undefined;
+
+  // Token: primero intenta D1 (lo que el cron auto-refresca cada semana),
+  // si no, cae a la variable de entorno (modo manual / primer despliegue).
+  let token: string | undefined;
+  try {
+    const db = env?.DB as D1Database | undefined;
+    if (db) {
+      const row = await db.prepare(
+        "SELECT valor FROM configuracion WHERE clave = 'instagram_access_token'"
+      ).first<{ valor: string }>();
+      if (row?.valor) token = row.valor;
+    }
+  } catch {
+    // D1 puede no estar bindeado en pre-build; seguimos al fallback
+  }
+  if (!token) token = env?.INSTAGRAM_ACCESS_TOKEN;
+
   const businessAccountId = env?.INSTAGRAM_BUSINESS_ACCOUNT_ID;
 
   if (!token) {

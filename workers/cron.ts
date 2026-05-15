@@ -9,6 +9,10 @@ interface Env {
   DB: D1Database;
   VAPID_PRIVATE_KEY: string;
   VAPID_PUBLIC_KEY: string;
+  // Instagram token auto-refresh (opcional)
+  INSTAGRAM_APP_ID?: string;
+  INSTAGRAM_APP_SECRET?: string;
+  INSTAGRAM_ACCESS_TOKEN?: string; // token inicial; tras el primer refresh se guarda en D1
 }
 
 interface Settings {
@@ -741,6 +745,95 @@ async function processCumpleanos(db: D1Database, settings: Settings, env: Env): 
   return logs;
 }
 
+// === INSTAGRAM TOKEN REFRESH ===
+
+/**
+ * Los Long-Lived User Access Tokens de Facebook (que es lo que usamos para
+ * Instagram Graph API) duran 60 días. Cada vez que llamas al endpoint de
+ * `fb_exchange_token` con un token long-lived válido, te devuelve uno nuevo
+ * con otros 60 días. Ejecutando esto cada miércoles, el token nunca expira.
+ *
+ * El token actual se lee de la tabla `configuracion` (clave 'instagram_access_token').
+ * Si la tabla aún no lo tiene, usa el de la variable de entorno como semilla.
+ * El nuevo token se guarda en la tabla para que `/api/instagram-feed` lo use.
+ *
+ * Si falta `INSTAGRAM_APP_ID` o `INSTAGRAM_APP_SECRET`, no intenta refrescar
+ * (el usuario tendría que rotar a mano cada 50-55 días).
+ */
+async function processInstagramTokenRefresh(db: D1Database, settings: Settings, env: Env): Promise<string[]> {
+  const logs: string[] = [];
+
+  // Solo los miércoles (refresh semanal). El cron corre diariamente.
+  const now = new Date();
+  const madridOffset = isSummerTime(now) ? 2 : 1;
+  const madrid = new Date(now.getTime() + madridOffset * 3600000);
+  if (madrid.getDay() !== 3) {
+    logs.push('Instagram refresh: no es miercoles, saltar');
+    return logs;
+  }
+
+  if (!env.INSTAGRAM_APP_ID || !env.INSTAGRAM_APP_SECRET) {
+    logs.push('Instagram refresh: faltan INSTAGRAM_APP_ID o INSTAGRAM_APP_SECRET, saltar (modo manual)');
+    return logs;
+  }
+
+  // Lee token actual desde D1 primero, fallback a env var
+  const currentToken = settings.instagram_access_token || env.INSTAGRAM_ACCESS_TOKEN;
+  if (!currentToken) {
+    logs.push('Instagram refresh: no hay token actual configurado, saltar');
+    return logs;
+  }
+
+  const url = `https://graph.facebook.com/v21.0/oauth/access_token?`
+    + `grant_type=fb_exchange_token`
+    + `&client_id=${encodeURIComponent(env.INSTAGRAM_APP_ID)}`
+    + `&client_secret=${encodeURIComponent(env.INSTAGRAM_APP_SECRET)}`
+    + `&fb_exchange_token=${encodeURIComponent(currentToken)}`;
+
+  try {
+    const resp = await fetch(url, { method: 'GET' });
+    if (!resp.ok) {
+      const errText = await resp.text().catch(() => 'unknown');
+      logs.push(`Instagram refresh: ERROR ${resp.status} - ${errText.slice(0, 200)}`);
+
+      // Avisa a Katy por Telegram que hay que revisar el token a mano
+      const botToken = settings.telegram_bot_token;
+      const chatId = settings.telegram_chat_id;
+      if (botToken && chatId) {
+        await sendTelegram(botToken, chatId,
+          `⚠️ El token de Instagram NO se ha podido renovar automáticamente.\n\n`
+          + `Status: ${resp.status}\nError: ${errText.slice(0, 200)}\n\n`
+          + `Renueva manualmente siguiendo docs/INSTAGRAM-API-SETUP.md antes de que expire (60 días desde su generación).`);
+      }
+      return logs;
+    }
+
+    const data = await resp.json() as { access_token?: string; expires_in?: number };
+    if (!data.access_token) {
+      logs.push('Instagram refresh: respuesta sin access_token, saltar');
+      return logs;
+    }
+
+    // Guarda el nuevo token en D1
+    const nowIso = new Date().toISOString();
+    await db.prepare(
+      `INSERT INTO configuracion (clave, valor) VALUES (?, ?)
+       ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor`
+    ).bind('instagram_access_token', data.access_token).run();
+
+    await db.prepare(
+      `INSERT INTO configuracion (clave, valor) VALUES (?, ?)
+       ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor`
+    ).bind('instagram_token_updated_at', nowIso).run();
+
+    logs.push(`Instagram refresh: OK, nuevo token guardado (valido 60 dias desde ${nowIso.slice(0,10)})`);
+    return logs;
+  } catch (err) {
+    logs.push(`Instagram refresh: excepcion - ${err instanceof Error ? err.message : 'unknown'}`);
+    return logs;
+  }
+}
+
 // === WORKER ENTRY ===
 
 export default {
@@ -762,6 +855,9 @@ export default {
 
     const cumpleLogs = await processCumpleanos(env.DB, settings, env);
     logs.push(...cumpleLogs);
+
+    const igLogs = await processInstagramTokenRefresh(env.DB, settings, env);
+    logs.push(...igLogs);
 
     console.log('Cron completed:', logs.join(' | '));
   },
@@ -791,6 +887,9 @@ export default {
 
     const cumpleLogs = await processCumpleanos(env.DB, settings, env);
     logs.push(...cumpleLogs);
+
+    const igLogs = await processInstagramTokenRefresh(env.DB, settings, env);
+    logs.push(...igLogs);
 
     return new Response(JSON.stringify({ logs }, null, 2), {
       headers: { 'Content-Type': 'application/json' },
