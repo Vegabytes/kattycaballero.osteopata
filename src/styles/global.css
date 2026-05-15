@@ -523,29 +523,25 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 3px rgba(111, 155, 110, 0.25);
 }
 
-/* Respect prefers-reduced-motion */
+/* Respect prefers-reduced-motion (WCAG 2.3.3 motion-from-interactions).
+ * Override global para todos los transitions/animations del sitio.
+ * Usamos 0.01ms en lugar de 0/none para que los scripts que dependen
+ * del evento transitionend sigan disparándose. */
 @media (prefers-reduced-motion: reduce) {
-  .card:hover {
-    transform: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
   }
 
-  .btn:active {
-    transform: none;
-  }
-
-  .section-tag:hover {
-    animation: none;
-  }
-
-  .scroll-top-btn:hover {
-    transform: none;
-  }
-
-  .whatsapp-float:hover {
-    transform: none;
-  }
-
-  .btn-primary:hover {
-    transform: none;
+  /* Hover/active transforms también desactivados (mantiene compatibilidad
+   * con el código previo, pero ahora aplicado en general). */
+  *:hover,
+  *:active {
+    transform: none !important;
   }
 }
