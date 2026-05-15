@@ -84,6 +84,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué es el vértigo postural paroxístico benigno', 'Diferencia con otros tipos de vértigo', 'Maniobra de Epley y otras técnicas', 'Cómo la osteopatía complementa el tratamiento', 'Recomendaciones para evitar recaídas'],
     readTimeMin: 6,
     internalLinks: ['/servicios/osteopatia-alpedrete'],
+    done: true,
   },
   {
     slug: 'latigazo-cervical-tratamiento',
@@ -96,6 +97,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué pasa en tu cuello tras un latigazo', 'Fases del tratamiento: aguda, subaguda, crónica', 'Cuándo empezar con osteopatía', 'Tratamiento osteopático: qué esperar', 'Por qué algunos pacientes quedan con secuelas crónicas'],
     readTimeMin: 7,
     internalLinks: ['/dolor-cervical', '/servicios/osteopatia-alpedrete'],
+    done: true,
   },
   {
     slug: 'escoliosis-adultos-osteopatia',
@@ -108,6 +110,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Escoliosis funcional vs estructural', 'Qué puede y qué NO puede hacer la osteopatía', 'Plan de tratamiento realista', 'Ejercicios complementarios recomendados', 'Cuándo necesitas otros profesionales'],
     readTimeMin: 7,
     internalLinks: ['/servicios/osteopatia-alpedrete'],
+    done: true,
   },
   {
     slug: 'codo-tenista-golfista-tratamiento',
@@ -120,6 +123,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Diferencia entre codo de tenista y de golfista', 'Por qué aparecen sin jugar a ningún deporte', 'Tratamiento osteopático del codo', 'Ejercicios excéntricos: el gold standard', 'Cuándo NO es codo de tenista (diagnóstico diferencial)'],
     readTimeMin: 6,
     internalLinks: ['/osteopatia-deportistas', '/servicios/masaje-deportivo-alpedrete'],
+    done: true,
   },
   {
     slug: 'dolor-cadera-al-caminar',
@@ -145,6 +149,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué es la pubalgia y por qué aparece', 'Síntomas que confunden con otras lesiones', 'Tipos: parietal, aductora, osteítis púbica', 'Tratamiento osteopático y manual', 'Plan de retorno al deporte sin recaídas'],
     readTimeMin: 7,
     internalLinks: ['/osteopatia-deportistas', '/servicios/masaje-deportivo-alpedrete'],
+    done: true,
   },
   {
     slug: 'sindrome-banda-iliotibial-runners-sierra',
@@ -157,6 +162,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Por qué los trail runners de la Sierra lo sufren más', 'Cómo identificar el dolor: localización y tipo', 'Errores de entrenamiento que lo provocan', 'Tratamiento osteopático + masaje deportivo', 'Vuelta progresiva a la carrera'],
     readTimeMin: 7,
     internalLinks: ['/osteopatia-deportistas', '/blog/recuperacion-deportiva-sierra-madrid', '/blog/estiramientos-corredores-montana'],
+    done: true,
   },
   {
     slug: 'espolon-calcaneo-osteopatia',
@@ -169,6 +175,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué es realmente un espolón calcáneo (no es lo que crees)', 'Diferencia entre espolón y fascitis plantar', 'Por qué duele aunque tengas el espolón hace años sin doler', 'Tratamiento osteopático paso a paso', 'Plantillas: ¿sí o no?'],
     readTimeMin: 6,
     internalLinks: ['/blog/fascitis-plantar-causas-tratamiento'],
+    done: true,
   },
   {
     slug: 'dolor-sacroiliaco-causa-lumbar',
@@ -181,6 +188,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['La articulación que casi nadie diagnostica bien', 'Síntomas típicos de disfunción sacroilíaca', 'Test que puede hacer un osteópata', 'Por qué muchas "hernias" son en realidad sacroilíacas', 'Tratamiento osteopático específico'],
     readTimeMin: 7,
     internalLinks: ['/dolor-de-espalda', '/blog/hernia-discal-osteopatia-tratamiento'],
+    done: true,
   },
   {
     slug: 'hipercifosis-dorsal-corregir',
@@ -193,6 +201,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Hipercifosis estructural vs funcional', 'Cómo evaluar tu postura tú mismo', 'Ejercicios que funcionan (y los que NO)', 'El papel del trabajo osteopático en zona dorsal', 'Rutina de 10 minutos al día'],
     readTimeMin: 7,
     internalLinks: ['/test-postura', '/osteopatia-teletrabajo'],
+    done: true,
   },
   {
     slug: 'dolor-menstrual-osteopatia-visceral',
@@ -205,6 +214,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Por qué duele la regla y qué se puede hacer', 'Qué evalúa una osteópata en dismenorrea', 'Técnicas viscerales: pelvis y diafragma', 'Cuándo combinar con ginecólogo', 'Resultados realistas que puedes esperar'],
     readTimeMin: 6,
     internalLinks: ['/blog/osteopatia-visceral-que-es'],
+    done: true,
   },
   {
     slug: 'reflujo-osteopatia-visceral',
@@ -217,6 +227,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['El papel del diafragma en la digestión', 'Cómo se trabaja una hernia de hiato funcional', 'Qué cambios notarás (y qué NO)', 'Hábitos que potencian el tratamiento', 'Cuándo es imprescindible el digestivo'],
     readTimeMin: 6,
     internalLinks: ['/blog/osteopatia-visceral-que-es'],
+    done: true,
   },
   {
     slug: 'estrenimiento-cronico-osteopatia-visceral',
@@ -229,6 +240,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Por qué tu intestino "se atasca"', 'Cómo se trabaja el colon en osteopatía visceral', 'Auto-masaje: técnica básica que puedes hacer en casa', 'Hábitos que multiplican el resultado', 'Cuándo descartar otras causas'],
     readTimeMin: 6,
     internalLinks: ['/blog/osteopatia-visceral-que-es'],
+    done: true,
   },
   {
     slug: 'recuperacion-post-cirugia-osteopatia',
@@ -241,6 +253,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Por qué las cicatrices generan adherencias', 'Cuándo empezar tras la cirugía (timing seguro)', 'Trabajo manual sobre cicatrices recientes y antiguas', 'Resultados realistas y casos clínicos', 'Coordinación con tu equipo médico'],
     readTimeMin: 7,
     internalLinks: ['/servicios/osteopatia-alpedrete'],
+    done: true,
   },
   {
     slug: 'insomnio-tension-muscular-circulo',
@@ -253,6 +266,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Cómo el insomnio aumenta la tensión muscular', 'Y cómo la tensión muscular sabotea el sueño', 'Sistema nervioso autónomo: el switch que se atasca', 'Cómo un masaje terapéutico desactiva el círculo', 'Rutina de relajación de 10 minutos antes de dormir'],
     readTimeMin: 7,
     internalLinks: ['/servicios/masaje-corporal-alpedrete', '/blog/estres-tension-muscular-cuerpo'],
+    done: true,
   },
   {
     slug: 'ansiedad-somatizada-cuerpo',
@@ -278,6 +292,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué es el psoas y por qué lo llaman "el músculo del alma"', 'Cómo se contractura y qué señales da', 'Estiramientos y test que puedes hacer tú', 'Tratamiento osteopático visceral y estructural', 'Conexión emocional y respiración diafragmática'],
     readTimeMin: 7,
     internalLinks: ['/blog/dolor-espalda-teletrabajo', '/servicios/osteopatia-alpedrete'],
+    done: true,
   },
   {
     slug: 'diafragma-respiracion-osteopatia',
@@ -316,6 +331,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Lesiones más típicas en estaciones cercanas', 'Preparación física antes de la temporada', 'Qué hacer si te caes y duele', 'Tratamiento osteopático tras la temporada', 'Estiramientos clave para esquiadores'],
     readTimeMin: 6,
     internalLinks: ['/osteopata-navacerrada', '/osteopatia-deportistas', '/servicios/masaje-deportivo-alpedrete'],
+    done: true,
   },
   {
     slug: 'preparacion-fisica-cumbres-madrid',
@@ -328,6 +344,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Las cumbres más demandadas y su exigencia', 'Plan progresivo de preparación (6-8 semanas)', 'Errores típicos del montañero amateur', 'Cuándo el masaje deportivo marca la diferencia', 'Recuperación post-ascensión'],
     readTimeMin: 7,
     internalLinks: ['/osteopatia-deportistas', '/blog/recuperacion-deportiva-sierra-madrid'],
+    done: true,
   },
   {
     slug: 'plan-recuperacion-maraton-madrid',
@@ -340,6 +357,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Las primeras 72 horas: lo que sí y lo que NO', 'Semana 1: descarga muscular activa', 'Cuándo el masaje deportivo es seguro tras la prueba', 'Osteopatía estructural y visceral en runners', 'Vuelta progresiva: las 4 semanas siguientes'],
     readTimeMin: 7,
     internalLinks: ['/servicios/masaje-deportivo-alpedrete', '/osteopatia-deportistas'],
+    done: true,
   },
   {
     slug: 'cervicalgia-profesionales-volante',
@@ -352,6 +370,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Por qué el cuerpo del conductor profesional sufre tanto', 'Postura del asiento: regulaciones que casi nadie hace', 'Micro-pausas que sí caben en su jornada', 'Plan de mantenimiento osteopático realista', 'Cuándo es ya un problema laboral'],
     readTimeMin: 7,
     internalLinks: ['/dolor-cervical', '/osteopatia-teletrabajo'],
+    done: true,
   },
   {
     slug: 'pinzamiento-cervical-tratamiento',
@@ -364,6 +383,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué es un "pinzamiento" cervical (y qué no es)', 'Por qué aparece de la nada', 'Qué hacer en las primeras 24h', 'Tratamiento osteopático en consulta', 'Prevención para que no vuelva'],
     readTimeMin: 6,
     internalLinks: ['/dolor-cervical', '/blog/contracturas-cervicales-causas-tratamiento'],
+    done: true,
   },
   {
     slug: 'osteopatia-bebes-lactantes',
@@ -376,6 +396,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué evalúa un osteópata en un bebé', 'Plagiocefalia: cuándo preocuparse', 'Cólico del lactante: el papel de la osteopatía visceral', 'Lactancia y problemas mecánicos del bebé', 'Cuándo es urgente acudir al pediatra primero'],
     readTimeMin: 7,
     internalLinks: ['/blog/osteopatia-infantil-beneficios'],
+    done: true,
   },
   {
     slug: 'osteopatia-menopausia-bienestar',
@@ -388,6 +409,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Cambios físicos típicos en la menopausia', 'Cómo la osteopatía puede mejorar la sintomatología', 'Trabajo sobre pelvis, diafragma y sistema visceral', 'Combinación con tu ginecóloga', 'Resultados realistas y plan de sesiones'],
     readTimeMin: 7,
     internalLinks: ['/servicios/osteopatia-alpedrete', '/blog/osteopatia-visceral-que-es'],
+    done: true,
   },
 ];
 
