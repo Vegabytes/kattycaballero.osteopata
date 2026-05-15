@@ -32,6 +32,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Por qué la postura importa más de lo que crees', 'Altura ideal del monitor', 'Configuración de la silla y la mesa', 'La regla 20-20-20 para los ojos', 'Pausas activas: micro-rutinas de 2 minutos', '¿Cuándo acudir a un osteópata?'],
     readTimeMin: 7,
     internalLinks: ['/osteopatia-teletrabajo', '/blog/dolor-espalda-teletrabajo', '/blog/ejercicios-dolor-lumbar-oficina'],
+    done: true,
   },
   {
     slug: 'crujidos-articulaciones-cuando-preocuparse',
@@ -44,6 +45,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué causa los crujidos: la física detrás', 'Cuándo son inofensivos', 'Señales de alarma que debes vigilar', 'El crujido en una manipulación osteopática', 'Mitos sobre los crujidos articulares'],
     readTimeMin: 6,
     internalLinks: ['/servicios/osteopatia-alpedrete', '/donde-te-duele'],
+    done: true,
   },
   {
     slug: 'dolor-espalda-al-despertar',
@@ -56,6 +58,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Tu colchón puede ser el culpable', 'Postura de dormir: bocarriba, boca abajo, de lado', 'La almohada importa más de lo que crees', 'Rigidez matutina vs dolor de espalda crónico', 'Rutina de 5 minutos al levantarte', 'Cuándo es una señal de algo más serio'],
     readTimeMin: 7,
     internalLinks: ['/dolor-de-espalda', '/blog/contracturas-cervicales-causas-tratamiento'],
+    done: true,
   },
   {
     slug: 'mareos-cervicogenicos-cuello',
@@ -68,6 +71,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué es un mareo cervicogénico', 'Cómo se diferencia del vértigo posicional', 'Por qué el cuello afecta al equilibrio', 'Tratamiento osteopático paso a paso', 'Ejercicios suaves para mejorar la propiocepción cervical'],
     readTimeMin: 6,
     internalLinks: ['/dolor-cervical', '/blog/contracturas-cervicales-causas-tratamiento'],
+    done: true,
   },
   {
     slug: 'vertigo-postural-osteopatia',
@@ -128,6 +132,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Las 5 causas más comunes', 'Cómo diferenciarlas según dónde duele', 'Test sencillos que puedes hacer en casa', 'Tratamiento osteopático según la causa', 'Cuándo es urgente acudir al traumatólogo'],
     readTimeMin: 7,
     internalLinks: ['/donde-te-duele', '/servicios/osteopatia-alpedrete'],
+    done: true,
   },
   {
     slug: 'pubalgia-deportista',
@@ -260,6 +265,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué significa somatizar y por qué le pasa a todo el mundo', 'Las 5 zonas donde la ansiedad se acumula', 'Por qué los tratamientos solo musculares no bastan', 'El papel de la osteopatía y el masaje en la regulación nerviosa', 'Cuándo necesitas también apoyo psicológico'],
     readTimeMin: 7,
     internalLinks: ['/servicios/masaje-corporal-alpedrete', '/blog/estres-tension-muscular-cuerpo'],
+    done: true,
   },
   {
     slug: 'sindrome-psoas-iliaco',
@@ -284,6 +290,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Por qué el diafragma es el músculo más infravalorado', 'Cómo afecta a tu postura y tu sistema nervioso', 'Auto-test: ¿respiras con el pecho o con el abdomen?', 'Trabajo osteopático del diafragma paso a paso', 'Ejercicios de respiración que sí funcionan'],
     readTimeMin: 6,
     internalLinks: ['/servicios/osteopatia-alpedrete', '/blog/osteopatia-visceral-que-es'],
+    done: true,
   },
   {
     slug: 'atm-mas-alla-bruxismo',
@@ -296,6 +303,7 @@ export const blogTopics: BlogTopic[] = [
     outlineH2s: ['Qué es la ATM y por qué da tantos problemas', 'Síntomas más allá del bruxismo: clics, mareos, otalgia', 'La conexión cuello-mandíbula', 'Tratamiento osteopático intra-oral: qué esperar', 'Combinación con dentista y férula'],
     readTimeMin: 6,
     internalLinks: ['/bruxismo-atm', '/blog/bruxismo-dolor-mandibula-osteopatia'],
+    done: true,
   },
   {
     slug: 'lesiones-esqui-prevencion-sierra',
