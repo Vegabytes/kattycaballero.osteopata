@@ -6,6 +6,7 @@ import WhatsAppButton from '../components/WhatsAppButton.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import SearchModal from '../components/SearchModal.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { reviews, averageRating, reviewCount } from '../data/reviews';
 import '../styles/fonts.css';
 import '../styles/global.css';
 
@@ -27,6 +28,12 @@ interface Props {
   /** Render the full MedicalBusiness schema (with reviews, areaServed, services, etc.). Default false: emit a lighter schema. Use true on home and /opiniones to keep rich snippets. */
   fullSchema?: boolean;
 }
+
+// Google Search Console verification. Para añadir el código:
+//   1. En Search Console, Settings → Ownership verification → HTML tag
+//   2. Copia el valor del atributo `content=` y pégalo abajo (o define la
+//      variable de entorno PUBLIC_GSC_VERIFICATION en .env / Cloudflare)
+const GSC_VERIFICATION = import.meta.env.PUBLIC_GSC_VERIFICATION || '';
 
 const {
   title,
@@ -52,6 +59,132 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
     ...(item.url ? { "item": `https://katycaballeroosteopata.com${item.url}` } : {})
   }))
 } : null;
+
+const businessAddress = {
+  "@type": "PostalAddress",
+  "streetAddress": "Calle Río Guadarrama 2",
+  "addressLocality": "Alpedrete",
+  "addressRegion": "Madrid",
+  "postalCode": "28430",
+  "addressCountry": "ES"
+};
+
+const businessGeo = {
+  "@type": "GeoCoordinates",
+  "latitude": "40.6631",
+  "longitude": "-4.0270"
+};
+
+const openingHours = [
+  { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "20:00" },
+  { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "14:00" }
+];
+
+const aggregateRatingObj = {
+  "@type": "AggregateRating",
+  "ratingValue": averageRating,
+  "bestRating": "5",
+  "worstRating": "1",
+  "ratingCount": String(reviewCount),
+  "reviewCount": String(reviewCount)
+};
+
+const lightSchema = {
+  "@context": "https://schema.org",
+  "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
+  "@id": "https://katycaballeroosteopata.com/#business",
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "url": "https://katycaballeroosteopata.com",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "telephone": "+34643961065",
+  "priceRange": "€€",
+  "address": businessAddress,
+  "geo": businessGeo,
+  "openingHoursSpecification": openingHours,
+  "aggregateRating": aggregateRatingObj,
+  "sameAs": [
+    "https://www.instagram.com/katycaballero.osteopata",
+    "https://es.nextdoor.com/pages/sala-osteopatia-katy-caballero-alpedrete-comunidad-de-madrid/",
+    "https://pueblus.com/empresas/katy-caballero-osteopatia-y-masajes-alpedrete"
+  ]
+};
+
+const fullBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
+  "@id": "https://katycaballeroosteopata.com/#business",
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "description": "Centro de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid. Tratamientos de osteopatía estructural, visceral y craneal, masaje deportivo, tailandés y terapéutico.",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "medicalSpecialty": "Osteopathic",
+  "isAcceptingNewPatients": true,
+  "availableService": [
+    { "@type": "MedicalTherapy", "name": "Osteopatía estructural, visceral y sacrocraneal", "description": "Tratamiento osteopático integral que aborda problemas estructurales, viscerales y craneales mediante técnicas manuales suaves.", "url": "https://katycaballeroosteopata.com/servicios/osteopatia-alpedrete" },
+    { "@type": "MedicalTherapy", "name": "Masaje deportivo", "description": "Masaje terapéutico enfocado en la recuperación muscular y prevención de lesiones deportivas.", "url": "https://katycaballeroosteopata.com/servicios/masaje-deportivo-alpedrete" },
+    { "@type": "MedicalTherapy", "name": "Masaje tradicional tailandés", "description": "Técnica milenaria de masaje que combina presiones, estiramientos y movilizaciones articulares.", "url": "https://katycaballeroosteopata.com/servicios/masaje-tailandes-alpedrete" },
+    { "@type": "MedicalTherapy", "name": "Masaje corporal relajante con aceite", "description": "Masaje corporal con aceites esenciales para aliviar tensiones y promover la relajación profunda.", "url": "https://katycaballeroosteopata.com/servicios/masaje-corporal-alpedrete" },
+    { "@type": "MedicalTherapy", "name": "Masaje con pindas herbales", "description": "Terapia que utiliza saquitos de hierbas medicinales calientes para aliviar dolores musculares y articulares.", "url": "https://katycaballeroosteopata.com/servicios/masaje-pindas-herbales-alpedrete" },
+    { "@type": "MedicalTherapy", "name": "Masaje para embarazadas", "description": "Masaje prenatal adaptado para aliviar las molestias del embarazo de forma segura y relajante.", "url": "https://katycaballeroosteopata.com/servicios/masaje-embarazadas-alpedrete" }
+  ],
+  "telephone": "+34643961065",
+  "email": "katycaballero.osteopata@gmail.com",
+  "address": businessAddress,
+  "geo": businessGeo,
+  "areaServed": [
+    { "@type": "City", "name": "Alpedrete" },
+    { "@type": "City", "name": "Collado Villalba" },
+    { "@type": "City", "name": "Moralzarzal" },
+    { "@type": "City", "name": "Galapagar" },
+    { "@type": "City", "name": "Guadarrama" },
+    { "@type": "City", "name": "Torrelodones" },
+    { "@type": "City", "name": "El Escorial" },
+    { "@type": "City", "name": "Cercedilla" },
+    { "@type": "City", "name": "Navacerrada" },
+    { "@type": "City", "name": "Collado Mediano" },
+    { "@type": "City", "name": "Becerril de la Sierra" },
+    { "@type": "City", "name": "Los Molinos" },
+    { "@type": "AdministrativeArea", "name": "Sierra de Guadarrama" },
+    { "@type": "AdministrativeArea", "name": "Sierra de Madrid" },
+    { "@type": "AdministrativeArea", "name": "Sierra Noroeste de Madrid" },
+    { "@type": "AdministrativeArea", "name": "Zona Noroeste de Madrid" }
+  ],
+  "url": "https://katycaballeroosteopata.com",
+  "priceRange": "€€",
+  "paymentAccepted": "Cash, Bizum, PayPal, Revolut",
+  "currenciesAccepted": "EUR",
+  "openingHoursSpecification": openingHours,
+  "aggregateRating": aggregateRatingObj,
+  "founder": {
+    "@type": "Person",
+    "name": "Katy Caballero",
+    "jobTitle": "Osteópata y Masajista",
+    "description": "Osteópata profesional con más de 12 años de experiencia en osteopatía estructural, visceral y sacrocraneal, masaje deportivo y terapéutico.",
+    "knowsAbout": ["Osteopatía estructural", "Osteopatía visceral", "Osteopatía craneal", "Masaje deportivo", "Masaje tailandés", "Masaje para embarazadas"]
+  },
+  "review": reviews.map(r => ({
+    "@type": "Review",
+    "author": { "@type": "Person", "name": r.name },
+    "reviewRating": { "@type": "Rating", "ratingValue": String(r.rating), "bestRating": "5" },
+    "reviewBody": r.text
+  })),
+  "sameAs": [
+    "https://www.instagram.com/katycaballero.osteopata",
+    "https://es.nextdoor.com/pages/sala-osteopatia-katy-caballero-alpedrete-comunidad-de-madrid/",
+    "https://www.bing.com/forbusiness/singleEntity?bizid=24de5fa7-ed7a-48d4-af66-dd995283aec4",
+    "https://pueblus.com/empresas/katy-caballero-osteopatia-y-masajes-alpedrete"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Servicios de osteopatía y masajes",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Osteopatía estructural, visceral y sacrocraneal" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Masaje deportivo" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Masaje tradicional tailandés" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Masaje corporal con aceite" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Masaje para embarazadas" } }
+    ]
+  }
+};
 ---
 
 <!DOCTYPE html>
@@ -82,6 +215,8 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
   <meta name="geo.placename" content="Alpedrete, Madrid">
   <meta name="geo.position" content="40.6631;-4.0270">
   <meta name="ICBM" content="40.6631, -4.0270">
+
+  {GSC_VERIFICATION && <meta name="google-site-verification" content={GSC_VERIFICATION} />}
   
   <!-- Canonical URL -->
   <link rel="canonical" href={canonicalURL}>
@@ -140,252 +275,7 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
   <link rel="preload" href="/fonts/montserrat-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
   
   <!-- Schema.org markup -->
-  {fullSchema ? (
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
-    "@id": "https://katycaballeroosteopata.com/#business",
-    "name": "Katy Caballero - Osteópata y Masajista",
-    "description": "Centro de osteopatía y masajes en Alpedrete, Sierra Noroeste de Madrid. Tratamientos de osteopatía estructural, visceral y craneal, masaje deportivo, tailandés y terapéutico.",
-    "image": "https://katycaballeroosteopata.com/images/logo.png",
-    "medicalSpecialty": "Osteopathic",
-    "isAcceptingNewPatients": true,
-    "availableService": [
-      {
-        "@type": "MedicalTherapy",
-        "name": "Osteopatía estructural, visceral y sacrocraneal",
-        "description": "Tratamiento osteopático integral que aborda problemas estructurales, viscerales y craneales mediante técnicas manuales suaves.",
-        "url": "https://katycaballeroosteopata.com/servicios/osteopatia-alpedrete"
-      },
-      {
-        "@type": "MedicalTherapy",
-        "name": "Masaje deportivo",
-        "description": "Masaje terapéutico enfocado en la recuperación muscular y prevención de lesiones deportivas.",
-        "url": "https://katycaballeroosteopata.com/servicios/masaje-deportivo-alpedrete"
-      },
-      {
-        "@type": "MedicalTherapy",
-        "name": "Masaje tradicional tailandés",
-        "description": "Técnica milenaria de masaje que combina presiones, estiramientos y movilizaciones articulares.",
-        "url": "https://katycaballeroosteopata.com/servicios/masaje-tailandes-alpedrete"
-      },
-      {
-        "@type": "MedicalTherapy",
-        "name": "Masaje corporal relajante con aceite",
-        "description": "Masaje corporal con aceites esenciales para aliviar tensiones y promover la relajación profunda.",
-        "url": "https://katycaballeroosteopata.com/servicios/masaje-corporal-alpedrete"
-      },
-      {
-        "@type": "MedicalTherapy",
-        "name": "Masaje con pindas herbales",
-        "description": "Terapia que utiliza saquitos de hierbas medicinales calientes para aliviar dolores musculares y articulares.",
-        "url": "https://katycaballeroosteopata.com/servicios/masaje-pindas-herbales-alpedrete"
-      },
-      {
-        "@type": "MedicalTherapy",
-        "name": "Masaje para embarazadas",
-        "description": "Masaje prenatal adaptado para aliviar las molestias del embarazo de forma segura y relajante.",
-        "url": "https://katycaballeroosteopata.com/servicios/masaje-embarazadas-alpedrete"
-      }
-    ],
-    "telephone": "+34643961065",
-    "email": "katycaballero.osteopata@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Calle Río Guadarrama 2",
-      "addressLocality": "Alpedrete",
-      "addressRegion": "Madrid",
-      "postalCode": "28430",
-      "addressCountry": "ES"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "40.6631",
-      "longitude": "-4.0270"
-    },
-    "areaServed": [
-      {"@type": "City", "name": "Alpedrete"},
-      {"@type": "City", "name": "Collado Villalba"},
-      {"@type": "City", "name": "Moralzarzal"},
-      {"@type": "City", "name": "Galapagar"},
-      {"@type": "City", "name": "Guadarrama"},
-      {"@type": "City", "name": "Torrelodones"},
-      {"@type": "City", "name": "El Escorial"},
-      {"@type": "City", "name": "Cercedilla"},
-      {"@type": "City", "name": "Navacerrada"},
-      {"@type": "City", "name": "Collado Mediano"},
-      {"@type": "City", "name": "Becerril de la Sierra"},
-      {"@type": "City", "name": "Los Molinos"},
-      {"@type": "AdministrativeArea", "name": "Sierra de Guadarrama"},
-      {"@type": "AdministrativeArea", "name": "Sierra de Madrid"},
-      {"@type": "AdministrativeArea", "name": "Sierra Noroeste de Madrid"},
-      {"@type": "AdministrativeArea", "name": "Zona Noroeste de Madrid"}
-    ],
-    "url": "https://katycaballeroosteopata.com",
-    "priceRange": "€€",
-    "paymentAccepted": "Cash, Bizum, PayPal, Revolut",
-    "currenciesAccepted": "EUR",
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "09:00",
-        "closes": "20:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Saturday",
-        "opens": "10:00",
-        "closes": "14:00"
-      }
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "bestRating": "5",
-      "worstRating": "1",
-      "ratingCount": "12",
-      "reviewCount": "12"
-    },
-    "founder": {
-      "@type": "Person",
-      "name": "Katy Caballero",
-      "jobTitle": "Osteópata y Masajista",
-      "description": "Osteópata profesional con más de 12 años de experiencia en osteopatía estructural, visceral y sacrocraneal, masaje deportivo y terapéutico.",
-      "knowsAbout": ["Osteopatía estructural", "Osteopatía visceral", "Osteopatía craneal", "Masaje deportivo", "Masaje tailandés", "Masaje para embarazadas"]
-    },
-    "review": [
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "Natalia Fernández Grande"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "Mi primera vez y ha sido una experiencia de 10. Un espacio muy acogedor, que invita a la relajación y el bienestar desde el primer momento. Gran profesional detallista, cuidadosa que maneja diferentes técnicas y te deja nueva."
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "Alejandro Castillo"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "Katy me ha ayudado con los problemas de espalda ya que trabajo muchas horas con el ordenador. También de una lesión en el gemelo que me impedía hacer deporte. Transmite tranquilidad y confianza."
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "Iulia Sasu"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "Hace tiempo que me duele el hombro derecho y probé con 2 fisioterapeutas distintos pero salía con el mismo dolor. Probé con Katy y noté mejoría. ¡Katy sabe escucharte a ti y también a tu cuerpo!"
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "ELENA CIBRIAN"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "Katy me ha ayudado a recuperarme de una lesión en la muñeca y hombro. Es muy buena profesional, se nota mucho su experiencia y toda su formación. El nuevo espacio es súper acogedor."
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "Elias Garcia Martinez"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "Katy me ha ayudado en la recuperación de una lesión de rodilla y a desinflamar y tratar el dolor. Tiene un trato muy agradable y respetuoso, es una gran profesional."
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "Nicoletta Baffetti"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "Gran profesional, atenta y preparada. La sala en la que trabaja, también, muy bonita y acogedora. Repetiré pronto."
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "meriem lazar"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "He tenido unas sesiones con ella, además de una muy buena profesional, te escucha y está atenta en todo el momento de la sesión."
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "ricardo r"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "Todo perfecto. Muy profesional. Perfecto en el trato y el tratamiento. Muy recomendable."
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "Kingsley Shaw"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "Todo salió bien. Un servicio profesional."
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "Laura G.U."},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "Salí nueva, en paz con mi cuerpo y conmigo misma."
-      },
-      {
-        "@type": "Review",
-        "author": {"@type": "Person", "name": "Amanda"},
-        "reviewRating": {"@type": "Rating", "ratingValue": "5"},
-        "reviewBody": "He acudido en varias ocasiones por problemas de espalda. El masaje en sí está genial, graduando presión aplicada y movimientos adecuados. Pero lo que más me gusta es que tiene una visión global de la persona."
-      }
-    ],
-    "sameAs": [
-      "https://www.instagram.com/katycaballero.osteopata",
-      "https://es.nextdoor.com/pages/sala-osteopatia-katy-caballero-alpedrete-comunidad-de-madrid/",
-      "https://www.bing.com/forbusiness/singleEntity?bizid=24de5fa7-ed7a-48d4-af66-dd995283aec4",
-      "https://pueblus.com/empresas/katy-caballero-osteopatia-y-masajes-alpedrete"
-    ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Servicios de osteopatía y masajes",
-      "itemListElement": [
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Osteopatía estructural, visceral y sacrocraneal"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Masaje deportivo"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Masaje tradicional tailandés"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Masaje corporal con aceite"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Masaje para embarazadas"}}
-      ]
-    }
-  }
-  </script>
-  ) : (
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
-    "@id": "https://katycaballeroosteopata.com/#business",
-    "name": "Katy Caballero - Osteópata y Masajista",
-    "url": "https://katycaballeroosteopata.com",
-    "image": "https://katycaballeroosteopata.com/images/logo.png",
-    "telephone": "+34643961065",
-    "priceRange": "€€",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Calle Río Guadarrama 2",
-      "addressLocality": "Alpedrete",
-      "addressRegion": "Madrid",
-      "postalCode": "28430",
-      "addressCountry": "ES"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "40.6631",
-      "longitude": "-4.0270"
-    },
-    "openingHoursSpecification": [
-      {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "20:00"},
-      {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "14:00"}
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "bestRating": "5",
-      "worstRating": "1",
-      "ratingCount": "12",
-      "reviewCount": "12"
-    },
-    "sameAs": [
-      "https://www.instagram.com/katycaballero.osteopata",
-      "https://es.nextdoor.com/pages/sala-osteopatia-katy-caballero-alpedrete-comunidad-de-madrid/",
-      "https://pueblus.com/empresas/katy-caballero-osteopatia-y-masajes-alpedrete"
-    ]
-  }
-  </script>
-  )}
+  <script type="application/ld+json" set:html={JSON.stringify(fullSchema ? fullBusinessSchema : lightSchema)} />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",

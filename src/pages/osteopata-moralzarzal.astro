@@ -1,15 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import LocalityBlogLinks from '../components/LocalityBlogLinks.astro';
 
 const pageTitle = "Osteópata cerca de Moralzarzal | Katy Caballero";
-const pageDescription = "Osteópata y masajista a 10 minutos de Moralzarzal. Osteopatía, masaje deportivo, tailandés y pindas herbales en Alpedrete. Parking gratuito. Cita: 643 961 065.";
+const pageDescription = "Osteópata y masajista a 5 minutos de Moralzarzal. Osteopatía, masaje deportivo, tailandés y pindas en Alpedrete. Parking gratuito. Cita: 643 961 065.";
 const pageKeywords = "osteopata moralzarzal, osteopatia moralzarzal, masajista moralzarzal, masaje moralzarzal, fisioterapia moralzarzal, dolor espalda moralzarzal, osteopata sierra noroeste madrid";
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "HealthAndBeautyBusiness",
   "name": "Katy Caballero - Osteópata y Masajista",
-  "description": "Centro de osteopatía y masajes en Alpedrete, a 10 minutos de Moralzarzal. Sierra Noroeste de Madrid.",
+  "description": "Centro de osteopatía y masajes en Alpedrete, a 5 minutos de Moralzarzal. Sierra Noroeste de Madrid.",
   "image": "https://katycaballeroosteopata.com/images/logo.png",
   "telephone": "+34643961065",
   "email": "katycaballero.osteopata@gmail.com",
@@ -57,7 +58,7 @@ const faqSchema = {
       "name": "¿Cuánto se tarda en llegar desde Moralzarzal a la consulta?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "La consulta está en Alpedrete, a solo 10 minutos en coche desde Moralzarzal por la M-608 y M-601. Es un trayecto rápido y con parking gratuito en la zona."
+        "text": "La consulta está en Alpedrete, a solo 5 minutos en coche desde Moralzarzal por la M-601. Apenas 3 kilómetros con parking gratuito en la puerta."
       }
     },
     {
@@ -96,7 +97,7 @@ const faqSchema = {
     <div class="container">
       <span class="section-tag">Moralzarzal</span>
       <h1>Osteópata cerca de Moralzarzal</h1>
-      <p class="town-hero-subtitle">Consulta de osteopatía y masajes en Alpedrete, a solo <strong>10 minutos en coche</strong> de Moralzarzal</p>
+      <p class="town-hero-subtitle">Consulta de osteopatía y masajes en Alpedrete, a solo <strong>5 minutos en coche</strong> de Moralzarzal</p>
       <div class="town-hero-actions">
         <a href="/reservar" class="btn btn-primary">Reservar cita</a>
       </div>
@@ -107,7 +108,7 @@ const faqSchema = {
     <div class="container">
       <div class="town-intro-content">
         <h2>Tu osteópata de confianza a un paso de Moralzarzal</h2>
-        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia. Mi consulta está en <strong>Alpedrete</strong>, a tan solo 10 minutos en coche desde Moralzarzal por la M-608. Muchos pacientes de Moralzarzal confían en mi para tratar sus dolencias y mejorar su calidad de vida.</p>
+        <p>Soy <strong>Katy Caballero</strong>, osteópata y masajista con más de 12 años de experiencia. Mi consulta está en <strong>Alpedrete</strong>, a tan solo 5 minutos en coche desde Moralzarzal por la M-601. Muchos pacientes de Moralzarzal confían en mi para tratar sus dolencias y mejorar su calidad de vida.</p>
         <p>En Moralzarzal, con una comunidad activa y deportista que disfruta de la Sierra, es habitual necesitar tratamientos de osteopatía o masaje para mantenerse en forma. En mi consulta encontrarás atención profesional, cercana y totalmente personalizada.</p>
       </div>
     </div>
@@ -162,8 +163,8 @@ const faqSchema = {
       <h2>¿Por qué elegir mi consulta desde Moralzarzal?</h2>
       <div class="reasons-grid">
         <div class="reason-card">
-          <h3>A 10 minutos de Moralzarzal</h3>
-          <p>Mi consulta en Alpedrete está muy cerca de Moralzarzal. Un trayecto rápido por la M-608 y parking gratuito en la puerta. Sin complicaciones.</p>
+          <h3>A 5 minutos de Moralzarzal</h3>
+          <p>Mi consulta en Alpedrete está muy cerca de Moralzarzal: apenas 3 km por la M-601 y parking gratuito en la puerta. Sin complicaciones.</p>
         </div>
         <div class="reason-card">
           <h3>Más de 12 años de experiencia</h3>
@@ -188,8 +189,8 @@ const faqSchema = {
           <h2>Cómo llegar desde Moralzarzal</h2>
           <div class="directions-info">
             <div class="direction-detail">
-              <strong>En coche (10 min)</strong>
-              <p>Toma la M-608 dirección sur y conecta con la M-601 hacia Alpedrete. La consulta está en Calle Río Guadarrama 2. Parking gratuito en la zona.</p>
+              <strong>En coche (5 min)</strong>
+              <p>Toma la M-601 dirección Alpedrete. En 5 minutos llegas a la Calle Río Guadarrama 2. Parking gratuito en la zona.</p>
             </div>
             <div class="direction-detail">
               <strong>Dirección</strong>
@@ -220,7 +221,7 @@ const faqSchema = {
   <section class="town-cta">
     <div class="container">
       <h2>Reserva tu cita desde Moralzarzal</h2>
-      <p>Estoy a solo 10 minutos de ti. Contacta conmigo y te atenderé lo antes posible.</p>
+      <p>Estoy a solo 5 minutos de ti. Contacta conmigo y te atenderé lo antes posible.</p>
       <div class="town-cta-actions">
         <a href="https://wa.me/34643961065?text=Hola%20Katy,%20soy%20de%20Moralzarzal%20y%20me%20gustaría%20reservar%20una%20cita" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp: 643 961 065</a>
         <a href="/reservar" class="btn btn-outline">Reservar online</a>
@@ -235,7 +236,7 @@ const faqSchema = {
       <div class="faq-grid">
         <details class="faq-item">
           <summary>¿Cuánto se tarda en llegar desde Moralzarzal a la consulta?</summary>
-          <p>La consulta está en Alpedrete, a solo 10 minutos en coche desde Moralzarzal por la M-608 y M-601. Parking gratuito en la zona.</p>
+          <p>La consulta está en Alpedrete, a solo 5 minutos en coche desde Moralzarzal por la M-601. Apenas 3 km con parking gratuito en la puerta.</p>
         </details>
         <details class="faq-item">
           <summary>¿Qué tratamientos ofreces para pacientes de Moralzarzal?</summary>
@@ -252,6 +253,8 @@ const faqSchema = {
       </div>
     </div>
   </section>
+  <LocalityBlogLinks />
+
   <section class="town-nearby">
     <div class="container">
       <h2>También atendemos pacientes de:</h2>
@@ -262,6 +265,7 @@ const faqSchema = {
         <a href="/osteopata-navacerrada" class="nearby-link">Navacerrada</a>
         <a href="/osteopata-cercedilla" class="nearby-link">Cercedilla</a>
         <a href="/osteopata-guadarrama" class="nearby-link">Guadarrama</a>
+        <a href="/osteopata-sierra-de-guadarrama" class="nearby-link">Sierra de Guadarrama</a>
       </div>
     </div>
   </section>

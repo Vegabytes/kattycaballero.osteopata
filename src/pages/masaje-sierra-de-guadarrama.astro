@@ -1,0 +1,257 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+import LocalityBlogLinks from '../components/LocalityBlogLinks.astro';
+import { services } from '../data/services';
+
+const pageTitle = "Masaje en la Sierra de Guadarrama | Katy Caballero";
+const pageDescription = "Masaje deportivo, tailandés, pindas y corporal en plena Sierra de Guadarrama (Alpedrete). Recuperación muscular para corredores, ciclistas y senderistas.";
+const pageKeywords = "masaje sierra de guadarrama, masajista sierra de guadarrama, masaje deportivo sierra de guadarrama, masaje tailandes sierra de guadarrama, masaje runners sierra, recuperacion deportiva guadarrama";
+
+const businessSchema = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "telephone": "+34643961065",
+  "email": "katycaballero.osteopata@gmail.com",
+  "url": "https://katycaballeroosteopata.com/masaje-sierra-de-guadarrama",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Río Guadarrama 2",
+    "addressLocality": "Alpedrete",
+    "addressRegion": "Madrid",
+    "postalCode": "28430",
+    "addressCountry": "ES"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": "40.6631", "longitude": "-4.0270" },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "Sierra de Guadarrama" },
+    { "@type": "AdministrativeArea", "name": "Parque Nacional Sierra de Guadarrama" }
+  ],
+  "priceRange": "€€",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "20:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "14:00" }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0", "bestRating": "5", "worstRating": "1",
+    "ratingCount": "12", "reviewCount": "12"
+  }
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué masajes son los más demandados en la Sierra de Guadarrama?",
+      "acceptedAnswer": { "@type": "Answer", "text": "El masaje deportivo es el más popular entre los pacientes activos de la sierra (corredores, ciclistas, senderistas). El masaje tailandés y el corporal con aceite son favoritos para desconectar tras semanas intensas. Las pindas herbales son la experiencia premium." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta un masaje?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Desde 20€ el masaje deportivo (30 min). El masaje corporal con aceite y el masaje para embarazadas son 40€ (60 min). El masaje tailandés tradicional 45€ (60 min). Las pindas herbales 70€ (90 min)." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Trabajáis con corredores y ciclistas de la sierra?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí, es uno de los perfiles más habituales. Combino masaje deportivo con osteopatía para tratar sobrecargas musculares, fascitis plantar, banda iliotibial, dolor lumbar y otras lesiones típicas del deporte de montaña." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hay parking?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí, parking gratuito en la propia calle de la consulta en Alpedrete." }
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Masaje Sierra de Guadarrama" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="region-hero">
+    <div class="container">
+      <span class="section-tag">Sierra de Guadarrama</span>
+      <h1>Masaje en la Sierra de Guadarrama</h1>
+      <p class="region-hero-subtitle">
+        Masaje deportivo, tailandés, corporal y pindas herbales en plena Sierra de Guadarrama.
+        Consulta en Alpedrete, accesible desde toda la sierra. Desde <strong>20€</strong>.
+      </p>
+      <div class="region-hero-actions">
+        <a href="/reservar" class="btn btn-primary">Reservar cita</a>
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20quer%C3%ADa%20un%20masaje" class="btn btn-outline" target="_blank" rel="noopener noreferrer nofollow">WhatsApp 643 961 065</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="region-intro">
+    <div class="container">
+      <div class="region-intro-content">
+        <h2>Masaje terapéutico en pleno corazón de la sierra</h2>
+        <p>
+          Soy <strong>Katy Caballero</strong>, masajista y osteópata. Mi consulta está en <strong>Alpedrete</strong>,
+          a pocos minutos de Cercedilla, Navacerrada, Guadarrama, Becerril, Collado Mediano y todo el entorno de la
+          Sierra de Guadarrama. Atiendo cada semana a deportistas que entrenan en la sierra, vecinos de los pueblos de
+          montaña y madrileños que suben los fines de semana a desconectar.
+        </p>
+        <p>
+          Cada masaje es único. No aplico protocolos cerrados: evalúo cómo está tu cuerpo ese día y adapto las técnicas.
+          Manejo <strong>masaje deportivo</strong> (recuperación muscular, prevención de lesiones), <strong>masaje
+          tailandés tradicional</strong> (estiramientos asistidos, presiones rítmicas), <strong>masaje corporal con
+          aceite</strong>, <strong>pindas herbales</strong> y <strong>masaje para embarazadas</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="region-services">
+    <div class="container">
+      <h2>Tipos de masaje disponibles</h2>
+      <div class="services-grid">
+        {services.filter(s => s.slug.startsWith('masaje-')).map(s => (
+          <a href={`/servicios/${s.slug}`} class="service-link-card">
+            <h3>{s.title}</h3>
+            <div class="service-link-meta">
+              <span>{s.duration}</span>
+              <span class="service-link-price">{s.price}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="region-deporte">
+    <div class="container">
+      <h2>Masaje deportivo para la Sierra de Guadarrama</h2>
+      <div class="region-deporte-grid">
+        <div class="region-deporte-card">
+          <h3>Trail running</h3>
+          <p>Trato sobrecargas de gemelos, cuádriceps, fascia plantar y banda iliotibial. Lesiones típicas en rutas como la Senda Schmidt o el Puerto de Navacerrada.</p>
+        </div>
+        <div class="region-deporte-card">
+          <h3>Ciclismo</h3>
+          <p>Cuello, hombros, lumbar, gemelos. El masaje deportivo descarga la tensión acumulada en horas de bici por puertos como Navacerrada, La Morcuera o Mijares.</p>
+        </div>
+        <div class="region-deporte-card">
+          <h3>Senderismo y montaña</h3>
+          <p>Cadera, rodillas, isquiotibiales. Tras una ruta exigente, el masaje deportivo acelera la recuperación y previene agujetas excesivas.</p>
+        </div>
+        <div class="region-deporte-card">
+          <h3>Esquí (Navacerrada, Valdesquí)</h3>
+          <p>Recuperación post-temporada o post-jornada intensa. Cadera, cuádriceps, lumbar, dorsal alta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="region-localities">
+    <div class="container">
+      <h2>¿Desde qué pueblo de la sierra vienes?</h2>
+      <div class="region-localities-grid">
+        <a href="/masaje-cercedilla" class="region-locality-link"><strong>Cercedilla</strong><span>15 min</span></a>
+        <a href="/masaje-navacerrada" class="region-locality-link"><strong>Navacerrada</strong><span>12 min</span></a>
+        <a href="/masaje-guadarrama" class="region-locality-link"><strong>Guadarrama</strong><span>12 min</span></a>
+        <a href="/masaje-becerril-de-la-sierra" class="region-locality-link"><strong>Becerril de la Sierra</strong><span>5 min</span></a>
+        <a href="/masaje-los-molinos" class="region-locality-link"><strong>Los Molinos</strong><span>10 min</span></a>
+        <a href="/masaje-collado-mediano" class="region-locality-link"><strong>Collado Mediano</strong><span>12 min</span></a>
+        <a href="/masaje-moralzarzal" class="region-locality-link"><strong>Moralzarzal</strong><span>5 min</span></a>
+        <a href="/masaje-collado-villalba" class="region-locality-link"><strong>Collado Villalba</strong><span>7 min</span></a>
+        <a href="/masaje-galapagar" class="region-locality-link"><strong>Galapagar</strong><span>12 min</span></a>
+        <a href="/masaje-el-escorial" class="region-locality-link"><strong>El Escorial</strong><span>18 min</span></a>
+        <a href="/masaje-torrelodones" class="region-locality-link"><strong>Torrelodones</strong><span>15 min</span></a>
+        <a href="/masaje-las-rozas" class="region-locality-link"><strong>Las Rozas</strong><span>25 min</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="region-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>¿Qué masajes son los más demandados en la Sierra de Guadarrama?</summary>
+          <p>El masaje deportivo es el más popular entre los pacientes activos de la sierra (corredores, ciclistas, senderistas). El masaje tailandés y el corporal con aceite son favoritos para desconectar tras semanas intensas. Las pindas herbales son la experiencia premium.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuánto cuesta un masaje?</summary>
+          <p>Desde 20€ el masaje deportivo (30 min). El masaje corporal con aceite y el masaje para embarazadas son 40€ (60 min). El masaje tailandés tradicional 45€ (60 min). Las pindas herbales 70€ (90 min). Consulta <a href="/tarifas">tarifas completas</a>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Trabajáis con corredores y ciclistas de la sierra?</summary>
+          <p>Sí, es uno de los perfiles más habituales. Combino <a href="/servicios/masaje-deportivo-alpedrete">masaje deportivo</a> con osteopatía para tratar sobrecargas musculares, fascitis plantar, banda iliotibial, dolor lumbar y otras lesiones típicas del deporte de montaña.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Hay parking?</summary>
+          <p>Sí, parking gratuito en la propia calle de la consulta en Alpedrete.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="¿Te apetece un masaje en la sierra?"
+    description="Reserva tu cita. Consulta en Alpedrete, accesible desde toda la Sierra de Guadarrama."
+  />
+
+  <LocalityBlogLinks />
+</Layout>
+
+<style>
+  .region-hero {
+    padding-top: 140px; padding-bottom: 60px;
+    background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+  .region-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .region-hero-subtitle { font-size: 1.15rem; color: var(--color-text-light); max-width: 700px; margin: 0 auto 32px; line-height: 1.7; }
+  .region-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .region-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .region-intro-content { max-width: 800px; margin: 0 auto; }
+  .region-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .region-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+
+  .region-services { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .region-services h2 { text-align: center; margin-bottom: 40px; font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
+  .service-link-card { background: var(--color-warm-white); padding: 25px; border-radius: 16px; text-decoration: none; color: inherit; transition: all 0.3s ease; border: 1px solid rgba(90, 124, 89, 0.1); }
+  .service-link-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(90, 124, 89, 0.12); }
+  .service-link-card h3 { font-size: 1.05rem; color: var(--color-primary); margin-bottom: 12px; }
+  .service-link-meta { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--color-text-light); }
+  .service-link-price { background: var(--color-secondary-light); padding: 4px 14px; border-radius: 20px; font-weight: 600; color: var(--color-text); }
+
+  .region-deporte { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .region-deporte h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .region-deporte-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; }
+  .region-deporte-card { background: var(--color-cream); padding: 28px; border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1); }
+  .region-deporte-card h3 { color: var(--color-primary); margin-bottom: 10px; font-size: 1.05rem; }
+  .region-deporte-card p { color: var(--color-text-light); font-size: 0.95rem; line-height: 1.65; }
+
+  .region-localities { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .region-localities h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 30px; }
+  .region-localities-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 1000px; margin: 0 auto; }
+  .region-locality-link { display: flex; flex-direction: column; gap: 4px; align-items: center; padding: 16px; background: var(--color-warm-white); border-radius: 12px; text-decoration: none; color: var(--color-text); border: 1px solid rgba(90, 124, 89, 0.1); transition: all 0.3s ease; }
+  .region-locality-link strong { color: var(--color-primary); font-size: 0.95rem; }
+  .region-locality-link span { font-size: 0.8rem; color: var(--color-text-light); }
+  .region-locality-link:hover { transform: translateY(-2px); border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(90, 124, 89, 0.1); }
+
+  .region-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .region-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+  .faq-item { background: var(--color-cream); border-radius: 15px; overflow: hidden; border: 1px solid rgba(90, 124, 89, 0.1); transition: all 0.3s ease; }
+  .faq-item[open] { box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1); }
+  .faq-item summary { padding: 20px 25px; cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 15px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; font-size: 1.4rem; color: var(--color-primary); font-weight: 300; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 25px 20px; color: var(--color-text-light); line-height: 1.8; font-size: 0.95rem; }
+  .faq-item a { color: var(--color-primary); font-weight: 500; }
+
+  @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } .region-localities-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 700px) { .services-grid { grid-template-columns: 1fr; } .region-localities-grid { grid-template-columns: repeat(2, 1fr); } .region-deporte-grid { grid-template-columns: 1fr; } }
+</style>

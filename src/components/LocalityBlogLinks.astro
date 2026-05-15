@@ -1,0 +1,120 @@
+---
+/**
+ * Bloque de "Lee también" para landings de localidad y hub.
+ * Selección curada de posts que aplican a cualquier audiencia local.
+ */
+const posts = [
+  {
+    slug: 'mejor-osteopata-sierra-madrid',
+    title: 'Cómo elegir el mejor osteópata en la Sierra de Madrid',
+    excerpt: 'Qué mirar antes de reservar tu primera cita: titulaciones, técnicas, precios y confianza.',
+  },
+  {
+    slug: 'diferencias-osteopatia-fisioterapia',
+    title: '¿Osteopatía o fisioterapia? Cuál necesitas',
+    excerpt: 'Dos disciplinas complementarias. Aprende a identificar qué te conviene en cada momento.',
+  },
+  {
+    slug: 'recuperacion-deportiva-sierra-madrid',
+    title: 'Recuperación deportiva en la Sierra de Madrid',
+    excerpt: 'Cómo cuidarte si entrenas en la sierra: prevención, masaje deportivo y osteopatía.',
+  },
+  {
+    slug: 'dolor-espalda-teletrabajo',
+    title: 'Dolor de espalda por teletrabajo: causas y soluciones',
+    excerpt: 'El problema más frecuente en mi consulta desde la pandemia. Qué hacer hoy mismo.',
+  },
+];
+---
+
+<section class="locality-blog-links">
+  <div class="container">
+    <h2>Aprende más sobre osteopatía y masajes</h2>
+    <p class="locality-blog-subtitle">Artículos prácticos del blog que pueden ayudarte mientras decides si reservar.</p>
+    <div class="locality-blog-grid">
+      {posts.map(p => (
+        <a href={`/blog/${p.slug}`} class="locality-blog-card">
+          <h3>{p.title}</h3>
+          <p>{p.excerpt}</p>
+          <span class="locality-blog-link">Leer artículo →</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .locality-blog-links {
+    background: var(--color-warm-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .locality-blog-links h2 {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  }
+
+  .locality-blog-subtitle {
+    text-align: center;
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+
+  .locality-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .locality-blog-card {
+    background: var(--color-cream);
+    padding: 24px 26px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .locality-blog-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(90, 124, 89, 0.12);
+    border-color: var(--color-primary);
+  }
+
+  .locality-blog-card h3 {
+    font-size: 1.02rem;
+    color: var(--color-text);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .locality-blog-card p {
+    font-size: 0.88rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .locality-blog-link {
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: auto;
+  }
+
+  @media (max-width: 768px) {
+    .locality-blog-grid { grid-template-columns: 1fr; }
+  }
+
+  :global([data-theme="dark"]) .locality-blog-card {
+    border-color: rgba(111, 155, 110, 0.15);
+  }
+</style>

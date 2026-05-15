@@ -1,7 +1,7 @@
 ---
 interface BreadcrumbItem {
-  label: string;
-  href?: string;
+  name: string;
+  url?: string;
 }
 
 interface Props {
@@ -9,28 +9,16 @@ interface Props {
 }
 
 const { items } = Astro.props;
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": items.map((item, index) => ({
-    "@type": "ListItem",
-    "position": index + 1,
-    "name": item.label,
-    ...(item.href ? { "item": `https://katycaballeroosteopata.com${item.href}` } : {})
-  }))
-};
 ---
 
-<nav class="breadcrumbs" aria-label="Breadcrumbs">
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<nav class="breadcrumbs" aria-label="Migas de pan">
   <ol class="breadcrumbs-list">
     {items.map((item, index) => (
       <li class="breadcrumbs-item">
-        {item.href ? (
-          <a href={item.href} class="breadcrumbs-link">{item.label}</a>
+        {item.url ? (
+          <a href={item.url} class="breadcrumbs-link">{item.name}</a>
         ) : (
-          <span class="breadcrumbs-current" aria-current="page">{item.label}</span>
+          <span class="breadcrumbs-current" aria-current="page">{item.name}</span>
         )}
         {index < items.length - 1 && (
           <span class="breadcrumbs-separator" aria-hidden="true">/</span>

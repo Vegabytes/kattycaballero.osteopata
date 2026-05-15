@@ -33,6 +33,10 @@ export default defineConfig({
         } else if (item.url.includes('/servicios/') && item.url !== 'https://katycaballeroosteopata.com/servicios/') {
           item.priority = 0.9;
           item.changefreq = 'monthly';
+        } else if (item.url.includes('/osteopata-sierra-de-guadarrama') || item.url.includes('/masaje-sierra-de-guadarrama') || item.url.includes('/osteopata-sierra-noroeste-madrid') || item.url.includes('/masaje-sierra-noroeste-madrid')) {
+          // Hub regionales: prioridad mayor (target keywords competitivos)
+          item.priority = 0.9;
+          item.changefreq = 'weekly';
         } else if (item.url.includes('/osteopata-') || item.url.includes('/masaje-') || item.url.includes('/osteopatia-') || item.url.includes('/dolor-') || item.url.includes('/postparto') || item.url.includes('/bruxismo') || item.url.includes('/pindas')) {
           item.priority = 0.85;
           item.changefreq = 'monthly';

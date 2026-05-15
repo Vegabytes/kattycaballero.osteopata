@@ -48,7 +48,7 @@ export interface AppSettings {
 // Todo desactivado por defecto
 const DEFAULTS: AppSettings = {
   nombre_clinica: 'Katy Caballero - Osteópata',
-  telefono_clinica: '634063461',
+  telefono_clinica: '643961065',
   email_clinica: '',
 
   email_service_activo: false,

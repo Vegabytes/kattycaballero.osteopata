@@ -21,3 +21,6 @@ Thumbs.db
 
 # Astro
 .astro/
+
+# Blog drafts (revisar y mover a src/content/blog/ antes de publicar)
+drafts/

@@ -1,0 +1,341 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+import LocalityBlogLinks from '../components/LocalityBlogLinks.astro';
+import { services } from '../data/services';
+
+const pageTitle = "Osteópata en la Sierra de Guadarrama | Katy Caballero";
+const pageDescription = "Osteopatía y masajes en plena Sierra de Guadarrama (Alpedrete, Madrid). Más de 12 años de experiencia tratando a vecinos y deportistas de la sierra.";
+const pageKeywords = "osteopata sierra de guadarrama, osteopatia sierra de guadarrama, masaje sierra de guadarrama, masajista sierra de guadarrama, fisioterapia sierra de guadarrama, recuperacion deportiva sierra de guadarrama";
+
+const businessSchema = {
+  "@context": "https://schema.org",
+  "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
+  "name": "Katy Caballero - Osteópata y Masajista",
+  "image": "https://katycaballeroosteopata.com/images/logo.png",
+  "telephone": "+34643961065",
+  "email": "katycaballero.osteopata@gmail.com",
+  "url": "https://katycaballeroosteopata.com/osteopata-sierra-de-guadarrama",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Río Guadarrama 2",
+    "addressLocality": "Alpedrete",
+    "addressRegion": "Madrid",
+    "postalCode": "28430",
+    "addressCountry": "ES"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": "40.6631", "longitude": "-4.0270" },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "Sierra de Guadarrama" },
+    { "@type": "AdministrativeArea", "name": "Parque Nacional Sierra de Guadarrama" },
+    { "@type": "AdministrativeArea", "name": "Sierra Noroeste de Madrid" }
+  ],
+  "priceRange": "€€",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "20:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "14:00" }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "12",
+    "reviewCount": "12"
+  }
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Atendéis pacientes de toda la Sierra de Guadarrama?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí. La consulta está en Alpedrete, en pleno corazón de la Sierra de Guadarrama. Recibo pacientes habituales desde Cercedilla, Navacerrada, Guadarrama, Becerril, Los Molinos, Collado Mediano, Moralzarzal, Galapagar, El Escorial y toda la zona, incluida la vertiente segoviana." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Tratáis lesiones típicas de la montaña?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí. Trabajo habitualmente con senderistas, trail runners, ciclistas de montaña y esquiadores. Las lesiones más frecuentes son fascitis plantar, sobrecargas de gemelos y cuádriceps, dolor de rodilla (síndrome de la banda iliotibial), tendinitis aquílea y lumbalgia de impacto. Combino osteopatía con masaje deportivo." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hay parking en la consulta?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí, parking gratuito en la propia calle. Es una zona residencial tranquila de Alpedrete sin problemas de aparcamiento." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué servicios ofrecéis?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Osteopatía estructural, visceral y craneal; masaje deportivo, corporal con aceite, tailandés tradicional, pindas herbales y masaje para embarazadas. Todos los servicios desde 20€." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo se reserva una cita?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Por WhatsApp al 643 961 065 (lo más rápido), por teléfono, o a través de reserva online en la web. Respuesta en menos de 2 horas en horario laboral." }
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Osteópata Sierra de Guadarrama" }]}>
+  <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="region-hero">
+    <div class="container">
+      <span class="section-tag">Sierra de Guadarrama</span>
+      <h1>Osteópata y Masajista en la Sierra de Guadarrama</h1>
+      <p class="region-hero-subtitle">
+        Consulta de osteopatía y masajes en Alpedrete, en pleno corazón de la Sierra de Guadarrama.
+        Atiendo a pacientes de toda la sierra desde hace más de 12 años.
+      </p>
+      <div class="region-hero-actions">
+        <a href="/reservar" class="btn btn-primary">Reservar cita</a>
+        <a href="https://wa.me/34643961065?text=Hola%20Katy,%20quer%C3%ADa%20preguntarte%20por%20una%20cita" class="btn btn-outline" target="_blank" rel="noopener noreferrer nofollow">WhatsApp 643 961 065</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="region-intro">
+    <div class="container">
+      <div class="region-intro-content">
+        <h2>Una consulta en el centro de la sierra, no en la ciudad</h2>
+        <p>
+          Soy <strong>Katy Caballero</strong>, osteópata y masajista. Mi consulta está en <strong>Alpedrete</strong>, un pueblo
+          de la Sierra de Guadarrama bien comunicado con Cercedilla, Navacerrada, Guadarrama, Becerril, Collado Mediano,
+          Moralzarzal y todo el entorno de la sierra. Llevo más de 12 años tratando a vecinos, deportistas y
+          familias que viven o disfrutan de la montaña.
+        </p>
+        <p>
+          La Sierra de Guadarrama tiene una vida deportiva muy intensa: senderismo, trail running, ciclismo de montaña,
+          esquí en Navacerrada y Valdesquí, escalada... y a la vez muchas personas trabajan desde casa o se desplazan
+          a Madrid. Las dolencias que más veo combinan ambos mundos: contracturas cervicales por horas de pantalla y
+          sobrecargas de gemelos, cuádriceps o tendón de Aquiles por el deporte.
+        </p>
+        <p>
+          Mi enfoque combina <strong>osteopatía estructural, visceral y sacrocraneal</strong> con técnicas de masaje
+          (deportivo, tailandés, corporal, pindas herbales) según lo que tu cuerpo necesite. Cada sesión es única, sin
+          protocolos cerrados.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="region-services">
+    <div class="container">
+      <h2>Servicios disponibles</h2>
+      <div class="services-grid">
+        {services.map(s => (
+          <a href={`/servicios/${s.slug}`} class="service-link-card">
+            <h3>{s.title}</h3>
+            <div class="service-link-meta">
+              <span>{s.duration}</span>
+              <span class="service-link-price">{s.price}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="region-localities">
+    <div class="container">
+      <h2>Atendemos pacientes de toda la Sierra de Guadarrama</h2>
+      <p class="region-localities-intro">
+        Si vives o trabajas en cualquiera de estas localidades de la sierra, mi consulta en Alpedrete está bien comunicada:
+      </p>
+      <div class="region-localities-grid">
+        <a href="/osteopata-cercedilla" class="region-locality-link">
+          <strong>Cercedilla</strong><span>15 min</span>
+        </a>
+        <a href="/osteopata-navacerrada" class="region-locality-link">
+          <strong>Navacerrada</strong><span>12 min</span>
+        </a>
+        <a href="/osteopata-guadarrama" class="region-locality-link">
+          <strong>Guadarrama</strong><span>12 min</span>
+        </a>
+        <a href="/osteopata-becerril-de-la-sierra" class="region-locality-link">
+          <strong>Becerril de la Sierra</strong><span>5 min</span>
+        </a>
+        <a href="/osteopata-los-molinos" class="region-locality-link">
+          <strong>Los Molinos</strong><span>10 min</span>
+        </a>
+        <a href="/osteopata-collado-mediano" class="region-locality-link">
+          <strong>Collado Mediano</strong><span>6 min</span>
+        </a>
+        <a href="/osteopata-moralzarzal" class="region-locality-link">
+          <strong>Moralzarzal</strong><span>5 min</span>
+        </a>
+        <a href="/osteopata-collado-villalba" class="region-locality-link">
+          <strong>Collado Villalba</strong><span>7 min</span>
+        </a>
+        <a href="/osteopata-galapagar" class="region-locality-link">
+          <strong>Galapagar</strong><span>10 min</span>
+        </a>
+        <a href="/osteopata-el-escorial" class="region-locality-link">
+          <strong>El Escorial</strong><span>18 min</span>
+        </a>
+        <a href="/osteopata-torrelodones" class="region-locality-link">
+          <strong>Torrelodones</strong><span>15 min</span>
+        </a>
+        <a href="/osteopata-las-rozas" class="region-locality-link">
+          <strong>Las Rozas</strong><span>25 min</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="region-deporte">
+    <div class="container">
+      <h2>Especializada en deporte de montaña</h2>
+      <div class="region-deporte-grid">
+        <div class="region-deporte-card">
+          <h3>Trail running y senderismo</h3>
+          <p>Sobrecargas de gemelos y cuádriceps, fascitis plantar, síndrome de la banda iliotibial. Trato muchas lesiones de corredores de las rutas clásicas de la sierra.</p>
+        </div>
+        <div class="region-deporte-card">
+          <h3>Ciclismo de montaña y carretera</h3>
+          <p>Dolor lumbar, cervicalgia por la postura del manillar, tendinitis de rodilla. Combino osteopatía con masaje deportivo de descarga.</p>
+        </div>
+        <div class="region-deporte-card">
+          <h3>Esquí y deportes de invierno</h3>
+          <p>Recuperación tras la temporada en Navacerrada o Valdesquí. Cadera, rodillas, lumbar y dorsal son las zonas que más sufren.</p>
+        </div>
+        <div class="region-deporte-card">
+          <h3>Escalada y montaña</h3>
+          <p>Antebrazo, hombro, dedos, dorsal. Trabajo manual específico para deportes de fuerza isométrica y agarre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="region-faq">
+    <div class="container">
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>¿Atendéis pacientes de toda la Sierra de Guadarrama?</summary>
+          <p>Sí. La consulta está en Alpedrete, en pleno corazón de la Sierra de Guadarrama. Recibo pacientes habituales desde Cercedilla, Navacerrada, Guadarrama, Becerril, Los Molinos, Collado Mediano, Moralzarzal, Galapagar, El Escorial y toda la zona, incluida la vertiente segoviana.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Tratáis lesiones típicas de la montaña?</summary>
+          <p>Sí. Trabajo habitualmente con senderistas, trail runners, ciclistas de montaña y esquiadores. Las lesiones más frecuentes son fascitis plantar, sobrecargas de gemelos y cuádriceps, dolor de rodilla (síndrome de la banda iliotibial), tendinitis aquílea y lumbalgia de impacto. Combino osteopatía con masaje deportivo.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Hay parking en la consulta?</summary>
+          <p>Sí, parking gratuito en la propia calle. Es una zona residencial tranquila de Alpedrete sin problemas de aparcamiento.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué servicios ofrecéis?</summary>
+          <p>Osteopatía estructural, visceral y craneal; masaje deportivo, corporal con aceite, tailandés tradicional, pindas herbales y masaje para embarazadas. Todos los servicios desde 20€. Consulta <a href="/tarifas">tarifas completas</a>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cómo se reserva una cita?</summary>
+          <p>Por <a href="https://wa.me/34643961065" target="_blank" rel="noopener noreferrer nofollow">WhatsApp al 643 961 065</a> (lo más rápido), por <a href="tel:+34643961065">teléfono</a>, o a través de <a href="/reservar">reserva online</a>. Respuesta en menos de 2 horas en horario laboral.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="¿Necesitas un osteópata en la Sierra de Guadarrama?"
+    description="Reserva tu cita. La consulta está en Alpedrete, a pocos minutos de cualquier pueblo de la sierra."
+  />
+
+  <LocalityBlogLinks />
+</Layout>
+
+<style>
+  .region-hero {
+    padding-top: 140px;
+    padding-bottom: 60px;
+    background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-warm-white) 100%);
+    text-align: center;
+  }
+  .region-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .region-hero-subtitle {
+    font-size: 1.15rem; color: var(--color-text-light);
+    max-width: 700px; margin: 0 auto 32px; line-height: 1.7;
+  }
+  .region-hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .region-intro { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .region-intro-content { max-width: 800px; margin: 0 auto; }
+  .region-intro h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 24px; text-align: center; }
+  .region-intro p { font-size: 1.05rem; line-height: 1.8; color: var(--color-text-light); margin-bottom: 16px; }
+
+  .region-services { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .region-services h2 { text-align: center; margin-bottom: 40px; font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
+  .service-link-card {
+    background: var(--color-warm-white); padding: 25px; border-radius: 16px;
+    text-decoration: none; color: inherit; transition: all 0.3s ease;
+    border: 1px solid rgba(90, 124, 89, 0.1);
+  }
+  .service-link-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(90, 124, 89, 0.12); }
+  .service-link-card h3 { font-size: 1.05rem; color: var(--color-primary); margin-bottom: 12px; }
+  .service-link-meta { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--color-text-light); }
+  .service-link-price { background: var(--color-secondary-light); padding: 4px 14px; border-radius: 20px; font-weight: 600; color: var(--color-text); }
+
+  .region-localities { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .region-localities h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 16px; }
+  .region-localities-intro { text-align: center; color: var(--color-text-light); max-width: 700px; margin: 0 auto 40px; }
+  .region-localities-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    max-width: 1000px; margin: 0 auto;
+  }
+  .region-locality-link {
+    display: flex; flex-direction: column; gap: 4px; align-items: center;
+    padding: 16px; background: var(--color-cream); border-radius: 12px;
+    text-decoration: none; color: var(--color-text);
+    border: 1px solid rgba(90, 124, 89, 0.1); transition: all 0.3s ease;
+  }
+  .region-locality-link strong { color: var(--color-primary); font-size: 0.95rem; }
+  .region-locality-link span { font-size: 0.8rem; color: var(--color-text-light); }
+  .region-locality-link:hover {
+    transform: translateY(-2px); border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(90, 124, 89, 0.1);
+  }
+
+  .region-deporte { padding: var(--section-padding) 0; background: var(--color-cream); }
+  .region-deporte h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .region-deporte-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; }
+  .region-deporte-card {
+    background: var(--color-warm-white); padding: 28px;
+    border-radius: 14px; border: 1px solid rgba(90, 124, 89, 0.1);
+  }
+  .region-deporte-card h3 { color: var(--color-primary); margin-bottom: 10px; font-size: 1.05rem; }
+  .region-deporte-card p { color: var(--color-text-light); font-size: 0.95rem; line-height: 1.65; }
+
+  .region-faq { padding: var(--section-padding) 0; background: var(--color-warm-white); }
+  .region-faq h2 { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 40px; }
+  .faq-grid { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+  .faq-item {
+    background: var(--color-cream); border-radius: 15px; overflow: hidden;
+    border: 1px solid rgba(90, 124, 89, 0.1); transition: all 0.3s ease;
+  }
+  .faq-item[open] { box-shadow: 0 4px 15px rgba(90, 124, 89, 0.1); }
+  .faq-item summary {
+    padding: 20px 25px; cursor: pointer; font-weight: 600;
+    list-style: none; display: flex; justify-content: space-between; gap: 15px;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+'; font-size: 1.4rem; color: var(--color-primary);
+    font-weight: 300; flex-shrink: 0;
+  }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { padding: 0 25px 20px; color: var(--color-text-light); line-height: 1.8; font-size: 0.95rem; }
+  .faq-item a { color: var(--color-primary); font-weight: 500; }
+
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .region-localities-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .region-localities-grid { grid-template-columns: repeat(2, 1fr); }
+    .region-deporte-grid { grid-template-columns: 1fr; }
+  }
+</style>

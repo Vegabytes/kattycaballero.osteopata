@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import LocalityBlogLinks from '../components/LocalityBlogLinks.astro';
 import CTASection from '../components/CTASection.astro';
 import { getLocalityBySlug } from '../data/localities';
 import { services } from '../data/services';
@@ -147,6 +148,8 @@ const breadcrumbSchema = [
     title={`¿Vienes desde ${locality.name}?`}
     description="Reserva tu cita y en pocos minutos estarás en consulta."
   />
+  <LocalityBlogLinks />
+
   <section class="town-nearby">
     <div class="container">
       <h2>También atendemos pacientes de:</h2>
@@ -157,6 +160,7 @@ const breadcrumbSchema = [
         <a href="/osteopata-collado-villalba" class="nearby-link">Collado Villalba</a>
         <a href="/osteopata-cercedilla" class="nearby-link">Cercedilla</a>
         <a href="/osteopata-los-molinos" class="nearby-link">Los Molinos</a>
+        <a href="/osteopata-sierra-de-guadarrama" class="nearby-link">Sierra de Guadarrama</a>
       </div>
     </div>
   </section>

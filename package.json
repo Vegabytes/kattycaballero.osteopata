@@ -11,7 +11,10 @@
     "astro": "astro",
     "db:create": "wrangler d1 create katy-clinica",
     "db:migrate": "wrangler d1 execute katy-clinica --file=db/schema.sql",
-    "db:migrate:local": "wrangler d1 execute katy-clinica --file=db/schema.sql --local"
+    "db:migrate:local": "wrangler d1 execute katy-clinica --file=db/schema.sql --local",
+    "draft": "node scripts/draft-post.mjs",
+    "draft:list": "node scripts/draft-post.mjs --list",
+    "draft:random": "node scripts/draft-post.mjs --random"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^8.1.0",

@@ -1,10 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import LocalityBlogLinks from '../components/LocalityBlogLinks.astro';
 import CTASection from '../components/CTASection.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const pageTitle = "¿Dónde te duele? | Mapa Corporal Interactivo - Katy Caballero";
-const pageDescription = "Descubre qué tratamiento necesitas según tu zona de dolor. Mapa corporal interactivo con diagnóstico orientativo y recomendación de tratamiento de osteopatía y masaje.";
+const pageDescription = "Descubre qué tratamiento necesitas según tu zona de dolor. Mapa corporal interactivo con recomendación de osteopatía o masaje.";
 const pageKeywords = "donde me duele, dolor de espalda tratamiento, dolor cervical osteopata sierra noroeste, ciatica tratamiento, dolor lumbar masaje, osteopata sierra noroeste madrid, osteopata sierra de guadarrama";
 
 const medicalSchema = {
@@ -66,7 +67,6 @@ const faqSchema = {
 
   <section class="page-header">
     <div class="container">
-      <Breadcrumbs items={[{label: "Inicio", href: "/"}, {label: "\u00bfD\u00f3nde te duele?"}]} />
       <span class="section-tag">HERRAMIENTA INTERACTIVA</span>
       <h1>¿Dónde te duele?</h1>
       <p class="page-subtitle">Haz clic en la zona del cuerpo donde sientes molestia y te recomendaremos el tratamiento más adecuado para ti.</p>
@@ -621,6 +621,7 @@ const faqSchema = {
     buttonLink="https://wa.me/34643961065?text=Hola%20Katy,%20he%20visto%20tu%20mapa%20corporal%20y%20me%20gustar%C3%ADa%20consultarte%20sobre%20mi%20dolor"
   />
 
+  <LocalityBlogLinks />
 </Layout>
 
 <style>
