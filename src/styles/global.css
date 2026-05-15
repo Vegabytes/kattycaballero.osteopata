@@ -496,14 +496,25 @@ section {
   animation: subtlePulse 1.2s ease-in-out infinite;
 }
 
-/* Form inputs: glow effect on focus */
+/* Form inputs: glow effect on focus.
+ * Mantenemos un outline real (no solo box-shadow) para accesibilidad por teclado.
+ * El outline-offset negativo lo hace visualmente coherente con el glow. */
 input:focus,
 textarea:focus,
 select:focus {
   box-shadow: 0 0 0 3px rgba(90, 124, 89, 0.2);
   border-color: var(--color-primary) !important;
-  outline: none;
+  outline: 2px solid var(--color-primary);
+  outline-offset: -1px;
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Para usuarios con teclado que no tienen :focus-visible deshabilitado,
+ * mostramos solo el glow (sin doble outline visible) cuando es click de mouse */
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+  outline: none;
 }
 
 [data-theme="dark"] input:focus,
