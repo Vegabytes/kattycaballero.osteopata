@@ -141,27 +141,46 @@ const allPages = [
   // Smart URL-based suggestions
   const path = window.location.pathname.toLowerCase();
 
+  // IMPORTANTE: el orden importa — patrones más específicos primero.
+  // Cuando matchea uno, hace break y no comprueba los siguientes.
   const suggestions: { pattern: RegExp; text: string; url: string; label: string }[] = [
-    { pattern: /masaje/, text: 'Parece que buscas un masaje. Mira nuestros servicios de masaje:', url: '/servicios', label: 'Ver masajes disponibles' },
-    { pattern: /osteo/, text: 'Parece que buscas información sobre osteopatía:', url: '/servicios/osteopatia-alpedrete', label: 'Osteopatía en Alpedrete' },
-    { pattern: /blog/, text: '¿Buscabas un artículo del blog?', url: '/blog', label: 'Ver todos los artículos' },
-    { pattern: /precio|tarifa/, text: '¿Buscas nuestras tarifas y precios?', url: '/tarifas', label: 'Ver tarifas' },
-    { pattern: /reserv|cita/, text: '¿Quieres reservar una cita?', url: '/reservar', label: 'Reservar cita ahora' },
+    // Hubs regionales (más específicos que /sierra/ a secas)
+    { pattern: /sierra.{0,3}de.{0,3}guadarrama|guadarrama.{0,5}sierra/, text: '¿Buscas osteópata en la Sierra de Guadarrama?', url: '/osteopata-sierra-de-guadarrama', label: 'Osteópata en la Sierra de Guadarrama' },
+    { pattern: /sierra.{0,3}noroeste/, text: '¿Buscas osteópata en la Sierra Noroeste?', url: '/osteopata-sierra-noroeste-madrid', label: 'Osteópata en la Sierra Noroeste' },
+    // Localidades específicas
     { pattern: /villalba/, text: '¿Buscas osteópata en Collado Villalba?', url: '/osteopata-collado-villalba', label: 'Osteópata en Collado Villalba' },
     { pattern: /moralzarzal/, text: '¿Buscas osteópata en Moralzarzal?', url: '/osteopata-moralzarzal', label: 'Osteópata en Moralzarzal' },
     { pattern: /galapagar/, text: '¿Buscas osteópata en Galapagar?', url: '/osteopata-galapagar', label: 'Osteópata en Galapagar' },
-    { pattern: /guadarrama/, text: '¿Buscas osteópata en Guadarrama?', url: '/osteopata-guadarrama', label: 'Osteópata en Guadarrama' },
+    { pattern: /collado.?mediano/, text: '¿Buscas osteópata en Collado Mediano?', url: '/osteopata-collado-mediano', label: 'Osteópata en Collado Mediano' },
     { pattern: /torrelodones/, text: '¿Buscas osteópata en Torrelodones?', url: '/osteopata-torrelodones', label: 'Osteópata en Torrelodones' },
     { pattern: /escorial/, text: '¿Buscas osteópata en El Escorial?', url: '/osteopata-el-escorial', label: 'Osteópata en El Escorial' },
     { pattern: /cercedilla/, text: '¿Buscas osteópata en Cercedilla?', url: '/osteopata-cercedilla', label: 'Osteópata en Cercedilla' },
     { pattern: /navacerrada/, text: '¿Buscas osteópata en Navacerrada?', url: '/osteopata-navacerrada', label: 'Osteópata en Navacerrada' },
-    { pattern: /collado.?mediano/, text: '¿Buscas osteópata en Collado Mediano?', url: '/osteopata-collado-mediano', label: 'Osteópata en Collado Mediano' },
+    { pattern: /guadarrama/, text: '¿Buscas osteópata en Guadarrama?', url: '/osteopata-guadarrama', label: 'Osteópata en Guadarrama' },
     { pattern: /becerril/, text: '¿Buscas osteópata en Becerril de la Sierra?', url: '/osteopata-becerril-de-la-sierra', label: 'Osteópata en Becerril de la Sierra' },
     { pattern: /molinos/, text: '¿Buscas osteópata en Los Molinos?', url: '/osteopata-los-molinos', label: 'Osteópata en Los Molinos' },
     { pattern: /rozas/, text: '¿Buscas osteópata en Las Rozas?', url: '/osteopata-las-rozas', label: 'Osteópata en Las Rozas' },
-    { pattern: /sierra/, text: '¿Buscas osteópata en la Sierra de Madrid?', url: '/osteopata-sierra-noroeste-madrid', label: 'Osteópata en la Sierra Noroeste' },
-    { pattern: /embaraz/, text: '¿Buscas masaje para embarazadas?', url: '/servicios/masaje-embarazadas-alpedrete', label: 'Masaje para embarazadas' },
-    { pattern: /contacto|telefono|email/, text: '¿Quieres contactar conmigo?', url: '/contacto', label: 'Ir a contacto' },
+    { pattern: /sierra/, text: '¿Buscas osteópata en la Sierra de Madrid?', url: '/osteopata-sierra-de-guadarrama', label: 'Osteópata en la Sierra de Guadarrama' },
+    // Audiencias específicas
+    { pattern: /embaraz|prenatal/, text: '¿Buscas masaje o tratamiento para embarazadas?', url: '/osteopatia-embarazadas', label: 'Osteopatía y masaje para embarazadas' },
+    { pattern: /deportist|runner|corredor|atleta/, text: '¿Buscas tratamiento para deportistas?', url: '/osteopatia-deportistas', label: 'Osteopatía para deportistas' },
+    { pattern: /teletrabajo|oficina|ordenador|silla/, text: '¿Te duele por teletrabajo u oficina?', url: '/osteopatia-teletrabajo', label: 'Osteopatía para teletrabajo' },
+    // Dolencias y experiencias
+    { pattern: /bruxismo|atm|mandibula|mand%C3%ADbula/, text: '¿Buscas tratamiento para bruxismo o ATM?', url: '/bruxismo-atm', label: 'Bruxismo y ATM' },
+    { pattern: /cervical|cuello/, text: '¿Te duele el cuello o las cervicales?', url: '/dolor-cervical', label: 'Tratamiento del dolor cervical' },
+    { pattern: /espalda|lumbar|dorsal|lumbago/, text: '¿Te duele la espalda?', url: '/dolor-de-espalda', label: 'Tratamiento del dolor de espalda' },
+    { pattern: /pinda/, text: '¿Buscas el masaje con pindas herbales?', url: '/pindas-herbales-experiencia', label: 'Experiencia con pindas herbales' },
+    { pattern: /tailand|thai/, text: '¿Buscas masaje tailandés?', url: '/masaje-tailandes-madrid', label: 'Masaje tailandés en Madrid' },
+    { pattern: /donde|duele/, text: '¿Quieres usar el mapa corporal interactivo?', url: '/donde-te-duele', label: '¿Dónde te duele?' },
+    // Generales (último recurso)
+    { pattern: /masaje/, text: 'Parece que buscas un masaje. Mira nuestros servicios:', url: '/servicios', label: 'Ver masajes disponibles' },
+    { pattern: /osteo/, text: 'Parece que buscas información sobre osteopatía:', url: '/servicios/osteopatia-alpedrete', label: 'Osteopatía en Alpedrete' },
+    { pattern: /blog|articulo|art%C3%ADculo/, text: '¿Buscabas un artículo del blog?', url: '/blog', label: 'Ver todos los artículos' },
+    { pattern: /precio|tarifa|coste|cuanto|cu%C3%A1nto/, text: '¿Buscas nuestras tarifas y precios?', url: '/tarifas', label: 'Ver tarifas' },
+    { pattern: /reserv|cita/, text: '¿Quieres reservar una cita?', url: '/reservar', label: 'Reservar cita ahora' },
+    { pattern: /bono|pack|sesion/, text: '¿Buscas los bonos de sesiones?', url: '/bonos', label: 'Ver bonos' },
+    { pattern: /opinion|rese%C3%B1a|resena|valoracion/, text: '¿Buscas las opiniones?', url: '/opiniones', label: 'Ver reseñas en Google' },
+    { pattern: /contacto|telefono|email|tel%C3%A9fono/, text: '¿Quieres contactar conmigo?', url: '/contacto', label: 'Ir a contacto' },
   ];
 
   const box = document.getElementById('smart-suggestion');
