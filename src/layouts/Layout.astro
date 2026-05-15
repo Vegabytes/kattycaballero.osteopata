@@ -266,8 +266,9 @@ const fullBusinessSchema = {
   <!-- Preconnect third-party origins -->
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <link rel="dns-prefetch" href="https://www.google-analytics.com">
-  <link rel="preconnect" href="https://w.behold.so" crossorigin>
-  <link rel="dns-prefetch" href="https://feeds.behold.so">
+  <!-- Instagram feed via /api/instagram-feed (Cloudflare edge). Preconnect a la CDN de imágenes de IG. -->
+  <link rel="preconnect" href="https://scontent.cdninstagram.com" crossorigin>
+  <link rel="dns-prefetch" href="https://scontent.cdninstagram.com">
 
   <!-- Fonts (self-hosted) -->
   <link rel="preload" href="/fonts/cormorant-garamond-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
