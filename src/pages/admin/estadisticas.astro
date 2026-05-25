@@ -312,7 +312,9 @@ try {
   `).first();
   totalCancelaciones = (r as any)?.canceladas || 0;
   totalNoShow = (r as any)?.no_show || 0;
-} catch {}
+} catch (e: any) {
+  console.error('Stats: error cancelaciones/no_show', e);
+}
 
 // Compute donut arcs
 function describeArc(cx: number, cy: number, r: number, startAngle: number, endAngle: number): string {

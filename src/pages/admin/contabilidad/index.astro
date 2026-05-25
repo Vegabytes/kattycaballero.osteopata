@@ -85,6 +85,7 @@ const exportData = {
       <a href="/admin/contabilidad/gastos/nuevo" class="btn btn-primary">+ Añadir gasto</a>
       <a href="/admin/contabilidad/gastos" class="btn btn-secondary">Ver gastos</a>
       <button class="btn btn-secondary" id="btnExportCsv">Exportar CSV</button>
+      <a href="/admin/fiscal" class="btn btn-secondary">Resumen imprimible</a>
     </div>
   </div>
 
@@ -106,7 +107,11 @@ const exportData = {
     <div class="conta-card conta-ingresos">
       <div class="conta-label">Ingresos cobrados</div>
       <div class="conta-value">{fmt(resumen?.ingresos || 0)}</div>
-      <div class="conta-sub">Citas completadas en el periodo</div>
+      <div class="conta-sub">
+        {(resumen?.ingresosBonos || 0) > 0
+          ? `Citas ${fmt(resumen?.ingresosCitas || 0)} · Bonos ${fmt(resumen?.ingresosBonos || 0)}`
+          : 'Citas completadas + bonos del periodo'}
+      </div>
     </div>
     <div class="conta-card conta-gastos">
       <div class="conta-label">Gastos</div>
@@ -124,11 +129,11 @@ const exportData = {
     <!-- Ingresos por método de pago -->
     <div class="card">
       <h3 class="conta-h3">Cómo le han pagado</h3>
-      {(!resumen || resumen.ingresosPorMetodo.length === 0) ? (
+      {(!resumen || (resumen.ingresosPorMetodo.length === 0 && resumen.ingresosBonos === 0)) ? (
         <p class="conta-empty">Sin ingresos en este periodo.</p>
       ) : (
         <table>
-          <thead><tr><th>Método</th><th style="text-align:right;">Citas</th><th style="text-align:right;">Total</th></tr></thead>
+          <thead><tr><th>Método</th><th style="text-align:right;">Nº</th><th style="text-align:right;">Total</th></tr></thead>
           <tbody>
             {resumen.ingresosPorMetodo.map((m) => (
               <tr>
@@ -137,6 +142,13 @@ const exportData = {
                 <td style="text-align:right;font-weight:600;">{fmt(m.total)}</td>
               </tr>
             ))}
+            {resumen.ingresosBonos > 0 && (
+              <tr>
+                <td>Bonos <span style="font-size:0.72rem;color:var(--admin-text-light);">(método no registrado)</span></td>
+                <td style="text-align:right;">{resumen.nBonos}</td>
+                <td style="text-align:right;font-weight:600;">{fmt(resumen.ingresosBonos)}</td>
+              </tr>
+            )}
           </tbody>
         </table>
       )}
@@ -191,23 +203,33 @@ const exportData = {
       </p>
     )}
 
-    <div class="conta-iva-grid">
-      <div class="conta-iva-item">
-        <span class="conta-iva-label">IVA repercutido</span>
-        <span class="conta-iva-val">{fmt(resumen?.ivaRepercutido || 0)}</span>
-        <span class="conta-iva-help">Cobrado en servicios</span>
+    {tipoIvaServicios === 0 ? (
+      <div class="conta-iva-grid conta-iva-grid--single">
+        <div class="conta-iva-item">
+          <span class="conta-iva-label">IVA soportado</span>
+          <span class="conta-iva-val">{fmt(resumen?.ivaSoportado || 0)}</span>
+          <span class="conta-iva-help">Deducible de tus gastos (informativo)</span>
+        </div>
       </div>
-      <div class="conta-iva-item">
-        <span class="conta-iva-label">IVA soportado</span>
-        <span class="conta-iva-val">{fmt(resumen?.ivaSoportado || 0)}</span>
-        <span class="conta-iva-help">Deducible de gastos</span>
+    ) : (
+      <div class="conta-iva-grid">
+        <div class="conta-iva-item">
+          <span class="conta-iva-label">IVA repercutido</span>
+          <span class="conta-iva-val">{fmt(resumen?.ivaRepercutido || 0)}</span>
+          <span class="conta-iva-help">Cobrado en servicios</span>
+        </div>
+        <div class="conta-iva-item">
+          <span class="conta-iva-label">IVA soportado</span>
+          <span class="conta-iva-val">{fmt(resumen?.ivaSoportado || 0)}</span>
+          <span class="conta-iva-help">Deducible de gastos</span>
+        </div>
+        <div class={`conta-iva-item ${ivaLiquidar >= 0 ? 'conta-iva-pagar' : 'conta-iva-favor'}`}>
+          <span class="conta-iva-label">{ivaLiquidar >= 0 ? 'IVA a ingresar' : 'IVA a tu favor'}</span>
+          <span class="conta-iva-val">{fmt(Math.abs(ivaLiquidar))}</span>
+          <span class="conta-iva-help">Repercutido − soportado</span>
+        </div>
       </div>
-      <div class={`conta-iva-item ${ivaLiquidar >= 0 ? 'conta-iva-pagar' : 'conta-iva-favor'}`}>
-        <span class="conta-iva-label">{ivaLiquidar >= 0 ? 'IVA a ingresar' : 'IVA a tu favor'}</span>
-        <span class="conta-iva-val">{fmt(Math.abs(ivaLiquidar))}</span>
-        <span class="conta-iva-help">Repercutido − soportado</span>
-      </div>
-    </div>
+    )}
     <p class="conta-disclaimer">Resumen orientativo para tu gestoría. No sustituye la declaración oficial.</p>
   </div>
 
@@ -259,6 +281,9 @@ const exportData = {
       const label = m.metodo === 'sin_especificar' ? 'Sin especificar' : (metodos[m.metodo] || m.metodo);
       csv += `${label};${m.n};"${eur(m.total)}"\n`;
     });
+    if ((resumen?.ingresosBonos || 0) > 0) {
+      csv += `Bonos;${resumen.nBonos};"${eur(resumen.ingresosBonos)}"\n`;
+    }
     csv += `Total ingresos;;"${eur(resumen?.ingresos || 0)}"\n\n`;
 
     csv += 'GASTOS\nFecha;Concepto;Categoria;Proveedor;Base;Tipo IVA;IVA;Total;Deducible;Pago\n';
@@ -357,6 +382,7 @@ const exportData = {
   .conta-iva-config select { padding: 6px 10px; border-radius: 8px; border: 1px solid var(--admin-border); background: var(--admin-card); color: var(--admin-text); font-size: 0.82rem; font-family: inherit; }
   .conta-iva-note { font-size: 0.85rem; color: var(--admin-text-light); margin-bottom: 16px; }
   .conta-iva-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .conta-iva-grid--single { grid-template-columns: 1fr; max-width: 300px; }
   .conta-iva-item { background: var(--admin-bg); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
   .conta-iva-label { font-size: 0.78rem; font-weight: 600; color: var(--admin-text-light); text-transform: uppercase; letter-spacing: 0.3px; }
   .conta-iva-val { font-size: 1.3rem; font-weight: 700; }

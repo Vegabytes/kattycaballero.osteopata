@@ -81,9 +81,14 @@ const mediaMensual = totalAnualCitas > 0 ? totalAnualIngresos / 12 : 0;
 <AdminLayout title="Resumen Fiscal" activeSection="estadisticas">
 
   <div class="page-header">
-    <h2>Resumen Fiscal &mdash; {year}</h2>
+    <h2>Resumen de citas por trimestre &mdash; {year}</h2>
     <button class="btn btn-secondary btn-sm" onclick="window.print()">Imprimir</button>
     <button class="btn btn-primary btn-sm" id="btnExportCsv">Exportar CSV</button>
+  </div>
+
+  <div class="alert alert-info" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <span>Esta vista es solo el <strong>resumen imprimible de ingresos por citas</strong>. Para la contabilidad completa (gastos, IVA, bonos y método de pago) usa</span>
+    <a href="/admin/contabilidad" class="btn btn-primary btn-sm">Ir a Contabilidad</a>
   </div>
 
   <!-- Annual Summary -->

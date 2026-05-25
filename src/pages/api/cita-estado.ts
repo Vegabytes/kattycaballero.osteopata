@@ -10,7 +10,7 @@ export async function POST(context: any) {
 
   try {
     const body = await context.request.json();
-    const { id, estado } = body;
+    const { id, estado, metodo_pago } = body;
 
     if (!id || !estado) {
       return new Response(JSON.stringify({ error: 'id y estado requeridos' }), {
@@ -28,7 +28,12 @@ export async function POST(context: any) {
     }
 
     const db = context.locals.runtime.env.DB;
-    await db.prepare('UPDATE citas SET estado = ? WHERE id = ?').bind(estado, id).run();
+    const metodosValidos = ['efectivo', 'bizum', 'tarjeta', 'transferencia'];
+    if (metodo_pago && metodosValidos.includes(metodo_pago)) {
+      await db.prepare('UPDATE citas SET estado = ?, metodo_pago = ? WHERE id = ?').bind(estado, metodo_pago, id).run();
+    } else {
+      await db.prepare('UPDATE citas SET estado = ? WHERE id = ?').bind(estado, id).run();
+    }
 
     return new Response(JSON.stringify({ ok: true }), {
       headers: { 'Content-Type': 'application/json' },

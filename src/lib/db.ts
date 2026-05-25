@@ -524,7 +524,10 @@ export async function eliminarGasto(Astro: AstroGlobal, id: number): Promise<voi
 // === CONTABILIDAD: RESUMEN ===
 
 export interface ResumenContable {
-  ingresos: number;                              // total cobrado (citas completadas)
+  ingresos: number;                              // total cobrado (citas + bonos)
+  ingresosCitas: number;                         // cobrado por citas completadas
+  ingresosBonos: number;                         // cobrado por bonos comprados en el periodo
+  nBonos: number;                                // nº de bonos comprados en el periodo
   ingresosPorMetodo: { metodo: string; total: number; n: number }[];
   gastos: number;                                // total gastos (base + iva)
   gastosPorCategoria: { categoria: string; total: number; n: number }[];
@@ -545,20 +548,25 @@ export async function getResumenContable(
 ): Promise<ResumenContable> {
   const db = getDB(Astro);
 
-  const [ingresosRow, metodos, gastosCat] = await Promise.all([
+  const [ingresosRow, metodos, gastosCat, bonosRow] = await Promise.all([
     db.prepare("SELECT COALESCE(SUM(precio), 0) as total FROM citas WHERE estado = 'completada' AND fecha >= ? AND fecha <= ?")
       .bind(desde, hasta).first(),
     db.prepare("SELECT COALESCE(metodo_pago, 'sin_especificar') as metodo, COALESCE(SUM(precio), 0) as total, COUNT(*) as n FROM citas WHERE estado = 'completada' AND fecha >= ? AND fecha <= ? GROUP BY metodo_pago ORDER BY total DESC")
       .bind(desde, hasta).all(),
     db.prepare('SELECT categoria, COALESCE(SUM(total), 0) as total, COUNT(*) as n FROM gastos WHERE fecha >= ? AND fecha <= ? GROUP BY categoria ORDER BY total DESC')
       .bind(desde, hasta).all(),
+    db.prepare("SELECT COALESCE(SUM(precio), 0) as total, COUNT(*) as n FROM bonos WHERE fecha_compra >= ? AND fecha_compra <= ?")
+      .bind(desde, hasta).first(),
     ]);
 
   const ivaSoportadoRow = await db
     .prepare('SELECT COALESCE(SUM(iva), 0) as total FROM gastos WHERE deducible = 1 AND fecha >= ? AND fecha <= ?')
     .bind(desde, hasta).first();
 
-  const ingresos = (ingresosRow as any)?.total || 0;
+  const ingresosCitas = (ingresosRow as any)?.total || 0;
+  const ingresosBonos = (bonosRow as any)?.total || 0;
+  const nBonos = (bonosRow as any)?.n || 0;
+  const ingresos = ingresosCitas + ingresosBonos;
   const gastosPorCategoria = ((gastosCat as any).results || []) as { categoria: string; total: number; n: number }[];
   const gastos = gastosPorCategoria.reduce((s, g) => s + g.total, 0);
   const ivaSoportado = (ivaSoportadoRow as any)?.total || 0;
@@ -570,6 +578,9 @@ export async function getResumenContable(
 
   return {
     ingresos,
+    ingresosCitas,
+    ingresosBonos,
+    nBonos,
     ingresosPorMetodo: ((metodos as any).results || []) as { metodo: string; total: number; n: number }[],
     gastos,
     gastosPorCategoria,
