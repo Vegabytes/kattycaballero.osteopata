@@ -43,12 +43,18 @@ try {
   tipoIvaServicios = Number(await getSetting(Astro, 'iva_servicios')) || 0;
 } catch { /* default 0 */ }
 
+// --- Periodo del año anterior (para comparativa) ---
+const prevDesde = rango.desde.replace(String(year), String(year - 1));
+const prevHasta = rango.hasta.replace(String(year), String(year - 1));
+
 // --- Datos ---
 let resumen: Awaited<ReturnType<typeof getResumenContable>> | null = null;
+let resumenPrev: Awaited<ReturnType<typeof getResumenContable>> | null = null;
 let gastos: Awaited<ReturnType<typeof getGastos>> = [];
 try {
-  [resumen, gastos] = await Promise.all([
+  [resumen, resumenPrev, gastos] = await Promise.all([
     getResumenContable(Astro, rango.desde, rango.hasta, tipoIvaServicios),
+    getResumenContable(Astro, prevDesde, prevHasta, tipoIvaServicios),
     getGastos(Astro, { desde: rango.desde, hasta: rango.hasta }),
   ]);
 } catch (e: any) {
@@ -57,6 +63,19 @@ try {
 }
 
 const fmt = (n: number) => (n || 0).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+
+// Variación % vs año anterior (null si no hay base con la que comparar)
+function variacion(actual: number, anterior: number): { pct: number; signo: string; clase: string } | null {
+  if (!anterior) return null;
+  const pct = ((actual - anterior) / anterior) * 100;
+  const signo = pct > 0 ? '+' : '';
+  const clase = pct > 0 ? 'var-up' : pct < 0 ? 'var-down' : 'var-flat';
+  return { pct: Math.round(pct), signo, clase };
+}
+const varIngresos = resumenPrev ? variacion(resumen?.ingresos || 0, resumenPrev.ingresos) : null;
+const varGastos = resumenPrev ? variacion(resumen?.gastos || 0, resumenPrev.gastos) : null;
+const varResultado = resumenPrev ? variacion(resumen?.resultado || 0, resumenPrev.resultado) : null;
+const hayComparativa = !!resumenPrev && (resumenPrev.ingresos > 0 || resumenPrev.gastos > 0);
 const ivaLiquidar = resumen ? resumen.ivaRepercutido - resumen.ivaSoportado : 0;
 const years = [now.getFullYear(), now.getFullYear() - 1, now.getFullYear() - 2];
 
@@ -82,7 +101,8 @@ const exportData = {
   <div class="page-header">
     <h2>Contabilidad — {rango.label} {year}</h2>
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <a href="/admin/contabilidad/gastos/nuevo" class="btn btn-primary">+ Añadir gasto</a>
+      <a href="/admin/contabilidad/caja" class="btn btn-primary">Cierre de caja</a>
+      <a href="/admin/contabilidad/gastos/nuevo" class="btn btn-secondary">+ Añadir gasto</a>
       <a href="/admin/contabilidad/gastos" class="btn btn-secondary">Ver gastos</a>
       <button class="btn btn-secondary" id="btnExportCsv">Exportar CSV</button>
       <a href="/admin/fiscal" class="btn btn-secondary">Resumen imprimible</a>
@@ -124,6 +144,24 @@ const exportData = {
       <div class="conta-sub">Ingresos − gastos</div>
     </div>
   </div>
+
+  {hayComparativa && (
+    <div class="conta-compare">
+      <span class="conta-compare-title">vs. {rango.label} {year - 1}:</span>
+      <span class="conta-compare-item">
+        Ingresos {fmt(resumenPrev!.ingresos)}
+        {varIngresos && <span class={`conta-var ${varIngresos.clase}`}>{varIngresos.signo}{varIngresos.pct}%</span>}
+      </span>
+      <span class="conta-compare-item">
+        Gastos {fmt(resumenPrev!.gastos)}
+        {varGastos && <span class={`conta-var ${varGastos.clase}`}>{varGastos.signo}{varGastos.pct}%</span>}
+      </span>
+      <span class="conta-compare-item">
+        Resultado {fmt(resumenPrev!.resultado)}
+        {varResultado && <span class={`conta-var ${varResultado.clase}`}>{varResultado.signo}{varResultado.pct}%</span>}
+      </span>
+    </div>
+  )}
 
   <div class="conta-grid">
     <!-- Ingresos por método de pago -->
@@ -366,6 +404,25 @@ const exportData = {
   .conta-resultado-pos .conta-value { color: #1565c0; }
   .conta-resultado-neg { border-left: 4px solid var(--admin-danger); }
   .conta-resultado-neg .conta-value { color: #c62828; }
+
+  .conta-compare {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding: 12px 18px;
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
+  }
+  .conta-compare-title { font-weight: 600; color: var(--admin-text-light); }
+  .conta-compare-item { color: var(--admin-text-light); }
+  .conta-var { font-weight: 700; margin-left: 4px; }
+  .conta-var.var-up { color: #2e7d32; }
+  .conta-var.var-down { color: #c62828; }
+  .conta-var.var-flat { color: var(--admin-text-light); }
 
   .conta-grid {
     display: grid;

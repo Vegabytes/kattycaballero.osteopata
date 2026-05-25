@@ -121,6 +121,7 @@ CREATE TABLE IF NOT EXISTS gastos (
   deducible INTEGER DEFAULT 1,
   metodo_pago TEXT,
   notas TEXT,
+  recurrente INTEGER DEFAULT 0,
   created_at TEXT DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS idx_gastos_fecha ON gastos(fecha);

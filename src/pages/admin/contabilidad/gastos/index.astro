@@ -2,13 +2,27 @@
 export const prerender = false;
 
 import AdminLayout from '../../../../layouts/AdminLayout.astro';
-import { getGastos, CATEGORIAS_GASTO, METODOS_PAGO } from '../../../../lib/db';
+import { getGastos, generarGastosRecurrentes, CATEGORIAS_GASTO, METODOS_PAGO } from '../../../../lib/db';
+
+let generados: string[] | null = null;
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  if (form.get('_action') === 'generar_recurrentes') {
+    try {
+      generados = await generarGastosRecurrentes(Astro);
+    } catch (e: any) {
+      console.error('Error generando recurrentes', e);
+      generados = [];
+    }
+  }
+}
 
 const now = new Date();
 const year = Number(Astro.url.searchParams.get('year')) || now.getFullYear();
 const categoria = Astro.url.searchParams.get('categoria') || '';
 const ok = Astro.url.searchParams.has('ok');
 const eliminado = Astro.url.searchParams.has('eliminado');
+const mesActualLabel = now.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
 
 let gastos: Awaited<ReturnType<typeof getGastos>> = [];
 let dbError = '';
@@ -35,10 +49,21 @@ const years = [now.getFullYear(), now.getFullYear() - 1, now.getFullYear() - 2];
   {dbError && <div class="alert alert-error"><strong>Error de base de datos:</strong> {dbError}</div>}
   {ok && <div class="alert alert-success">Gasto guardado correctamente</div>}
   {eliminado && <div class="alert alert-info">Gasto eliminado</div>}
+  {generados !== null && (
+    generados.length > 0
+      ? <div class="alert alert-success">Generados {generados.length} gasto{generados.length === 1 ? '' : 's'} recurrente{generados.length === 1 ? '' : 's'} de {mesActualLabel}: {generados.join(', ')}.</div>
+      : <div class="alert alert-info">No había gastos recurrentes pendientes de generar este mes (ya estaban todos).</div>
+  )}
 
   <div class="page-header">
     <h2>Gastos {year} ({gastos.length})</h2>
-    <a href="/admin/contabilidad/gastos/nuevo" class="btn btn-primary">+ Añadir gasto</a>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <form method="POST" style="display:inline;" onsubmit={`return confirm('¿Generar los gastos recurrentes de ${mesActualLabel}?')`}>
+        <input type="hidden" name="_action" value="generar_recurrentes">
+        <button type="submit" class="btn btn-secondary">↻ Generar recurrentes</button>
+      </form>
+      <a href="/admin/contabilidad/gastos/nuevo" class="btn btn-primary">+ Añadir gasto</a>
+    </div>
   </div>
 
   <form class="search-bar" method="GET">
@@ -74,6 +99,7 @@ const years = [now.getFullYear(), now.getFullYear() - 1, now.getFullYear() - 2];
                 <td style="white-space:nowrap;">{g.fecha}</td>
                 <td>
                   <a href={`/admin/contabilidad/gastos/${g.id}`}>{g.concepto}</a>
+                  {g.recurrente ? <span class="badge-recurrente" title="Se repite cada mes">↻ mensual</span> : ''}
                   {g.proveedor && <div style="font-size:0.75rem;color:var(--admin-text-light);">{g.proveedor}</div>}
                   {!g.deducible && <span class="badge-no-deducible">no deducible</span>}
                 </td>
@@ -103,5 +129,6 @@ const years = [now.getFullYear(), now.getFullYear() - 1, now.getFullYear() - 2];
 
 <style is:global>
   .badge-no-deducible { display: inline-block; margin-top: 4px; font-size: 0.68rem; background: #fce4ec; color: #c62828; padding: 2px 7px; border-radius: 10px; font-weight: 600; }
+  .badge-recurrente { display: inline-block; margin-left: 6px; font-size: 0.68rem; background: #e3f2fd; color: #1565c0; padding: 2px 7px; border-radius: 10px; font-weight: 600; }
   .search-bar select { padding: 10px 14px; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 0.9rem; font-family: inherit; background: var(--admin-card); color: var(--admin-text); }
 </style>

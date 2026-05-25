@@ -39,6 +39,7 @@ if (Astro.request.method === 'POST') {
       deducible: form.get('deducible') ? 1 : 0,
       metodo_pago: (form.get('metodo_pago') as string) || null,
       notas: (form.get('notas') as string) || null,
+      recurrente: form.get('recurrente') ? 1 : 0,
     });
     mensaje = 'Gasto actualizado';
   }
@@ -116,6 +117,13 @@ if (!gasto) return Astro.redirect('/admin/contabilidad/gastos');
         <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:500;">
           <input type="checkbox" name="deducible" value="1" checked={gasto.deducible === 1} style="width:auto;">
           Gasto deducible (relacionado con la actividad)
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:500;">
+          <input type="checkbox" name="recurrente" value="1" checked={gasto.recurrente === 1} style="width:auto;">
+          Se repite cada mes (cuota de autónomos, gestoría, alquiler…)
         </label>
       </div>
 

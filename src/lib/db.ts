@@ -441,6 +441,7 @@ export interface Gasto {
   deducible: number; // 1 = deducible, 0 = no
   metodo_pago: string | null;
   notas: string | null;
+  recurrente: number; // 1 = se repite cada mes
   created_at: string;
 }
 
@@ -494,11 +495,11 @@ export async function getGasto(Astro: AstroGlobal, id: number): Promise<Gasto | 
 export async function crearGasto(Astro: AstroGlobal, data: Partial<Gasto>): Promise<number> {
   const db = getDB(Astro);
   const result = await db
-    .prepare('INSERT INTO gastos (fecha, concepto, categoria, proveedor, base, tipo_iva, iva, total, deducible, metodo_pago, notas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    .prepare('INSERT INTO gastos (fecha, concepto, categoria, proveedor, base, tipo_iva, iva, total, deducible, metodo_pago, notas, recurrente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
     .bind(
       data.fecha, data.concepto, data.categoria || 'otros', data.proveedor || null,
       data.base ?? 0, data.tipo_iva ?? 0, data.iva ?? 0, data.total ?? 0,
-      data.deducible ?? 1, data.metodo_pago || null, data.notas || null
+      data.deducible ?? 1, data.metodo_pago || null, data.notas || null, data.recurrente ?? 0
     )
     .run();
   return result.meta.last_row_id;
@@ -507,11 +508,11 @@ export async function crearGasto(Astro: AstroGlobal, data: Partial<Gasto>): Prom
 export async function actualizarGasto(Astro: AstroGlobal, id: number, data: Partial<Gasto>): Promise<void> {
   const db = getDB(Astro);
   await db
-    .prepare('UPDATE gastos SET fecha = ?, concepto = ?, categoria = ?, proveedor = ?, base = ?, tipo_iva = ?, iva = ?, total = ?, deducible = ?, metodo_pago = ?, notas = ? WHERE id = ?')
+    .prepare('UPDATE gastos SET fecha = ?, concepto = ?, categoria = ?, proveedor = ?, base = ?, tipo_iva = ?, iva = ?, total = ?, deducible = ?, metodo_pago = ?, notas = ?, recurrente = ? WHERE id = ?')
     .bind(
       data.fecha, data.concepto, data.categoria || 'otros', data.proveedor || null,
       data.base ?? 0, data.tipo_iva ?? 0, data.iva ?? 0, data.total ?? 0,
-      data.deducible ?? 1, data.metodo_pago || null, data.notas || null, id
+      data.deducible ?? 1, data.metodo_pago || null, data.notas || null, data.recurrente ?? 0, id
     )
     .run();
 }
@@ -519,6 +520,42 @@ export async function actualizarGasto(Astro: AstroGlobal, id: number, data: Part
 export async function eliminarGasto(Astro: AstroGlobal, id: number): Promise<void> {
   const db = getDB(Astro);
   await db.prepare('DELETE FROM gastos WHERE id = ?').bind(id).run();
+}
+
+/**
+ * Genera, para el mes indicado (YYYY-MM, por defecto el actual), una copia de
+ * cada gasto marcado como recurrente que aún no tenga entrada ese mes.
+ * Devuelve los conceptos creados.
+ */
+export async function generarGastosRecurrentes(Astro: AstroGlobal, mes?: string): Promise<string[]> {
+  const db = getDB(Astro);
+  const ym = mes || new Date().toISOString().slice(0, 7); // 'YYYY-MM'
+  const fechaPrimerDia = `${ym}-01`;
+
+  // Última plantilla recurrente por concepto
+  const plantillas = (await db.prepare(
+    `SELECT * FROM gastos WHERE recurrente = 1 AND id IN (
+       SELECT MAX(id) FROM gastos WHERE recurrente = 1 GROUP BY concepto
+     )`
+  ).all()).results as Gasto[];
+
+  const creados: string[] = [];
+  for (const g of plantillas) {
+    // ¿Ya existe ese concepto este mes?
+    const existe = await db.prepare(
+      "SELECT COUNT(*) as n FROM gastos WHERE concepto = ? AND fecha LIKE ?"
+    ).bind(g.concepto, `${ym}%`).first() as { n: number } | null;
+    if ((existe?.n || 0) > 0) continue;
+
+    await db.prepare(
+      'INSERT INTO gastos (fecha, concepto, categoria, proveedor, base, tipo_iva, iva, total, deducible, metodo_pago, notas, recurrente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)'
+    ).bind(
+      fechaPrimerDia, g.concepto, g.categoria, g.proveedor || null,
+      g.base, g.tipo_iva, g.iva, g.total, g.deducible, g.metodo_pago || null, g.notas || null
+    ).run();
+    creados.push(g.concepto);
+  }
+  return creados;
 }
 
 // === CONTABILIDAD: RESUMEN ===

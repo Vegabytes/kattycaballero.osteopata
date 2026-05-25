@@ -1,0 +1,177 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getResumenContable, getCitas, getGastos, METODOS_PAGO } from '../../../lib/db';
+
+const hoy = new Date().toISOString().split('T')[0];
+const dia = Astro.url.searchParams.get('dia') || hoy;
+
+let resumen: Awaited<ReturnType<typeof getResumenContable>> | null = null;
+let citas: Awaited<ReturnType<typeof getCitas>> = [];
+let gastosDia: Awaited<ReturnType<typeof getGastos>> = [];
+let dbError = '';
+try {
+  [resumen, citas, gastosDia] = await Promise.all([
+    getResumenContable(Astro, dia, dia, 0),
+    getCitas(Astro, dia),
+    getGastos(Astro, { desde: dia, hasta: dia }),
+  ]);
+} catch (e: any) {
+  dbError = e.message;
+}
+
+const citasCobradas = citas.filter((c) => c.estado === 'completada' && c.precio);
+const fmt = (n: number) => (n || 0).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+
+// Total por método (mapa para acceso rápido)
+const porMetodo: Record<string, number> = {};
+(resumen?.ingresosPorMetodo || []).forEach((m) => { porMetodo[m.metodo] = m.total; });
+const efectivo = porMetodo['efectivo'] || 0;
+const totalGastos = gastosDia.reduce((s, g) => s + (g.total || 0), 0);
+const neto = (resumen?.ingresos || 0) - totalGastos;
+
+// Navegación día anterior / siguiente
+const d = new Date(dia + 'T00:00:00');
+const prev = new Date(d); prev.setDate(prev.getDate() - 1);
+const next = new Date(d); next.setDate(next.getDate() + 1);
+const prevStr = prev.toISOString().split('T')[0];
+const nextStr = next.toISOString().split('T')[0];
+const diaLabel = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<AdminLayout title="Cierre de caja" activeSection="contabilidad">
+  <a href="/admin/contabilidad" class="back-link">← Volver a contabilidad</a>
+
+  {dbError && <div class="alert alert-error"><strong>Error de base de datos:</strong> {dbError}</div>}
+
+  <div class="page-header">
+    <h2>Cierre de caja</h2>
+    <button class="btn btn-secondary btn-sm" onclick="window.print()">Imprimir</button>
+  </div>
+
+  <!-- Navegador de día -->
+  <form method="GET" class="caja-daybar">
+    <a href={`/admin/contabilidad/caja?dia=${prevStr}`} class="btn btn-secondary btn-sm">←</a>
+    <input type="date" name="dia" value={dia} onchange="this.form.submit()">
+    <a href={`/admin/contabilidad/caja?dia=${nextStr}`} class="btn btn-secondary btn-sm">→</a>
+    {dia !== hoy && <a href="/admin/contabilidad/caja" class="btn btn-secondary btn-sm">Hoy</a>}
+    <span class="caja-daylabel">{diaLabel}</span>
+  </form>
+
+  <!-- Totales -->
+  <div class="caja-cards">
+    <div class="caja-card caja-total">
+      <span class="caja-label">Cobrado</span>
+      <span class="caja-value">{fmt(resumen?.ingresos || 0)}</span>
+      <span class="caja-sub">{citasCobradas.length} cita{citasCobradas.length === 1 ? '' : 's'}{(resumen?.ingresosBonos || 0) > 0 ? ` + ${resumen?.nBonos} bono(s)` : ''}</span>
+    </div>
+    <div class="caja-card caja-efectivo">
+      <span class="caja-label">💶 Efectivo</span>
+      <span class="caja-value">{fmt(efectivo)}</span>
+      <span class="caja-sub">Lo que debe haber en el cajón</span>
+    </div>
+    <div class="caja-card">
+      <span class="caja-label">Gastos del día</span>
+      <span class="caja-value">{fmt(totalGastos)}</span>
+      <span class="caja-sub">{gastosDia.length} gasto{gastosDia.length === 1 ? '' : 's'}</span>
+    </div>
+    <div class={`caja-card ${neto >= 0 ? 'caja-neto-pos' : 'caja-neto-neg'}`}>
+      <span class="caja-label">Neto del día</span>
+      <span class="caja-value">{fmt(neto)}</span>
+      <span class="caja-sub">Cobrado − gastos</span>
+    </div>
+  </div>
+
+  <!-- Desglose por método -->
+  <div class="card" style="margin-bottom:24px;">
+    <h3 class="caja-h3">Desglose por método de pago</h3>
+    {(resumen?.ingresosPorMetodo.length === 0 && (resumen?.ingresosBonos || 0) === 0) ? (
+      <p class="caja-empty">No hay cobros registrados este día.</p>
+    ) : (
+      <div class="caja-metodos">
+        {['efectivo', 'bizum', 'tarjeta', 'transferencia'].map((k) => (
+          <div class="caja-metodo">
+            <span class="caja-metodo-label">{METODOS_PAGO[k]}</span>
+            <span class="caja-metodo-val">{fmt(porMetodo[k] || 0)}</span>
+          </div>
+        ))}
+        {(porMetodo['sin_especificar'] || 0) > 0 && (
+          <div class="caja-metodo caja-metodo-warn">
+            <span class="caja-metodo-label">Sin especificar</span>
+            <span class="caja-metodo-val">{fmt(porMetodo['sin_especificar'])}</span>
+          </div>
+        )}
+        {(resumen?.ingresosBonos || 0) > 0 && (
+          <div class="caja-metodo">
+            <span class="caja-metodo-label">Bonos</span>
+            <span class="caja-metodo-val">{fmt(resumen?.ingresosBonos || 0)}</span>
+          </div>
+        )}
+      </div>
+    )}
+    {(porMetodo['sin_especificar'] || 0) > 0 && (
+      <p class="caja-aviso">Hay cobros sin método de pago asignado. Edítalos en cada cita para que el cierre cuadre.</p>
+    )}
+  </div>
+
+  <!-- Detalle de citas cobradas -->
+  <div class="card">
+    <h3 class="caja-h3">Citas cobradas</h3>
+    {citasCobradas.length === 0 ? (
+      <p class="caja-empty">Ninguna cita completada con precio este día.</p>
+    ) : (
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Hora</th><th>Paciente</th><th>Servicio</th><th>Método</th><th style="text-align:right;">Importe</th></tr></thead>
+          <tbody>
+            {citasCobradas.sort((a, b) => (a.hora || '').localeCompare(b.hora || '')).map((c) => (
+              <tr>
+                <td style="white-space:nowrap;">{c.hora}</td>
+                <td><a href={`/admin/citas/${c.id}`}>{c.paciente_nombre} {c.paciente_apellidos}</a></td>
+                <td>{c.servicio || '—'}</td>
+                <td>{(c as any).metodo_pago ? (METODOS_PAGO[(c as any).metodo_pago] || (c as any).metodo_pago) : <span style="color:var(--admin-text-light);">—</span>}</td>
+                <td style="text-align:right;font-weight:600;">{fmt(c.precio || 0)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+</AdminLayout>
+
+<style is:global>
+  .caja-daybar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+  .caja-daybar input[type="date"] { padding: 8px 12px; border: 1px solid var(--admin-border); border-radius: 8px; background: var(--admin-card); color: var(--admin-text); font-family: inherit; }
+  .caja-daylabel { color: var(--admin-text-light); font-size: 0.9rem; text-transform: capitalize; }
+
+  .caja-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .caja-card { background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .caja-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.4px; color: var(--admin-text-light); }
+  .caja-value { font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
+  .caja-sub { font-size: 0.74rem; color: var(--admin-text-light); }
+  .caja-total { border-left: 4px solid var(--admin-success); }
+  .caja-total .caja-value { color: #2e7d32; }
+  .caja-efectivo { border-left: 4px solid var(--admin-secondary); background: linear-gradient(135deg, #fffaf0 0%, var(--admin-card) 100%); }
+  .caja-neto-pos { border-left: 4px solid var(--admin-info); }
+  .caja-neto-neg { border-left: 4px solid var(--admin-danger); }
+  .caja-neto-neg .caja-value { color: #c62828; }
+
+  .caja-h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 14px; }
+  .caja-empty { color: var(--admin-text-light); font-size: 0.88rem; }
+  .caja-metodos { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .caja-metodo { background: var(--admin-bg); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+  .caja-metodo-label { font-size: 0.78rem; color: var(--admin-text-light); font-weight: 600; }
+  .caja-metodo-val { font-size: 1.2rem; font-weight: 700; }
+  .caja-metodo-warn { background: #fff3e0; }
+  .caja-aviso { margin-top: 12px; font-size: 0.78rem; color: #e65100; }
+
+  @media (max-width: 768px) {
+    .caja-cards { grid-template-columns: 1fr 1fr; }
+  }
+  @media print {
+    .admin-sidebar, .admin-topbar, .mobile-toggle, .sidebar-overlay, .back-link, .page-header .btn, .caja-daybar a, .caja-daybar input { display: none !important; }
+    .admin-main { margin-left: 0 !important; }
+  }
+</style>
