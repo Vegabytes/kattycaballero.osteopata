@@ -46,6 +46,7 @@ if (Astro.request.method === 'POST') {
       estado,
       notas: form.get('notas') as string,
       precio: form.get('precio') ? Number(form.get('precio')) : null,
+      metodo_pago: (form.get('metodo_pago') as string) || null,
     });
 
     // Save motivo_cancelacion if cancelled/no-show
@@ -202,15 +203,27 @@ const reprogramWhatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="estado">Estado</label>
-        <select id="estado" name="estado">
-          <option value="pendiente" selected={cita.estado === 'pendiente'}>Pendiente</option>
-          <option value="confirmada" selected={cita.estado === 'confirmada'}>Confirmada</option>
-          <option value="completada" selected={cita.estado === 'completada'}>Completada</option>
-          <option value="cancelada" selected={cita.estado === 'cancelada'}>Cancelada</option>
-          <option value="no_show" selected={cita.estado === 'no_show'}>No acudió</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="estado">Estado</label>
+          <select id="estado" name="estado">
+            <option value="pendiente" selected={cita.estado === 'pendiente'}>Pendiente</option>
+            <option value="confirmada" selected={cita.estado === 'confirmada'}>Confirmada</option>
+            <option value="completada" selected={cita.estado === 'completada'}>Completada</option>
+            <option value="cancelada" selected={cita.estado === 'cancelada'}>Cancelada</option>
+            <option value="no_show" selected={cita.estado === 'no_show'}>No acudió</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="metodo_pago">Cómo ha pagado</label>
+          <select id="metodo_pago" name="metodo_pago">
+            <option value="" selected={!(cita as any).metodo_pago}>Sin especificar</option>
+            <option value="efectivo" selected={(cita as any).metodo_pago === 'efectivo'}>Efectivo</option>
+            <option value="bizum" selected={(cita as any).metodo_pago === 'bizum'}>Bizum</option>
+            <option value="tarjeta" selected={(cita as any).metodo_pago === 'tarjeta'}>Tarjeta</option>
+            <option value="transferencia" selected={(cita as any).metodo_pago === 'transferencia'}>Transferencia</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group" id="motivo-cancel-group" style={cita.estado === 'cancelada' || cita.estado === 'no_show' ? '' : 'display:none;'}>

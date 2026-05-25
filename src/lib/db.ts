@@ -23,6 +23,7 @@ export interface Cita {
   estado: string;
   notas: string | null;
   precio: number | null;
+  metodo_pago: string | null;
   created_at: string;
   // Joined
   paciente_nombre?: string;
@@ -77,7 +78,7 @@ export interface Tratamiento {
   paciente_apellidos?: string;
 }
 
-function getDB(Astro: AstroGlobal) {
+export function getDB(Astro: AstroGlobal) {
   return (Astro.locals as any).runtime.env.DB;
 }
 
@@ -173,8 +174,8 @@ export async function getCita(Astro: AstroGlobal, id: number): Promise<Cita | nu
 export async function crearCita(Astro: AstroGlobal, data: Partial<Cita>): Promise<number> {
   const db = getDB(Astro);
   const result = await db
-    .prepare('INSERT INTO citas (paciente_id, fecha, hora, duracion, servicio, estado, notas, precio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
-    .bind(data.paciente_id, data.fecha, data.hora, data.duracion || 60, data.servicio || null, data.estado || 'pendiente', data.notas || null, data.precio || null)
+    .prepare('INSERT INTO citas (paciente_id, fecha, hora, duracion, servicio, estado, notas, precio, metodo_pago) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(data.paciente_id, data.fecha, data.hora, data.duracion || 60, data.servicio || null, data.estado || 'pendiente', data.notas || null, data.precio || null, data.metodo_pago || null)
     .run();
   return result.meta.last_row_id;
 }
@@ -182,8 +183,8 @@ export async function crearCita(Astro: AstroGlobal, data: Partial<Cita>): Promis
 export async function actualizarCita(Astro: AstroGlobal, id: number, data: Partial<Cita>): Promise<void> {
   const db = getDB(Astro);
   await db
-    .prepare('UPDATE citas SET paciente_id = ?, fecha = ?, hora = ?, duracion = ?, servicio = ?, estado = ?, notas = ?, precio = ? WHERE id = ?')
-    .bind(data.paciente_id, data.fecha, data.hora, data.duracion || 60, data.servicio || null, data.estado || 'pendiente', data.notas || null, data.precio || null, id)
+    .prepare('UPDATE citas SET paciente_id = ?, fecha = ?, hora = ?, duracion = ?, servicio = ?, estado = ?, notas = ?, precio = ?, metodo_pago = ? WHERE id = ?')
+    .bind(data.paciente_id, data.fecha, data.hora, data.duracion || 60, data.servicio || null, data.estado || 'pendiente', data.notas || null, data.precio || null, data.metodo_pago || null, id)
     .run();
 }
 
@@ -422,5 +423,158 @@ export async function getEstadisticasCompletas(Astro: AstroGlobal) {
     ingresosMes: (ingresosMes as any)?.total || 0,
     citasCompletadasMes: (citasCompletadasMes as any)?.total || 0,
     bonosActivos: (bonosActivos as any)?.total || 0,
+  };
+}
+
+// === CONTABILIDAD: GASTOS ===
+
+export interface Gasto {
+  id: number;
+  fecha: string;
+  concepto: string;
+  categoria: string;
+  proveedor: string | null;
+  base: number;      // base imponible
+  tipo_iva: number;  // % de IVA (0, 4, 10, 21)
+  iva: number;       // cuota de IVA soportado
+  total: number;     // base + iva (lo realmente pagado)
+  deducible: number; // 1 = deducible, 0 = no
+  metodo_pago: string | null;
+  notas: string | null;
+  created_at: string;
+}
+
+// Categorías de gasto del autónomo (clave => etiqueta)
+export const CATEGORIAS_GASTO: Record<string, string> = {
+  asesoria: 'Asesoría / Gestoría',
+  material: 'Material clínico / fungible',
+  equipamiento: 'Equipamiento (camilla, etc.)',
+  suministros: 'Suministros (luz, teléfono, internet)',
+  alquiler: 'Alquiler del local',
+  formacion: 'Formación',
+  marketing: 'Marketing / Web',
+  cuota_autonomo: 'Cuota de autónomos',
+  otros: 'Otros',
+};
+
+// Métodos de pago aceptados (clave => etiqueta)
+export const METODOS_PAGO: Record<string, string> = {
+  efectivo: 'Efectivo',
+  bizum: 'Bizum',
+  tarjeta: 'Tarjeta',
+  transferencia: 'Transferencia',
+};
+
+export async function getGastos(
+  Astro: AstroGlobal,
+  opts: { desde?: string; hasta?: string; categoria?: string } = {}
+): Promise<Gasto[]> {
+  const db = getDB(Astro);
+  const conditions: string[] = [];
+  const params: any[] = [];
+
+  if (opts.desde) { conditions.push('fecha >= ?'); params.push(opts.desde); }
+  if (opts.hasta) { conditions.push('fecha <= ?'); params.push(opts.hasta); }
+  if (opts.categoria) { conditions.push('categoria = ?'); params.push(opts.categoria); }
+
+  let query = 'SELECT * FROM gastos';
+  if (conditions.length > 0) query += ' WHERE ' + conditions.join(' AND ');
+  query += ' ORDER BY fecha DESC, id DESC';
+
+  let stmt = db.prepare(query);
+  if (params.length > 0) stmt = stmt.bind(...params);
+  return (await stmt.all()).results as Gasto[];
+}
+
+export async function getGasto(Astro: AstroGlobal, id: number): Promise<Gasto | null> {
+  const db = getDB(Astro);
+  return await db.prepare('SELECT * FROM gastos WHERE id = ?').bind(id).first() as Gasto | null;
+}
+
+export async function crearGasto(Astro: AstroGlobal, data: Partial<Gasto>): Promise<number> {
+  const db = getDB(Astro);
+  const result = await db
+    .prepare('INSERT INTO gastos (fecha, concepto, categoria, proveedor, base, tipo_iva, iva, total, deducible, metodo_pago, notas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(
+      data.fecha, data.concepto, data.categoria || 'otros', data.proveedor || null,
+      data.base ?? 0, data.tipo_iva ?? 0, data.iva ?? 0, data.total ?? 0,
+      data.deducible ?? 1, data.metodo_pago || null, data.notas || null
+    )
+    .run();
+  return result.meta.last_row_id;
+}
+
+export async function actualizarGasto(Astro: AstroGlobal, id: number, data: Partial<Gasto>): Promise<void> {
+  const db = getDB(Astro);
+  await db
+    .prepare('UPDATE gastos SET fecha = ?, concepto = ?, categoria = ?, proveedor = ?, base = ?, tipo_iva = ?, iva = ?, total = ?, deducible = ?, metodo_pago = ?, notas = ? WHERE id = ?')
+    .bind(
+      data.fecha, data.concepto, data.categoria || 'otros', data.proveedor || null,
+      data.base ?? 0, data.tipo_iva ?? 0, data.iva ?? 0, data.total ?? 0,
+      data.deducible ?? 1, data.metodo_pago || null, data.notas || null, id
+    )
+    .run();
+}
+
+export async function eliminarGasto(Astro: AstroGlobal, id: number): Promise<void> {
+  const db = getDB(Astro);
+  await db.prepare('DELETE FROM gastos WHERE id = ?').bind(id).run();
+}
+
+// === CONTABILIDAD: RESUMEN ===
+
+export interface ResumenContable {
+  ingresos: number;                              // total cobrado (citas completadas)
+  ingresosPorMetodo: { metodo: string; total: number; n: number }[];
+  gastos: number;                                // total gastos (base + iva)
+  gastosPorCategoria: { categoria: string; total: number; n: number }[];
+  ivaSoportado: number;                          // IVA deducible de gastos
+  ivaRepercutido: number;                        // IVA cobrado en servicios (según tipo configurado)
+  resultado: number;                             // ingresos - gastos
+}
+
+/**
+ * Resumen contable de un periodo [desde, hasta] (fechas YYYY-MM-DD inclusive).
+ * tipoIvaServicios: % de IVA que repercute en sus servicios (0 = exenta / no factura).
+ */
+export async function getResumenContable(
+  Astro: AstroGlobal,
+  desde: string,
+  hasta: string,
+  tipoIvaServicios = 0
+): Promise<ResumenContable> {
+  const db = getDB(Astro);
+
+  const [ingresosRow, metodos, gastosCat] = await Promise.all([
+    db.prepare("SELECT COALESCE(SUM(precio), 0) as total FROM citas WHERE estado = 'completada' AND fecha >= ? AND fecha <= ?")
+      .bind(desde, hasta).first(),
+    db.prepare("SELECT COALESCE(metodo_pago, 'sin_especificar') as metodo, COALESCE(SUM(precio), 0) as total, COUNT(*) as n FROM citas WHERE estado = 'completada' AND fecha >= ? AND fecha <= ? GROUP BY metodo_pago ORDER BY total DESC")
+      .bind(desde, hasta).all(),
+    db.prepare('SELECT categoria, COALESCE(SUM(total), 0) as total, COUNT(*) as n FROM gastos WHERE fecha >= ? AND fecha <= ? GROUP BY categoria ORDER BY total DESC')
+      .bind(desde, hasta).all(),
+    ]);
+
+  const ivaSoportadoRow = await db
+    .prepare('SELECT COALESCE(SUM(iva), 0) as total FROM gastos WHERE deducible = 1 AND fecha >= ? AND fecha <= ?')
+    .bind(desde, hasta).first();
+
+  const ingresos = (ingresosRow as any)?.total || 0;
+  const gastosPorCategoria = ((gastosCat as any).results || []) as { categoria: string; total: number; n: number }[];
+  const gastos = gastosPorCategoria.reduce((s, g) => s + g.total, 0);
+  const ivaSoportado = (ivaSoportadoRow as any)?.total || 0;
+
+  // IVA repercutido: si tributa con IVA, el precio cobrado se considera IVA incluido.
+  const ivaRepercutido = tipoIvaServicios > 0
+    ? ingresos - ingresos / (1 + tipoIvaServicios / 100)
+    : 0;
+
+  return {
+    ingresos,
+    ingresosPorMetodo: ((metodos as any).results || []) as { metodo: string; total: number; n: number }[],
+    gastos,
+    gastosPorCategoria,
+    ivaSoportado,
+    ivaRepercutido,
+    resultado: ingresos - gastos,
   };
 }

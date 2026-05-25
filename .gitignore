@@ -22,5 +22,8 @@ Thumbs.db
 # Astro
 .astro/
 
+# Wrangler / D1 local state
+.wrangler/
+
 # Blog drafts (revisar y mover a src/content/blog/ antes de publicar)
 drafts/

@@ -1,0 +1,170 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import { getGasto, actualizarGasto, eliminarGasto, CATEGORIAS_GASTO, METODOS_PAGO } from '../../../../lib/db';
+
+const id = Number(Astro.params.id);
+let error = '';
+let mensaje = '';
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+
+  if (form.get('_action') === 'eliminar') {
+    await eliminarGasto(Astro, id);
+    return Astro.redirect('/admin/contabilidad/gastos?eliminado=1');
+  }
+
+  const concepto = (form.get('concepto') as string || '').trim();
+  const total = Number(form.get('total')) || 0;
+  const tipo_iva = Number(form.get('tipo_iva')) || 0;
+
+  if (!concepto) {
+    error = 'El concepto es obligatorio';
+  } else if (total <= 0) {
+    error = 'El importe total debe ser mayor que 0';
+  } else {
+    const base = Math.round((total / (1 + tipo_iva / 100)) * 100) / 100;
+    const iva = Math.round((total - base) * 100) / 100;
+    await actualizarGasto(Astro, id, {
+      fecha: (form.get('fecha') as string),
+      concepto,
+      categoria: (form.get('categoria') as string) || 'otros',
+      proveedor: (form.get('proveedor') as string) || null,
+      base,
+      tipo_iva,
+      iva,
+      total,
+      deducible: form.get('deducible') ? 1 : 0,
+      metodo_pago: (form.get('metodo_pago') as string) || null,
+      notas: (form.get('notas') as string) || null,
+    });
+    mensaje = 'Gasto actualizado';
+  }
+}
+
+const gasto = await getGasto(Astro, id);
+if (!gasto) return Astro.redirect('/admin/contabilidad/gastos');
+---
+
+<AdminLayout title={`Gasto #${id}`} activeSection="contabilidad">
+  <a href="/admin/contabilidad/gastos" class="back-link">← Volver a gastos</a>
+
+  {mensaje && <div class="alert alert-success">{mensaje}</div>}
+  {error && <div class="alert alert-error">{error}</div>}
+
+  <div class="card">
+    <form method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fecha">Fecha *</label>
+          <input type="date" id="fecha" name="fecha" value={gasto.fecha} required>
+        </div>
+        <div class="form-group">
+          <label for="categoria">Categoría</label>
+          <select id="categoria" name="categoria">
+            {Object.entries(CATEGORIAS_GASTO).map(([k, v]) => (
+              <option value={k} selected={k === gasto.categoria}>{v}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="concepto">Concepto *</label>
+        <input type="text" id="concepto" name="concepto" required value={gasto.concepto}>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="proveedor">Proveedor / tienda</label>
+          <input type="text" id="proveedor" name="proveedor" value={gasto.proveedor || ''}>
+        </div>
+        <div class="form-group">
+          <label for="metodo_pago">Cómo lo pagó</label>
+          <select id="metodo_pago" name="metodo_pago">
+            <option value="" selected={!gasto.metodo_pago}>Sin especificar</option>
+            {Object.entries(METODOS_PAGO).map(([k, v]) => <option value={k} selected={k === gasto.metodo_pago}>{v}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="total">Importe total pagado (€) *</label>
+          <input type="number" id="total" name="total" step="0.01" min="0" required value={gasto.total}>
+        </div>
+        <div class="form-group">
+          <label for="tipo_iva">IVA del gasto</label>
+          <select id="tipo_iva" name="tipo_iva">
+            <option value="21" selected={gasto.tipo_iva === 21}>21% (general)</option>
+            <option value="10" selected={gasto.tipo_iva === 10}>10% (reducido)</option>
+            <option value="4" selected={gasto.tipo_iva === 4}>4% (superreducido)</option>
+            <option value="0" selected={gasto.tipo_iva === 0}>Sin IVA / exento</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="gasto-desglose" id="desglose">
+        <div><span>Base imponible</span><strong id="d-base">—</strong></div>
+        <div><span>Cuota IVA</span><strong id="d-iva">—</strong></div>
+        <div class="d-total"><span>Total</span><strong id="d-total">—</strong></div>
+      </div>
+
+      <div class="form-group" style="margin-top:20px;">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:500;">
+          <input type="checkbox" name="deducible" value="1" checked={gasto.deducible === 1} style="width:auto;">
+          Gasto deducible (relacionado con la actividad)
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label for="notas">Notas</label>
+        <textarea id="notas" name="notas">{gasto.notas || ''}</textarea>
+      </div>
+
+      <div style="display:flex;gap:12px;">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a href="/admin/contabilidad/gastos" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+
+    <form method="POST" style="margin-top:24px;padding-top:16px;border-top:1px solid var(--admin-border);" onsubmit="return confirm('¿Eliminar este gasto?')">
+      <input type="hidden" name="_action" value="eliminar">
+      <button type="submit" class="btn btn-danger btn-sm">Eliminar gasto</button>
+    </form>
+  </div>
+</AdminLayout>
+
+<script>
+  function recalc() {
+    const total = Number((document.getElementById('total') as HTMLInputElement).value) || 0;
+    const tipo = Number((document.getElementById('tipo_iva') as HTMLSelectElement).value) || 0;
+    const base = total / (1 + tipo / 100);
+    const iva = total - base;
+    const fmt = (n: number) => n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    document.getElementById('d-base')!.textContent = fmt(base);
+    document.getElementById('d-iva')!.textContent = fmt(iva);
+    document.getElementById('d-total')!.textContent = fmt(total);
+  }
+  document.getElementById('total')?.addEventListener('input', recalc);
+  document.getElementById('tipo_iva')?.addEventListener('change', recalc);
+  recalc();
+</script>
+
+<style is:global>
+  .gasto-desglose {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 16px 20px;
+    background: var(--admin-bg);
+    border-radius: 10px;
+    margin-top: 4px;
+  }
+  .gasto-desglose > div { display: flex; flex-direction: column; gap: 2px; }
+  .gasto-desglose span { font-size: 0.75rem; color: var(--admin-text-light); text-transform: uppercase; letter-spacing: 0.3px; }
+  .gasto-desglose strong { font-size: 1.1rem; }
+  .gasto-desglose .d-total strong { color: var(--admin-primary-dark); }
+</style>

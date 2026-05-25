@@ -1,0 +1,107 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import { getGastos, CATEGORIAS_GASTO, METODOS_PAGO } from '../../../../lib/db';
+
+const now = new Date();
+const year = Number(Astro.url.searchParams.get('year')) || now.getFullYear();
+const categoria = Astro.url.searchParams.get('categoria') || '';
+const ok = Astro.url.searchParams.has('ok');
+const eliminado = Astro.url.searchParams.has('eliminado');
+
+let gastos: Awaited<ReturnType<typeof getGastos>> = [];
+let dbError = '';
+try {
+  gastos = await getGastos(Astro, {
+    desde: `${year}-01-01`,
+    hasta: `${year}-12-31`,
+    categoria: categoria || undefined,
+  });
+} catch (e: any) {
+  dbError = e.message;
+}
+
+const totalBase = gastos.reduce((s, g) => s + (g.base || 0), 0);
+const totalIva = gastos.reduce((s, g) => s + (g.iva || 0), 0);
+const totalTotal = gastos.reduce((s, g) => s + (g.total || 0), 0);
+const fmt = (n: number) => (n || 0).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+const years = [now.getFullYear(), now.getFullYear() - 1, now.getFullYear() - 2];
+---
+
+<AdminLayout title="Gastos" activeSection="contabilidad">
+  <a href="/admin/contabilidad" class="back-link">← Volver a contabilidad</a>
+
+  {dbError && <div class="alert alert-error"><strong>Error de base de datos:</strong> {dbError}</div>}
+  {ok && <div class="alert alert-success">Gasto guardado correctamente</div>}
+  {eliminado && <div class="alert alert-info">Gasto eliminado</div>}
+
+  <div class="page-header">
+    <h2>Gastos {year} ({gastos.length})</h2>
+    <a href="/admin/contabilidad/gastos/nuevo" class="btn btn-primary">+ Añadir gasto</a>
+  </div>
+
+  <form class="search-bar" method="GET">
+    <select name="year">
+      {years.map((y) => <option value={y} selected={y === year}>{y}</option>)}
+    </select>
+    <select name="categoria">
+      <option value="">Todas las categorías</option>
+      {Object.entries(CATEGORIAS_GASTO).map(([k, v]) => <option value={k} selected={k === categoria}>{v}</option>)}
+    </select>
+    <button type="submit" class="btn btn-secondary">Filtrar</button>
+    {categoria && <a href={`/admin/contabilidad/gastos?year=${year}`} class="btn btn-secondary">Limpiar</a>}
+  </form>
+
+  {gastos.length === 0 ? (
+    <div class="card empty-state">
+      <p>No hay gastos {categoria ? 'en esta categoría' : ''} en {year}.</p>
+      <a href="/admin/contabilidad/gastos/nuevo" class="btn btn-primary">Añadir el primero</a>
+    </div>
+  ) : (
+    <div class="card">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th><th>Concepto</th><th>Categoría</th><th>Pago</th>
+              <th style="text-align:right;">Base</th><th style="text-align:right;">IVA</th><th style="text-align:right;">Total</th><th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {gastos.map((g) => (
+              <tr>
+                <td style="white-space:nowrap;">{g.fecha}</td>
+                <td>
+                  <a href={`/admin/contabilidad/gastos/${g.id}`}>{g.concepto}</a>
+                  {g.proveedor && <div style="font-size:0.75rem;color:var(--admin-text-light);">{g.proveedor}</div>}
+                  {!g.deducible && <span class="badge-no-deducible">no deducible</span>}
+                </td>
+                <td>{CATEGORIAS_GASTO[g.categoria] || g.categoria}</td>
+                <td>{g.metodo_pago ? (METODOS_PAGO[g.metodo_pago] || g.metodo_pago) : '—'}</td>
+                <td style="text-align:right;">{fmt(g.base)}</td>
+                <td style="text-align:right;">{fmt(g.iva)} {g.tipo_iva ? <span style="font-size:0.7rem;color:var(--admin-text-light);">({g.tipo_iva}%)</span> : ''}</td>
+                <td style="text-align:right;font-weight:600;">{fmt(g.total)}</td>
+                <td style="text-align:right;"><a href={`/admin/contabilidad/gastos/${g.id}`} class="btn btn-secondary btn-sm">Editar</a></td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr style="border-top:2px solid var(--admin-border);font-weight:700;">
+              <td colspan="4">Total {year}</td>
+              <td style="text-align:right;">{fmt(totalBase)}</td>
+              <td style="text-align:right;">{fmt(totalIva)}</td>
+              <td style="text-align:right;">{fmt(totalTotal)}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  )}
+</AdminLayout>
+
+<style is:global>
+  .badge-no-deducible { display: inline-block; margin-top: 4px; font-size: 0.68rem; background: #fce4ec; color: #c62828; padding: 2px 7px; border-radius: 10px; font-weight: 600; }
+  .search-bar select { padding: 10px 14px; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 0.9rem; font-family: inherit; background: var(--admin-card); color: var(--admin-text); }
+</style>

@@ -12,6 +12,8 @@
     "db:create": "wrangler d1 create katy-clinica",
     "db:migrate": "wrangler d1 execute katy-clinica --file=db/schema.sql",
     "db:migrate:local": "wrangler d1 execute katy-clinica --file=db/schema.sql --local",
+    "db:contabilidad": "wrangler d1 execute katy-clinica --file=db/migration-contabilidad.sql --remote",
+    "db:contabilidad:local": "wrangler d1 execute katy-clinica --file=db/migration-contabilidad.sql --local",
     "draft": "node scripts/draft-post.mjs",
     "draft:list": "node scripts/draft-post.mjs --list",
     "draft:random": "node scripts/draft-post.mjs --random"

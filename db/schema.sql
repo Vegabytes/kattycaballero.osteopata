@@ -107,6 +107,25 @@ CREATE TABLE IF NOT EXISTS push_subscriptions (
   created_at TEXT DEFAULT (datetime('now'))
 );
 
+-- Gastos / contabilidad (libro de gastos del autónomo)
+CREATE TABLE IF NOT EXISTS gastos (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  fecha TEXT NOT NULL,
+  concepto TEXT NOT NULL,
+  categoria TEXT NOT NULL DEFAULT 'otros',
+  proveedor TEXT,
+  base REAL NOT NULL DEFAULT 0,
+  tipo_iva REAL NOT NULL DEFAULT 0,
+  iva REAL NOT NULL DEFAULT 0,
+  total REAL NOT NULL DEFAULT 0,
+  deducible INTEGER DEFAULT 1,
+  metodo_pago TEXT,
+  notas TEXT,
+  created_at TEXT DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_gastos_fecha ON gastos(fecha);
+CREATE INDEX IF NOT EXISTS idx_gastos_categoria ON gastos(categoria);
+
 -- Notas y tareas (to-do personal)
 CREATE TABLE IF NOT EXISTS notas (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -127,3 +146,6 @@ CREATE TABLE IF NOT EXISTS notas (
 
 -- Motivo de cancelación/no-show (ejecutar manualmente en D1)
 -- ALTER TABLE citas ADD COLUMN motivo_cancelacion TEXT;
+
+-- Método de pago de la cita / contabilidad (ejecutar manualmente en D1)
+-- ALTER TABLE citas ADD COLUMN metodo_pago TEXT;
