@@ -4,11 +4,13 @@ Web profesional para Katy Caballero, osteópata y masajista en Alpedrete, Madrid
 
 ## 🚀 Tecnología
 
-- **Framework**: [Astro](https://astro.build/) v4
+- **Framework**: [Astro](https://astro.build/) (SSR con `@astrojs/cloudflare`)
 - **Estilos**: CSS puro (variables CSS, sin framework externo)
 - **Blog**: Markdown con Content Collections de Astro
 - **SEO**: Sitemap automático, Schema.org, Open Graph
-- **Hosting recomendado**: Netlify, Vercel o cualquier hosting estático
+- **Hosting**: Cloudflare Workers (`wrangler deploy`)
+- **Base de datos**: Cloudflare D1 (`katy-clinica`) — reserva de citas y panel de contabilidad
+- **Despliegue**: manual con `wrangler deploy` (no hay CI). Migraciones D1 vía scripts `npm run db:*`
 
 ## 📁 Estructura del proyecto
 
