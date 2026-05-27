@@ -74,6 +74,14 @@ const services: Service[] = [
     alt: 'Masaje prenatal para embarazadas en consulta de Alpedrete, Moralzarzal y Galapagar'
   }
 ];
+
+// `hideHeader`: oculta la cabecera interna (tag + h2 + subtítulo) cuando la
+// página que incluye el componente ya tiene su propio hero (p.ej. /servicios),
+// para no duplicar el encabezado. Por defecto se muestra (home).
+interface Props {
+  hideHeader?: boolean;
+}
+const { hideHeader = false } = Astro.props;
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify({
@@ -100,12 +108,14 @@ const services: Service[] = [
 })} />
 <section class="services" id="servicios">
   <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Servicios</span>
-      <h2>Tratamientos personalizados para tu bienestar</h2>
-      <p>Cada cuerpo es único. Por eso, diseño cada sesión adaptada a tus necesidades específicas.</p>
-    </div>
-    
+    {!hideHeader && (
+      <div class="section-header">
+        <span class="section-tag">Servicios</span>
+        <h2>Tratamientos personalizados para tu bienestar</h2>
+        <p>Cada cuerpo es único. Por eso, diseño cada sesión adaptada a tus necesidades específicas.</p>
+      </div>
+    )}
+
     <div class="services-grid">
       {services.map(service => (
         <a href={`/servicios/${service.slug}`} class="service-card-link">
