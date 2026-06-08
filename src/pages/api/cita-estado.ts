@@ -1,11 +1,15 @@
 export const prerender = false;
 
-import { isAuthenticated } from '../../lib/auth';
+import { isAuthenticated, isSameOrigin } from '../../lib/auth';
 
 export async function POST(context: any) {
   const authenticated = await isAuthenticated(context);
   if (!authenticated) {
     return new Response('No autorizado', { status: 401 });
+  }
+
+  if (!isSameOrigin(context.request)) {
+    return new Response('Origen no permitido', { status: 403 });
   }
 
   try {

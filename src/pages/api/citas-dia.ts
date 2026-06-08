@@ -28,6 +28,7 @@ export async function GET(context: any) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (e: any) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+    console.error('[citas-dia]', e);
+    return new Response(JSON.stringify({ error: 'Error interno' }), { status: 500 });
   }
 }

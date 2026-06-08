@@ -22,7 +22,8 @@ if (Astro.request.method === 'POST') {
       error = 'Contraseña incorrecta';
     }
   } catch (e: any) {
-    error = `Error: ${e.message}`;
+    console.error('[admin-login]', e);
+    error = 'Error interno';
   }
 }
 ---

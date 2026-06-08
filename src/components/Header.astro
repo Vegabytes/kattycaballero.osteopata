@@ -749,6 +749,11 @@ const toolLinks = [
     const mobileMenu = document.getElementById('mobile-menu');
     const nav = document.getElementById('main-nav');
 
+    // Reset mobile menu state on (re)init — Header persists across ViewTransitions
+    mobileMenuBtn?.classList.remove('active');
+    mobileMenu?.classList.remove('active');
+    mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+
     // Mobile menu toggle
     mobileMenuBtn?.addEventListener('click', () => {
       mobileMenuBtn.classList.toggle('active');
@@ -757,14 +762,24 @@ const toolLinks = [
       mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
     });
 
+    // Close mobile menu helper
+    function closeMobileMenu() {
+      mobileMenuBtn?.classList.remove('active');
+      mobileMenu?.classList.remove('active');
+      mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+    }
+
     // Close mobile menu on Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileMenu?.classList.contains('active')) {
-        mobileMenuBtn?.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+        closeMobileMenu();
         mobileMenuBtn?.focus();
       }
+    });
+
+    // Close mobile menu when navigating via a link inside it (SPA / ViewTransitions)
+    mobileMenu?.querySelectorAll('a[href]').forEach((link) => {
+      link.addEventListener('click', () => closeMobileMenu());
     });
 
     // Mobile tools dropdown toggle

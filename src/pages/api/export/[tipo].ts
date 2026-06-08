@@ -5,7 +5,11 @@ import { isAuthenticated } from '../../../lib/auth';
 
 function escapeCsv(value: any): string {
   if (value === null || value === undefined) return '';
-  const str = String(value);
+  let str = String(value);
+  // CSV injection defense: neutralize formula-leading characters.
+  if (/^[=+\-@]/.test(str)) {
+    str = "'" + str;
+  }
   if (str.includes(',') || str.includes('"') || str.includes('\n') || str.includes('\r')) {
     return '"' + str.replace(/"/g, '""') + '"';
   }
@@ -121,8 +125,8 @@ export const GET: APIRoute = async (context) => {
     });
 
   } catch (error: any) {
-    console.error(`Error exporting ${tipo}:`, error);
-    return new Response(JSON.stringify({ error: error.message || 'Error interno del servidor' }), {
+    console.error('[export]', error);
+    return new Response(JSON.stringify({ error: 'Error interno' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

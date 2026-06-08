@@ -46,7 +46,8 @@ export async function GET(context: any) {
       },
     });
   } catch (e: any) {
-    return new Response(JSON.stringify({ error: `Error generando backup: ${e.message}` }), {
+    console.error('[backup]', e);
+    return new Response(JSON.stringify({ error: 'Error interno' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import CTASection from '../components/CTASection.astro';
 import { reviews, averageRating as avgRating } from '../data/reviews';
 
-const aggregateRatingSchema = {
+const businessSchema = {
   "@context": "https://schema.org",
   "@type": "HealthAndBeautyBusiness",
   "name": "Katy Caballero - Osteópata y Masajista",
@@ -17,20 +17,7 @@ const aggregateRatingSchema = {
     "addressRegion": "Madrid",
     "postalCode": "28430",
     "addressCountry": "ES"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": avgRating,
-    "reviewCount": reviews.length,
-    "bestRating": "5",
-    "worstRating": "1"
-  },
-  "review": reviews.map(r => ({
-    "@type": "Review",
-    "author": { "@type": "Person", "name": r.name },
-    "reviewRating": { "@type": "Rating", "ratingValue": r.rating, "bestRating": "5" },
-    "reviewBody": r.text
-  }))
+  }
 };
 
 const pageTitle = "Opiniones y Reseñas | Katy Caballero Osteópata en Alpedrete";
@@ -43,7 +30,7 @@ const pageDescription = `Opiniones reales de pacientes sobre Katy Caballero, ost
   breadcrumbs={[{ name: "Inicio", url: "/" }, { name: "Opiniones" }]}
   fullSchema={true}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(aggregateRatingSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
 
   <section class="page-header">
     <div class="container">

@@ -66,12 +66,18 @@ export const GET: APIRoute = async (context) => {
       },
     });
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    console.error('[exportar]', error);
+    return new Response(JSON.stringify({ error: 'Error interno' }), { status: 500 });
   }
 };
 
 function esc(val: any): string {
   if (val == null) return '';
-  const s = String(val).replace(/"/g, '""');
+  let raw = String(val);
+  // CSV injection defense: neutralize formula-leading characters.
+  if (/^[=+\-@]/.test(raw)) {
+    raw = "'" + raw;
+  }
+  const s = raw.replace(/"/g, '""');
   return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s}"` : s;
 }

@@ -176,3 +176,24 @@ export async function changePassword(context: any, newPassword: string): Promise
 export async function logout(context: any): Promise<void> {
   context.cookies.delete(COOKIE_NAME, { path: '/' });
 }
+
+// CSRF defense: verify the request originates from the same host.
+// Compares the host of the Origin header (or Referer as fallback) with the
+// request host. Returns false if they differ or cannot be determined.
+export function isSameOrigin(request: Request): boolean {
+  try {
+    const requestHost = new URL(request.url).host;
+    const origin = request.headers.get('origin');
+    if (origin) {
+      return new URL(origin).host === requestHost;
+    }
+    const referer = request.headers.get('referer');
+    if (referer) {
+      return new URL(referer).host === requestHost;
+    }
+    // No Origin nor Referer present: reject mutating requests.
+    return false;
+  } catch {
+    return false;
+  }
+}

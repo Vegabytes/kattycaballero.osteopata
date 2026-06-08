@@ -85,7 +85,8 @@ export const GET: APIRoute = async (context) => {
       },
     });
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    console.error('[cita-ics]', error);
+    return new Response(JSON.stringify({ error: 'Error interno' }), { status: 500 });
   }
 };
 
