@@ -23,6 +23,13 @@ function isRateLimited(ip: string): boolean {
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  // SEO: canonicaliza www -> apex con 301 (evita contenido duplicado).
+  const reqUrl = new URL(context.request.url);
+  if (reqUrl.hostname === 'www.katycaballeroosteopata.com') {
+    reqUrl.hostname = 'katycaballeroosteopata.com';
+    return Response.redirect(reqUrl.toString(), 301);
+  }
+
   const path = new URL(context.request.url).pathname.replace(/\/+$/, '') || '/';
   const isAdmin = path.startsWith('/admin');
 
