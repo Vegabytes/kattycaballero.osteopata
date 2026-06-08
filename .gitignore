@@ -27,3 +27,6 @@ Thumbs.db
 
 # Blog drafts (revisar y mover a src/content/blog/ antes de publicar)
 drafts/
+
+# Claude Code local settings (contiene tokens/permiso local — NO versionar)
+.claude/settings.local.json
