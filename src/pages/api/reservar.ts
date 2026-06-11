@@ -99,6 +99,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
       pacienteId = insertResult.meta.last_row_id;
     }
 
+    // Validar formato de fecha/hora y que no sea pasada antes de tocar la BD.
+    // (Sin esto, una hora basura hace hora.split(':') -> NaN e inserta una cita corrupta.)
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+      return new Response(JSON.stringify({ success: false, error: 'Fecha inválida.' }), { status: 400, headers });
+    }
+    if (!/^\d{2}:\d{2}$/.test(hora)) {
+      return new Response(JSON.stringify({ success: false, error: 'Hora inválida.' }), { status: 400, headers });
+    }
+    const hoyMadrid = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Madrid' });
+    if (fecha < hoyMadrid) {
+      return new Response(JSON.stringify({ success: false, error: 'No se puede reservar en una fecha pasada.' }), { status: 400, headers });
+    }
+
     // Check for conflicts before creating (considering duration + 30 min buffer)
     const existingCitas = await db
       .prepare("SELECT hora, duracion FROM citas WHERE fecha = ? AND estado != 'cancelada'")
@@ -141,7 +154,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
   } catch (error: any) {
     console.error('Error saving booking:', error);
     return new Response(
-      JSON.stringify({ success: false, error: error.message || 'Error interno del servidor' }),
+      JSON.stringify({ success: false, error: 'Error interno del servidor' }),
       { status: 500, headers }
     );
   }
