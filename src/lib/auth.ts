@@ -1,176 +1,153 @@
 const COOKIE_NAME = 'katy_admin_session';
 const SESSION_DURATION_HOURS = 72;
-const SECRET_SALT = 'katy-clinica-2024-salt';
 
-// HMAC-based auth — no DB needed for session verification
-async function createSignedToken(password: string): Promise<string> {
+// La clave que firma las sesiones viene del ENTORNO (secret de Cloudflare),
+// nunca hardcodeada. Sin ella, el sistema falla cerrado (deniega todo).
+function getSessionSecret(context: any): string | null {
+  const s = context.locals?.runtime?.env?.SESSION_SECRET;
+  return typeof s === 'string' && s.length >= 16 ? s : null;
+}
+
+// Contraseña de admin desde el entorno. Sin valor por defecto: si no está
+// configurada (y no hay hash en D1), el login se deniega.
+function getEnvPassword(context: any): string | null {
+  const p = context.locals?.runtime?.env?.ADMIN_PASSWORD;
+  return typeof p === 'string' && p.length > 0 ? p : null;
+}
+
+async function hmacHex(secret: string, data: string): Promise<string> {
   const encoder = new TextEncoder();
   const key = await crypto.subtle.importKey(
     'raw',
-    encoder.encode(SECRET_SALT),
+    encoder.encode(secret),
     { name: 'HMAC', hash: 'SHA-256' },
     false,
-    ['sign']
+    ['sign'],
   );
-  const expiry = Date.now() + SESSION_DURATION_HOURS * 60 * 60 * 1000;
-  const data = `${password}:${expiry}`;
-  const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(data));
-  const sigHex = Array.from(new Uint8Array(signature), b => b.toString(16).padStart(2, '0')).join('');
-  // Use . separator to avoid URL-encoding issues with : in cookies
-  return `${expiry}.${sigHex}`;
+  const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(data));
+  return Array.from(new Uint8Array(sig), (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-async function verifyToken(token: string, password: string): Promise<boolean> {
+// Comparación en tiempo (cuasi) constante para evitar timing attacks.
+function timingSafeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+// Token de sesión: {expiry}.{hmac(secret, expiry)}. NO depende de la contraseña,
+// así que no hace falta almacenar la contraseña en claro para verificarlo.
+async function createSignedToken(secret: string): Promise<string> {
+  const expiry = Date.now() + SESSION_DURATION_HOURS * 60 * 60 * 1000;
+  const sig = await hmacHex(secret, String(expiry));
+  return `${expiry}.${sig}`;
+}
+
+async function verifyToken(secret: string, token: string): Promise<boolean> {
   try {
-    const dotIndex = token.indexOf('.');
-    if (dotIndex === -1) return false;
-    const expiryStr = token.substring(0, dotIndex);
-    const sigHex = token.substring(dotIndex + 1);
-    const expiry = Number(expiryStr);
-
+    const dot = token.indexOf('.');
+    if (dot === -1) return false;
+    const expiry = Number(token.substring(0, dot));
+    const sigHex = token.substring(dot + 1);
     if (!expiry || Date.now() > expiry) return false;
-
-    const encoder = new TextEncoder();
-    const key = await crypto.subtle.importKey(
-      'raw',
-      encoder.encode(SECRET_SALT),
-      { name: 'HMAC', hash: 'SHA-256' },
-      false,
-      ['verify']
-    );
-    const data = `${password}:${expiry}`;
-    const sigBytes = new Uint8Array(sigHex.match(/.{2}/g)!.map(byte => parseInt(byte, 16)));
-    return await crypto.subtle.verify('HMAC', key, sigBytes, encoder.encode(data));
+    const expected = await hmacHex(secret, String(expiry));
+    return timingSafeEqual(expected, sigHex);
   } catch {
     return false;
   }
 }
 
-function getEnvPassword(context: any): string {
-  return context.locals?.runtime?.env?.ADMIN_PASSWORD || 'katy2024';
+// Hash de contraseña para almacenamiento/comparación (con el secret de entorno).
+async function hashPassword(secret: string, password: string): Promise<string> {
+  return hmacHex(secret, `pw:${password}`);
 }
 
-// Hash a password using HMAC-SHA256 for storage
-async function hashPassword(password: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey(
-    'raw',
-    encoder.encode(SECRET_SALT),
-    { name: 'HMAC', hash: 'SHA-256' },
-    false,
-    ['sign']
-  );
-  const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(password));
-  return Array.from(new Uint8Array(signature), b => b.toString(16).padStart(2, '0')).join('');
-}
-
-// Get the effective password: check D1 override first, then env var
-async function getEffectivePassword(context: any): Promise<string> {
+// Hash de override almacenado en D1 (si la admin cambió la password desde el panel).
+async function getStoredHash(context: any): Promise<string | null> {
   try {
     const db = context.locals?.runtime?.env?.DB;
     if (db) {
-      const row = await db.prepare('SELECT valor FROM configuracion WHERE clave = ?').bind('admin_password_hash').first() as { valor: string } | null;
-      if (row?.valor) {
-        // Return a special marker so login knows to compare hashes
-        return `__hashed__:${row.valor}`;
-      }
+      const row = (await db
+        .prepare('SELECT valor FROM configuracion WHERE clave = ?')
+        .bind('admin_password_hash')
+        .first()) as { valor: string } | null;
+      if (row?.valor) return row.valor;
     }
   } catch {
-    // D1 not available, fall back to env var
+    // D1 no disponible
   }
-  return getEnvPassword(context);
+  return null;
+}
+
+// ¿La contraseña es correcta? Vale tanto la del entorno como el hash de override.
+// La del entorno SIEMPRE funciona (evita lockout si quedó un hash viejo).
+async function passwordMatches(context: any, secret: string, password: string): Promise<boolean> {
+  const envPw = getEnvPassword(context);
+  if (envPw !== null && timingSafeEqual(password, envPw)) return true;
+  const storedHash = await getStoredHash(context);
+  if (storedHash) return timingSafeEqual(await hashPassword(secret, password), storedHash);
+  return false;
 }
 
 export async function login(context: any, password: string): Promise<{ success: boolean; token?: string }> {
-  const effectivePassword = await getEffectivePassword(context);
+  const secret = getSessionSecret(context);
+  if (!secret) return { success: false }; // fail-closed: falta SESSION_SECRET
 
-  if (effectivePassword.startsWith('__hashed__:')) {
-    // Compare against stored hash
-    const storedHash = effectivePassword.substring('__hashed__:'.length);
-    const inputHash = await hashPassword(password);
-    if (inputHash !== storedHash) return { success: false };
-  } else {
-    // Compare plain text against env var
-    if (password !== effectivePassword) return { success: false };
-  }
+  if (!(await passwordMatches(context, secret, password))) return { success: false };
 
-  // Use the actual password for the session token
-  const token = await createSignedToken(password);
-
-  const maxAge = SESSION_DURATION_HOURS * 60 * 60;
+  const token = await createSignedToken(secret);
   context.cookies.set(COOKIE_NAME, token, {
     path: '/',
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
-    maxAge,
+    maxAge: SESSION_DURATION_HOURS * 60 * 60,
   });
-
   return { success: true, token };
 }
 
 export async function isAuthenticated(context: any): Promise<boolean> {
-  // Try Astro's cookie API first
-  let token = context.cookies.get(COOKIE_NAME)?.value;
+  const secret = getSessionSecret(context);
+  if (!secret) return false;
 
-  // Fallback: parse Cookie header manually in case Astro's decode mismatches
+  let token = context.cookies.get(COOKIE_NAME)?.value;
   if (!token) {
     const cookieHeader = context.request.headers.get('cookie') || '';
     const match = cookieHeader.match(new RegExp(`${COOKIE_NAME}=([^;]+)`));
-    if (match) {
-      token = decodeURIComponent(match[1]);
-    }
+    if (match) token = decodeURIComponent(match[1]);
   }
-
   if (!token) return false;
 
-  // Try verifying against all possible passwords
-  const envPassword = getEnvPassword(context);
-
-  // First try env password
-  if (await verifyToken(token, envPassword)) return true;
-
-  // Then try to get the override password hash and verify
-  try {
-    const db = context.locals?.runtime?.env?.DB;
-    if (db) {
-      const row = await db.prepare('SELECT valor FROM configuracion WHERE clave = ?').bind('admin_password_override').first() as { valor: string } | null;
-      if (row?.valor && await verifyToken(token, row.valor)) return true;
-    }
-  } catch {
-    // D1 not available
-  }
-
-  return false;
+  return verifyToken(secret, token);
 }
 
 export async function verifyPassword(context: any, password: string): Promise<boolean> {
-  const effectivePassword = await getEffectivePassword(context);
-
-  if (effectivePassword.startsWith('__hashed__:')) {
-    const storedHash = effectivePassword.substring('__hashed__:'.length);
-    const inputHash = await hashPassword(password);
-    return inputHash === storedHash;
-  }
-
-  return password === effectivePassword;
+  const secret = getSessionSecret(context);
+  if (!secret) return false;
+  return passwordMatches(context, secret, password);
 }
 
 export async function changePassword(context: any, newPassword: string): Promise<void> {
+  const secret = getSessionSecret(context);
+  if (!secret) throw new Error('SESSION_SECRET no configurado');
   const db = context.locals?.runtime?.env?.DB;
   if (!db) throw new Error('Base de datos no disponible');
 
-  const hashedPassword = await hashPassword(newPassword);
-
-  // Store the hash in configuracion
-  await db.prepare(
-    "INSERT INTO configuracion (clave, valor, updated_at) VALUES (?, ?, datetime('now')) ON CONFLICT(clave) DO UPDATE SET valor = ?, updated_at = datetime('now')"
-  ).bind('admin_password_hash', hashedPassword, hashedPassword).run();
-
-  // Also store the plain password for session token verification
-  await db.prepare(
-    "INSERT INTO configuracion (clave, valor, updated_at) VALUES (?, ?, datetime('now')) ON CONFLICT(clave) DO UPDATE SET valor = ?, updated_at = datetime('now')"
-  ).bind('admin_password_override', newPassword, newPassword).run();
+  const hashed = await hashPassword(secret, newPassword);
+  // Solo guardamos el HASH, nunca el plaintext.
+  await db
+    .prepare(
+      "INSERT INTO configuracion (clave, valor, updated_at) VALUES (?, ?, datetime('now')) ON CONFLICT(clave) DO UPDATE SET valor = ?, updated_at = datetime('now')",
+    )
+    .bind('admin_password_hash', hashed, hashed)
+    .run();
+  // Limpiar el plaintext legacy si existía de versiones anteriores.
+  try {
+    await db.prepare('DELETE FROM configuracion WHERE clave = ?').bind('admin_password_override').run();
+  } catch {
+    // no pasa nada si no existe
+  }
 }
 
 export async function logout(context: any): Promise<void> {
@@ -178,8 +155,6 @@ export async function logout(context: any): Promise<void> {
 }
 
 // CSRF defense: verify the request originates from the same host.
-// Compares the host of the Origin header (or Referer as fallback) with the
-// request host. Returns false if they differ or cannot be determined.
 export function isSameOrigin(request: Request): boolean {
   try {
     const requestHost = new URL(request.url).host;
@@ -191,7 +166,6 @@ export function isSameOrigin(request: Request): boolean {
     if (referer) {
       return new URL(referer).host === requestHost;
     }
-    // No Origin nor Referer present: reject mutating requests.
     return false;
   } catch {
     return false;
