@@ -34,6 +34,12 @@ interface Props {
 //      variable de entorno PUBLIC_GSC_VERIFICATION en .env / Cloudflare)
 const GSC_VERIFICATION = import.meta.env.PUBLIC_GSC_VERIFICATION || '';
 
+// Bing Webmaster Tools verification (msvalidate.01). Lo más rápido es importar
+// el sitio desde Google Search Console en BWT (sin código); si prefieres el meta,
+// copia el código de BWT → Settings → Verify ownership → HTML meta, y ponlo en la
+// env PUBLIC_BING_VERIFICATION (.env / Cloudflare). Solo se emite si existe.
+const BING_VERIFICATION = import.meta.env.PUBLIC_BING_VERIFICATION || '';
+
 const {
   title,
   description = "Osteópata y masajista en Alpedrete (Madrid). Osteopatía estructural, visceral, craneal y masajes terapéuticos. 12+ años de experiencia. Reserva online.",
@@ -199,6 +205,7 @@ const fullBusinessSchema = {
   <meta name="ICBM" content="40.6631, -4.0270">
 
   {GSC_VERIFICATION && <meta name="google-site-verification" content={GSC_VERIFICATION} />}
+  {BING_VERIFICATION && <meta name="msvalidate.01" content={BING_VERIFICATION} />}
   
   <!-- Canonical URL -->
   <link rel="canonical" href={canonicalURL}>
