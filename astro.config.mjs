@@ -5,6 +5,11 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   site: 'https://katycaballeroosteopata.com',
   output: 'hybrid',
+  // Enlaces internos van sin barra final (/blog, /contacto...) pero las rutas
+  // de directorio (blog/index.astro) se sirven canónicamente con barra ->
+  // cada clic interno disparaba un 308 innecesario. 'ignore' sirve ambas
+  // formas directamente, sin redirigir.
+  trailingSlash: 'ignore',
   adapter: cloudflare({
     platformProxy: {
       enabled: true,
