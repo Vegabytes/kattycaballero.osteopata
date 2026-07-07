@@ -19,7 +19,7 @@ const count = reviews.length;
 ---
 
 <div class={`trust-signal ${compact ? 'trust-signal--compact' : ''}`}>
-  <a href="/opiniones" class="trust-stars" aria-label={`${averageRating} de 5 estrellas — ${count} reseñas`}>
+  <a href="/opiniones/" class="trust-stars" aria-label={`${averageRating} de 5 estrellas — ${count} reseñas`}>
     <span class="trust-stars-row" aria-hidden="true">
       {Array.from({ length: 5 }).map(() => (
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">

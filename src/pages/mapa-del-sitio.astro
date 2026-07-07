@@ -132,7 +132,7 @@ const breadcrumbs = [
         <section class="sitemap-section">
           <h2>Blog</h2>
           <ul>
-            <li><a href="/blog">Todos los artículos</a></li>
+            <li><a href="/blog/">Todos los artículos</a></li>
             {sortedPosts.map(post => (
               <li><a href={`/blog/${post.slug}/`}>{post.data.title}</a></li>
             ))}
