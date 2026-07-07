@@ -52,12 +52,12 @@ Es ideal cuando el dolor es recurrente, no sabes qué lo causa, o los masajes te
 Elige masaje cuando:
 
 - **Tienes una contractura localizada** que sabes de qué viene (mala postura, deporte, estrés)
-- **Quieres desconectar y relajarte**: un [masaje corporal con aceites](/servicios/masaje-corporal-alpedrete) es perfecto
-- **Acabas de entrenar fuerte** y necesitas recuperar: el [masaje deportivo](/servicios/masaje-deportivo-alpedrete) está diseñado para esto
-- **Buscas una experiencia sensorial**: el [masaje tailandés](/servicios/masaje-tailandes-alpedrete) o las [pindas herbales](/servicios/masaje-pindas-herbales-alpedrete) son opciones fantásticas
-- **Estás embarazada** y quieres aliviar la sobrecarga: el [masaje prenatal](/servicios/masaje-embarazadas-alpedrete) es seguro y reconfortante
+- **Quieres desconectar y relajarte**: un [masaje corporal con aceites](/servicios/masaje-corporal-alpedrete/) es perfecto
+- **Acabas de entrenar fuerte** y necesitas recuperar: el [masaje deportivo](/servicios/masaje-deportivo-alpedrete/) está diseñado para esto
+- **Buscas una experiencia sensorial**: el [masaje tailandés](/servicios/masaje-tailandes-alpedrete/) o las [pindas herbales](/servicios/masaje-pindas-herbales-alpedrete/) son opciones fantásticas
+- **Estás embarazada** y quieres aliviar la sobrecarga: el [masaje prenatal](/servicios/masaje-embarazadas-alpedrete/) es seguro y reconfortante
 
-Si quieres saber más, lee nuestro artículo sobre los [beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico).
+Si quieres saber más, lee nuestro artículo sobre los [beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico/).
 
 ## ¿Cuándo elegir osteopatía?
 
@@ -71,13 +71,13 @@ Elige osteopatía cuando:
 - **Tras un accidente, caída o parto**: el cuerpo compensa y genera desequilibrios
 - **Problemas posturales** o escoliosis
 
-Para entender mejor la osteopatía, puedes leer sobre las [diferencias con la fisioterapia](/blog/diferencias-osteopatia-fisioterapia) o sobre la [osteopatía craneal](/blog/osteopatia-craneal-que-es).
+Para entender mejor la osteopatía, puedes leer sobre las [diferencias con la fisioterapia](/blog/diferencias-osteopatia-fisioterapia/) o sobre la [osteopatía craneal](/blog/osteopatia-craneal-que-es/).
 
 ## Casos reales de mi consulta
 
 ### "Me duele la espalda del trabajo"
 **Llegó pidiendo**: masaje relajante.
-**Lo que encontré**: bloqueo de la charnela dorsolumbar y restricción diafragmática por [estrés](/blog/estres-tension-muscular-cuerpo).
+**Lo que encontré**: bloqueo de la charnela dorsolumbar y restricción diafragmática por [estrés](/blog/estres-tension-muscular-cuerpo/).
 **Tratamiento**: una sesión de osteopatía + masaje de la zona. El dolor no volvió tras 3 sesiones.
 **Moraleja**: si el masaje te alivia pero el dolor vuelve en días, necesitas osteopatía.
 
@@ -101,10 +101,10 @@ La ventaja de acudir a un profesional que domina ambas disciplinas es que puedes
 
 ## ¿Todavía no sabes qué elegir?
 
-Prueba nuestro [test de tratamiento](/test-tratamiento): en 5 preguntas te recomendamos el mejor servicio para tu caso. También puedes usar la herramienta [¿dónde te duele?](/donde-te-duele) para identificar qué tratamiento se adapta mejor a tu zona de molestia.
+Prueba nuestro [test de tratamiento](/test-tratamiento/): en 5 preguntas te recomendamos el mejor servicio para tu caso. También puedes usar la herramienta [¿dónde te duele?](/donde-te-duele/) para identificar qué tratamiento se adapta mejor a tu zona de molestia.
 
 ## Masaje y osteopatía en la Sierra de Madrid
 
-Si vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba), [Torrelodones](/osteopata-torrelodones), [Guadarrama](/osteopata-guadarrama) o alrededores, puedo ayudarte a decidir y tratarte. Consulta todos mis [servicios](/servicios) o **[reserva tu cita](/reservar)**.
+Si vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba/), [Torrelodones](/osteopata-torrelodones/), [Guadarrama](/osteopata-guadarrama/) o alrededores, puedo ayudarte a decidir y tratarte. Consulta todos mis [servicios](/servicios/) o **[reserva tu cita](/reservar/)**.
 
-**Te puede interesar:** [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico) · [Osteopatía para deportistas](/blog/osteopatia-para-deportistas)
+**Te puede interesar:** [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico/) · [Osteopatía para deportistas](/blog/osteopatia-para-deportistas/)

@@ -34,7 +34,7 @@ Tipo de dolor muy específico:
 - **Si paras y caminas, desaparece** (después vuelve si retomas la carrera).
 - **Punzada eléctrica** más que dolor sordo.
 
-Si tu dolor es así, casi seguro es banda iliotibial. Si es otro tipo de dolor de rodilla, lee mi artículo de [dolor de cadera al caminar](/blog/dolor-cadera-al-caminar) o pide valoración.
+Si tu dolor es así, casi seguro es banda iliotibial. Si es otro tipo de dolor de rodilla, lee mi artículo de [dolor de cadera al caminar](/blog/dolor-cadera-al-caminar/) o pide valoración.
 
 ## Errores de entrenamiento que lo provocan
 
@@ -57,7 +57,7 @@ Cuando un runner llega con esta lesión, la sesión incluye:
 5. **Tratamiento de la propia banda**: técnicas miofasciales lentas (NO foam roller agresivo en fase aguda — empeora).
 6. **Trabajo articular de rodilla, cadera y sacroilíaca** si hay disfunciones.
 
-El [masaje deportivo](/servicios/masaje-deportivo-alpedrete) regular durante la fase de recuperación acelera mucho. Suelo recomendar 1-2 sesiones por semana las primeras 2-3 semanas.
+El [masaje deportivo](/servicios/masaje-deportivo-alpedrete/) regular durante la fase de recuperación acelera mucho. Suelo recomendar 1-2 sesiones por semana las primeras 2-3 semanas.
 
 ## Plan de recuperación realista
 
@@ -103,4 +103,4 @@ Si estás en fase aguda (dolor al correr cualquier distancia):
 
 Si eres runner de la Sierra y tienes este patrón, una valoración inicial suele orientar bien el plan. Trabajo con muchos corredores locales y entendemos las exigencias específicas del trail en nuestra zona.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [recuperación deportiva](/blog/recuperacion-deportiva-sierra-madrid) y [estiramientos para corredores de montaña](/blog/estiramientos-corredores-montana).
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [recuperación deportiva](/blog/recuperacion-deportiva-sierra-madrid/) y [estiramientos para corredores de montaña](/blog/estiramientos-corredores-montana/).

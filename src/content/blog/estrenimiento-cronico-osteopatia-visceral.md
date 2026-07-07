@@ -115,4 +115,4 @@ Resultados realistas: 60-70% de los pacientes notan mejoría clara con tratamien
 
 Si llevas tiempo con estreñimiento que no acaba de responder a fibra y agua, una valoración suele orientar bien. Especialmente útil si tienes cirugías abdominales previas o estrés crónico de fondo.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es/). Consulta en Alpedrete, Sierra de Guadarrama.

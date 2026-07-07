@@ -110,4 +110,4 @@ Por eso una valoración inicial completa es importante: el psoas suele ser parte
 
 Si te identificas con varios de los síntomas del psoas y llevas tiempo con lumbalgia que no acaba de irse, una sesión de tratamiento específico puede aportar mucho.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). Más sobre [dolor de espalda por teletrabajo](/blog/dolor-espalda-teletrabajo) y [diafragma y respiración](/blog/diafragma-respiracion-osteopatia). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). Más sobre [dolor de espalda por teletrabajo](/blog/dolor-espalda-teletrabajo/) y [diafragma y respiración](/blog/diafragma-respiracion-osteopatia/). Consulta en Alpedrete, Sierra de Guadarrama.

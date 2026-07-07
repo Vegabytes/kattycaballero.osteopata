@@ -65,7 +65,7 @@ Mi rutina recomendada (en serio: ponla en una alarma):
   - Estiramiento de pectoral en el marco de una puerta (20 segundos por lado)
   - Cat-cow sentado: arquea y redondea la espalda 8 veces
 
-Tienes más estiramientos en la [guía de estiramientos por zona](/guia-estiramientos) que tengo publicada en la web.
+Tienes más estiramientos en la [guía de estiramientos por zona](/guia-estiramientos/) que tengo publicada en la web.
 
 ## Errores típicos que veo a diario en consulta
 
@@ -75,16 +75,16 @@ Tienes más estiramientos en la [guía de estiramientos por zona](/guia-estirami
 4. **Cruzar las piernas o sentarse sobre una pierna**: descompensa la pelvis y la lumbar.
 5. **Trabajar con el aire del aire acondicionado directo al cuello**: las contracturas cervicales por frío son más frecuentes de lo que parece.
 
-Si te ves reflejado en varios de estos puntos y ya tienes dolor crónico, una sesión de [osteopatía](/servicios/osteopatia-alpedrete) puede ayudar a deshacer las tensiones acumuladas, pero el origen está en el setup ergonómico. Si no lo arreglas, el dolor vuelve.
+Si te ves reflejado en varios de estos puntos y ya tienes dolor crónico, una sesión de [osteopatía](/servicios/osteopatia-alpedrete/) puede ayudar a deshacer las tensiones acumuladas, pero el origen está en el setup ergonómico. Si no lo arreglas, el dolor vuelve.
 
 ## ¿Cuándo acudir a un osteópata?
 
 Si llevas semanas o meses con dolor cervical, lumbar, cefaleas tensionales o adormecimiento de manos relacionado con tu trabajo de oficina, vale la pena una valoración. La osteopatía trata el origen del problema, no solo el síntoma: revisa la movilidad de las vértebras, la tensión muscular, la postura global y los hábitos.
 
-En mi consulta atiendo cada semana a personas con [dolor de espalda por teletrabajo](/blog/dolor-espalda-teletrabajo) y veo mejorías claras cuando combinamos el tratamiento manual con ajustes ergonómicos como los de esta guía.
+En mi consulta atiendo cada semana a personas con [dolor de espalda por teletrabajo](/blog/dolor-espalda-teletrabajo/) y veo mejorías claras cuando combinamos el tratamiento manual con ajustes ergonómicos como los de esta guía.
 
 ## ¿Te puedo ayudar?
 
-Si te identificas con varios de los puntos de esta guía y ya tienes molestias frecuentes, escríbeme por WhatsApp al **643 961 065** o [reserva tu cita online](/reservar). Te valoro en una primera sesión y vemos qué necesitas: a veces es solo un par de sesiones para deshacer la tensión acumulada, otras veces hablamos de tus hábitos y ajustamos las dos cosas a la vez.
+Si te identificas con varios de los puntos de esta guía y ya tienes molestias frecuentes, escríbeme por WhatsApp al **643 961 065** o [reserva tu cita online](/reservar/). Te valoro en una primera sesión y vemos qué necesitas: a veces es solo un par de sesiones para deshacer la tensión acumulada, otras veces hablamos de tus hábitos y ajustamos las dos cosas a la vez.
 
 Mi consulta está en Alpedrete, en plena Sierra de Guadarrama, accesible desde Collado Villalba, Moralzarzal, Galapagar, Cercedilla, Navacerrada y toda la sierra.

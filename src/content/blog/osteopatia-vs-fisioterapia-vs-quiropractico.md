@@ -97,8 +97,8 @@ En mi consulta de Alpedrete, aplico un enfoque integral de osteopatía que inclu
 
 No compito con la fisioterapia: la complemento. Si detecto que necesitas ejercicio terapéutico o rehabilitación específica, te lo recomendaré. Mi objetivo es que te encuentres mejor, no retenerte como paciente.
 
-Si tienes dudas sobre qué profesional necesitas, puedes [contactarme](/contacto) sin compromiso. Te orientaré con honestidad sobre si la osteopatía es lo más adecuado para tu caso o si es mejor que acudas a otro profesional.
+Si tienes dudas sobre qué profesional necesitas, puedes [contactarme](/contacto/) sin compromiso. Te orientaré con honestidad sobre si la osteopatía es lo más adecuado para tu caso o si es mejor que acudas a otro profesional.
 
 ---
 
-*¿Quieres saber más sobre la [osteopatía en Alpedrete](/servicios/osteopatia-alpedrete)? Consulta nuestros servicios o [reserva tu primera cita](/reservar).*
+*¿Quieres saber más sobre la [osteopatía en Alpedrete](/servicios/osteopatia-alpedrete/)? Consulta nuestros servicios o [reserva tu primera cita](/reservar/).*

@@ -118,4 +118,4 @@ En mi experiencia con pacientes adultos con escoliosis:
 
 Si tienes escoliosis y quieres una valoración honesta sobre qué puede aportar el tratamiento manual a tu caso, lo coordinamos. Trabajo conjuntamente con traumatólogo o fisioterapeuta especializado si hace falta.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [test de postura](/test-postura) en la web. Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [test de postura](/test-postura/) en la web. Consulta en Alpedrete, Sierra de Guadarrama.

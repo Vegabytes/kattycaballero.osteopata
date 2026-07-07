@@ -55,7 +55,7 @@ Es una rigidez progresiva del hombro que limita enormemente el movimiento. Más 
 
 Muchas veces el dolor de hombro no viene del hombro, sino del cuello. Las vértebras cervicales pueden irradiar dolor hacia el hombro y el brazo.
 
-**Pista:** Si el dolor va acompañado de hormigueo en los dedos o dolor cervical, probablemente el origen esté en el cuello. Puedes leer más en nuestro artículo sobre [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento).
+**Pista:** Si el dolor va acompañado de hormigueo en los dedos o dolor cervical, probablemente el origen esté en el cuello. Puedes leer más en nuestro artículo sobre [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento/).
 
 ### 5. Síndrome del hombro de oficina
 
@@ -121,8 +121,8 @@ Busca atención médica urgente si:
 
 ## Tratamiento del dolor de hombro en la Sierra de Madrid
 
-Si sufres dolor de hombro y vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba), [Moralzarzal](/osteopata-moralzarzal), [Galapagar](/osteopata-galapagar) o cualquier zona de la Sierra de Guadarrama, puedo ayudarte a identificar la causa y tratarla de forma efectiva con nuestro [servicio de osteopatía en Alpedrete](/servicios/osteopatia-alpedrete).
+Si sufres dolor de hombro y vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba/), [Moralzarzal](/osteopata-moralzarzal/), [Galapagar](/osteopata-galapagar/) o cualquier zona de la Sierra de Guadarrama, puedo ayudarte a identificar la causa y tratarla de forma efectiva con nuestro [servicio de osteopatía en Alpedrete](/servicios/osteopatia-alpedrete/).
 
-Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y recupera la movilidad de tu hombro.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios/) o **[reserva tu cita](/reservar/)** y recupera la movilidad de tu hombro.
 
-**Te puede interesar:** [Osteopatía para deportistas: prevención y recuperación](/blog/osteopatia-para-deportistas) · [Cómo el estrés genera tensión muscular](/blog/estres-tension-muscular-cuerpo)
+**Te puede interesar:** [Osteopatía para deportistas: prevención y recuperación](/blog/osteopatia-para-deportistas/) · [Cómo el estrés genera tensión muscular](/blog/estres-tension-muscular-cuerpo/)

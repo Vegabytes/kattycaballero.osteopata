@@ -118,4 +118,4 @@ Si pasados 10-14 días sigues fatigado y desmotivado, posible **fatiga post-mara
 
 Si has hecho maratón recientemente o lo vas a hacer y quieres planificar la recuperación, lo coordinamos. Sesión post-maratón + plan de retorno a entrenamiento.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [masaje deportivo](/servicios/masaje-deportivo-alpedrete) y [osteopatía para deportistas](/osteopatia-deportistas). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [masaje deportivo](/servicios/masaje-deportivo-alpedrete/) y [osteopatía para deportistas](/osteopatia-deportistas/). Consulta en Alpedrete, Sierra de Guadarrama.

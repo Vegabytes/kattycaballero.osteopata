@@ -98,4 +98,4 @@ En muchos casos, la osteopatía puede evitar o retrasar la cirugía. En mi exper
 
 ---
 
-*¿Sufres hormigueo en las manos? Te puedo ayudar a identificar el origen real del problema. [Reserva tu cita](/reservar) en Alpedrete o consúltame por [WhatsApp](https://wa.me/34643961065).*
+*¿Sufres hormigueo en las manos? Te puedo ayudar a identificar el origen real del problema. [Reserva tu cita](/reservar/) en Alpedrete o consúltame por [WhatsApp](https://wa.me/34643961065).*

@@ -118,7 +118,7 @@ const { hideHeader = false } = Astro.props;
 
     <div class="services-grid">
       {services.map(service => (
-        <a href={`/servicios/${service.slug}`} class="service-card-link">
+        <a href={`/servicios/${service.slug}/`} class="service-card-link">
           <div class="service-card" id={service.id} class:list={[{ featured: service.featured }]}>
             {service.featured && <span class="featured-badge">Más popular</span>}
             <div class="service-image">

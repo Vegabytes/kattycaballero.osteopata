@@ -55,7 +55,7 @@ Aquí es importante: trabajo el suelo pélvico desde el exterior (sacro, pelvis,
 
 ### Cefaleas y migrañas
 
-Si las cefaleas tensionales aumentan en frecuencia con la menopausia (es común), el trabajo cervical-cráneo-mandibular suele ayudar. Tienes más detalle en [cefaleas tensionales](/blog/cefaleas-tensionales-ejercicios-tratamiento).
+Si las cefaleas tensionales aumentan en frecuencia con la menopausia (es común), el trabajo cervical-cráneo-mandibular suele ayudar. Tienes más detalle en [cefaleas tensionales](/blog/cefaleas-tensionales-ejercicios-tratamiento/).
 
 ## Trabajo sobre pelvis, diafragma y sistema visceral
 
@@ -96,4 +96,4 @@ Algunas pacientes con menos síntomas necesitan menos sesiones. Otras con cuadro
 
 Si estás en peri-menopausia o menopausia y los síntomas físicos te limitan la calidad de vida, una valoración suele orientar bien. No prometo eliminar todos los síntomas, pero la mayoría de mis pacientes notan mejoría en dolor, sueño y bienestar general.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). Mi consulta está en Alpedrete, en plena Sierra de Guadarrama. También sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es).
+Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). Mi consulta está en Alpedrete, en plena Sierra de Guadarrama. También sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es/).

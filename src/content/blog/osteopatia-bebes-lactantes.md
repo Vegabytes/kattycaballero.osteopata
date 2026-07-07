@@ -111,4 +111,4 @@ Si vienes esperando un milagro, te van a fallar las expectativas. Si vienes a co
 
 Si tienes un bebé con plagiocefalia, cólico difícil de manejar o dificultades de lactancia con componente mecánico, una valoración inicial sin compromiso puede orientarte.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [osteopatía infantil](/blog/osteopatia-infantil-beneficios) en otro artículo. Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [osteopatía infantil](/blog/osteopatia-infantil-beneficios/) en otro artículo. Consulta en Alpedrete, Sierra de Guadarrama.

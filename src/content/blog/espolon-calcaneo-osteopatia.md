@@ -37,7 +37,7 @@ Son cosas distintas que se confunden:
 
 A menudo coexisten, pero pueden aparecer por separado. El espolón es un signo de que ha habido tracción crónica; la fascitis es la fase aguda.
 
-Tengo otro artículo más detallado sobre [fascitis plantar](/blog/fascitis-plantar-causas-tratamiento) si tu dolor encaja más con eso.
+Tengo otro artículo más detallado sobre [fascitis plantar](/blog/fascitis-plantar-causas-tratamiento/) si tu dolor encaja más con eso.
 
 ## Por qué duele aunque tengas el espolón hace años sin doler
 
@@ -104,4 +104,4 @@ Acude al médico si:
 
 Si llevas tiempo con dolor de talón que no acaba de irse, una valoración suele orientar bien. En consulta no atacamos al espolón en sí, sino a las causas reales del dolor: fascia, gemelos, biomecánica.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [fascitis plantar](/blog/fascitis-plantar-causas-tratamiento). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [fascitis plantar](/blog/fascitis-plantar-causas-tratamiento/). Consulta en Alpedrete, Sierra de Guadarrama.

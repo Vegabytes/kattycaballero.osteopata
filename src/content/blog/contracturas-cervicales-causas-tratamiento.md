@@ -64,7 +64,7 @@ En mi consulta, abordo las contracturas cervicales de forma integral:
 
 3. **Técnicas articulatorias**: Para recuperar la movilidad de las vértebras cervicales.
 
-4. **[Técnicas craneales](/blog/osteopatia-craneal-que-es)**: Muy útiles cuando hay dolor de cabeza asociado.
+4. **[Técnicas craneales](/blog/osteopatia-craneal-que-es/)**: Muy útiles cuando hay dolor de cabeza asociado.
 
 5. **Estiramientos asistidos**: Para elongar los músculos acortados.
 
@@ -104,14 +104,14 @@ La mejor contractura es la que no aparece. Algunos consejos:
 - **Descansos activos**: Mueve el cuello cada hora si trabajas sentado
 - **Buena higiene del sueño**: Elige una almohada adecuada a tu posición de dormir
 - **Limita el uso del móvil**: O úsalo a la altura de los ojos
-- **Sesiones de mantenimiento**: Un [masaje corporal](/servicios/masaje-corporal-alpedrete) mensual puede prevenir muchos problemas
+- **Sesiones de mantenimiento**: Un [masaje corporal](/servicios/masaje-corporal-alpedrete/) mensual puede prevenir muchos problemas
 
 ## Mi enfoque en Alpedrete
 
 En mi consulta de la Sierra de Madrid, trato las contracturas cervicales con un enfoque personalizado. No me limito a la zona que duele, sino que busco la causa del problema para que no vuelva a aparecer.
 
-Si vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba), [Moralzarzal](/osteopata-moralzarzal), [Galapagar](/osteopata-galapagar) o cualquier pueblo de la Sierra de Guadarrama y sufres de contracturas cervicales, puedo ayudarte con nuestro [tratamiento de osteopatía](/servicios/osteopatia-alpedrete).
+Si vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba/), [Moralzarzal](/osteopata-moralzarzal/), [Galapagar](/osteopata-galapagar/) o cualquier pueblo de la Sierra de Guadarrama y sufres de contracturas cervicales, puedo ayudarte con nuestro [tratamiento de osteopatía](/servicios/osteopatia-alpedrete/).
 
-Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu cita](/reservar)** y empieza a sentirte mejor.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios/) o **[reserva tu cita](/reservar/)** y empieza a sentirte mejor.
 
-**Te puede interesar:** [Dolor de hombro: causas y tratamiento](/blog/dolor-hombro-causas-tratamiento) · [Cómo el estrés afecta a tu cuerpo](/blog/estres-tension-muscular-cuerpo)
+**Te puede interesar:** [Dolor de hombro: causas y tratamiento](/blog/dolor-hombro-causas-tratamiento/) · [Cómo el estrés afecta a tu cuerpo](/blog/estres-tension-muscular-cuerpo/)

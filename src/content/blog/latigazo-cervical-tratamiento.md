@@ -110,4 +110,4 @@ A partir de la semana 2:
 
 Si has tenido un accidente recientemente y quieres una valoración honesta, lo coordinamos. Si llevas tiempo con secuelas y quieres explorar tratamiento, también. La clave del latigazo cervical es empezar pronto pero con suavidad.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [dolor cervical](/dolor-cervical) y [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [dolor cervical](/dolor-cervical/) y [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento/). Consulta en Alpedrete, Sierra de Guadarrama.

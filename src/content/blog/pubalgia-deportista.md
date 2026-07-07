@@ -107,4 +107,4 @@ Saltarse fases es la causa principal de recaídas. Es un proceso lento pero efec
 
 Si llevas semanas con dolor inguinal o en el pubis al hacer deporte, una valoración honesta puede ahorrarte meses de tratamientos parciales. Trabajo coordinadamente con tu preparador físico si lo tienes.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). Más sobre [osteopatía para deportistas](/osteopatia-deportistas) y [masaje deportivo](/servicios/masaje-deportivo-alpedrete).
+Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). Más sobre [osteopatía para deportistas](/osteopatia-deportistas/) y [masaje deportivo](/servicios/masaje-deportivo-alpedrete/).

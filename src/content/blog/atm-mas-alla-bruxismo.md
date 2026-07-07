@@ -36,7 +36,7 @@ La conexión ATM-vestibular es real. Disfunciones de la mandíbula pueden genera
 
 ### Cefaleas tensionales y migrañas frecuentes
 
-El músculo temporal, uno de los músculos masticatorios, se inserta en el cráneo. Cuando está crónicamente contracturado por bruxismo o por una mordida inestable, puede generar cefaleas que parecen migrañas pero responden a tratamiento manual de la mandíbula. He hablado más de esto en mi artículo de [cefaleas tensionales](/blog/cefaleas-tensionales-ejercicios-tratamiento).
+El músculo temporal, uno de los músculos masticatorios, se inserta en el cráneo. Cuando está crónicamente contracturado por bruxismo o por una mordida inestable, puede generar cefaleas que parecen migrañas pero responden a tratamiento manual de la mandíbula. He hablado más de esto en mi artículo de [cefaleas tensionales](/blog/cefaleas-tensionales-ejercicios-tratamiento/).
 
 ### Dolor cervical alto persistente
 
@@ -80,7 +80,7 @@ Si tu dentista te ha puesto una férula pero el dolor persiste, el trabajo manua
 
 - **No mastiques chicle**. Es uno de los peores hábitos para una ATM sensible.
 - **No abras la boca exageradamente** (bostezos enormes, morder un bocadillo entero). Si vas a bostezar, pon un puño suave bajo la barbilla para limitar el rango.
-- **Vigila tu postura al teclear**: cabeza adelantada → cervical alta tensa → ATM tensa. Cierra el círculo. Mira mi guía de [postura correcta delante del ordenador](/blog/postura-correcta-ordenador-teletrabajo).
+- **Vigila tu postura al teclear**: cabeza adelantada → cervical alta tensa → ATM tensa. Cierra el círculo. Mira mi guía de [postura correcta delante del ordenador](/blog/postura-correcta-ordenador-teletrabajo/).
 - **Compresas calientes** sobre los maseteros 10 minutos antes de dormir si tienes bruxismo.
 - **Ejercicio suave de movilidad mandibular**: abrir-cerrar lentamente, lateralizaciones, llevar la lengua al paladar mientras abres y cierras.
 
@@ -101,4 +101,4 @@ Si tienes síntomas que sospechas que pueden ser de ATM (clics, dolor mandibular
 
 En mi consulta combino tratamiento manual ATM con trabajo cervical y postural. Suelo coordinarme con dentistas cuando hace falta.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). Mi consulta está en Alpedrete, accesible desde toda la Sierra de Guadarrama. También puedes ver más detalle en mi página dedicada a [bruxismo y dolor de mandíbula](/bruxismo-atm).
+Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). Mi consulta está en Alpedrete, accesible desde toda la Sierra de Guadarrama. También puedes ver más detalle en mi página dedicada a [bruxismo y dolor de mandíbula](/bruxismo-atm/).

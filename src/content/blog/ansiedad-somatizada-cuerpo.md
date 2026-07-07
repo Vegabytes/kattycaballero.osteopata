@@ -22,7 +22,7 @@ El problema no es que esto pase. El problema es que en muchas personas, esta act
 
 En la consulta veo patrones muy claros. Estas son las zonas físicas donde la ansiedad suele "almacenarse":
 
-1. **Mandíbula y ATM**: bruxismo nocturno, dolor al masticar, chasquidos. Mira mi artículo sobre [bruxismo y osteopatía](/blog/bruxismo-dolor-mandibula-osteopatia).
+1. **Mandíbula y ATM**: bruxismo nocturno, dolor al masticar, chasquidos. Mira mi artículo sobre [bruxismo y osteopatía](/blog/bruxismo-dolor-mandibula-osteopatia/).
 2. **Cuello y trapecio**: contracturas crónicas que no acaban de mejorar con masaje solo.
 3. **Diafragma**: respiración superficial torácica, sensación de "no llegar el aire", suspiros frecuentes.
 4. **Estómago y plexo solar**: digestiones lentas, nudo en el estómago, reflujo, intestino irritable.
@@ -95,6 +95,6 @@ Esto activa directamente el sistema parasimpático y, hecho durante 2-3 semanas,
 
 ## ¿Te puedo ayudar?
 
-Si reconoces tu cuerpo en este artículo y quieres explorar si la osteopatía o el masaje pueden ser parte de tu tratamiento, escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). En la primera sesión hablamos con calma de lo que te pasa y vemos qué encaja para ti.
+Si reconoces tu cuerpo en este artículo y quieres explorar si la osteopatía o el masaje pueden ser parte de tu tratamiento, escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). En la primera sesión hablamos con calma de lo que te pasa y vemos qué encaja para ti.
 
 Mi consulta está en Alpedrete, en plena Sierra de Guadarrama. El propio entorno —tranquilo, lejos del ruido urbano— forma parte del tratamiento.

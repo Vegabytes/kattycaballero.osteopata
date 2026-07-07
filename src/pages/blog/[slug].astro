@@ -70,48 +70,48 @@ const relatedPosts = allPosts
 // Map blog categories to related service pages
 const categoryServiceMap: Record<string, { url: string; name: string }[]> = {
   "Osteopatía": [
-    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía estructural, visceral y craneal" },
+    { url: "/servicios/osteopatia-alpedrete/", name: "Osteopatía estructural, visceral y craneal" },
   ],
   "Masajes": [
-    { url: "/servicios/masaje-corporal-alpedrete", name: "Masaje corporal con aceite" },
-    { url: "/servicios/masaje-tailandes-alpedrete", name: "Masaje tradicional tailandés" },
+    { url: "/servicios/masaje-corporal-alpedrete/", name: "Masaje corporal con aceite" },
+    { url: "/servicios/masaje-tailandes-alpedrete/", name: "Masaje tradicional tailandés" },
   ],
   "Deporte": [
-    { url: "/servicios/masaje-deportivo-alpedrete", name: "Masaje deportivo" },
-    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía para deportistas" },
+    { url: "/servicios/masaje-deportivo-alpedrete/", name: "Masaje deportivo" },
+    { url: "/servicios/osteopatia-alpedrete/", name: "Osteopatía para deportistas" },
   ],
   "Dolor de espalda": [
-    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía estructural, visceral y craneal" },
+    { url: "/servicios/osteopatia-alpedrete/", name: "Osteopatía estructural, visceral y craneal" },
   ],
   "Bienestar": [
-    { url: "/servicios/masaje-corporal-alpedrete", name: "Masaje corporal con aceite" },
-    { url: "/servicios/masaje-tailandes-alpedrete", name: "Masaje tradicional tailandés" },
+    { url: "/servicios/masaje-corporal-alpedrete/", name: "Masaje corporal con aceite" },
+    { url: "/servicios/masaje-tailandes-alpedrete/", name: "Masaje tradicional tailandés" },
   ],
   "Consejos": [
-    { url: "/servicios", name: "Ver todos nuestros servicios" },
+    { url: "/servicios/", name: "Ver todos nuestros servicios" },
   ],
   "Ejercicios": [
-    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía estructural, visceral y craneal" },
-    { url: "/guia-estiramientos", name: "Guía de estiramientos" },
+    { url: "/servicios/osteopatia-alpedrete/", name: "Osteopatía estructural, visceral y craneal" },
+    { url: "/guia-estiramientos/", name: "Guía de estiramientos" },
   ],
   "Lesiones": [
-    { url: "/servicios/osteopatia-alpedrete", name: "Osteopatía estructural, visceral y craneal" },
-    { url: "/servicios/masaje-deportivo-alpedrete", name: "Masaje deportivo" },
+    { url: "/servicios/osteopatia-alpedrete/", name: "Osteopatía estructural, visceral y craneal" },
+    { url: "/servicios/masaje-deportivo-alpedrete/", name: "Masaje deportivo" },
   ],
 };
-const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/servicios", name: "Ver todos nuestros servicios" }];
+const relatedServices = categoryServiceMap[post.data.category] || [{ url: "/servicios/", name: "Ver todos nuestros servicios" }];
 
 // Map categories to booking pre-selection
 const categoryBookingMap: Record<string, string> = {
-  "Osteopatía": "/reservar?servicio=Osteopat%C3%ADa",
-  "Dolor de espalda": "/reservar?servicio=Osteopat%C3%ADa",
-  "Lesiones": "/reservar?servicio=Osteopat%C3%ADa",
-  "Ejercicios": "/reservar?servicio=Osteopat%C3%ADa",
-  "Deporte": "/reservar?servicio=Masaje%20deportivo",
-  "Masajes": "/reservar?servicio=Masaje%20corporal",
-  "Bienestar": "/reservar?servicio=Masaje%20corporal",
+  "Osteopatía": "/reservar/?servicio=Osteopat%C3%ADa",
+  "Dolor de espalda": "/reservar/?servicio=Osteopat%C3%ADa",
+  "Lesiones": "/reservar/?servicio=Osteopat%C3%ADa",
+  "Ejercicios": "/reservar/?servicio=Osteopat%C3%ADa",
+  "Deporte": "/reservar/?servicio=Masaje%20deportivo",
+  "Masajes": "/reservar/?servicio=Masaje%20corporal",
+  "Bienestar": "/reservar/?servicio=Masaje%20corporal",
 };
-const bookingUrl = categoryBookingMap[post.data.category] || "/reservar";
+const bookingUrl = categoryBookingMap[post.data.category] || "/reservar/";
 ---
 
 <Layout
@@ -122,7 +122,7 @@ const bookingUrl = categoryBookingMap[post.data.category] || "/reservar";
   publishedDate={post.data.date.toISOString()}
   breadcrumbs={[
     { name: "Inicio", url: "/" },
-    { name: "Blog", url: "/blog" },
+    { name: "Blog", url: "/blog/" },
     { name: post.data.title }
   ]}
 >
@@ -369,12 +369,12 @@ const bookingUrl = categoryBookingMap[post.data.category] || "/reservar";
         <div class="related-grid">
           {relatedPosts.map(relatedPost => (
             <article class="related-card">
-              <a href={`/blog/${relatedPost.slug}`}>
+              <a href={`/blog/${relatedPost.slug}/`}>
                 <img src={relatedPost.data.image} alt={relatedPost.data.title} width="400" height="180" loading="lazy" />
               </a>
               <div class="related-content">
                 <span class="related-tag">{relatedPost.data.category}</span>
-                <h3><a href={`/blog/${relatedPost.slug}`}>{relatedPost.data.title}</a></h3>
+                <h3><a href={`/blog/${relatedPost.slug}/`}>{relatedPost.data.title}</a></h3>
               </div>
             </article>
           ))}

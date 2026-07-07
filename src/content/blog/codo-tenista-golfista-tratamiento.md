@@ -89,4 +89,4 @@ Si el dolor no mejora en 6-8 semanas con tratamiento conservador correcto, vale 
 
 Si tienes dolor en el codo que llevas más de 4-6 semanas, vale la pena una valoración. En consulta evalúo el codo en su contexto (cervical, hombro, gestos repetitivos del trabajo), trato manualmente lo que esté implicado, y te enseño los ejercicios excéntricos correctos (la técnica importa mucho).
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre tratamiento deportivo en [osteopatía para deportistas](/osteopatia-deportistas) y [masaje deportivo](/servicios/masaje-deportivo-alpedrete).
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre tratamiento deportivo en [osteopatía para deportistas](/osteopatia-deportistas/) y [masaje deportivo](/servicios/masaje-deportivo-alpedrete/).

@@ -33,7 +33,7 @@ const posts = [
     <p class="locality-blog-subtitle">Artículos prácticos del blog que pueden ayudarte mientras decides si reservar.</p>
     <div class="locality-blog-grid">
       {posts.map(p => (
-        <a href={`/blog/${p.slug}`} class="locality-blog-card">
+        <a href={`/blog/${p.slug}/`} class="locality-blog-card">
           <h3>{p.title}</h3>
           <p>{p.excerpt}</p>
           <span class="locality-blog-link">Leer artículo →</span>

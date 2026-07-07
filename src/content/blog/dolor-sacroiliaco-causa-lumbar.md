@@ -82,4 +82,4 @@ La mejoría suele empezar en 1-3 sesiones. Si después de 4-6 sesiones bien diri
 
 Si llevas tiempo con dolor lumbar bajo que no acaba de responder y sospechas que puede ser sacroilíaca, una valoración suele aclararlo en una sola sesión. Si lo es, el tratamiento suele ser efectivo en pocas sesiones.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). Más sobre [dolor de espalda](/dolor-de-espalda) y [hernia discal](/blog/hernia-discal-osteopatia-tratamiento). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). Más sobre [dolor de espalda](/dolor-de-espalda/) y [hernia discal](/blog/hernia-discal-osteopatia-tratamiento/). Consulta en Alpedrete, Sierra de Guadarrama.

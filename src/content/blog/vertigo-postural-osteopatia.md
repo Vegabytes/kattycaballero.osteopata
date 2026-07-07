@@ -95,7 +95,7 @@ Estos pueden ser vértigos centrales (cerebrales) que requieren atención urgent
 Algunas personas tienen episodios recurrentes de "vértigo" o "mareo" sin diagnóstico claro. En estos casos:
 
 - **Visita a otorrino** primero para descartar VPPB, Menière, neuritis vestibular.
-- **Si todo sale normal**, valorar componente cervicogénico (mira mi artículo de [mareos cervicogénicos](/blog/mareos-cervicogenicos-cuello)).
+- **Si todo sale normal**, valorar componente cervicogénico (mira mi artículo de [mareos cervicogénicos](/blog/mareos-cervicogenicos-cuello/)).
 - **A veces es migraña vestibular**: tratamiento neurológico.
 - **A veces, mareo psicógeno**: relacionado con ansiedad o trauma.
 
@@ -103,4 +103,4 @@ Algunas personas tienen episodios recurrentes de "vértigo" o "mareo" sin diagn�
 
 Si tienes vértigo posicional típico y quieres tratamiento sin medicación, o si tienes vértigo crónico que sospechas que puede tener componente cervical, una valoración suele aclarar el caso.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [mareos cervicogénicos](/blog/mareos-cervicogenicos-cuello). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [mareos cervicogénicos](/blog/mareos-cervicogenicos-cuello/). Consulta en Alpedrete, Sierra de Guadarrama.

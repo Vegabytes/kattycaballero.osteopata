@@ -96,7 +96,7 @@ Este ejercicio es fundamental si trabajas sentado durante muchas horas al día.
 
 ## ¿Cuándo deberías visitar a un osteópata?
 
-Estos ejercicios son un excelente complemento para cuidar tu espalda en el día a día. Sin embargo, hay situaciones en las que es importante acudir a un profesional de [osteopatía](/servicios/osteopatia-alpedrete):
+Estos ejercicios son un excelente complemento para cuidar tu espalda en el día a día. Sin embargo, hay situaciones en las que es importante acudir a un profesional de [osteopatía](/servicios/osteopatia-alpedrete/):
 
 - **El dolor persiste más de 2-3 semanas** a pesar de los ejercicios y el reposo
 - **Sientes dolor irradiado** hacia la pierna, el glúteo o el pie (posible ciática)

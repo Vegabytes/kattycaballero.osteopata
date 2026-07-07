@@ -48,13 +48,13 @@ Cuando aprietas los dientes, se activan los músculos maseteros y temporales con
 3. **A los hombros**: la tensión cervical se propaga al trapecio
 4. **A la espalda**: una mandíbula tensa puede alterar la postura de toda la columna
 
-Es habitual que pacientes con bruxismo tengan también [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento), dolor de cabeza frecuente y [tensión en los hombros](/blog/dolor-hombro-causas-tratamiento).
+Es habitual que pacientes con bruxismo tengan también [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento/), dolor de cabeza frecuente y [tensión en los hombros](/blog/dolor-hombro-causas-tratamiento/).
 
 ## Causas del bruxismo
 
 ### Estrés y ansiedad
 
-Es la causa principal. El [estrés crónico](/blog/estres-tension-muscular-cuerpo) mantiene el sistema nervioso en alerta y la mandíbula es una de las primeras zonas donde se acumula la tensión.
+Es la causa principal. El [estrés crónico](/blog/estres-tension-muscular-cuerpo/) mantiene el sistema nervioso en alerta y la mandíbula es una de las primeras zonas donde se acumula la tensión.
 
 ### Maloclusión dental
 
@@ -118,4 +118,4 @@ La cafeína y el alcohol pueden empeorar el bruxismo. Intenta reducir su consumo
 
 La férula que prescribe el dentista protege los dientes del desgaste, pero no trata la causa muscular. Por eso muchos pacientes usan férula y siguen con dolor. Lo ideal es combinar la férula (para proteger los dientes) con la osteopatía (para tratar la tensión muscular y las causas del bruxismo).
 
-Si crees que puedes tener bruxismo o tienes dolor de mandíbula, puedo ayudarte en mi [consulta de osteopatía en Alpedrete](/contacto). Muchos pacientes se sorprenden de lo rápido que mejoran con el tratamiento adecuado.
+Si crees que puedes tener bruxismo o tienes dolor de mandíbula, puedo ayudarte en mi [consulta de osteopatía en Alpedrete](/contacto/). Muchos pacientes se sorprenden de lo rápido que mejoran con el tratamiento adecuado.

@@ -31,7 +31,7 @@ El patrón es bastante característico:
 - **Bloqueo mecánico**: cuesta girar la cabeza hacia ese lado, a veces también inclinarla.
 - No hay antecedente de golpe, esfuerzo ni mal gesto — simplemente amaneces así.
 
-Si el dolor es distinto (irradia al brazo, hormigueo en los dedos, o lleva ya varios días), no es un tortícolis simple y conviene valorarlo — puede tratarse de un [pinzamiento cervical](/blog/pinzamiento-cervical-tratamiento).
+Si el dolor es distinto (irradia al brazo, hormigueo en los dedos, o lleva ya varios días), no es un tortícolis simple y conviene valorarlo — puede tratarse de un [pinzamiento cervical](/blog/pinzamiento-cervical-tratamiento/).
 
 ## Qué hacer en las primeras horas
 
@@ -65,4 +65,4 @@ Lo más simple: que el aire o el ventilador **no incidan directamente sobre el c
 
 Si te has despertado con el cuello bloqueado y no mejora en un par de días, no hace falta aguantar hasta que se pase solo — una sesión suele resolverlo rápido.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [postura y dolor cervical](/blog/pinzamiento-cervical-tratamiento).
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [postura y dolor cervical](/blog/pinzamiento-cervical-tratamiento/).

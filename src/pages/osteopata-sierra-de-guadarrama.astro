@@ -119,7 +119,7 @@ const faqSchema = {
       <h2>Servicios disponibles</h2>
       <div class="services-grid">
         {services.map(s => (
-          <a href={`/servicios/${s.slug}`} class="service-link-card">
+          <a href={`/servicios/${s.slug}/`} class="service-link-card">
             <h3>{s.title}</h3>
             <div class="service-link-meta">
               <span>{s.duration}</span>

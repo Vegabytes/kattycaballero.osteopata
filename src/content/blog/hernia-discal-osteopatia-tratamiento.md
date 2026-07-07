@@ -34,7 +34,7 @@ Con la edad, los discos pierden hidratación y elasticidad. Es un proceso normal
 
 - Levantar pesos de forma incorrecta (con la espalda en vez de con las piernas)
 - Movimientos repetitivos de flexión y rotación
-- [Estar sentado muchas horas](/blog/dolor-espalda-teletrabajo) con mala postura
+- [Estar sentado muchas horas](/blog/dolor-espalda-teletrabajo/) con mala postura
 - Vibraciones constantes (conductores profesionales)
 
 ### Factores de riesgo
@@ -51,7 +51,7 @@ Los síntomas dependen de la localización y de si comprime algún nervio:
 
 ### Hernia lumbar (la más común)
 
-- Dolor lumbar que puede irradiarse a glúteo y pierna ([ciática](/blog/ciatica-causas-tratamiento-osteopatia))
+- Dolor lumbar que puede irradiarse a glúteo y pierna ([ciática](/blog/ciatica-causas-tratamiento-osteopatia/))
 - Hormigueo o adormecimiento en la pierna o el pie
 - Debilidad muscular en la pierna afectada
 - Dolor que empeora al sentarse, toser o estornudar
@@ -60,7 +60,7 @@ Los síntomas dependen de la localización y de si comprime algún nervio:
 
 - Dolor de cuello que irradia al brazo
 - Hormigueo en dedos de la mano
-- [Contractura cervical](/blog/contracturas-cervicales-causas-tratamiento) persistente
+- [Contractura cervical](/blog/contracturas-cervicales-causas-tratamiento/) persistente
 - Dolor de cabeza en la base del cráneo
 
 ## Cómo aborda la osteopatía una hernia discal
@@ -118,4 +118,4 @@ Estos síntomas pueden indicar compresión nerviosa grave y requieren atención 
 - **Levanta peso con las piernas**: nunca con la espalda flexionada y rotada
 - **Mantén un peso saludable**: menos peso, menos carga para los discos
 
-Si tienes una hernia discal diagnosticada o sospechas que puedes tenerla, puedes consultar en mi [consulta de osteopatía en Alpedrete](/servicios). Valoraré tu caso y te diré con honestidad si puedo ayudarte o si necesitas otro tipo de atención.
+Si tienes una hernia discal diagnosticada o sospechas que puedes tenerla, puedes consultar en mi [consulta de osteopatía en Alpedrete](/servicios/). Valoraré tu caso y te diré con honestidad si puedo ayudarte o si necesitas otro tipo de atención.

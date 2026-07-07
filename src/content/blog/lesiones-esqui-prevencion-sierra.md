@@ -83,7 +83,7 @@ Aunque no te hayas caído, esquiar regularmente genera adaptaciones musculares q
 - **Lumbar**: descomprimir.
 - **Pies**: muchos tienen los pies machacados por las botas. Trabajo manual del arco plantar y de los huesos del tarso.
 
-Una sesión de [masaje deportivo](/servicios/masaje-deportivo-alpedrete) al final de la temporada es muy buena inversión. Y si has tenido caídas, una valoración osteopática completa.
+Una sesión de [masaje deportivo](/servicios/masaje-deportivo-alpedrete/) al final de la temporada es muy buena inversión. Y si has tenido caídas, una valoración osteopática completa.
 
 ## Estiramientos clave para esquiadores
 
@@ -104,4 +104,4 @@ Una sesión de [masaje deportivo](/servicios/masaje-deportivo-alpedrete) al fina
 
 Si has tenido una caída esquiando y quieres una valoración, o si esquías regularmente y quieres mantenimiento entre temporadas, mi consulta está en Alpedrete, a 12 minutos de Navacerrada y muy bien comunicada con Valdesquí.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [recuperación deportiva en la Sierra](/blog/recuperacion-deportiva-sierra-madrid) y [osteopatía para deportistas](/osteopatia-deportistas).
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [recuperación deportiva en la Sierra](/blog/recuperacion-deportiva-sierra-madrid/) y [osteopatía para deportistas](/osteopatia-deportistas/).

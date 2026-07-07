@@ -67,13 +67,13 @@ function formatDate(date: Date): string {
       <div class="blog-grid">
         {sortedPosts.map((post, index) => (
           <article class="blog-card" class:list={[{ featured: index === 0 }]} data-category={post.data.category} data-title={post.data.title.toLowerCase()} data-excerpt={post.data.excerpt.toLowerCase()}>
-            <a href={`/blog/${post.slug}`} class="blog-card-image-link">
+            <a href={`/blog/${post.slug}/`} class="blog-card-image-link">
               <img src={post.data.image} alt={post.data.title} class="blog-card-image" width="600" height="280" loading={index === 0 ? "eager" : "lazy"} />
             </a>
             <div class="blog-card-content">
               <span class="blog-card-tag">{post.data.category}</span>
               <h2>
-                <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
               </h2>
               <p>{post.data.excerpt}</p>
               <div class="blog-card-meta">
@@ -81,7 +81,7 @@ function formatDate(date: Date): string {
                 <span>•</span>
                 <span>{post.data.readTime ?? getReadingTime(post.body)} min de lectura</span>
               </div>
-              <a href={`/blog/${post.slug}`} class="blog-card-link">
+              <a href={`/blog/${post.slug}/`} class="blog-card-link">
                 Leer artículo
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
               </a>

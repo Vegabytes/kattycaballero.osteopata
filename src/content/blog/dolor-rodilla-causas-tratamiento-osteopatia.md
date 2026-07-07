@@ -105,4 +105,4 @@ No esperes a que el dolor se cronifique. Consulta si:
 - El dolor te impide hacer vida normal
 - Ya has probado reposo y no mejora
 
-En mi [consulta de osteopatía en Alpedrete](/servicios) valoro tu caso de forma individualizada y te propongo un plan de tratamiento adaptado a ti. Si no sabes si tu caso es para osteopatía, puedes hacer el [test de tratamiento](/test-tratamiento) o escribirme por WhatsApp sin compromiso.
+En mi [consulta de osteopatía en Alpedrete](/servicios/) valoro tu caso de forma individualizada y te propongo un plan de tratamiento adaptado a ti. Si no sabes si tu caso es para osteopatía, puedes hacer el [test de tratamiento](/test-tratamiento/) o escribirme por WhatsApp sin compromiso.

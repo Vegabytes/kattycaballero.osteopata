@@ -96,7 +96,7 @@ Analizo tu postura, tu forma de moverte y las demandas específicas de tu deport
 Combino diferentes técnicas según lo que necesites:
 
 - **Técnicas estructurales**: Para restaurar la movilidad articular
-- **[Masaje deportivo](/servicios/masaje-deportivo-alpedrete)**: Para liberar la musculatura sobrecargada
+- **[Masaje deportivo](/servicios/masaje-deportivo-alpedrete/)**: Para liberar la musculatura sobrecargada
 - **Técnicas de energía muscular**: Para reequilibrar cadenas musculares
 - **Vendaje neuromuscular**: Si es necesario
 
@@ -117,13 +117,13 @@ Depende de tu nivel de actividad:
 
 ## Deportistas de la Sierra de Madrid
 
-Si entrenas en la Sierra de Guadarrama, ya sea corriendo por el monte, en bici por las carreteras de la zona, o jugando al pádel en [Collado Villalba](/osteopata-collado-villalba), [Moralzarzal](/osteopata-moralzarzal) o [Galapagar](/osteopata-galapagar), en mi consulta de Alpedrete puedo ayudarte a:
+Si entrenas en la Sierra de Guadarrama, ya sea corriendo por el monte, en bici por las carreteras de la zona, o jugando al pádel en [Collado Villalba](/osteopata-collado-villalba/), [Moralzarzal](/osteopata-moralzarzal/) o [Galapagar](/osteopata-galapagar/), en mi consulta de Alpedrete puedo ayudarte a:
 
 - Prevenir lesiones
 - Mejorar tu rendimiento
 - Recuperarte más rápido
 - Tratar lesiones existentes
 
-Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu sesión](/reservar)** y lleva tu rendimiento al siguiente nivel.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios/) o **[reserva tu sesión](/reservar/)** y lleva tu rendimiento al siguiente nivel.
 
-**Te puede interesar:** [Dolor de hombro: causas y tratamiento](/blog/dolor-hombro-causas-tratamiento) · [Ciática: causas y tratamiento](/blog/ciatica-causas-tratamiento-osteopatia)
+**Te puede interesar:** [Dolor de hombro: causas y tratamiento](/blog/dolor-hombro-causas-tratamiento/) · [Ciática: causas y tratamiento](/blog/ciatica-causas-tratamiento-osteopatia/)

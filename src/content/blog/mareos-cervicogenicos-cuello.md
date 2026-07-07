@@ -90,4 +90,4 @@ Estas pueden ser señales de problemas neurológicos o vasculares que necesitan 
 
 Si llevas tiempo con mareos que nadie acaba de diagnosticar y tienes a la vez tensión cervical crónica, una valoración osteopática puede aportar. No prometo milagros, pero en pacientes con este patrón clínico, la mejoría suele ser clara.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). Mi consulta está en Alpedrete, accesible desde toda la Sierra de Guadarrama y Sierra Noroeste de Madrid. Más detalle en mi página de [dolor cervical](/dolor-cervical).
+Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). Mi consulta está en Alpedrete, accesible desde toda la Sierra de Guadarrama y Sierra Noroeste de Madrid. Más detalle en mi página de [dolor cervical](/dolor-cervical/).

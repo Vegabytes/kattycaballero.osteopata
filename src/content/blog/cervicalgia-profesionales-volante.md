@@ -139,4 +139,4 @@ Acude al médico inmediatamente si:
 
 Si tu trabajo es conducir y notas que el cuerpo te pasa factura, no esperes a que sea crónico. Un programa de mantenimiento ahora vale más que tratamientos largos cuando ya tienes una hernia o cervicalgia crónica.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [dolor cervical](/dolor-cervical) y [osteopatía teletrabajo](/osteopatia-teletrabajo). Consulta en Alpedrete, accesible desde A-6 y M-601.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [dolor cervical](/dolor-cervical/) y [osteopatía teletrabajo](/osteopatia-teletrabajo/). Consulta en Alpedrete, accesible desde A-6 y M-601.

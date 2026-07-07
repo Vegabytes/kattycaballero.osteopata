@@ -10,7 +10,7 @@ author: "Katy Caballero"
 
 El masaje tailandés es una de las terapias corporales más completas y antiguas del mundo. Con más de 2.500 años de historia, esta técnica originaria de Tailandia combina **presiones, estiramientos, movilizaciones articulares y trabajo energético** en una experiencia que beneficia al cuerpo y a la mente por igual.
 
-En mi consulta de Alpedrete ofrezco sesiones de [masaje tailandés](/servicios/masaje-tailandes-alpedrete) adaptadas a las necesidades de cada persona. Hoy quiero contarte los 7 beneficios principales que mis pacientes experimentan con esta terapia.
+En mi consulta de Alpedrete ofrezco sesiones de [masaje tailandés](/servicios/masaje-tailandes-alpedrete/) adaptadas a las necesidades de cada persona. Hoy quiero contarte los 7 beneficios principales que mis pacientes experimentan con esta terapia.
 
 ## ¿Qué es exactamente el masaje tailandés?
 
@@ -92,6 +92,6 @@ Existen algunas contraindicaciones que valoramos en consulta antes de la sesión
 
 En mi consulta de Alpedrete adapto cada sesión a tus necesidades específicas. Antes de comenzar, hablamos sobre tus objetivos, tus molestias y tu estado general para personalizar la intensidad y el enfoque del tratamiento.
 
-Consulta las [tarifas](/tarifas) y la duración de las sesiones para elegir la opción que mejor se adapte a ti.
+Consulta las [tarifas](/tarifas/) y la duración de las sesiones para elegir la opción que mejor se adapte a ti.
 
 **¿Quieres probar los beneficios del masaje tailandés?** [Reserva tu cita por WhatsApp](https://wa.me/34643961065?text=Hola%20Katy,%20me%20gustaría%20reservar%20una%20sesión%20de%20masaje%20tailandés) y empieza a cuidarte.

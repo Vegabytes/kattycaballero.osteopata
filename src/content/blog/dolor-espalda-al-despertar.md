@@ -102,12 +102,12 @@ Acude al médico si tu dolor de espalda matutino:
 - Aparece tras un golpe o caída reciente.
 - No mejora en 4-6 semanas con cambios de hábitos.
 
-En consulta combino [osteopatía estructural](/servicios/osteopatia-alpedrete) con revisión de hábitos posturales para tratar los casos de origen mecánico, que son la mayoría. Si la causa es inflamatoria o requiere otros profesionales, te lo indico claramente.
+En consulta combino [osteopatía estructural](/servicios/osteopatia-alpedrete/) con revisión de hábitos posturales para tratar los casos de origen mecánico, que son la mayoría. Si la causa es inflamatoria o requiere otros profesionales, te lo indico claramente.
 
 ## ¿Te puedo ayudar?
 
 Si llevas semanas o meses despertándote con la espalda dolorida y ya has probado a cambiar el colchón sin éxito, posiblemente hay una disfunción articular o muscular acumulada que se beneficiaría de una valoración osteopática.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). En la primera sesión exploramos qué está pasando y diseñamos un plan corto. Habitualmente con 2-3 sesiones y cambios en los hábitos de sueño se nota una mejoría clara.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). En la primera sesión exploramos qué está pasando y diseñamos un plan corto. Habitualmente con 2-3 sesiones y cambios en los hábitos de sueño se nota una mejoría clara.
 
 Mi consulta está en Alpedrete, en plena Sierra de Guadarrama, accesible desde Collado Villalba, Moralzarzal, Galapagar, Cercedilla y toda la zona.

@@ -108,4 +108,4 @@ El objetivo no es solo quitar el dolor puntual, sino identificar y tratar las ca
 
 ---
 
-*¿Las cefaleas están afectando tu día a día? Puedo ayudarte a encontrar la causa y tratarla. [Reserva tu cita](/reservar) en mi consulta de Alpedrete o consúltame por [WhatsApp](https://wa.me/34643961065).*
+*¿Las cefaleas están afectando tu día a día? Puedo ayudarte a encontrar la causa y tratarla. [Reserva tu cita](/reservar/) en mi consulta de Alpedrete o consúltame por [WhatsApp](https://wa.me/34643961065).*

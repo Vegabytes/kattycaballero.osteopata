@@ -12,7 +12,7 @@ Muchos padres se sorprenden cuando les digo que la osteopatía también es para 
 
 ## ¿Qué es la osteopatía infantil?
 
-La osteopatía pediátrica utiliza técnicas manuales muy suaves —principalmente [craneosacrales](/blog/osteopatia-craneal-que-es)— para detectar y tratar tensiones en el cuerpo del bebé o del niño. No se utilizan manipulaciones bruscas ni movimientos forzados. Son toques delicados que respetan la fragilidad del sistema musculoesquelético en desarrollo.
+La osteopatía pediátrica utiliza técnicas manuales muy suaves —principalmente [craneosacrales](/blog/osteopatia-craneal-que-es/)— para detectar y tratar tensiones en el cuerpo del bebé o del niño. No se utilizan manipulaciones bruscas ni movimientos forzados. Son toques delicados que respetan la fragilidad del sistema musculoesquelético en desarrollo.
 
 La presión que se aplica es comparable a la que usarías para comprobar la madurez de un tomate. Es decir, mínima.
 
@@ -90,8 +90,8 @@ Mi recomendación es hacer una **revisión osteopática en las primeras semanas 
 
 ## Osteopatía infantil en la Sierra de Madrid
 
-Si buscas un osteópata para tu bebé o hijo y vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba), [Collado Mediano](/osteopata-collado-mediano), [Becerril de la Sierra](/osteopata-becerril-de-la-sierra) o cualquier pueblo de la Sierra de Guadarrama, estaré encantada de ayudarte.
+Si buscas un osteópata para tu bebé o hijo y vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba/), [Collado Mediano](/osteopata-collado-mediano/), [Becerril de la Sierra](/osteopata-becerril-de-la-sierra/) o cualquier pueblo de la Sierra de Guadarrama, estaré encantada de ayudarte.
 
-Consulta nuestro [servicio de osteopatía en Alpedrete](/servicios/osteopatia-alpedrete) o **[reserva tu cita](/reservar)** para una valoración.
+Consulta nuestro [servicio de osteopatía en Alpedrete](/servicios/osteopatia-alpedrete/) o **[reserva tu cita](/reservar/)** para una valoración.
 
-**Te puede interesar:** [¿Qué es la osteopatía craneal?](/blog/osteopatia-craneal-que-es) · [Diferencias entre osteopatía y fisioterapia](/blog/diferencias-osteopatia-fisioterapia)
+**Te puede interesar:** [¿Qué es la osteopatía craneal?](/blog/osteopatia-craneal-que-es/) · [Diferencias entre osteopatía y fisioterapia](/blog/diferencias-osteopatia-fisioterapia/)

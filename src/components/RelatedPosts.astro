@@ -17,7 +17,7 @@ const { title = "Artículos relacionados", posts } = Astro.props;
     <h2>{title}</h2>
     <div class="related-posts-grid">
       {posts.map(post => (
-        <a href={`/blog/${post.slug}`} class="related-post-card">
+        <a href={`/blog/${post.slug}/`} class="related-post-card">
           <span class="related-post-title">{post.title}</span>
           <span class="related-post-link">Leer artículo →</span>
         </a>

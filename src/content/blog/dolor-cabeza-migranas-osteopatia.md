@@ -22,7 +22,7 @@ Es el tipo más común. Se siente como una banda que aprieta alrededor de la cab
 - Sensación de presión constante
 - No suele empeorar con la actividad física
 - Puede durar horas o días
-- Muy relacionado con el [estrés y la tensión muscular](/blog/estres-tension-muscular-cuerpo)
+- Muy relacionado con el [estrés y la tensión muscular](/blog/estres-tension-muscular-cuerpo/)
 
 ### Migraña
 
@@ -41,7 +41,7 @@ Se origina en el cuello y se irradia hacia la cabeza:
 - Dolor que empieza en la nuca y sube
 - Suele ser unilateral
 - Se agrava con los movimientos del cuello
-- Muy frecuente en personas con [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento)
+- Muy frecuente en personas con [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento/)
 
 ## Por qué la osteopatía es eficaz para los dolores de cabeza
 
@@ -89,7 +89,7 @@ Combino diferentes técnicas según lo que encuentre:
 
 - **Técnicas suboccipitales**: trabajo suave pero profundo en la base del cráneo para liberar la tensión de los músculos que envuelven los nervios
 - **Movilización cervical**: técnicas articulares suaves para recuperar la movilidad de las vértebras cervicales
-- **[Osteopatía craneal](/blog/osteopatia-craneal-que-es)**: técnicas muy sutiles que trabajan las tensiones de las membranas intracraneales
+- **[Osteopatía craneal](/blog/osteopatia-craneal-que-es/)**: técnicas muy sutiles que trabajan las tensiones de las membranas intracraneales
 - **Trabajo de la ATM**: si hay bruxismo o tensión mandibular
 - **Liberación diafragmática**: para mejorar la respiración y reducir la tensión general
 
@@ -123,4 +123,4 @@ El estrés crónico es uno de los principales desencadenantes. Técnicas de resp
 
 ## Cuándo consultar
 
-Si tienes dolores de cabeza más de 2-3 veces al mes, si necesitas tomar analgésicos con frecuencia o si el dolor afecta a tu calidad de vida, no lo normalices. En mi [consulta de Alpedrete](/contacto) puedo valorar tu caso y proponerte un tratamiento que vaya a la raíz del problema.
+Si tienes dolores de cabeza más de 2-3 veces al mes, si necesitas tomar analgésicos con frecuencia o si el dolor afecta a tu calidad de vida, no lo normalices. En mi [consulta de Alpedrete](/contacto/) puedo valorar tu caso y proponerte un tratamiento que vaya a la raíz del problema.

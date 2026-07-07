@@ -31,7 +31,7 @@ En consulta, el tratamiento osteopático del reflujo funcional incluye:
 3. **Trabajo de la fascia abdominal alta**.
 4. **Liberación cervical alta y vagal**: el nervio vago controla la digestión; si hay tensión cervical, el vago está irritado.
 5. **Trabajo dorsal alto** (T1-T6): por la inervación simpática del esófago y estómago.
-6. **Postura global**: muchas veces la postura cifótica favorece el reflujo. Se trabaja [hipercifosis dorsal](/blog/hipercifosis-dorsal-corregir).
+6. **Postura global**: muchas veces la postura cifótica favorece el reflujo. Se trabaja [hipercifosis dorsal](/blog/hipercifosis-dorsal-corregir/).
 
 El tratamiento es muy suave. Muchos pacientes notan menos acidez ya esa misma semana.
 
@@ -74,7 +74,7 @@ Lo que tú haces fuera de consulta marca enorme diferencia:
 
 - **El estrés es un trigger directo del reflujo**: el sistema nervioso simpático ralentiza la digestión y altera el cierre esofágico.
 - **Respiración diafragmática** 10 min/día regula esto.
-- **Si tienes ansiedad somatizada importante**, lee mi [artículo específico](/blog/ansiedad-somatizada-cuerpo).
+- **Si tienes ansiedad somatizada importante**, lee mi [artículo específico](/blog/ansiedad-somatizada-cuerpo/).
 
 ## Cuándo es imprescindible el digestivo
 
@@ -101,4 +101,4 @@ Si en 4-5 sesiones bien dirigidas y con cambios de hábitos no hay mejoría clar
 
 Si tienes reflujo crónico funcional o digestiones lentas persistentes y quieres explorar tratamiento complementario, una valoración suele orientar bien. Trabajo coordinada con tu médica de cabecera o digestiva cuando es necesario.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es) y [diafragma](/blog/diafragma-respiracion-osteopatia). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es/) y [diafragma](/blog/diafragma-respiracion-osteopatia/). Consulta en Alpedrete, Sierra de Guadarrama.

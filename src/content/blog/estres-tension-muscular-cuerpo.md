@@ -30,7 +30,7 @@ Cada persona tiene sus "zonas diana", pero hay patrones muy comunes:
 
 Es la zona más típica. Cuando estamos estresados, tendemos a elevar los hombros inconscientemente, como protegiéndonos. Con el tiempo, esto genera:
 
-- [Contracturas en trapecio](/blog/contracturas-cervicales-causas-tratamiento)
+- [Contracturas en trapecio](/blog/contracturas-cervicales-causas-tratamiento/)
 - Dolor cervical
 - Dolores de cabeza tensionales
 - Rigidez al girar la cabeza
@@ -87,7 +87,7 @@ La osteopatía aborda las consecuencias físicas del estrés trabajando directam
 
 2. **Trabajar el diafragma**: Técnicas específicas para liberar este músculo y restaurar una respiración completa.
 
-3. **[Técnicas craneales](/blog/osteopatia-craneal-que-es)**: Muy efectivas para calmar el sistema nervioso y reducir la tensión general.
+3. **[Técnicas craneales](/blog/osteopatia-craneal-que-es/)**: Muy efectivas para calmar el sistema nervioso y reducir la tensión general.
 
 4. **Trabajo visceral**: Para aliviar las tensiones acumuladas en el abdomen.
 
@@ -131,7 +131,7 @@ El móvil y las redes mantienen activado el sistema de alerta. Intenta:
 ### Autocuidado
 
 No es egoísmo, es necesidad:
-- Un [masaje corporal](/servicios/masaje-corporal-alpedrete) regular o una sesión de [masaje con pindas herbales](/servicios/masaje-pindas-herbales-alpedrete) para desconectar
+- Un [masaje corporal](/servicios/masaje-corporal-alpedrete/) regular o una sesión de [masaje con pindas herbales](/servicios/masaje-pindas-herbales-alpedrete/) para desconectar
 - Tiempo en la naturaleza (la Sierra de Guadarrama está ahí)
 - Actividades que te gusten
 
@@ -139,8 +139,8 @@ No es egoísmo, es necesidad:
 
 La tensión muscular es la forma que tiene tu cuerpo de decirte que algo no va bien. Ignorarla solo empeora las cosas.
 
-Si sientes que el estrés está afectando a tu cuerpo y vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba), [Becerril de la Sierra](/osteopata-becerril-de-la-sierra), [Moralzarzal](/osteopata-moralzarzal) o la Sierra de Madrid, puedo ayudarte a liberar esa tensión acumulada con nuestro [servicio de osteopatía](/servicios/osteopatia-alpedrete).
+Si sientes que el estrés está afectando a tu cuerpo y vives en Alpedrete, [Collado Villalba](/osteopata-collado-villalba/), [Becerril de la Sierra](/osteopata-becerril-de-la-sierra/), [Moralzarzal](/osteopata-moralzarzal/) o la Sierra de Madrid, puedo ayudarte a liberar esa tensión acumulada con nuestro [servicio de osteopatía](/servicios/osteopatia-alpedrete/).
 
-Consulta todos mis [servicios de osteopatía y masajes](/servicios) o **[reserva tu sesión](/reservar)** y empieza a sentirte mejor.
+Consulta todos mis [servicios de osteopatía y masajes](/servicios/) o **[reserva tu sesión](/reservar/)** y empieza a sentirte mejor.
 
-**Te puede interesar:** [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico) · [Contracturas cervicales: causas y tratamiento](/blog/contracturas-cervicales-causas-tratamiento)
+**Te puede interesar:** [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico/) · [Contracturas cervicales: causas y tratamiento](/blog/contracturas-cervicales-causas-tratamiento/)

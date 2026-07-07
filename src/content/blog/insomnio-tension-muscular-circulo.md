@@ -87,6 +87,6 @@ El masaje y la osteopatía son una pieza, no el todo, cuando el insomnio es seve
 
 ## ¿Te puedo ayudar?
 
-Si tu insomnio se acompaña de tensión muscular crónica y quieres probar una vía no farmacológica, una sesión de [masaje corporal con aceite](/servicios/masaje-corporal-alpedrete) o de [osteopatía](/servicios/osteopatia-alpedrete) puede ser un buen punto de partida.
+Si tu insomnio se acompaña de tensión muscular crónica y quieres probar una vía no farmacológica, una sesión de [masaje corporal con aceite](/servicios/masaje-corporal-alpedrete/) o de [osteopatía](/servicios/osteopatia-alpedrete/) puede ser un buen punto de partida.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Lee también sobre [estrés y tensión muscular](/blog/estres-tension-muscular-cuerpo). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Lee también sobre [estrés y tensión muscular](/blog/estres-tension-muscular-cuerpo/). Consulta en Alpedrete, Sierra de Guadarrama.

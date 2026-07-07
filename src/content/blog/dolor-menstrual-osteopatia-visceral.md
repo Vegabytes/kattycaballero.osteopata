@@ -94,4 +94,4 @@ Cosas que ayudan mucho fuera de consulta:
 
 Si tu regla te limita semanalmente y quieres explorar opciones complementarias al tratamiento médico, una primera valoración puede orientar bien. Trabajo coordinada con ginecólogas cuando hace falta.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). Mi consulta está en Alpedrete. Más sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es) y [diafragma y respiración](/blog/diafragma-respiracion-osteopatia).
+Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). Mi consulta está en Alpedrete. Más sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es/) y [diafragma y respiración](/blog/diafragma-respiracion-osteopatia/).

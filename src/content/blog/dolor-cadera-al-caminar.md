@@ -42,7 +42,7 @@ En este artículo te explico las cinco causas más frecuentes, cómo identificar
 
 **Cómo se identifica**: el dolor empeora al estar sentado, al cruzar las piernas o al hacer giros. Si pones la pierna afectada cruzada sobre la otra y empujas la rodilla hacia abajo, suele provocar el dolor.
 
-**Qué hacer**: tratamiento osteopático del piriforme y del glúteo, estiramientos específicos, y revisar la postura sentado. Es uno de los problemas más típicos en teletrabajadores. Tienes más detalle en mi artículo de [síndrome piramidal](/blog/sindrome-piramidal-causas-sintomas).
+**Qué hacer**: tratamiento osteopático del piriforme y del glúteo, estiramientos específicos, y revisar la postura sentado. Es uno de los problemas más típicos en teletrabajadores. Tienes más detalle en mi artículo de [síndrome piramidal](/blog/sindrome-piramidal-causas-sintomas/).
 
 ### 4. Tendinopatía del glúteo medio
 
@@ -75,7 +75,7 @@ Con un solo dedo, intenta señalar el punto exacto donde te duele:
 - En la ingle, parte anterior → posible artrosis o pinzamiento.
 - En el hueso lateral (el que se nota al tocar la cadera) → bursitis o tendinopatía.
 - En el glúteo, profundo → piriforme o glúteo medio.
-- En la parte trasera, alto, cerca del sacro → puede ser dolor sacroilíaco (otra causa frecuente). Mira el artículo sobre [dolor sacroilíaco](/blog/dolor-sacroiliaco-causa-lumbar) si te suena.
+- En la parte trasera, alto, cerca del sacro → puede ser dolor sacroilíaco (otra causa frecuente). Mira el artículo sobre [dolor sacroilíaco](/blog/dolor-sacroiliaco-causa-lumbar/) si te suena.
 
 **Test 2 — Test de Trendelenburg**
 
@@ -115,6 +115,6 @@ Estas señales pueden indicar fractura, infección o lesión estructural que nec
 
 Si tienes dolor de cadera al caminar de causa mecánica (que es la mayoría) y quieres una valoración antes de decidir si necesitas traumatólogo, en mi consulta exploramos qué estructuras están implicadas y diseñamos un plan.
 
-Trabajo combinando [osteopatía](/servicios/osteopatia-alpedrete) con [masaje deportivo](/servicios/masaje-deportivo-alpedrete) cuando hace falta. Cada caso es distinto: a veces son 2-3 sesiones, otras un trabajo de 6-8 semanas con ejercicios pautados.
+Trabajo combinando [osteopatía](/servicios/osteopatia-alpedrete/) con [masaje deportivo](/servicios/masaje-deportivo-alpedrete/) cuando hace falta. Cada caso es distinto: a veces son 2-3 sesiones, otras un trabajo de 6-8 semanas con ejercicios pautados.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). Mi consulta está en Alpedrete, accesible desde toda la Sierra de Guadarrama y Sierra Noroeste de Madrid.
+Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). Mi consulta está en Alpedrete, accesible desde toda la Sierra de Guadarrama y Sierra Noroeste de Madrid.

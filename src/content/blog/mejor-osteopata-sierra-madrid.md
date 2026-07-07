@@ -59,7 +59,7 @@ Se centra en la movilidad y la función de los órganos internos. Puede ayudar e
 
 Trabaja con técnicas sutiles sobre el cráneo, la columna y el sacro. Es especialmente útil en cefaleas, migrañas, problemas de ATM, estrés y en el tratamiento de bebés.
 
-En mi consulta de Alpedrete ofrezco un enfoque integrador que combina estas tres vertientes según lo que cada paciente necesita. Puedes ver todos los [servicios](/servicios) que ofrezco para hacerte una idea.
+En mi consulta de Alpedrete ofrezco un enfoque integrador que combina estas tres vertientes según lo que cada paciente necesita. Puedes ver todos los [servicios](/servicios/) que ofrezco para hacerte una idea.
 
 ## 5. Primera consulta: lo que deberías esperar
 
@@ -70,18 +70,18 @@ La primera visita es clave para evaluar si un profesional es el adecuado. Un ost
 - **Explicarte el diagnóstico y el plan de tratamiento**: qué ha encontrado, qué va a hacer y cuántas sesiones estima que necesitarás
 - **Ser honesto**: si tu problema no es de su competencia, debería derivarte al profesional adecuado
 
-En mi [primera visita](/primera-visita) dedico el tiempo necesario para entender tu caso en profundidad antes de comenzar cualquier tratamiento.
+En mi [primera visita](/primera-visita/) dedico el tiempo necesario para entender tu caso en profundidad antes de comenzar cualquier tratamiento.
 
 ## 6. Transparencia en precios y condiciones
 
-Un profesional serio es transparente con sus [tarifas](/tarifas). Antes de acudir, deberías saber:
+Un profesional serio es transparente con sus [tarifas](/tarifas/). Antes de acudir, deberías saber:
 
 - El precio de la sesión y su duración
 - Si la primera consulta tiene un coste diferente
 - Las formas de pago aceptadas
 - La política de cancelación
 
-Desconfía de precios excesivamente bajos: una sesión de [osteopatía](/servicios/osteopatia-alpedrete) de calidad requiere tiempo, formación y experiencia que tienen un coste justo.
+Desconfía de precios excesivamente bajos: una sesión de [osteopatía](/servicios/osteopatia-alpedrete/) de calidad requiere tiempo, formación y experiencia que tienen un coste justo.
 
 ## 7. Opiniones de otros pacientes
 

@@ -89,4 +89,4 @@ Dedicarte una hora a la semana para que tu cuerpo se recupere no es un lujo: es 
 
 ---
 
-*¿Acabas de ser mamá y tu cuerpo te lo está recordando? Puedo ayudarte con un tratamiento adaptado a tu momento. [Reserva tu cita](/reservar) en Alpedrete o escríbeme por [WhatsApp](https://wa.me/34643961065). También ofrezco [masaje para embarazadas](/servicios/masaje-embarazadas-alpedrete) durante la gestación.*
+*¿Acabas de ser mamá y tu cuerpo te lo está recordando? Puedo ayudarte con un tratamiento adaptado a tu momento. [Reserva tu cita](/reservar/) en Alpedrete o escríbeme por [WhatsApp](https://wa.me/34643961065). También ofrezco [masaje para embarazadas](/servicios/masaje-embarazadas-alpedrete/) durante la gestación.*

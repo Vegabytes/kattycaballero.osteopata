@@ -23,7 +23,7 @@ En la oficina, al menos te levantas para ir a reuniones, hablar con compañeros 
 
 ### 1. Zona lumbar
 
-La parte baja de la espalda es la que más carga soporta al estar sentado. Sin un buen apoyo lumbar, los discos intervertebrales se comprimen de forma desigual, lo que puede derivar en protrusiones o [ciática](/blog/ciatica-causas-tratamiento-osteopatia).
+La parte baja de la espalda es la que más carga soporta al estar sentado. Sin un buen apoyo lumbar, los discos intervertebrales se comprimen de forma desigual, lo que puede derivar en protrusiones o [ciática](/blog/ciatica-causas-tratamiento-osteopatia/).
 
 **Señales de alarma:**
 - Dolor al levantarte de la silla
@@ -32,7 +32,7 @@ La parte baja de la espalda es la que más carga soporta al estar sentado. Sin u
 
 ### 2. Zona cervical y cuello
 
-Mirar hacia abajo al portátil genera una sobrecarga brutal en las cervicales. La cabeza pesa unos 5 kg, pero al inclinarla 45 grados, las cervicales soportan hasta 22 kg de presión. Puedes leer más sobre este problema en nuestro artículo de [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento).
+Mirar hacia abajo al portátil genera una sobrecarga brutal en las cervicales. La cabeza pesa unos 5 kg, pero al inclinarla 45 grados, las cervicales soportan hasta 22 kg de presión. Puedes leer más sobre este problema en nuestro artículo de [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento/).
 
 **Señales de alarma:**
 - Dolor de cuello constante
@@ -45,7 +45,7 @@ La postura encorvada frente al ordenador cierra el pecho y sobrecarga los múscu
 
 ### 4. Hombros
 
-Los hombros elevados por tensión o por un escritorio demasiado alto generan contracturas en los trapecios y pueden derivar en [dolor de hombro](/blog/dolor-hombro-causas-tratamiento) crónico.
+Los hombros elevados por tensión o por un escritorio demasiado alto generan contracturas en los trapecios y pueden derivar en [dolor de hombro](/blog/dolor-hombro-causas-tratamiento/) crónico.
 
 ## Tu puesto de trabajo: cómo debe estar
 
@@ -88,7 +88,7 @@ En posición de caballero (una rodilla en el suelo), empuja la cadera hacia dela
 ### 5. Chin tucks (retracción cervical)
 Lleva la barbilla hacia atrás como si quisieras hacer "papada". Mantén 5 segundos, repite 10 veces. Corrige la postura de cabeza adelantada.
 
-Puedes encontrar más ejercicios en nuestra [guía de estiramientos](/guia-estiramientos) y en el artículo de [ejercicios para el dolor lumbar en oficina](/blog/ejercicios-dolor-lumbar-oficina).
+Puedes encontrar más ejercicios en nuestra [guía de estiramientos](/guia-estiramientos/) y en el artículo de [ejercicios para el dolor lumbar en oficina](/blog/ejercicios-dolor-lumbar-oficina/).
 
 ## ¿Cómo puede ayudarte la osteopatía?
 
@@ -97,14 +97,14 @@ Cuando la postura mantenida ya ha generado dolor crónico, los estiramientos sol
 - **Libera las restricciones articulares** de la columna que se han fijado por la mala postura
 - **Relaja la musculatura contracturada** con técnicas manuales profundas
 - **Reequilibra las cadenas musculares** para que la postura correcta sea natural, no forzada
-- **Trabaja las vísceras** si el [estrés](/blog/estres-tension-muscular-cuerpo) está contribuyendo a la tensión muscular
+- **Trabaja las vísceras** si el [estrés](/blog/estres-tension-muscular-cuerpo/) está contribuyendo a la tensión muscular
 
 En mi consulta, además del tratamiento manual, te enseño ejercicios específicos para tu caso y te ayudo a ajustar tu puesto de trabajo.
 
 ## Tratamiento del dolor de espalda por teletrabajo en la Sierra de Madrid
 
-Si trabajas desde casa y el dolor de espalda no te deja concentrarte, puedo ayudarte. Atiendo en mi consulta de Alpedrete a pacientes de [Collado Villalba](/osteopata-collado-villalba), [Moralzarzal](/osteopata-moralzarzal), [Galapagar](/osteopata-galapagar) y toda la Sierra Noroeste de Madrid.
+Si trabajas desde casa y el dolor de espalda no te deja concentrarte, puedo ayudarte. Atiendo en mi consulta de Alpedrete a pacientes de [Collado Villalba](/osteopata-collado-villalba/), [Moralzarzal](/osteopata-moralzarzal/), [Galapagar](/osteopata-galapagar/) y toda la Sierra Noroeste de Madrid.
 
-Consulta nuestro [servicio de osteopatía](/servicios/osteopatia-alpedrete) o el [masaje corporal con aceites](/servicios/masaje-corporal-alpedrete) para aliviar la tensión acumulada. También puedes ver todos mis [servicios](/servicios) o **[reservar tu cita](/reservar)**.
+Consulta nuestro [servicio de osteopatía](/servicios/osteopatia-alpedrete/) o el [masaje corporal con aceites](/servicios/masaje-corporal-alpedrete/) para aliviar la tensión acumulada. También puedes ver todos mis [servicios](/servicios/) o **[reservar tu cita](/reservar/)**.
 
-**Te puede interesar:** [5 ejercicios para aliviar el dolor lumbar](/blog/ejercicios-dolor-lumbar-oficina) · [Cómo el estrés genera tensión muscular en tu cuerpo](/blog/estres-tension-muscular-cuerpo)
+**Te puede interesar:** [5 ejercicios para aliviar el dolor lumbar](/blog/ejercicios-dolor-lumbar-oficina/) · [Cómo el estrés genera tensión muscular en tu cuerpo](/blog/estres-tension-muscular-cuerpo/)

@@ -27,13 +27,13 @@ function formatDate(date: Date): string {
     <div class="blog-grid">
       {latestPosts.map((post, index) => (
         <article class={`blog-card ${index === 0 ? 'blog-card-featured' : ''}`}>
-          <a href={`/blog/${post.slug}`} class="blog-card-image-link">
+          <a href={`/blog/${post.slug}/`} class="blog-card-image-link">
             <img src={post.data.image} alt={post.data.title} class="blog-card-image" width="400" height={index === 0 ? 300 : 220} loading="lazy" />
           </a>
           <div class="blog-card-content">
             <span class="blog-card-tag">{post.data.category}</span>
             <h3>
-              <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+              <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
             </h3>
             <p>{post.data.excerpt}</p>
             <div class="blog-card-meta">

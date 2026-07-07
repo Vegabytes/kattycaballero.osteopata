@@ -113,4 +113,4 @@ No vayas si:
 
 Si vas a empezar a subir cumbres y quieres preparación seria, podemos hacer una valoración inicial + sesiones de masaje deportivo periódicas. Mi consulta está cerca de los accesos a la sierra (a 12 min de Navacerrada).
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [recuperación deportiva](/blog/recuperacion-deportiva-sierra-madrid) y [masaje deportivo](/servicios/masaje-deportivo-alpedrete).
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [recuperación deportiva](/blog/recuperacion-deportiva-sierra-madrid/) y [masaje deportivo](/servicios/masaje-deportivo-alpedrete/).

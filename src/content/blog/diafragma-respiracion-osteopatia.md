@@ -78,7 +78,7 @@ Para que estos ejercicios den fruto necesitas constancia: 5-10 minutos al día d
 
 Cuando el diafragma es el "punto bisagra" del tratamiento:
 
-- Personas con ansiedad somatizada (lee mi artículo de [ansiedad somatizada](/blog/ansiedad-somatizada-cuerpo)).
+- Personas con ansiedad somatizada (lee mi artículo de [ansiedad somatizada](/blog/ansiedad-somatizada-cuerpo/)).
 - Pacientes con reflujo gastroesofágico, hernia de hiato funcional, digestiones lentas.
 - Dolor lumbar persistente sin causa estructural clara.
 - Cervicalgia con respiración torácica crónica.
@@ -88,4 +88,4 @@ Cuando el diafragma es el "punto bisagra" del tratamiento:
 
 Si reconoces tu respiración como "siempre cortita" o tienes alguno de estos patrones, una valoración del diafragma puede aportar mucho. Es una de las técnicas más infrautilizadas en fisioterapia convencional, y de las más útiles cuando se trata bien.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar). Mi consulta está en Alpedrete. Más sobre osteopatía visceral en [este artículo](/blog/osteopatia-visceral-que-es).
+Escríbeme por WhatsApp al **643 961 065** o [reserva tu cita](/reservar/). Mi consulta está en Alpedrete. Más sobre osteopatía visceral en [este artículo](/blog/osteopatia-visceral-que-es/).

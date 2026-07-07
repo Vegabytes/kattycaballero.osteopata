@@ -90,7 +90,7 @@ Ponte a la pata coja sobre una superficie inestable (cojín, hierba) durante 30 
 7. **Aductores** en sentadilla profunda: 30 seg
 8. **Espalda** con gato-vaca: 10 repeticiones
 
-Puedes encontrar más ejercicios organizados por zona en nuestra [guía de estiramientos](/guia-estiramientos).
+Puedes encontrar más ejercicios organizados por zona en nuestra [guía de estiramientos](/guia-estiramientos/).
 
 ## ¿Cuándo necesitas algo más que estiramientos?
 
@@ -101,12 +101,12 @@ Los estiramientos previenen, pero no curan. Busca ayuda profesional si:
 - **El dolor aparece durante la carrera** y te obliga a parar
 - **Tienes inflamación visible** o calor en una zona
 
-La [osteopatía para deportistas](/blog/osteopatia-para-deportistas) puede ayudarte a identificar desequilibrios antes de que se conviertan en lesión. Con un [masaje deportivo](/servicios/masaje-deportivo-alpedrete) puedes acelerar la recuperación tras carreras largas o competiciones.
+La [osteopatía para deportistas](/blog/osteopatia-para-deportistas/) puede ayudarte a identificar desequilibrios antes de que se conviertan en lesión. Con un [masaje deportivo](/servicios/masaje-deportivo-alpedrete/) puedes acelerar la recuperación tras carreras largas o competiciones.
 
 ## Cuidando a los corredores de la Sierra
 
-En mi consulta de Alpedrete atiendo a muchos corredores de montaña de [Collado Villalba](/osteopata-collado-villalba), [Los Molinos](/osteopata-los-molinos), [Guadarrama](/osteopata-guadarrama) y toda la Sierra Noroeste. Si necesitas una valoración de tu cadena muscular o un tratamiento preventivo antes de tu próxima carrera, puedo ayudarte.
+En mi consulta de Alpedrete atiendo a muchos corredores de montaña de [Collado Villalba](/osteopata-collado-villalba/), [Los Molinos](/osteopata-los-molinos/), [Guadarrama](/osteopata-guadarrama/) y toda la Sierra Noroeste. Si necesitas una valoración de tu cadena muscular o un tratamiento preventivo antes de tu próxima carrera, puedo ayudarte.
 
-Echa un vistazo a nuestro [test de postura](/test-postura) para comprobar si hay desequilibrios o consulta todos mis [servicios](/servicios). **[Reserva tu cita](/reservar)** y corre sin limitaciones.
+Echa un vistazo a nuestro [test de postura](/test-postura/) para comprobar si hay desequilibrios o consulta todos mis [servicios](/servicios/). **[Reserva tu cita](/reservar/)** y corre sin limitaciones.
 
-**Te puede interesar:** [Osteopatía para deportistas](/blog/osteopatia-para-deportistas) · [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico)
+**Te puede interesar:** [Osteopatía para deportistas](/blog/osteopatia-para-deportistas/) · [Beneficios del masaje terapéutico](/blog/beneficios-masaje-terapeutico/)

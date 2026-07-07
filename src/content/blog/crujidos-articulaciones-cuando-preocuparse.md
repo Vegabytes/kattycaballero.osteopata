@@ -85,4 +85,4 @@ En consulta evaluamos la movilidad articular global y trabajamos las zonas que e
 
 Si tienes dudas sobre si tus crujidos articulares son normales o no, una valoración suele aclararlo en una sesión. Si todo está bien, te lo digo claro y no necesitas tratamiento.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Mi consulta está en Alpedrete, accesible desde toda la Sierra de Guadarrama. Mira también [¿dónde te duele?](/donde-te-duele) si tienes molestias en alguna zona concreta.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Mi consulta está en Alpedrete, accesible desde toda la Sierra de Guadarrama. Mira también [¿dónde te duele?](/donde-te-duele/) si tienes molestias en alguna zona concreta.

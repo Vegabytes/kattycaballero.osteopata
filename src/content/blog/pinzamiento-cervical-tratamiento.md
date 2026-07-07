@@ -60,7 +60,7 @@ La mejoría tras una sola sesión suele ser del 40-70%. Una segunda sesión en 3
 Si ya has tenido pinzamientos cervicales repetidos, conviene prevenir. Lo que más diferencia veo:
 
 - **Almohada adecuada** según postura habitual de sueño.
-- **Postura en el trabajo**: monitor a altura correcta (mira mi [guía de postura correcta](/blog/postura-correcta-ordenador-teletrabajo)).
+- **Postura en el trabajo**: monitor a altura correcta (mira mi [guía de postura correcta](/blog/postura-correcta-ordenador-teletrabajo/)).
 - **Pausas activas** cada 30-45 minutos.
 - **Trabajar la musculatura cervical de forma proactiva**: ejercicios isométricos suaves 3 veces por semana fortalecen sin sobrecargar.
 - **Gestión del estrés**: el cuello es uno de los primeros sitios donde se acumula tensión.
@@ -83,4 +83,4 @@ Estos son signos de problemas neurológicos o infecciosos que requieren atenció
 
 Si tienes un pinzamiento agudo y necesitas atención rápida, intento darte cita en 24-48h. Si son episodios recurrentes y quieres prevenirlos, podemos diseñar un plan de mantenimiento corto.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento) y [dolor cervical](/dolor-cervical) en otros artículos. Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [contracturas cervicales](/blog/contracturas-cervicales-causas-tratamiento/) y [dolor cervical](/dolor-cervical/) en otros artículos. Consulta en Alpedrete, Sierra de Guadarrama.

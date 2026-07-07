@@ -109,7 +109,7 @@ const faqSchema = {
           <div class="pricing-card">
             <div class="pricing-card-header">
               <h2 class="pricing-card-title">
-                <a href={`/servicios/${service.slug}`}>{service.title}</a>
+                <a href={`/servicios/${service.slug}/`}>{service.title}</a>
               </h2>
               <span class="pricing-card-duration">{service.duration}</span>
             </div>
@@ -119,7 +119,7 @@ const faqSchema = {
             <p class="pricing-card-description">
               {shortDescriptions[service.slug]}
             </p>
-            <a href={`/servicios/${service.slug}`} class="pricing-card-link">
+            <a href={`/servicios/${service.slug}/`} class="pricing-card-link">
               Ver más
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
@@ -276,7 +276,7 @@ const faqSchema = {
     title="&iquest;Quieres reservar?"
     description="Contacta conmigo y te ayudo a elegir el tratamiento adecuado."
     buttonText="Reservar Cita"
-    buttonLink="/reservar"
+    buttonLink="/reservar/"
   />
 </Layout>
 

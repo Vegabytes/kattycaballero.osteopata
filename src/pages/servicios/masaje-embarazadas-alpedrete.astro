@@ -52,7 +52,7 @@ const faqSchema = {
 
 const breadcrumbSchema = [
   { name: "Inicio", url: "/" },
-  { name: "Servicios", url: "/servicios" },
+  { name: "Servicios", url: "/servicios/" },
   { name: service.title }
 ];
 ---
@@ -152,7 +152,7 @@ const breadcrumbSchema = [
     buttonLink="/reservar?servicio=embarazadas"
   />
 
-  <StickyCtaBar serviceName={service.title} price={service.price} bookingUrl="/reservar?servicio=embarazadas" />
+  <StickyCtaBar serviceName={service.title} price={service.price} bookingUrl="/reservar/?servicio=embarazadas" />
 </Layout>
 
 <style>

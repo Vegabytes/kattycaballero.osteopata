@@ -99,7 +99,7 @@ La combinación de osteopatía 1-2 veces al mes + ejercicio diario en casa es la
 
 Si tu trabajo te obliga a estar sentado muchas horas:
 
-- **Monitor a la altura correcta** (mira mi [guía de postura](/blog/postura-correcta-ordenador-teletrabajo)).
+- **Monitor a la altura correcta** (mira mi [guía de postura](/blog/postura-correcta-ordenador-teletrabajo/)).
 - **Pausa cada 30-45 minutos** para hacer 30 segundos de extensión dorsal.
 - **Trabajo en escritorio de pie** parte de la jornada si puedes.
 - **Silla con buen apoyo lumbar** sin "encajarte" en el respaldo.
@@ -108,4 +108,4 @@ Si tu trabajo te obliga a estar sentado muchas horas:
 
 Si llevas tiempo con la sensación de estar más encorvado y quieres una valoración profesional, en consulta evaluamos si es funcional (recuperable con trabajo) o estructural (manejable pero no totalmente reversible). Diseñamos un plan adaptado.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [test de postura](/test-postura) en la web. Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [test de postura](/test-postura/) en la web. Consulta en Alpedrete, Sierra de Guadarrama.

@@ -94,4 +94,4 @@ La mayoría de pacientes nota mejoría desde la primera sesión. Para dolores cr
 
 ---
 
-*Si el dolor de cuello y hombros está limitando tu vida diaria, puedo ayudarte. [Reserva tu cita](/reservar) en mi consulta de Alpedrete o escríbeme por [WhatsApp](https://wa.me/34643961065).*
+*Si el dolor de cuello y hombros está limitando tu vida diaria, puedo ayudarte. [Reserva tu cita](/reservar/) en mi consulta de Alpedrete o escríbeme por [WhatsApp](https://wa.me/34643961065).*

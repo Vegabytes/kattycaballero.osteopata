@@ -109,4 +109,4 @@ Lo que normalmente se puede esperar:
 
 Si has tenido cirugía y tienes molestias que no acaban de resolverse, o si llevas años con síntomas que sospechas que pueden estar relacionados con una cirugía antigua, una valoración puede aportar mucho. Soy especialmente cuidadosa con cicatrices recientes y trabajo coordinada con tu cirujano si hace falta.
 
-Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar). Más sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es). Consulta en Alpedrete, Sierra de Guadarrama.
+Escríbeme por WhatsApp al **643 961 065** o [reserva online](/reservar/). Más sobre [osteopatía visceral](/blog/osteopatia-visceral-que-es/). Consulta en Alpedrete, Sierra de Guadarrama.
