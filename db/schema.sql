@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS citas (
   servicio TEXT,
   estado TEXT DEFAULT 'pendiente',
   notas TEXT,
+  codigo_promo TEXT,
   precio REAL,
   recordatorio_enviado INTEGER DEFAULT 0,
   recordatorio_notificado INTEGER DEFAULT 0,

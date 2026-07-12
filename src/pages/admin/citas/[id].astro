@@ -47,6 +47,7 @@ if (Astro.request.method === 'POST') {
       notas: form.get('notas') as string,
       precio: form.get('precio') ? Number(form.get('precio')) : null,
       metodo_pago: (form.get('metodo_pago') as string) || null,
+      codigo_promo: ((form.get('codigo_promo') as string) || '').trim().toUpperCase() || null,
     });
 
     // Save motivo_cancelacion if cancelled/no-show
@@ -238,6 +239,11 @@ const reprogramWhatsappUrl = telefonoLimpio ? `https://wa.me/34${telefonoLimpio}
           <option value="Sin avisar" selected={(cita as any).motivo_cancelacion === 'Sin avisar'}>Sin avisar</option>
           <option value="Otro" selected={(cita as any).motivo_cancelacion === 'Otro'}>Otro</option>
         </select>
+      </div>
+
+      <div class="form-group">
+        <label for="codigo_promo">Código promocional</label>
+        <input type="text" id="codigo_promo" name="codigo_promo" placeholder="Ej: PUEBLUS10" maxlength="30" style="text-transform: uppercase;" value={(cita as any).codigo_promo || ''} />
       </div>
 
       <div class="form-group">

@@ -142,6 +142,10 @@ const services = [
                 <label for="user-notes">Notas (opcional)</label>
                 <textarea id="user-notes" placeholder="¿Algo que deba saber? Ej: primera visita, zona de dolor..." rows="3"></textarea>
               </div>
+              <div class="form-group">
+                <label for="user-promo">Código promocional (opcional)</label>
+                <input type="text" id="user-promo" placeholder="Ej: PUEBLUS10" maxlength="30" autocomplete="off" style="text-transform: uppercase;">
+              </div>
 
               <div class="form-group" style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
                 <label for="booking-website">Website</label>
@@ -1359,10 +1363,11 @@ const services = [
     const phone = (document.getElementById('user-phone') as HTMLInputElement).value.trim();
     const email = (document.getElementById('user-email') as HTMLInputElement).value.trim();
     const notes = (document.getElementById('user-notes') as HTMLTextAreaElement).value.trim();
+    const promo = ((document.getElementById('user-promo') as HTMLInputElement)?.value || '').trim().toUpperCase();
     const dayName = WEEKDAYS_SHORT[state.date.getDay() === 0 ? 6 : state.date.getDay() - 1];
     const dateDisplay = `${dayName} ${state.date.getDate()} de ${MONTHS[state.date.getMonth()]} de ${state.date.getFullYear()}`;
     const dateISO = `${state.date.getFullYear()}-${String(state.date.getMonth() + 1).padStart(2, '0')}-${String(state.date.getDate()).padStart(2, '0')}`;
-    return { name, phone, email, notes, dateDisplay, dateISO, time: state.time, service: state.service };
+    return { name, phone, email, notes, promo, dateDisplay, dateISO, time: state.time, service: state.service };
   }
 
   async function saveBooking(data: ReturnType<typeof getBookingData>): Promise<{ ok: boolean; conflict?: boolean }> {
@@ -1383,6 +1388,7 @@ const services = [
           hora: data.time,
           duracion: parseInt(data.service!.duration) || 60,
           notas: data.notes || null,
+          codigo_promo: data.promo || null,
         }),
       });
       if (res.status === 409) return { ok: false, conflict: true };

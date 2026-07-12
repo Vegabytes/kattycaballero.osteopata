@@ -42,7 +42,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     rateLimitMap.set(ip, attempts);
 
     const body = await request.json();
-    const { nombre, telefono, email, servicio, fecha, hora, duracion, notas, website } = body;
+    const { nombre, telefono, email, servicio, fecha, hora, duracion, notas, codigo_promo, website } = body;
 
     // Honeypot check
     if (website) {
@@ -61,7 +61,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     // Validate input length
-    if (nombre.length > 100 || (servicio && servicio.length > 100) || (notas && notas.length > 2000) || telefono.length > 20 || (email && email.length > 100)) {
+    if (nombre.length > 100 || (servicio && servicio.length > 100) || (notas && notas.length > 2000) || (codigo_promo && String(codigo_promo).length > 30) || telefono.length > 20 || (email && email.length > 100)) {
       return new Response(
         JSON.stringify({ success: false, error: 'Texto demasiado largo' }),
         { status: 400, headers }
@@ -134,15 +134,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     // Create cita with estado='pendiente'
     const result = await db
-      .prepare('INSERT INTO citas (paciente_id, fecha, hora, duracion, servicio, estado, notas) VALUES (?, ?, ?, ?, ?, \'pendiente\', ?)')
-      .bind(pacienteId, fecha, hora, duracion || 60, servicio || null, notas || null)
+      .prepare('INSERT INTO citas (paciente_id, fecha, hora, duracion, servicio, estado, notas, codigo_promo) VALUES (?, ?, ?, ?, ?, \'pendiente\', ?)')
+      .bind(pacienteId, fecha, hora, duracion || 60, servicio || null, notas || null, codigo_promo ? String(codigo_promo).trim().toUpperCase() : null)
       .run();
 
     const citaId = result.meta.last_row_id;
 
     // Send notifications (await before responding — Workers closes after Response)
     try {
-      await notifyNewBooking(env, { nombre, telefono, email, servicio, fecha, hora, duracion: duracion || 60, notas }, citaId);
+      await notifyNewBooking(env, { nombre, telefono, email, servicio, fecha, hora, duracion: duracion || 60, notas: codigo_promo ? `${notas ? notas + ' | ' : ''}Código: ${String(codigo_promo).trim().toUpperCase()}` : notas }, citaId);
     } catch (e) {
       console.error('Notification error:', e);
     }

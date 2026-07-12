@@ -429,7 +429,7 @@ const ultimoTratamiento = tratamientos.length > 0 ? tratamientos[0] : null;
               <tr>
                 <td>{c.fecha}</td>
                 <td>{c.hora}</td>
-                <td>{c.servicio || '-'}</td>
+                <td>{c.servicio || '-'}{(c as any).codigo_promo && <span class="badge" style="background:#e8f5ee;color:#1F7A3E;margin-left:6px;">{(c as any).codigo_promo}</span>}</td>
                 <td><span class={`badge badge-${c.estado}`}>{c.estado}</span></td>
                 <td><a href={`/admin/citas/${c.id}`} class="btn btn-secondary btn-sm">Ver</a></td>
               </tr>

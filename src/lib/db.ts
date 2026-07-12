@@ -22,6 +22,7 @@ export interface Cita {
   servicio: string | null;
   estado: string;
   notas: string | null;
+  codigo_promo?: string | null;
   precio: number | null;
   metodo_pago: string | null;
   created_at: string;
@@ -174,8 +175,8 @@ export async function getCita(Astro: AstroGlobal, id: number): Promise<Cita | nu
 export async function crearCita(Astro: AstroGlobal, data: Partial<Cita>): Promise<number> {
   const db = getDB(Astro);
   const result = await db
-    .prepare('INSERT INTO citas (paciente_id, fecha, hora, duracion, servicio, estado, notas, precio, metodo_pago) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
-    .bind(data.paciente_id, data.fecha, data.hora, data.duracion || 60, data.servicio || null, data.estado || 'pendiente', data.notas || null, data.precio || null, data.metodo_pago || null)
+    .prepare('INSERT INTO citas (paciente_id, fecha, hora, duracion, servicio, estado, notas, codigo_promo, precio, metodo_pago) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(data.paciente_id, data.fecha, data.hora, data.duracion || 60, data.servicio || null, data.estado || 'pendiente', data.notas || null, data.codigo_promo || null, data.precio || null, data.metodo_pago || null)
     .run();
   return result.meta.last_row_id;
 }
@@ -183,8 +184,8 @@ export async function crearCita(Astro: AstroGlobal, data: Partial<Cita>): Promis
 export async function actualizarCita(Astro: AstroGlobal, id: number, data: Partial<Cita>): Promise<void> {
   const db = getDB(Astro);
   await db
-    .prepare('UPDATE citas SET paciente_id = ?, fecha = ?, hora = ?, duracion = ?, servicio = ?, estado = ?, notas = ?, precio = ?, metodo_pago = ? WHERE id = ?')
-    .bind(data.paciente_id, data.fecha, data.hora, data.duracion || 60, data.servicio || null, data.estado || 'pendiente', data.notas || null, data.precio || null, data.metodo_pago || null, id)
+    .prepare('UPDATE citas SET paciente_id = ?, fecha = ?, hora = ?, duracion = ?, servicio = ?, estado = ?, notas = ?, codigo_promo = ?, precio = ?, metodo_pago = ? WHERE id = ?')
+    .bind(data.paciente_id, data.fecha, data.hora, data.duracion || 60, data.servicio || null, data.estado || 'pendiente', data.notas || null, data.codigo_promo || null, data.precio || null, data.metodo_pago || null, id)
     .run();
 }
 

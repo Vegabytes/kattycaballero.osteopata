@@ -16,6 +16,8 @@
     "db:contabilidad:local": "wrangler d1 execute katy-clinica --file=db/migration-contabilidad.sql --local",
     "db:gastos-recurrentes": "wrangler d1 execute katy-clinica --file=db/migration-gastos-recurrentes.sql --remote",
     "db:gastos-recurrentes:local": "wrangler d1 execute katy-clinica --file=db/migration-gastos-recurrentes.sql --local",
+    "db:codigo-promo": "wrangler d1 execute katy-clinica --file=db/migration-codigo-promo.sql --remote",
+    "db:codigo-promo:local": "wrangler d1 execute katy-clinica --file=db/migration-codigo-promo.sql --local",
     "draft": "node scripts/draft-post.mjs",
     "draft:list": "node scripts/draft-post.mjs --list",
     "draft:random": "node scripts/draft-post.mjs --random"
