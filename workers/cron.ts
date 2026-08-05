@@ -836,6 +836,59 @@ async function processInstagramTokenRefresh(db: D1Database, settings: Settings, 
 
 // === WORKER ENTRY ===
 
+// === SOLICITUD DE RESEÑAS DE GOOGLE ===
+//
+// Alex, 06/08/2026: "hay que fomentar lo de que pongan reseñas". Mismo patrón
+// humano que los recordatorios: a Katty le llega por Telegram un enlace de
+// WhatsApp con el mensaje preparado, y ELLA decide si lo envía. Nada sale
+// directo al paciente.
+//
+// Reglas: se pide a los 2 días de una cita COMPLETADA, una sola vez en la
+// vida por paciente (pacientes.resena_solicitada), máximo 3 al día para no
+// convertir el Telegram de Katty en una fábrica, y se puede apagar poniendo
+// resenas_activo=0 en configuracion.
+const GOOGLE_REVIEW_URL = 'https://g.page/r/CUVuAD3Rp90PEBE/review';
+
+async function processSolicitudResenas(db: D1Database, settings: Settings): Promise<string[]> {
+  const logs: string[] = [];
+  if (settings.resenas_activo === '0') {
+    logs.push('Reseñas: desactivado en configuración');
+    return logs;
+  }
+  const botToken = settings.telegram_bot_token;
+  const chatId = settings.telegram_chat_id;
+  if (!botToken || !chatId) {
+    logs.push('Reseñas: faltan credenciales de Telegram');
+    return logs;
+  }
+
+  const haceDosDias = getDateInMadrid(-2);
+  const pacientes = (await db.prepare(
+    `SELECT DISTINCT p.id, p.nombre, p.apellidos, p.telefono
+     FROM citas c JOIN pacientes p ON c.paciente_id = p.id
+     WHERE c.fecha = ? AND c.estado = 'completada'
+       AND p.resena_solicitada = 0
+       AND p.telefono IS NOT NULL AND p.telefono != ''
+     LIMIT 3`
+  ).bind(haceDosDias).all()).results as { id: number; nombre: string; apellidos: string; telefono: string }[];
+
+  if (pacientes.length === 0) {
+    logs.push('Reseñas: nadie que pedir hoy');
+    return logs;
+  }
+
+  for (const p of pacientes) {
+    const phone = p.telefono.replace(/\D/g, '').replace(/^34/, '');
+    const mensaje = `Hola ${p.nombre}, soy Katy 😊 ¡Gracias por tu visita del otro día! Si quedaste a gusto con la sesión, me ayudarías muchísimo dejando una reseña en Google — es solo un minuto: ${GOOGLE_REVIEW_URL} ¡Mil gracias!`;
+    const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(mensaje)}`;
+    await sendTelegram(botToken, chatId,
+      `⭐ Pedir reseña a ${p.nombre} ${p.apellidos} (cita del ${formatFechaES(haceDosDias)}):\n${waUrl}`);
+    await db.prepare('UPDATE pacientes SET resena_solicitada = 1 WHERE id = ?').bind(p.id).run();
+    logs.push(`Reseña pedida (via Katty): ${p.nombre} ${p.apellidos}`);
+  }
+  return logs;
+}
+
 export default {
   async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
     const settings = await getSettings(env.DB);
@@ -858,6 +911,9 @@ export default {
 
     const igLogs = await processInstagramTokenRefresh(env.DB, settings, env);
     logs.push(...igLogs);
+
+    const resenaLogs = await processSolicitudResenas(env.DB, settings);
+    logs.push(...resenaLogs);
 
     console.log('Cron completed:', logs.join(' | '));
   },
@@ -890,6 +946,9 @@ export default {
 
     const igLogs = await processInstagramTokenRefresh(env.DB, settings, env);
     logs.push(...igLogs);
+
+    const resenaLogs = await processSolicitudResenas(env.DB, settings);
+    logs.push(...resenaLogs);
 
     return new Response(JSON.stringify({ logs }, null, 2), {
       headers: { 'Content-Type': 'application/json' },
