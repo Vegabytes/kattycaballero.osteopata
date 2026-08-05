@@ -1,0 +1,115 @@
+---
+/**
+ * Confirmación de cita en un toque (06/08/2026).
+ *
+ * El recordatorio de WhatsApp que envía Katty lleva un enlace
+ * /confirmar?c=<id>&t=<token>. El paciente lo abre y la cita pasa de
+ * "pendiente" a "confirmada"; Katty recibe el aviso por Telegram.
+ *
+ * El token lo genera el cron al preparar el recordatorio y solo vale para esa
+ * cita. Idempotente: reabrir el enlace no rompe nada, y una cita ya
+ * confirmada lo dice en vez de fallar. Citas pasadas o canceladas no se tocan.
+ */
+export const prerender = false;
+
+const url = new URL(Astro.request.url);
+const id = url.searchParams.get('c');
+const token = url.searchParams.get('t');
+
+type Resultado = 'confirmada' | 'ya-confirmada' | 'no-valida' | 'pasada' | 'cancelada';
+let resultado: Resultado = 'no-valida';
+let fechaTexto = '';
+let hora = '';
+
+const formatFechaES = (fecha: string): string => {
+  const days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  const d = new Date(fecha + 'T00:00:00');
+  return `${days[d.getDay()]} ${d.getDate()} de ${months[d.getMonth()]}`;
+};
+
+if (id && token && /^\d+$/.test(id)) {
+  const db = (Astro.locals as any).runtime.env.DB;
+  const cita = await db.prepare(
+    `SELECT c.id, c.fecha, c.hora, c.estado, p.nombre, p.apellidos
+     FROM citas c JOIN pacientes p ON c.paciente_id = p.id
+     WHERE c.id = ? AND c.token_confirmacion = ?`
+  ).bind(Number(id), token).first();
+
+  if (cita) {
+    fechaTexto = formatFechaES(cita.fecha);
+    hora = cita.hora;
+    const hoy = new Date(new Date().getTime() + 2 * 3600000).toISOString().split('T')[0]; // aprox Madrid
+    if (cita.fecha < hoy) {
+      resultado = 'pasada';
+    } else if (cita.estado === 'confirmada') {
+      resultado = 'ya-confirmada';
+    } else if (cita.estado === 'pendiente') {
+      await db.prepare("UPDATE citas SET estado = 'confirmada' WHERE id = ?").bind(cita.id).run();
+      resultado = 'confirmada';
+      // Aviso a Katty (que no dependa de que ella mire el panel). Best-effort:
+      // si Telegram falla, la confirmación ya está guardada igualmente.
+      try {
+        const conf = await db.prepare(
+          "SELECT clave, valor FROM configuracion WHERE clave IN ('telegram_bot_token','telegram_chat_id')"
+        ).all();
+        const map: Record<string, string> = {};
+        for (const r of (conf.results as { clave: string; valor: string }[])) map[r.clave] = r.valor;
+        if (map.telegram_bot_token && map.telegram_chat_id) {
+          await fetch(`https://api.telegram.org/bot${map.telegram_bot_token}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: map.telegram_chat_id,
+              text: `✅ ${cita.nombre} ${cita.apellidos} ha confirmado su cita del ${fechaTexto} a las ${cita.hora}.`,
+            }),
+          });
+        }
+      } catch { /* la confirmación manda; el aviso es cortesía */ }
+    } else {
+      resultado = 'cancelada';
+    }
+  }
+}
+
+const titulos: Record<Resultado, string> = {
+  'confirmada': '¡Cita confirmada!',
+  'ya-confirmada': 'Tu cita ya estaba confirmada',
+  'no-valida': 'Enlace no válido',
+  'pasada': 'Esta cita ya pasó',
+  'cancelada': 'Esta cita fue cancelada',
+};
+const mensajes: Record<Resultado, string> = {
+  'confirmada': `Te espero el ${fechaTexto} a las ${hora} en C/ Río Guadarrama 2, Alpedrete. ¡Gracias por confirmar!`,
+  'ya-confirmada': `Todo en orden: el ${fechaTexto} a las ${hora}. ¡Hasta entonces!`,
+  'no-valida': 'Este enlace no corresponde a ninguna cita. Si crees que es un error, escríbeme por WhatsApp al 643 961 065.',
+  'pasada': 'Si quieres reservar una nueva, puedes hacerlo desde la web o por WhatsApp al 643 961 065.',
+  'cancelada': 'Si quieres retomarla, escríbeme por WhatsApp al 643 961 065 y buscamos hueco.',
+};
+const ok = resultado === 'confirmada' || resultado === 'ya-confirmada';
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{titulos[resultado]} · Katy Caballero Osteópata</title>
+    <style>
+      body { font-family: system-ui, -apple-system, sans-serif; background: #f6f4f0; margin: 0; display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 24px; }
+      .tarjeta { background: #fff; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,.08); padding: 40px 32px; max-width: 420px; text-align: center; }
+      .icono { font-size: 52px; line-height: 1; }
+      h1 { color: #2f4f43; font-size: 24px; margin: 16px 0 8px; }
+      p { color: #5c6660; line-height: 1.55; margin: 0 0 22px; }
+      a.boton { display: inline-block; background: #2f4f43; color: #fff; text-decoration: none; padding: 12px 22px; border-radius: 999px; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <div class="tarjeta">
+      <div class="icono">{ok ? '✅' : 'ℹ️'}</div>
+      <h1>{titulos[resultado]}</h1>
+      <p>{mensajes[resultado]}</p>
+      <a class="boton" href="/">Ir a la web</a>
+    </div>
+  </body>
+</html>

@@ -318,7 +318,13 @@ async function processReminders(db: D1Database, settings: Settings, env: Env): P
   for (const cita of citas) {
     if (cita.telefono) {
       const phone = cita.telefono.replace(/\D/g, '').replace(/^34/, '');
-      const waMessage = `Hola ${cita.nombre}, soy Katy de la consulta de osteopatía. Te recuerdo que mañana ${fechaDisplay} tienes cita a las ${cita.hora}. Dirección: C/ Río Guadarrama 2, Alpedrete. Si no puedes asistir avísame con antelación. ¡Hasta mañana! 😊`;
+      // Confirmación en un toque (06/08/2026): el recordatorio lleva un
+      // enlace con token; el paciente lo toca, la cita pasa a confirmada y
+      // Katty recibe el aviso. Menos "¿vendrá o no vendrá?".
+      const token = crypto.randomUUID().replace(/-/g, '').slice(0, 20);
+      await db.prepare('UPDATE citas SET token_confirmacion = ? WHERE id = ?').bind(token, cita.id).run();
+      const confirmUrl = `https://www.katycaballeroosteopata.com/confirmar?c=${cita.id}&t=${token}`;
+      const waMessage = `Hola ${cita.nombre}, soy Katy de la consulta de osteopatía. Te recuerdo que mañana ${fechaDisplay} tienes cita a las ${cita.hora}. Dirección: C/ Río Guadarrama 2, Alpedrete. Puedes confirmarla en un toque aquí: ${confirmUrl} — y si no puedes asistir, avísame con antelación. ¡Hasta mañana! 😊`;
       const waUrl = `https://wa.me/34${phone}?text=${encodeURIComponent(waMessage)}`;
 
       await sendTelegram(botToken, chatId,
@@ -891,6 +897,16 @@ async function processSolicitudResenas(db: D1Database, settings: Settings): Prom
 
 export default {
   async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+    // Latido: lo PRIMERO de cada ejecución, antes de cualquier proceso que
+    // pueda fallar. El vigilante externo (cron del servidor de Pueblus) lee
+    // /health y avisa si este timestamp envejece — así el silencio del 05/08
+    // (el trigger no se disparó y nadie se enteró hasta que preguntó Katty)
+    // no vuelve a pasar desapercibido.
+    await env.DB.prepare(
+      `INSERT INTO configuracion (clave, valor) VALUES ('cron_ultimo_run', ?)
+       ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor`
+    ).bind(new Date().toISOString()).run();
+
     const settings = await getSettings(env.DB);
     const logs: string[] = [];
 
@@ -921,6 +937,18 @@ export default {
   // Allow manual trigger via HTTP for testing
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+
+    // Salud para el vigilante externo: cuándo corrió el cron por última vez.
+    // Sin secreto: un timestamp no cuenta nada de nadie.
+    if (url.pathname === '/health') {
+      const row = await env.DB.prepare(
+        "SELECT valor FROM configuracion WHERE clave = 'cron_ultimo_run'"
+      ).first<{ valor: string }>();
+      return new Response(JSON.stringify({ cron_ultimo_run: row?.valor ?? null }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const secret = url.searchParams.get('secret');
     if (secret !== 'katy-cron-2024') {
       return new Response('Unauthorized', { status: 401 });
